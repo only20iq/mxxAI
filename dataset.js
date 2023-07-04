@@ -766,7 +766,7 @@ var stalin_soz=[
         "sc5": "Değişir {bos_yap_nj}{bos_yap_k}{bos_yap_n}",
         "set6": "aşık+mısın,aşk+yaşıyon+mu,aşk+yaşıyor+musun=$sc6",
         "sc6": "{bos_yap_n}{bos_yap_nj}{bos_yap_k}",
-        "set7":"siktir+git/piç/puşt/yavşak,orusbu/orospu/orsbu+çocuğu/evladı/çocu/cocu,amına/amna+korum/koyarım+senin,amına+kodumun/koydumun/koyduğumun/koyarım/beton,31+çek/çekiyor/çekyon/çekiyon/çekiyosun+mu/musun/sun/san/sin/su/sever/seviyor/seviyon/seviyonmu/seviyormu/seviyormusun/demek,31+çekiyore/çekiyosan=$sc7",
+        "set7":"siktir+git/piç/puşt/yavşak,orusbu/orospu/orsbu+çocuğu/evladı/çocu/cocu,amına/amna+korum/koyarım+senin,amına+kodumun/koydumun/koyduğumun/koyarım/beton,31+çek/çekiyor/çekyon/çekiyon/çekiyosun+mu/musun/sun/san/sin/su/sever/seviyor/seviyon/seviyonmu/seviyormu/seviyormusun/demek,31+çekiyore/çekiyosan/çekiyormusun=$sc7",
         "set7.1":"psikopat,manyak/deli+şarkı/müzik,sosyopat,ruh+hastası=$sc7",
         "sc7":"{military}{nazi}{stalin_soz}{sozler_v1}",
         "set8":"kpop/korean/kore+şarkısı/müziği/müzik/song/müzikleri=$sc8",
