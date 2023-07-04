@@ -671,7 +671,8 @@ function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
                   "boşyapma":"$şarkısöyle",
                   "boşyapmayıkes":"$şarkısöyle",
                   "boşyapmayıbırak":"$şarkısöyle",
-                  "kpophakkında":"Hızla gelişen bir sektör olduğunu düşünüyorum umarım biraz daha gelişir<br>{kpop}<br>{sozler_v1}{sozler_v1}"
+                  "kpophakkında":"Hızla gelişen bir sektör olduğunu düşünüyorum umarım biraz daha gelişir<br>{kpop}<br>{sozler_v1}{sozler_v1}",
+                  "dtw":"{dtw}"
                 },
                 "multi" : {
                   "set1": "merhaba/nasılsın/iyimisin/naber/meraba=$sc1",
