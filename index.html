@@ -726,7 +726,7 @@ function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
                 },
                 "dataset1":{
                   "n":"blackpink",
-                  "sevme":["Aşığım aq"],
+                  "sevme":["Aşığım dermişim direkt"],
                   "nasıl":"Çok yetenekli süper bir kpop grubu",
                   "love":["Blackpink e aşığım ya","Blackpink aşık olunmicak gibi değil"],
                   "kötü":["Bi koreliler kadar çalışkan olamadık ya :(","Bi koreli kadar çalışkan olamadım ya offf","Bir koreliler kadar çalışkan olamadık :( ya off off"]
@@ -743,6 +743,13 @@ function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
                   "nasıl":"$sevme",
                   "love":"Müziklerinin kalitesi muhteşem {bos_yap_nj}{bos_yap_nj}{bos_yap_nj}",
                   "kötü":["Bi koreliler kadar çalışkan olamadık ya :(","Bi koreli kadar çalışkan olamadım ya offf","Bir koreliler kadar çalışkan olamadık :( ya off off"]
+                },
+                "dataset3":{
+                  "n":"sserafim",
+                  "sevme":["Hem müzik yönüyle çok başarılı işler çıkartıyorlar hem de çok çekiciler ve tatlılar"],
+                  "nasıl":"$sevme",
+                  "love":"Aşırı kaliteli bir kpop grubu gerçekten acı biber gibiler {bos_yap_nj}{bos_yap_nj}{bos_yap_nj}",
+                  "kötü":["Kore ye gitmek istiyorum","Kpop virüsüne yakalanma sebebim","Çok iyiler ya o kadar iyiler ki kendimi kötü hissediyorum"]
                 }
               }
             };
@@ -1030,7 +1037,7 @@ function quad_thread(text) {
   }
   for (let item of wait_dataset_cache["sevme"]) {
     var _cache_dataset_data = ekler(item[0]);
-    var dataset = _cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri+"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon/musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri,"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon/musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri+mu/mü/ki/ben/sen/o/biz/siz/onlar/onları=this";
+    var dataset = _cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri/düşüncelerin+"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon/musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri/düşüncelerin,"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon/musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri+mu/mü/ki/ben/sen/o/biz/siz/onlar/onları/düşüncelerin=this";
     var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"sevme",item[0]);
     cevap += cevapx;
   }
@@ -1048,7 +1055,7 @@ function quad_thread(text) {
   }
   for (let item of wait_dataset_cache["kötü"]) {
     var _cache_dataset_data = ekler(item[0]);
-    var dataset = _cache_dataset_data+"kötü/iğrenç/berbat/rezil/kalitesiz/beceriksiz/vasıfsız/gereksiz/rezil/berbat/yeteneksiz"+"=this";
+    var dataset = _cache_dataset_data+"+kötü/iğrenç/berbat/rezil/kalitesiz/beceriksiz/vasıfsız/gereksiz/rezil/berbat/yeteneksiz"+"=this";
     var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"kötü",item[0]);
     cevap += cevapx;
   }
