@@ -13,9 +13,7 @@ Simple Dataset
   "dataset0":{
     "n":"adana",
     "sevme":["Çok sıcak {music}","güneşe sıkıcam","Sıcaktan ölüyom"],
-    "nasıl":"Sıcaklarından çekilmez",
-    "nasılsın":["ee yani","işte","olduğum kadar","olabildiğim kadar işte"],
-    "nasilsin":"$nasılsın"
+    "nasıl":"Sıcaklarından çekilmez"
   }
 }
 ```
@@ -23,6 +21,7 @@ Simple Dataset
 "single":{
   "merhaba":["Merhaba Bura İyi Mi?","Merhaba Burayı Sevdin Mi?"],
   "meraba":"$merhaba",
-  ""
+  "nasılsın":["ee yani","işte","olduğum kadar","olabildiğim kadar işte"],
+  "nasilsin":"$nasılsın"
 }
 ```
