@@ -670,7 +670,8 @@ function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
                   "sanaçokazdım":"$azgın",
                   "boşyapma":"$şarkısöyle",
                   "boşyapmayıkes":"$şarkısöyle",
-                  "boşyapmayıbırak":"$şarkısöyle"
+                  "boşyapmayıbırak":"$şarkısöyle",
+                  "kpophakkında":"Hızla gelişen bir sektör olduğunu düşünüyorum umarım biraz daha gelişir<br>{kpop}<br>{sozler_v1}{sozler_v1}"
                 },
                 "multi" : {
                   "set1": "merhaba/nasılsın/iyimisin/naber/meraba=$sc1",
@@ -720,6 +721,8 @@ function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
                   "set2.06":"eğitim/öğretim+sistemi=$sc7",
                   "set2.07":"senden/sana/azdım/sulandım/kendime+hoşlanıyom/azdım/görünce/sulandım=$sc2.07",
                   "sc2.07":"{dtw}{sozler_v1}{sozler_v1}",
+                  "set2.08":"kpop/kore/korea+hakkında/hakkındaki/ilgili/ile+düşüncelerin/fikirlerin/bahset/ile/ilgili,kpop/kore/korea+hakkında/hakkındaki+ki=$sc2.08",
+                  "sc2.08":["Hızla gelişen bir sektör olduğunu düşünüyorum umarım biraz daha gelişir<br>{kpop}<br>{sozler_v1}{sozler_v1}","Çok başarılı bir sektör olduğunu düşünüyorum<br>{kpop}<br>{sozler_v1}{sozler_v1}","Kore ye kaçak girme düşüncesine sebep olan bir sektör bu<br>{kpop}<br>{sozler_v1}{sozler_v1}"],
                   "sc2": "Bilmiyorum {bos_yap_n}{bos_yap_k}",
                   "set3": "hava/yağış+durumu/bekleniyormu,yağış+bekleniyor+mu=$sc3",
                   "sc3": "Google da ara bana sorma {bos_yap_nj}{sozler_v1}{bts_sozler}{bos_yap_n}{troll_kpop_sozler}{bos_yap_k}",
