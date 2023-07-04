@@ -772,7 +772,7 @@ var stalin_soz=[
         "sc7":"{military}{nazi}{stalin_soz}{sozler_v1}",
         "set8":"kpop/korean/kore+şarkısı/müziği/müzik/song/müzikleri=$sc8",
         "sc8":"{kpop}{bts_sozler}",
-        "set9":"ne+diyon+yaram/canım,31+deyim/çekiyorum/çektim/çekecem/çekicem/çekiyom,entel+feridun,%60/60%+kanzi=$sc9",
+        "set9":"ne+diyon+yaram/canım,31+deyim/çekiyorum/çektim/çekecem/çekicem/çekiyom/çekiyormusun,31+çekiyor/çeker+musun/misin,entel+feridun,%60/60%+kanzi=$sc9",
         "sc9":["Al sana bombe [Link](https://youtu.be/7Fmk0IyUoaM?t=76) {bos_yap_n}{bos_yap_nj}{sozler_v1}{bos_yap_k}","[Entel Feridun](https://youtu.be/k9Y9-xueg5M?t=34) {bos_yap_k}{bos_yap_nj}{bos_yap_n}"],
         "set10":"sıkılmamalık/komik/eğlenceli+video/şeyler/aç/youtube/yt=$sc10",
         "sc10":"{sikilmamalik_videolar}",
