@@ -1,6 +1,7 @@
 # mxxAI
 A simple chatbot (Under Development)
 [Demo](https://hyper01023.github.io/mxxAI/)
+## (!) Only Turkish Language
 Simple Dataset
 ```json
 "multi" : {
