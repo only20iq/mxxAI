@@ -724,6 +724,7 @@ function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
                   "sc2.07":"{dtw}{sozler_v1}{sozler_v1}",
                   "set2.08":"kpop/kore/korea+hakkında/hakkındaki/ilgili/ile+düşüncelerin/fikirlerin/bahset/ile/ilgili,kpop/kore/korea+hakkında/hakkındaki+ki=$sc2.08",
                   "sc2.08":["Hızla gelişen bir sektör olduğunu düşünüyorum umarım biraz daha gelişir<br>{kpop}<br>{sozler_v1}{sozler_v1}","Çok başarılı bir sektör olduğunu düşünüyorum<br>{kpop}<br>{sozler_v1}{sozler_v1}","Kore ye kaçak girme düşüncesine sebep olan bir sektör bu<br>{kpop}<br>{sozler_v1}{sozler_v1}"],
+                  "set2.09":"seks/sexy/sex+yapıyor/yapıyom/yapıyon/yapıyormu/yapıyonmu/yapıyo/yapyonmu/seviyonmu/seviyon/sevyon/seviyor/sever/seven=$sc2.07",
                   "sc2": "Bilmiyorum {bos_yap_n}{bos_yap_k}",
                   "set3": "hava/yağış+durumu/bekleniyormu,yağış+bekleniyor+mu=$sc3",
                   "sc3": "Google da ara bana sorma {bos_yap_nj}{sozler_v1}{bts_sozler}{bos_yap_n}{troll_kpop_sozler}{bos_yap_k}",
