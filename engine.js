@@ -140,7 +140,7 @@ function quad_thread(text) {
   }
   for (let item of wait_dataset_cache["love"]) {
     var _cache_dataset_data = ekler(item[0]);
-    var dataset = _cache_dataset_data+"+e/aşık/aşk/aşıq/seksi/seksilik/seksiliği/ateşli/ateşliliği/ateşi/sexy/sexyliği/hottest/çekici/çekiciliği/çekci/tatlı/gideri/a+özelliği/özellikleri/var/varmı/mi/mı/sence/nasıl/seviyesi/buldun/buluyorsun/beğeniyorsun/anladın/anlatsana/mısın/misin,"+_cache_dataset_data+"+nasıl/sence/bahset/bahsetsene/anlat,"+_cache_dataset_data+"+gideri/yi/din/den/dan/tan/ten/a/e/o/yu/yü+var/özelliği/özellikleri+mı/mi/varmı/var/sence=this";
+    var dataset = _cache_dataset_data+"+e/aşık/aşk/aşıq/seksi/seksilik/seksiliği/ateşli/ateşliliği/ateşi/sexy/sexyliği/hottest/çekici/çekiciliği/çekci/tatlı/gideri/a+özelliği/özellikleri/var/varmı/mi/mı/sence/nasıl/seviyesi/buldun/buluyorsun/beğeniyorsun/anladın/anlatsana/mısın/misin,"+_cache_dataset_data+"+nasıl/sence/bahset/bahsetsene/anlat,"+_cache_dataset_data+"+gideri/yi/din/den/dan/tan/ten/a/e/o/yu/yü+var/özelliği/özellikleri+mı/mi/varmı/var/sence,"+_cache_dataset_data+"+hoşlanıyonmu/hoşlanıyorsun/hoşlanıyorsan/hoşlanıyon/hoşlanıyormusun=this";
     var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"love",item[0]);
     cevap += cevapx;
   }

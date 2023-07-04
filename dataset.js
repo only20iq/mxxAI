@@ -737,7 +737,7 @@ var stalin_soz=[
         "sc2.00":"{dtw}",
         "set2.01":"deli/manyak/hasta+misin/mısın=$sc2.01",
         "sc2.01":"{dtw}",
-        "set2.02":"kimden/kimi/sevdiğin/sevdin+hoşlanıyon/hoşlanıyorsun/seviyorsun/birisi/biri,kimi/hoşlandığın/azdığın/sevdiğin/seveceğin/doyamadığın+biri/birisi+var+mı,kime+aşık+sın,kimi+seviyorsun/ısındın/ısınıyorsun,kimi/çekici+bulduğun/çekici+buluyorsun/varmı,çekici/seksi/tatlı/güzel+bulduğun+biri+var+mı,çekici/seksi/tatlı/güzel/hoş+bulduğun+biri+varmı,hoşlandığın/azdığın/sevdiğin/doyamadığın+biri/birisi/hayalin+varmı=$sc2.02",
+        "set2.02":"kimden/kimi/sevdiğin/sevdin+hoşlanıyonmu/hoşlanıyon/hoşlanıyorsun/seviyorsun/birisi/biri,sen/kimi/hoşlandığın/azdığın/sevdiğin/seveceğin/doyamadığın+birinden/biri/birisi+var+mı,kime+aşık+sın,kimi+seviyorsun/ısındın/ısınıyorsun,kimi/çekici+bulduğun/çekici+buluyorsun/varmı,çekici/seksi/tatlı/güzel+bulduğun+biri+var+mı,çekici/seksi/tatlı/güzel/hoş+bulduğun+biri+varmı,hoşlandığın/azdığın/sevdiğin/doyamadığın+biri/birisi/hayalin+varmı=$sc2.02",
         "sc2.02":["Nmixx Sullyoon [mm](https://www.youtube.com/watch?v=6kEZEvMYKQY) {seksi_kpop}","IVE Wonyoung {bos_yap_nj}{sozler_v1}{troll_kpop_sozler}{bos_yap_k}{bts_sozler}<br>{kpop} - {seksi_kpop}","Aespa Winter {troll_kpop_sozler}{bos_yap_nj}{sozler_v1}{bos_yap_k}{bts_sozler}{bos_yap_n}<br>{kpop} - {seksi_kpop}"],
         "set2.03":"kore/koreyi+neden/seviyorsun/sevme/niye+amacın/seviyorsun/seviyon/sevyon/aşıksın/hastasın=$sc2.03",
         "sc2.03":"Bilmem {dtw} {nazi}",
@@ -771,7 +771,7 @@ var stalin_soz=[
         "sc7":"{military}{nazi}{stalin_soz}{sozler_v1}",
         "set8":"kpop/korean/kore+şarkısı/müziği/müzik/song/müzikleri=$sc8",
         "sc8":"{kpop}{bts_sozler}",
-        "set9":"ne+diyon+yaram/canım,31+deyim/çekiyorum/çektim/çekecem/çekicem,entel+feridun,%60/60%+kanzi=$sc9",
+        "set9":"ne+diyon+yaram/canım,31+deyim/çekiyorum/çektim/çekecem/çekicem/çekiyom,entel+feridun,%60/60%+kanzi=$sc9",
         "sc9":["Al sana bombe [Link](https://youtu.be/7Fmk0IyUoaM?t=76) {bos_yap_n}{bos_yap_nj}{sozler_v1}{bos_yap_k}","[Entel Feridun](https://youtu.be/k9Y9-xueg5M?t=34) {bos_yap_k}{bos_yap_nj}{bos_yap_n}"],
         "set10":"sıkılmamalık/komik/eğlenceli+video/şeyler/aç/youtube/yt=$sc10",
         "sc10":"{sikilmamalik_videolar}",
@@ -832,6 +832,13 @@ var stalin_soz=[
         "sevme":["Bu kpop grubunun neden gelişmediğini merak ediyorum daha fazlasını elde etmeleri lazım {sozler_v1}","Umarım iyi yerlere gelirler umarım daha fazlasını elde ederler umarım en kısa sürede hakettiklerini alırlar"],
         "nasıl":"$sevme",
         "love":"kpop dinleme keyf {kpop}<br>{kpop}<br>{kpop}{bos_yap_nj}{bos_yap_nj}{bos_yap_nj}{sozler_v1}",
+        "kötü":"$sevme"
+        },
+        "dataset7":{
+        "n":"sullyoon",
+        "sevme":["Sullyoon çok çekici ve güzel{bos_yap_nj}{bos_yap_nj}{bos_yap_nj}{sozler_v1}","Sullyoon un illegal bir güzelliği var{bos_yap_nj}{bos_yap_nj}{bos_yap_nj}{sozler_v1}"],
+        "nasıl":"$sevme",
+        "love":"$sevme",
         "kötü":"$sevme"
         }
     }
