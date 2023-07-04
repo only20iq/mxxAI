@@ -382,7 +382,7 @@ function xxx(string) {
     return "<br>" + random; // HTML bağlantısını oluşturun
   }
   if (string == "troll_kpop_sozler"){
-    if(troll_kpop_sozler>=troll_kpop_sozler.length){
+    if(cache_troll_kpop_sozler>=troll_kpop_sozler.length){
       cache_troll_kpop_sozler=0;
     }
     var random = troll_kpop_sozler[cache_troll_kpop_sozler]; // Diziden rastgele bir eleman seçin
