@@ -52,7 +52,7 @@ function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
             "https://www.youtube.com/watch?v=0iJ2FpANIQY,Bez Bebek Ruh Çağırma",
             "https://www.youtube.com/watch?v=UKfn29YiN9c,Şişko Şakaları",
             "https://www.youtube.com/watch?v=7f1H_m3bLHU,Emre Okulda Kabadayılık Taslıyor - Bez Bebek",
-            "https://www.youtube.com/watch?v=EWPEocjNp20,Selena, Pandora ile savaşıyor",
+            "https://www.youtube.com/watch?v=EWPEocjNp20,Selena Pandora ile savaşıyor",
             "https://www.youtube.com/watch?v=vTvk0dzujFU,Selena ve Hades ilk defa birlikte savaşıyor",
             "https://www.youtube.com/watch?v=6inYiDycWJU,Turkish X-Men",
             "https://www.youtube.com/watch?v=EPrWNvBe064,Lithuanian X-MEN",
@@ -716,18 +716,28 @@ function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
                 "dataset0":{
                   "n":"adana",
                   "sevme":["Çok sıcak {military}{nazi}{stalin_soz}","güneşe sıkıcam {military}{nazi}{stalin_soz}","Sıcaktan ölüyom {military}{nazi}{stalin_soz}"],
-                  "nasıl":"Sıcaklarından çekilmez"
+                  "nasıl":"Sıcaklarından çekilmez",
+                  "kötü":"Bence de öyle bunaltıcı sıcak var"
                 },
                 "dataset1":{
                   "n":"blackpink",
                   "sevme":["Aşığım aq"],
-                  "nasıl":"efso",
-                  "love":"Kesinlikle var var var"
+                  "nasıl":"Çok yetenekli süper bir kpop grubu",
+                  "love":["Blackpink e aşığım ya","Blackpink aşık olunmicak gibi değil"],
+                  "kötü":["Bi koreliler kadar çalışkan olamadık ya :(","Bi koreli kadar çalışkan olamadım ya offf","Bir koreliler kadar çalışkan olamadık :( ya off off"]
                 },
                 "dataset2":{
                   "n":"avrupa",
                   "sevme":["Hiç özenilecek bir yer değil vatanımız daha iyi","Çok abartılıyor batıcılık iyi bir şey değil"],
-                  "nasıl":"$sevme"
+                  "nasıl":"$sevme",
+                  "kötü":["Kesinlikle aynı fikirdeyiz","Gerçekten öyle doğru diyorsun.","Kesinlikle ne demek istediğini anlıyorum"]
+                },
+                "dataset3":{
+                  "n":"newjeans",
+                  "sevme":["Aşırı seviyorum onlar gibi çalışkan olmak istiyorum"],
+                  "nasıl":"$sevme",
+                  "love":"Müziklerinin kalitesi muhteşem {bos_yap_nj}{bos_yap_nj}{bos_yap_nj}",
+                  "kötü":["Bi koreliler kadar çalışkan olamadık ya :(","Bi koreli kadar çalışkan olamadım ya offf","Bir koreliler kadar çalışkan olamadık :( ya off off"]
                 }
               }
             };
@@ -988,7 +998,7 @@ function quad_thread(text) {
   var cevap = "";
   text = text.trim();
   var wait_dataset_cache={
-    "sevme":[],"nasıl":[],"love":[]
+    "sevme":[],"nasıl":[],"love":[],"kötü":[]
   };
   for (let key of Object.keys(data["quad"])) { // data["quad"] nesnesinin tüm anahtarlarını döngü ile gez
     if (key.startsWith("dataset")) { // Anahtarın "dataset" ile başlayıp başlamadığını kontrol et
@@ -1029,6 +1039,12 @@ function quad_thread(text) {
     var _cache_dataset_data = ekler(item[0]);
     var dataset = _cache_dataset_data+"+e/aşık/aşk/aşıq/seksi/seksilik/seksiliği/ateşli/ateşliliği/ateşi/sexy/sexyliği/hottest/çekici/çekiciliği/çekci/tatlı/gideri/a+özelliği/özellikleri/var/varmı/mi/mı/sence/nasıl/seviyesi/buldun/buluyorsun/beğeniyorsun/anladın/anlatsana/mısın/misin,"+_cache_dataset_data+"+nasıl/sence/bahset/bahsetsene/anlat,"+_cache_dataset_data+"+gideri/yi/din/den/dan/tan/ten/a/e/o/yu/yü+var/özelliği/özellikleri+mı/mi/varmı/var/sence=this";
     var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"love",item[0]);
+    cevap += cevapx;
+  }
+  for (let item of wait_dataset_cache["kötü"]) {
+    var _cache_dataset_data = ekler(item[0]);
+    var dataset = _cache_dataset_data+"kötü/iğrenç/berbat/rezil/kalitesiz/beceriksiz/vasıfsız/gereksiz/rezil/berbat/yeteneksiz"+"=this";
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"kötü",item[0]);
     cevap += cevapx;
   }
   if (cevap == "") {
