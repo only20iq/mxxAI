@@ -698,7 +698,8 @@ var stalin_soz=[
         "gerizekalısın":"$nazi",
         "evrim":"$sus",
         "xmen":"[Lithuanian X-MEN](https://www.youtube.com/watch?v=EPrWNvBe064)<br>[Turkish X-Men](https://www.youtube.com/watch?v=6inYiDycWJU)<br>[Russian X-MEN](https://www.youtube.com/watch?v=2kR6daKgbQ4)",
-        "xman":"$xmen"
+        "xman":"$xmen",
+        "sananelan":"$sanane"
     },
     "multi" : {
         "set1": "merhaba/nasılsın/iyimisin/naber/meraba=$sc1",
