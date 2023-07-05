@@ -830,14 +830,14 @@ var stalin_soz=[
         "kötü":"$sevme"
         },
         "dataset7":{
-        "n":"kep1er",
+        "n":"kep1er/chaehyun/xioting/hikaru/yujin/mashiro/bahiyyih/dayeon/yeseo/youngeun",
         "sevme":["Bu kpop grubunun neden gelişmediğini merak ediyorum daha fazlasını elde etmeleri lazım {sozler_v1}","Umarım iyi yerlere gelirler umarım daha fazlasını elde ederler umarım en kısa sürede hakettiklerini alırlar"],
         "nasıl":"$sevme",
         "love":"kpop dinleme keyf {kpop}<br>{kpop}<br>{kpop}{bos_yap_nj}{bos_yap_nj}{bos_yap_nj}{sozler_v1}",
         "kötü":"$sevme"
         },
-        "dataset7":{
-        "n":"sullyoon",
+        "dataset8":{
+        "n":"sullyoon/sulyon/sullyon",
         "sevme":["Sullyoon çok çekici ve güzel{bos_yap_nj}{bos_yap_nj}{bos_yap_nj}{sozler_v1}","Sullyoon un illegal bir güzelliği var{bos_yap_nj}{bos_yap_nj}{bos_yap_nj}{sozler_v1}"],
         "nasıl":"$sevme",
         "love":"$sevme",

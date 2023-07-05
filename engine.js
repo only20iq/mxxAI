@@ -97,6 +97,7 @@ function quad_core([dataset, text, name],database_0,sub_item_name,sub_item_keyx)
   }
   return [cevap,database_0];
 }
+// 112234
 function quad_thread(text) {
   var cevap = "";
   text = text.trim();
@@ -107,17 +108,16 @@ function quad_thread(text) {
     if (key.startsWith("dataset")) { // Anahtarın "dataset" ile başlayıp başlamadığını kontrol et
       if (data["quad"][key].hasOwnProperty("n")) { // Anahtarın değerinin "n" özelliği olup olmadığını kontrol et
         let value = data["quad"][key]["n"]; // "n" özelliğinin değerini al
-        if (text.includes(value)) { // Metnin değeri içerip içermediğini kontrol et
-          for (let sub_key of Object.keys(data["quad"][key])) { // data["quad"] nesnesinin tüm anahtarlarını döngü ile gez
-            if (wait_dataset_cache.hasOwnProperty(sub_key)) { // Başka bir nesnenin sub_key ile eşleşen bir anahtarı olup olmadığını kontrol et
-              wait_dataset_cache[sub_key].push([data["quad"][key]["n"],key]); // Eşleşen anahtarın değerine data["quad"][key]["n"] değerini push et
+        let parts = value.split("/"); // Değeri "/" ile ayır ve bir diziye at
+        for (let part of parts) { // Dizinin tüm elemanlarını döngü ile gez
+          if (text.includes(part)) { // Metnin part değerini içerip içermediğini kontrol et
+            for (let sub_key of Object.keys(data["quad"][key])) { // data["quad"] nesnesinin tüm anahtarlarını döngü ile gez
+              if (wait_dataset_cache.hasOwnProperty(sub_key)) { // Başka bir nesnenin sub_key ile eşleşen bir anahtarı olup olmadığını kontrol et
+                wait_dataset_cache[sub_key].push([part,key]); // Eşleşen anahtarın değerine part değerini push et
+              }
             }
           }
-        } else {
-          // alert("Hayır 2");
         }
-      } else {
-        // alert("Hayır 1");
       }
     }
   }
@@ -134,7 +134,7 @@ function quad_thread(text) {
   }
   for (let item of wait_dataset_cache["nasıl"]) {
     var _cache_dataset_data = ekler(item[0]);
-    var dataset = _cache_dataset_data+"+nasıl/iyi/sence/hakkında+mi/iyi/nasıl/sizce/yer/bahset/anlat,"+_cache_dataset_data+"+nasıl/sence/bahset/bahsetsene/anlat,"+_cache_dataset_data+"+yi/din/den/dan/tan/ten/a/e/o/yu/yü+nasıl/iyi/sence/hakkında/mi/iyi/nasıl/sizce/yer/bahset/anlat=this";
+    var dataset = _cache_dataset_data+"+nasıl/iyi/sence/hakkında+mi/iyi/nasıl/sizce/yer/bahset/anlat/düşünüyorsun/düşünüyon/düşündün/anlatsana/açıkla/açıklasana/konuş/konuşsana,"+_cache_dataset_data+"+nasıl/sence/bahset/bahsetsene/anlat,"+_cache_dataset_data+"+yi/din/den/dan/tan/ten/a/e/o/yu/yü+nasıl/iyi/sence/hakkında/mi/iyi/nasıl/sizce/yer/bahset/anlat=this";
     var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"nasıl",item[0]);
     cevap += cevapx;
   }
