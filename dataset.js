@@ -216,7 +216,7 @@ var dtw=[
     "https://www.youtube.com/watch?v=9ghPVA6u_og,Dümenci RAGIP",
     "https://youtu.be/k9Y9-xueg5M?t=3,Entel Feridun",
     "https://www.youtube.com/watch?v=8wyT69ifKYY,SAPIK ismet 1996",
-    "https://www.youtube.com/watch?v=NXQJ9iR5BkA,Sapık ismet",
+    "https://youtu.be/NXQJ9iR5BkA?t=104,Sapık ismet",
     "https://www.youtube.com/watch?v=PzSEYrOb2Dw,HARUN SPORTS",
     "https://www.youtube.com/watch?v=v45OLE8hhqY,SERTİFİKA RÜŞAN"
 ];shuffle(dtw);
