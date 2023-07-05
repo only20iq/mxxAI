@@ -12,7 +12,7 @@ Simple Dataset
 ```json
 "quad": {
   "dataset0":{
-    "n":"adana",
+    "n":"adana/aadana/adanna/aaadana",
     "sevme":["Çok sıcak {music}","güneşe sıkıcam","Sıcaktan ölüyom"],
     "nasıl":"Sıcaklarından çekilmez"
   }
