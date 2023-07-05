@@ -233,7 +233,8 @@ var military = [
     "https://www.youtube.com/watch?v=GMHPh3EmJTI,Iran’s military capability",
     "https://youtu.be/Ra5ZNNTpf10?t=18,Defend the Headquarters of the Revolution",
     "https://www.youtube.com/watch?v=HJNI8mO4gZk,Without a Break",
-    "https://youtu.be/Ux9UlfglGAc?t=23,Feindflug - Ignorant"
+    "https://youtu.be/Ux9UlfglGAc?t=23,Feindflug - Ignorant",
+    "https://youtu.be/wgs5XJny4PI?t=61,Hitler Speech"
 ];shuffle(military);
 var kpop = [
     "https://youtu.be/RIWRyggt-QY,April Story",
