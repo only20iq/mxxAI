@@ -245,7 +245,7 @@ function random_choice(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 function ai_cevapla(metin) {
-  metin = metin.toLowerCase().replace("?", "").replace("!", "").replace(".", "");
+  metin = metin.toLowerCase().replace("?", "").replace("!", "").replace(".", "").replace(",", "");
   let cevap = "";
   var test = "";
   var test1 = single_thread(metin);

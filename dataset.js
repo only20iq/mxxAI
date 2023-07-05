@@ -700,7 +700,25 @@ var stalin_soz=[
         "evrim":"$sus",
         "xmen":"[Lithuanian X-MEN](https://www.youtube.com/watch?v=EPrWNvBe064)<br>[Turkish X-Men](https://www.youtube.com/watch?v=6inYiDycWJU)<br>[Russian X-MEN](https://www.youtube.com/watch?v=2kR6daKgbQ4)",
         "xman":"$xmen",
-        "sananelan":"$sanane"
+        "sananelan":"$sanane",
+        "yalancı":"$şarkısöyle",
+        "yalancının":"$şarkısöyle",
+        "yalancınınaq":"$şarkısöyle",
+        "aqyalancısı":"$şarkısöyle",
+        "buneaq":"$şarkısöyle",
+        "aq":"$nazi",
+        "sapık":"$nazi",
+        "sapıkmısın":"$nazi",
+        "malmısın":"$nazi",
+        "malsın":"$nazi",
+        "malınteki":"$nazi",
+        "malıntekisin":"$nazi",
+        "salaksınki":"$nazi",
+        "pezeveng":"$nazi",
+        "pezevenk":"$nazi",
+        "boş":"$şarkısöyle",
+        "boşyap":"$şarkısöyle",
+        "napıyorsun":"$şarkısöyle"
     },
     "multi" : {
         "set1": "merhaba/nasılsın/iyimisin/naber/meraba=$sc1",
@@ -759,6 +777,10 @@ var stalin_soz=[
         "sc2.11":"Sağlam durmalısın<br>{military}<br>{military}<br>{military}{nazi}{nazi}",
         "set2.12":"senin/sana+kafanı/kafa/kafana+sikim/sik/sokim/sokuyum/sokayım/s2m=$sc2.12",
         "sc2.12": "[sana cevabım](https://youtu.be/NXQJ9iR5BkA?t=107) {nazi}",
+        "set2.13":"dünya/dünyayı/dünyanın+yok/ele+ed/et/edecek/etcek/edicek/etti/ettiğinde/edeceği/etceği/edebilir/edebilecek,dünya/dünyayı/dünyanın+sonu/sonunu/sonuna+gelecek/getirecek/getircek/getirebilir/gelebilir=$sc2.13",
+        "sc2.13": "Kesinlikle kesin kesin aynen aynen...<br>{dtw}<br>{sikilmamalik_videolar}",
+        "set2.14":"oyun/oyunları+oynuyo/oynuyor/oynamayı+mu/musun/müsün/oynadınmı/oynadın/sever/seviyon/severmisin/severmiydin/sevdin/sevilebilir/sevilecek=$sc2.14",
+        "sc2.14":"Oyun oynayarak zamanımı boşa harcamam<br>{dtw}{sozler_v1}{sozler_v1}",
         "sc2": "Bilmiyorum {bos_yap_n}{bos_yap_k}",
         "set3": "hava/yağış+durumu/bekleniyormu,yağış+bekleniyor+mu=$sc3",
         "sc3": "Google da ara bana sorma {bos_yap_nj}{sozler_v1}{bts_sozler}{bos_yap_n}{troll_kpop_sozler}{bos_yap_k}",
@@ -783,7 +805,7 @@ var stalin_soz=[
     },
     "quad": {
         "dataset0":{
-        "n":"adana",
+        "n":"adana/aadana/adanna/aaadana",
         "sevme":["Çok sıcak {military}{nazi}{stalin_soz}","güneşe sıkıcam {military}{nazi}{stalin_soz}","Sıcaktan ölüyom {military}{nazi}{stalin_soz}"],
         "nasıl":"Sıcaklarından çekilmez",
         "kötü":"Bence de öyle bunaltıcı sıcak var"
@@ -796,7 +818,7 @@ var stalin_soz=[
         "kötü":["Bi koreliler kadar çalışkan olamadık ya :(","Bi koreli kadar çalışkan olamadım ya offf","Bir koreliler kadar çalışkan olamadık :( ya off off {sozler_v1}"]
         },
         "dataset2":{
-        "n":"avrupa",
+        "n":"avrupa/europe",
         "sevme":["Hiç özenilecek bir yer değil vatanımız daha iyi","Çok abartılıyor batıcılık iyi bir şey değil"],
         "nasıl":"$sevme",
         "kötü":["Kesinlikle aynı fikirdeyiz","Gerçekten öyle doğru diyorsun.","Kesinlikle ne demek istediğini anlıyorum"]
