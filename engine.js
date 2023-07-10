@@ -303,6 +303,65 @@ function rand_single() {
   let randomKey = keys[Math.floor(Math.random() * keys.length)]; // Diziden rastgele bir anahtar seç
   return single_thread(randomKey); // Seçilen anahtarı single_thread fonksiyonuna gönder ve sonucu döndür
 }
+function rand_multi() {
+  let keys = Object.keys(data["multi"]); // data["multi"] nesnesinin tüm anahtarlarını bir diziye at
+  let scKeys = keys.filter(key => key.startsWith("sc")); // Diziden sadece "sc" ile başlayan anahtarları seç ve bir diziye at
+  if (scKeys.length > 0) { // scKeys dizisinin boş olup olmadığını kontrol et
+    let randomKey = scKeys[Math.floor(Math.random() * scKeys.length)]; // Diziden rastgele bir anahtar seç
+    let value = data["multi"][randomKey]; // Seçilen anahtarın değerini al
+    if (Array.isArray(value)) { // Değerin bir dizi olup olmadığını kontrol et
+      value = value[Math.floor(Math.random() * value.length)]; // Diziden rastgele bir eleman seç
+    }
+    return value; // Değeri döndür
+  } else { // scKeys dizisi boşsa
+    return null; // null döndür
+  }
+}
+function rand_quad() {
+  let keys = Object.keys(data["quad"]); // data["quad"] nesnesinin tüm anahtarlarını bir diziye at
+  let datasetKeys = keys.filter(key => key.startsWith("dataset")); // Diziden sadece "dataset" ile başlayan anahtarları seç ve bir diziye at
+  if (datasetKeys.length > 0) { // datasetKeys dizisinin boş olup olmadığını kontrol et
+    let randomKey = datasetKeys[Math.floor(Math.random() * datasetKeys.length)]; // Diziden rastgele bir anahtar seç
+    let subkeys = Object.keys(data["quad"][randomKey]); // Seçilen anahtarın değerinin tüm anahtarlarını bir diziye at
+    let subkeysWithoutN = subkeys.filter(subkey => subkey != "n"); // Diziden sadece "n" olmayan anahtarları seç ve bir diziye at
+    if (subkeysWithoutN.length > 0) { // subkeysWithoutN dizisinin boş olup olmadığını kontrol et
+      let randomSubkey = subkeysWithoutN[Math.floor(Math.random() * subkeysWithoutN.length)]; // Diziden rastgele bir anahtar seç
+      let value = data["quad"][randomKey][randomSubkey]; // Seçilen anahtarın değerini al
+      if (Array.isArray(value)) {
+        value = value[Math.floor(Math.random() * value.length)]; // Diziden rastgele bir eleman seç
+        return value;
+      } else {
+        if (value.startsWith("$")) { // Değerin "$" ile başlayıp başlamadığını kontrol et
+          let key = value.slice(1); // Değerin "$" işaretinden sonraki kısmını al
+          if (key in data["quad"][randomKey]) { // key değerinin data["quad"] nesnesinde olup olmadığını kontrol et
+            value = data["quad"][randomKey][key]; // key değerinin data["quad"] nesnesindeki değerini al
+            if (Array.isArray(value)) { // Değerin bir dizi olup olmadığını kontrol et
+              value = value[Math.floor(Math.random() * value.length)]; // Diziden rastgele bir eleman seç
+              return value;
+            } else {
+              return value;
+            }
+          }
+        } else {
+          return value;
+        }
+      }
+    } else { // subkeysWithoutN dizisi boşsa
+      return null; // null döndür
+    }
+  } else { // datasetKeys dizisi boşsa
+    return null; // null döndür
+  }
+}
+function shuffle_array(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
 function ai_cevapla(metin) {
   metin = metin.toLowerCase().replace("?", "").replace("!", "").replace(".", "").replace(",", "");
   var test = "";
@@ -319,8 +378,26 @@ function ai_cevapla(metin) {
     test+=test3;
   }
   if (test == "") {
-  // return markdown_to_html_link(random_choice(data["multi"]["default"]).trim());
-return markdown_to_html_link(rand_single());
+  var array = [1,2,3];
+  array = shuffle_array(array);
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] == 1) {
+      test += rand_single();
+    }
+    else if (array[i] == 2) {
+      test += rand_multi();
+    }
+    else if (array[i] == 3) {
+      test += rand_quad();
+    }
+    if (i != array.length - 1) {
+      test += " ";
+    }
+  }
+  if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
+    test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
+  }
+  return markdown_to_html_link(test);
   } else {
     if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
       test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
