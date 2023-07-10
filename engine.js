@@ -1,3 +1,16 @@
+function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
+  let currentIndex = array.length, randomIndex; // Mevcut indeks ve rastgele indeks değişkenlerini tanımlayın
+  // Karıştırılacak eleman kalmayana kadar
+  while (currentIndex != 0) {
+    // Bir eleman seçin
+    randomIndex = Math.floor (Math.random () * currentIndex);
+    currentIndex--;
+    // Seçilen elemanı mevcut elemanla değiştirin
+    [array [currentIndex], array [randomIndex]] = [
+      array [randomIndex], array [currentIndex]];
+  }
+  return array; // Diziyi döndürün
+}
 function quad_core([dataset, text, name],database_0,sub_item_name,sub_item_keyx) {
   let cevap = "";
   let metin = text.split(" "); // Metni boşluklara göre bölün
@@ -110,7 +123,7 @@ function quad_thread(text) {
         let value = data["quad"][key]["n"]; // "n" özelliğinin değerini al
         let parts = value.split("/"); // Değeri "/" ile ayır ve bir diziye at
         for (let part of parts) { // Dizinin tüm elemanlarını döngü ile gez
-          if (text.includes(part)) { // Metnin part değerini içerip içermediğini kontrol et
+          if (text.includes(part.replace("+"," "))) { // Metnin part değerini içerip içermediğini kontrol et
             for (let sub_key of Object.keys(data["quad"][key])) { // data["quad"] nesnesinin tüm anahtarlarını döngü ile gez
               if (wait_dataset_cache.hasOwnProperty(sub_key)) { // Başka bir nesnenin sub_key ile eşleşen bir anahtarı olup olmadığını kontrol et
                 wait_dataset_cache[sub_key].push([part,key]); // Eşleşen anahtarın değerine part değerini push et
@@ -124,31 +137,72 @@ function quad_thread(text) {
   var database_0 = [];
   var cevapx;
   function ekler(e) {
-    return e+"/"+e+"ımı/"+e+"imi/"+e+"nı/"+e+"ni/"+e+"ı/"+e+"i/"+e+"mi/"+e+"ğı/"+e+"yi/"+e+"yı/"+e+"mı/"+e+"am/"+e+"dan/"+e+"den/"+e+"ten/"+e+"tan";
+    if (e.includes("+")) { // e değerinin içinde + olup olmadığını kontrol et
+      let parts = e.split("+"); // e değerini + ile ayır ve bir diziye at
+      let last = parts[parts.length - 1]; // Dizinin son elemanını al
+      let result = e+"/"+last+"ımı/"+last+"imi/"+last+"nı/"+last+"ni/"+last+"ı/"+last+"i/"+last+"mi/"+last+"ğı/"+last+"yi/"+last+"yı/"+last+"mı/"+last+"am/"+last+"dan/"+last+"den/"+last+"ten/"+last+"tan"; // Sonucu oluştur
+      for (let i = 0; i < parts.length - 1; i++) { // Dizinin ilk elemanından sondan bir önceki elemanına kadar döngü ile gez
+        let part = parts[i]; // Dizinin i. elemanını al
+        result += "/"+part+last; // Sonuca part+last değerini ekle
+      }
+      return result; // Sonucu döndür
+    } else { // e değerinin içinde + yoksa
+      return e+"/"+e+"ımı/"+e+"imi/"+e+"nı/"+e+"ni/"+e+"ı/"+e+"i/"+e+"mi/"+e+"ğı/"+e+"yi/"+e+"yı/"+e+"mı/"+e+"am/"+e+"dan/"+e+"den/"+e+"ten/"+e+"tan";
+    }
+  }  
+  function _a(item) {
+    var parts = item.split("/"); // item[0] değerini "/" ile ayır ve bir diziye at
+    let result = "";
+    let result1 = [];
+    for (let i = 0; i < parts.length; i++) { // Dizinin tüm elemanlarını döngü ile gez
+      let part = parts[i]; // Dizinin i. elemanını al
+      if (part.includes("+")) { // Elemanın "+" içerip içermediğini kontrol et
+        result1.push(part);
+      } else { // Eleman "+" içermiyorsa
+        result += part + "/"; // Sonuca elemanı ve "/" ekleyin
+      }
+    }
+    result = result.slice(0, -1);
+    if(result!=""){
+      result1.push(result);
+    }
+    return result1;
   }
   for (let item of wait_dataset_cache["sevme"]) {
-    var _cache_dataset_data = ekler(item[0]);
+    var result = _a(item[0]);
+    for (let element of result) {
+    var _cache_dataset_data = ekler(element);
     var dataset = _cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri/düşüncelerin+"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon/musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri/düşüncelerin,"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon/musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin/seviyorum/sevyom,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri+mu/mü/ki/ben/sen/o/biz/siz/onlar/onları/düşüncelerin=this";
-    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"sevme",item[0]);
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"sevme",element);
     cevap += cevapx;
+    }
   }
   for (let item of wait_dataset_cache["nasıl"]) {
-    var _cache_dataset_data = ekler(item[0]);
+    var result = _a(item[0]);
+    for (let element of result) {
+    var _cache_dataset_data = ekler(element);
     var dataset = _cache_dataset_data+"+nasıl/iyi/sence/hakkında+mi/iyi/nasıl/sizce/yer/bahset/anlat/düşünüyorsun/düşünüyon/düşündün/anlatsana/açıkla/açıklasana/konuş/konuşsana,"+_cache_dataset_data+"+nasıl/sence/bahset/bahsetsene/anlat,"+_cache_dataset_data+"+yi/din/den/dan/tan/ten/a/e/o/yu/yü+nasıl/iyi/sence/hakkında/mi/iyi/nasıl/sizce/yer/bahset/anlat=this";
-    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"nasıl",item[0]);
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"nasıl",element);
     cevap += cevapx;
+    }
   }
   for (let item of wait_dataset_cache["love"]) {
-    var _cache_dataset_data = ekler(item[0]);
+    var result = _a(item[0]);
+    for (let element of result) {
+    var _cache_dataset_data = ekler(element);
     var dataset = _cache_dataset_data+"+e/aşık/aşk/aşıq/seksi/seksilik/seksiliği/ateşli/azıyor/azdın/ateşliliği/ateşi/sexy/sexyliği/hottest/çekici/çekiciliği/çekci/tatlı/gideri/a+sanırım/özelliği/özellikleri/var/varmı/mi/mı/sence/nasıl/seviyesi/buldun/buluyorsun/beğeniyorsun/anladın/anlatsana/mısın/misin,"+_cache_dataset_data+"+nasıl/sence/bahset/bahsetsene/anlat,"+_cache_dataset_data+"+gideri/yi/din/den/dan/tan/ten/a/e/o/yu/yü+var/özelliği/özellikleri+mı/mi/varmı/var/sence,"+_cache_dataset_data+"+hoşlanıyonmu/hoşlanıyorsun/hoşlanıyorsan/hoşlanıyon/hoşlanıyormusun=this";
-    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"love",item[0]);
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"love",element);
     cevap += cevapx;
+    }
   }
   for (let item of wait_dataset_cache["kötü"]) {
-    var _cache_dataset_data = ekler(item[0]);
+    var result = _a(item[0]);
+    for (let element of result) {
+    var _cache_dataset_data = ekler(element);
     var dataset = _cache_dataset_data+"+kötü/iğrenç/berbat/rezil/kalitesiz/beceriksiz/vasıfsız/gereksiz/rezil/berbat/yeteneksiz/nefret/sevmiyom/beğenmiyom/beğenmiyorum,"+_cache_dataset_data+"+kötü/iğrenç/berbat/rezil/kalitesiz/beceriksiz/vasıfsız/gereksiz/rezil/berbat/yeteneksiz/nefret/sevmiyom/beğenmiyom/beğenmiyorum+ediyorum/kesinlikle/ettim/edicem/etyom/edyom/ben/sen/biz/siz/onlar=this";
-    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"kötü",item[0]);
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"kötü",element);
     cevap += cevapx;
+    }
   }
   if (cevap == "") {
     return null;
@@ -244,9 +298,13 @@ function random_choice(array) {
   // Bir dizi alır ve rastgele bir eleman döndürür
   return array[Math.floor(Math.random() * array.length)];
 }
+function rand_single() {
+  let keys = Object.keys(data["single"]); // data["single"] nesnesinin tüm anahtarlarını bir diziye at
+  let randomKey = keys[Math.floor(Math.random() * keys.length)]; // Diziden rastgele bir anahtar seç
+  return single_thread(randomKey); // Seçilen anahtarı single_thread fonksiyonuna gönder ve sonucu döndür
+}
 function ai_cevapla(metin) {
   metin = metin.toLowerCase().replace("?", "").replace("!", "").replace(".", "").replace(",", "");
-  let cevap = "";
   var test = "";
   var test1 = single_thread(metin);
   var test2 = multi_thread(metin);
@@ -261,149 +319,54 @@ function ai_cevapla(metin) {
     test+=test3;
   }
   if (test == "") {
-  return markdown_to_html_link(random_choice(data["multi"]["default"]).trim()); // random_choice fonksiyonunu kullanın
+  // return markdown_to_html_link(random_choice(data["multi"]["default"]).trim());
+return markdown_to_html_link(rand_single());
   } else {
+    if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
+      test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
+    }
     return markdown_to_html_link(test);
   }
 }
-var cache_military=0;
-var cache_kpop=0;
-var cache_nazi=0;
-var cache_dtw=0;
-var cache_bts_sozler=0;
-var cache_bos_yap_k=0;
-var cache_bos_yap_n=0;
-var cache_bos_yap_nj=0;
-var cache_seksi_kpop=0;
-var cache_sikilmamalik_videolar=0;
-var cache_troll_kpop_sozler=0;
-var cache_stalin_soz=0;
-var cache_tatil_music=0;
-var cache_sozler_v1=0;
+var cache_ds = {};
+for (let key of Object.keys(data["set"])) { // data["set"] nesnesinin tüm anahtarlarını döngü ile gez
+  cache_ds[key] = 0; // cache_ds nesnesine anahtarları 0 değeri ile ekle
+  shuffle(data["set"][key]);
+}
+
+function link(data) {
+  var link = data.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
+  var description = data.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
+  return "<a href='" + link + "' target='_blank' style='color:#f60000;'>" + description + "</a><br>"; // HTML bağlantısını oluşturun
+}
 function xxx(string) {
-  if (string == "military"){
-    if(cache_military>=military.length){
-      cache_military=0;
+  for (let key of Object.keys(data["set"])) { // data["set"] nesnesinin tüm anahtarlarını döngü ile gez
+    if (key.startsWith("link")) { // Anahtarın "link" ile başlayıp başlamadığını kontrol et
+      if(key.slice(5) == string) {
+        let array = data["set"][key]; // Anahtarın değerini bir diziye at
+        if (array.length > 0) { // Dizinin boş olup olmadığını kontrol et
+          if(cache_ds[key]>=array.length){
+            cache_ds[key]=0;
+          }
+          var random = link(array[cache_ds[key]]); // Diziden rastgele bir eleman seçin
+          cache_ds[key]++;
+          return random;
+        }
+      }
     }
-    var random = military[cache_military]; // Diziden rastgele bir eleman seçin
-    cache_military++;
-    var link = random.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
-    var description = random.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
-    return "<a href='" + link + "' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturun
-  }
-  if (string == "kpop"){
-    if(cache_kpop>=kpop.length){
-      cache_kpop=0;
+    if (key.startsWith("p")) { // Anahtarın "link" ile başlayıp başlamadığını kontrol et
+      if(key.slice(2) == string) {
+        let array = data["set"][key]; // Anahtarın değerini bir diziye at
+        if (array.length > 0) { // Dizinin boş olup olmadığını kontrol et
+          if(cache_ds[key]>=array.length){
+            cache_ds[key]=0;
+          }
+          var random = array[cache_ds[key]] + "<br>"; // Diziden rastgele bir eleman seçin
+          cache_ds[key]++;
+          return random;
+        }
+      }
     }
-    var random = kpop[cache_kpop]; // Diziden rastgele bir eleman seçin
-    cache_kpop++;
-    var link = random.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
-    var description = random.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
-    return "<a href='" + link + "' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturun
-  }
-  if (string == "sikilmamalik_videolar"){
-    if(cache_sikilmamalik_videolar>=sikilmamalik_videolar.length){
-      cache_sikilmamalik_videolar=0;
-    }
-    var random = sikilmamalik_videolar[cache_sikilmamalik_videolar]; // Diziden rastgele bir eleman seçin
-    cache_sikilmamalik_videolar++;
-    var link = random.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
-    var description = random.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
-    return "<a href='" + link + "' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturun
-  }
-  if (string == "nazi"){
-    if(cache_nazi>=nazi.length){
-      cache_nazi=0;
-    }
-    var random = nazi[cache_nazi]; // Diziden rastgele bir eleman seçin
-    cache_nazi++;
-    return "<br>" + random; // HTML bağlantısını oluşturun
-  }
-  if (string == "dtw"){
-    if(cache_dtw>=dtw.length){
-      cache_dtw=0;
-    }
-    var random = dtw[cache_dtw]; // Diziden rastgele bir eleman seçin
-    cache_dtw++;
-    var link = random.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
-    var description = random.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
-    return "<a href='" + link + "' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturun
-  }
-  if (string == "seksi_kpop"){
-    if(cache_seksi_kpop>=seksi_kpop.length){
-      cache_seksi_kpop=0;
-    }
-    var random = seksi_kpop[cache_seksi_kpop]; // Diziden rastgele bir eleman seçin
-    cache_seksi_kpop++;
-    var link = random.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
-    var description = random.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
-    return "<a href='" + link + "' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturun
-  }
-  if (string == "tatil_music"){
-    if(cache_tatil_music>=tatil_music.length){
-      cache_tatil_music=0;
-    }
-    var random = tatil_music[cache_tatil_music]; // Diziden rastgele bir eleman seçin
-    cache_tatil_music++;
-    var link = random.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
-    var description = random.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
-    return "<a href='" + link + "' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturun
-  }
-  if (string == "bts_sozler"){
-    if(cache_bts_sozler>=bts_sozler.length){
-      cache_bts_sozler=0;
-    }
-    var random = bts_sozler[cache_bts_sozler]; // Diziden rastgele bir eleman seçin
-    cache_bts_sozler++;
-    return "<br>" + random; // HTML bağlantısını oluşturun
-  }
-  if (string == "bos_yap_k"){
-    if(cache_bos_yap_k>=bos_yap_k.length){
-      cache_bos_yap_k=0;
-    }
-    var random = bos_yap_k[cache_bos_yap_k]; // Diziden rastgele bir eleman seçin
-    cache_bos_yap_k++;
-    return "<br>" + random; // HTML bağlantısını oluşturun
-  }
-  if (string == "bos_yap_n"){
-    if(cache_bos_yap_n>=bos_yap_n.length){
-      cache_bos_yap_n=0;
-    }
-    var random = bos_yap_n[cache_bos_yap_n]; // Diziden rastgele bir eleman seçin
-    cache_bos_yap_n++;
-    return "<br>" + random; // HTML bağlantısını oluşturun
-  }
-  if (string == "bos_yap_nj"){
-    if(cache_bos_yap_nj>=bos_yap_nj.length){
-      cache_bos_yap_nj=0;
-    }
-    var random = bos_yap_nj[cache_bos_yap_nj]; // Diziden rastgele bir eleman seçin
-    cache_bos_yap_nj++;
-    return "<br>" + random; // HTML bağlantısını oluşturun
-  }
-  if (string == "troll_kpop_sozler"){
-    if(cache_troll_kpop_sozler>=troll_kpop_sozler.length){
-      cache_troll_kpop_sozler=0;
-    }
-    var random = troll_kpop_sozler[cache_troll_kpop_sozler]; // Diziden rastgele bir eleman seçin
-    cache_troll_kpop_sozler++;
-    return "<br>" + random; // HTML bağlantısını oluşturun
-  }
-  if (string == "stalin_soz"){
-    if(cache_stalin_soz>=stalin_soz.length){
-      cache_stalin_soz=0;
-    }
-    var random = stalin_soz[cache_stalin_soz]; // Diziden rastgele bir eleman seçin
-    cache_stalin_soz++;
-    return "<br>" + random; // HTML bağlantısını oluşturun
-  }
-  if (string == "sozler_v1"){
-    if(cache_sozler_v1>=sozler_v1.length){
-      cache_sozler_v1=0;
-    }
-    var random = sozler_v1[cache_sozler_v1]; // Diziden rastgele bir eleman seçin
-    cache_sozler_v1++;
-    return "<br>" + random; // HTML bağlantısını oluşturun
   }
 }
 function replace_with_xxx(string) {
