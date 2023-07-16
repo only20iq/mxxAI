@@ -1,4 +1,4 @@
-var data = {
+var data_raw = {
     "single":{
         "merhaba":["Merhaba Bura İyi Mi? {sikilmamalik_videolar}","Merhaba Burayı Sevdin Mi? {sikilmamalik_videolar}"],
         "meraba":"$merhaba",
@@ -493,7 +493,7 @@ var data = {
             "https://www.youtube.com/watch?v=fZ0TW7jGDx0,Fromis9 Stay This Way 8K",
             "https://www.youtube.com/watch?v=gMHP8ZXvuMM,Gfriend Flower",
             "https://www.youtube.com/watch?v=pQQ7QwBOmkA,Fromis9 Love Bomb",
-            "https://www.youtube.com/watch?v=AbP_Rkg9IJM,Fromis0 Talk & Talk 4K",
+            "https://www.youtube.com/watch?v=AbP_Rkg9IJM,Fromis9 Talk & Talk 4K",
             "https://www.youtube.com/watch?v=XQSse3b2ge4,Gfriend Apple",
             "https://www.youtube.com/watch?v=dMX8j2gt8lA,OH MY GIRL_A-ing",
             "https://www.youtube.com/watch?v=BLwoB6nunys,Twice Dance The Night Away 6K",
@@ -628,6 +628,8 @@ var data = {
             "https://www.youtube.com/watch?v=ArmDp-zijuc,NewJeans Super Shy",
             "https://www.youtube.com/watch?v=nJ31sMmytHU,Davichi & T-ara We were in love",
             "https://www.youtube.com/watch?v=FpRORKz2m9c,Like It Hot",
+            "https://www.youtube.com/watch?v=HQzu7NYlZNQ,Girls' Generation PARTY",
+            "https://www.youtube.com/watch?v=ttiOtnPwfJk,NMIXX - Roller Coaster it's Live",
             "https://youtu.be/I3dezFzsNss?t=7,Exo Growl",
             "https://www.youtube.com/watch?v=p6OoY6xneI0,SHINee Don't Call Me"
         ],
@@ -671,7 +673,8 @@ var data = {
             "https://www.youtube.com/watch?v=inC77F0vWS0,Never Ending Summer I",
             "https://www.youtube.com/watch?v=nzuJ90JJJNc,FUTARI NO NATSU MONOGATARI NEVER ENDING SUMMER",
             "https://www.youtube.com/watch?v=ifmbp7W4Xnw,Misty Night Cruising",
-            "https://www.youtube.com/watch?v=75NVojFiRXs,Kimi ha 1000％"
+            "https://www.youtube.com/watch?v=75NVojFiRXs,Kimi ha 1000％",
+            "https://www.youtube.com/watch?v=QSLgj_p_dbs,SCRAMBLE CROSS Remix"
         ],
         "link_sikilmamalik_videolar":[
             "https://www.youtube.com/watch?v=66Td0AbQsEg,Hanzo Burak Hoca",
@@ -865,4 +868,11 @@ var data = {
 
     }
     };
-    var data = JSON.parse(JSON.stringify(data));
+    data_raw = JSON.stringify(data_raw);
+    var data = JSON.parse(data_raw);
+    window.onload = function() {
+    var size = new TextEncoder().encode(data_raw).length;
+    var kiloBytes = size / 1024; // Bayt cinsinden boyutu 1024'e bölerek KB cinsinden boyutu hesapla
+    var x = document.getElementsByTagName("x")[0]; // x elementini etiket adı seçiciyle seç, dönen dizi içinde ilk elemanı al
+    x.innerHTML = kiloBytes + " KB"; // x elementinin innerHTML özelliğine boyutu atayarak 
+    }
