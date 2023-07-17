@@ -363,7 +363,7 @@ var data_raw = {
         },
         "dataset6":{
         "n":"hayat",
-        "sevme":"Hayattan nefret eden tek sen değilsin{military}{military}{military}{nazi}{nazi}",
+        "sevme":"Hayattan nefret eden tek sen değilsin {military}{military}{military}{nazi}{nazi}",
         "nasıl":"$sevme",
         "love":"kpop dinleme keyf {kpop}{kpop}{kpop}{bos_yap_nj}{bos_yap_nj}{bos_yap_nj}{sozler_v1}",
         "kötü":"$sevme"
@@ -871,8 +871,8 @@ var data_raw = {
     data_raw = JSON.stringify(data_raw);
     var data = JSON.parse(data_raw);
     window.onload = function() {
-    var size = new TextEncoder().encode(data_raw).length;
-    var kiloBytes = size / 1024; // Bayt cinsinden boyutu 1024'e bölerek KB cinsinden boyutu hesapla
-    var x = document.getElementsByTagName("x")[0]; // x elementini etiket adı seçiciyle seç, dönen dizi içinde ilk elemanı al
-    x.innerHTML = kiloBytes + " KB"; // x elementinin innerHTML özelliğine boyutu atayarak 
+        var size = new TextEncoder().encode(data_raw).length;
+        var kiloBytes = size / 1024; // Bayt cinsinden boyutu 1024'e bölerek KB cinsinden boyutu hesapla
+        var x = document.getElementsByTagName("x")[0]; // x elementini etiket adı seçiciyle seç, dönen dizi içinde ilk elemanı al
+        x.innerHTML = kiloBytes + " KB"; // x elementinin innerHTML özelliğine boyutu atayarak
     }

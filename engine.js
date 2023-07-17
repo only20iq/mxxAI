@@ -380,15 +380,16 @@ function ai_cevapla(metin) {
   if (test == "") {
   var array = [1,2,3];
   array = shuffle_array(array);
+  array = [array[0]];
   for (let i = 0; i < array.length; i++) {
     if (array[i] == 1) {
-      test += rand_single();
+      test += rand_single() + " ";
     }
     else if (array[i] == 2) {
-      test += rand_multi();
+      test += rand_multi() + " ";
     }
     else if (array[i] == 3) {
-      test += rand_quad();
+      test += rand_quad() + " ";
     }
     if (i != array.length - 1) {
       test += " ";
