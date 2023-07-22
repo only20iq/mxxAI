@@ -432,7 +432,7 @@ function xxx(string) {
         }
       }
     }
-    if (key.startsWith("p")) { // Anahtarın "link" ile başlayıp başlamadığını kontrol et
+    if (key.startsWith("p")) { // Anahtarın "p" ile başlayıp başlamadığını kontrol et
       if(key.slice(2) == string) {
         let array = data["set"][key]; // Anahtarın değerini bir diziye at
         if (array.length > 0) { // Dizinin boş olup olmadığını kontrol et
