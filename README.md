@@ -13,7 +13,7 @@ Simple Dataset
 "quad": {
   "dataset0":{
     "n":"adana/aadana/adanna/aaadana",
-    "sevme":["Çok sıcak {music}","güneşe sıkıcam","Sıcaktan ölüyom"],
+    "sevme":["Çok sıcak {music:all}","güneşe sıkıcam {music:2}","Sıcaktan ölüyom {music}"],
     "nasıl":"Sıcaklarından çekilmez"
   }
 }
