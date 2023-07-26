@@ -14,7 +14,8 @@ Simple Dataset
   "dataset0":{
     "n":"adana/aadana/adanna/aaadana",
     "sevme":["Çok sıcak {music:all}","güneşe sıkıcam {music:2}","Sıcaktan ölüyom {music}"],
-    "nasıl":"Sıcaklarından çekilmez"
+    "nasıl":"Sıcaklarından çekilmez",
+    "love":"$sevme"
   }
 }
 ```
