@@ -520,13 +520,18 @@ function xxx(string, length = 0) {
   }
 }
 function replace_with_xxx(string) {
-  let regex = /\{([^}:]+)(?::(\d+|all))?\}/g; // Stringin içinde {text}, {text:10} veya {text:all} olan kısmı tanımlayan bir regex oluşturun
+  let regex = /\{([^}:]+)(?::([^}]+))?\}/g; // Stringin içinde {text}, {text:10}, {text:all} veya {text:10ü} gibi olan kısmı tanımlayan bir regex oluşturun
   let callback = function(match, text, length) { // Replace metodu için bir callback fonksiyonu tanımlayın
       if (length) { // Eğer length parametresi varsa
           if (length === 'all') { // Eğer length parametresi 'all' ise
               return xxx(text, 'all'); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
-          } else { // Eğer length parametresi sayı ise
-              return xxx(text, length); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
+          } else { // Eğer length parametresi sayı veya başka bir şey ise
+              length = Number(length); // Length parametresini Number() fonksiyonu ile dönüştür
+              if (isNaN(length)) { // Eğer length parametresi sayı değilse
+                return xxx(text); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
+              } else { // Eğer length parametresi sayı ise
+                return xxx(text, length); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
+              }
           }
       } else { // Eğer length parametresi yoksa
           return xxx(text); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
