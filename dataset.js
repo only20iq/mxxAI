@@ -694,7 +694,9 @@ var data_raw = {
             "https://www.youtube.com/watch?v=vTvk0dzujFU,Selena ve Hades ilk defa birlikte savaşıyor",
             "https://www.youtube.com/watch?v=6inYiDycWJU,Turkish X-Men",
             "https://www.youtube.com/watch?v=EPrWNvBe064,Lithuanian X-MEN",
-            "https://www.youtube.com/watch?v=2kR6daKgbQ4,Russian X-MEN"
+            "https://www.youtube.com/watch?v=2kR6daKgbQ4,Russian X-MEN",
+            "https://www.youtube.com/watch?v=jPPT7TcFmAk,Drunk Alien Song",
+            "https://www.youtube.com/watch?v=W7ls1Cb6jUg,Isyan Tetick - Patlamaya Devam"
         ],
         "p_sozler_v1":[
             "Ederinden fazla değer, soytarıyı kral eder",
