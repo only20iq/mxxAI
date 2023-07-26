@@ -41,6 +41,31 @@
               font-weight:1000px;
             }
           </style>
+<style>
+    /* Önerilenler kutusunun stilini tanımla */
+    .suggestions {
+      display: flex; /* Önerileri yatay olarak hizala */
+      margin: 10px; /* Kutuya biraz boşluk ver */
+    }
+  
+    /* Her bir önerinin stilini tanımla */
+    .suggestion {
+      background-color: #f0f0f0; /* Önerinin arka plan rengini belirle */
+      border-radius: 10px; /* Önerinin köşelerini yuvarla */
+      padding: 10px; /* Önerinin içine biraz boşluk ver */
+      margin: 5px; /* Öneriler arasına biraz boşluk ver */
+      cursor: pointer; /* Önerinin üzerine gelince imleci el şekline getir */
+      user-select: none; /* Önerinin mouse ile seçilemez olmasını sağla */
+    }
+  
+    /* Önerinin üzerine gelince stilini değiştir */
+    .suggestion:hover {
+      background-color: #e0e0e0; /* Önerinin arka plan rengini koyulaştır */
+      transform: scale(1.1); /* Öneriyi biraz büyüt */
+      transition: all 0.3s; /* Değişikliği yumuşak bir şekilde yap */
+    }
+  </style>
+  
     </head>
     <body>
         <div style="margin:0 auto;text-align:center;height:auto;color:grey;max-width:600px;">
@@ -51,9 +76,51 @@
                 </div>
                 <input type="text" id="target-input" value="a" style="display:none" required>
             </form>
+            <!-- Önerilenler kutusunu oluştur -->
+            <div class="suggestions">
+            <!-- Her bir öneriyi bir div elementi olarak ekle -->
+            <div class="suggestion">/music -s 15</div>
+            <div class="suggestion">Boş yap</div>
+            <div class="suggestion">Bana bir şeyler anlat.</div>
+            </div>
             <div id="messages" style="word-wrap: break-word;">Size: <x>null</x><br>JS Based ChatBot</div>
         </div>
         <script>
+  // Önerileri seç
+  let suggestions = document.querySelectorAll('.suggestion');
+
+  // Her bir öneri için bir event listener ekle
+  for (let suggestion of suggestions) {
+    suggestion.addEventListener('click', function() {
+      // Tıklanan önerinin textini al
+      let text = suggestion.textContent;
+
+      // id="message-input" olan elementi seç
+      let input = document.getElementById('message-input');
+
+      // input elementinin value özelliğine texti ata
+      input.value = text;
+
+      // id="message-submit" olan elementi seç
+      let submit = document.getElementById('message-submit');
+
+      // submit elementine onkeypress eventini ekle
+      submit.onkeypress = function(event) {
+        // Eğer basılan tuş enter ise
+        if (event.keyCode === 13) {
+          // Eventin varsayılan davranışını engelle
+          event.preventDefault();
+
+          // submit elementine tıkla
+          submit.click();
+        }
+      };
+
+      // submit elementine otomatik olarak tıkla
+      submit.click();
+    });
+  }
+
             var messages = document.querySelector('#messages');
             function ai(m){
                 // m = m.trim();

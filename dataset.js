@@ -51,7 +51,7 @@ var data_raw = {
         "şarkıaç":"$kpop",
         "şarkıaçsana":"$şarkıaç",
         "playsong":"$şarkıaç",
-        "sıkıldım":"{sikilmamalik_videolar}{dtw:2}{sikilmamalik_videolar}{sikilmamalik_videolar}",
+        "sıkıldım":"{sikilmamalik_videolar}{dtw:2}{sikilmamalik_videolar:2}",
         "komik":"$sıkıldım",
         "entelferidun":"[Entel Feridun](https://youtu.be/k9Y9-xueg5M?t=4)",
         "entelferdun":"$entelferidun",
