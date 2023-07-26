@@ -363,8 +363,44 @@ function shuffle_array(array) {
   return array;
 }
 function ai_cevapla(metin) {
-  metin = metin.toLowerCase().replace("?", "").replace("!", "").replace(".", "").replace(",", "");
   var test = "";
+  // /enc text123hello -k 123456789 yazınca key değişkenine sorunsuz alıyor ama text değişkeni boş oluyor hep
+  let args = metin.split(" "); // metin.split(" ") yerine metin.split() kullanıyoruz
+  let text = null; // text değişkenini varsayılan olarak null tanımlıyoruz
+  let key = null; // key değişkenini varsayılan olarak null tanımlıyoruz
+  if (metin.startsWith('/')) { // metin değişkeni / ile başlıyorsa bu bloğu çalıştırıyoruz
+    if (args[0].toLowerCase().slice(1) == 'kpop' || args[0].toLowerCase().slice(1) == 'müzik' || args[0].toLowerCase().slice(1) == 'şarkı') {
+      if (args.includes('-s')) {
+        let key_index = args.indexOf('-s') + 1;
+        key = args[key_index]; // key değişkenine -k argümanının değerini atıyoruz
+        if (key_index == 2) { // -k argümanı ikinci sırada ise
+          text = args.slice(3).join(" "); // text değişkenine -k argümanından sonraki tüm argümanları birleştirerek atıyoruz
+        } else { // -k argümanı ikinci sırada değilse
+          text = args.slice(1, key_index - 1).join(" "); // text değişkenine ilk ve -k argümanları arasındaki tüm argümanları birleştirerek atıyoruz
+        }
+      } else {
+        text = args.slice(1).join(" "); // text değişkenine ilk argümandan sonraki tüm argümanları birleştirerek atıyoruz
+      }
+      if(key==null) {
+        test += "{kpop:5}";
+      }else{
+        if (isNaN(key) && key!="all") {
+          // eğer rakam veya sayı değilse, Number() fonksiyonu ile dönüştür
+          key = Number(key);
+          test += "{kpop:"+key+"}";
+        }else if(key=="all") {
+          test += "{kpop:all}";
+        }else{
+          test += "{kpop:"+key+"}";
+        }
+      }
+      // alert(text);
+      // alert(key);
+      // ...
+    }
+  }
+
+  metin = metin.toLowerCase().replace("?", "").replace("!", "").replace(".", "").replace(",", "");
   var test1 = single_thread(metin);
   var test2 = multi_thread(metin);
   var test3 = quad_thread(metin);
@@ -417,44 +453,89 @@ function link(data) {
   var description = data.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
   return "<a href='" + link + "' target='_blank' style='color:#f60000;'>" + description + "</a><br>"; // HTML bağlantısını oluşturun
 }
-function xxx(string) {
+function xxx(string, length = 0) {
   for (let key of Object.keys(data["set"])) { // data["set"] nesnesinin tüm anahtarlarını döngü ile gez
     if (key.startsWith("link")) { // Anahtarın "link" ile başlayıp başlamadığını kontrol et
-      if(key.slice(5) == string) {
+      if (key.slice(5) == string) {
         let array = data["set"][key]; // Anahtarın değerini bir diziye at
         if (array.length > 0) { // Dizinin boş olup olmadığını kontrol et
-          if(cache_ds[key]>=array.length){
-            cache_ds[key]=0;
+          if (cache_ds[key] >= array.length) {
+            cache_ds[key] = 0;
           }
-          var random = link(array[cache_ds[key]]); // Diziden rastgele bir eleman seçin
-          cache_ds[key]++;
-          return random;
+          if (length === 'all') { // Eğer length parametresi 'all' ise
+            var result = ''; // Sonucu tutacak bir değişken tanımla
+            for (let item of array) { // Dizinin tüm elemanlarını döngü ile gez
+              result += link(item); // Her elemanı link fonksiyonu ile işle ve sonuca ekle
+            }
+            return result; // Sonucu döndür
+          } else if (length > 0) { // Eğer length parametresi pozitif bir sayı ise
+            var result = ''; // Sonucu tutacak bir değişken tanımla
+            for (let i = 0; i < length; i++) { // Length kadar döngü yap
+              result += link(array[cache_ds[key]]); // Diziden sırayla bir eleman seçin ve link fonksiyonu ile işle ve sonuca ekle
+              cache_ds[key]++; // Cache değerini artırın
+              if (cache_ds[key] >= array.length) { // Eğer cache değeri dizinin uzunluğunu aşıyorsa
+                cache_ds[key] = 0; // Cache değerini sıfırlayın
+              }
+            }
+            return result; // Sonucu döndür
+          } else { // Eğer length parametresi yoksa veya sıfır ise
+            var random = link(array[cache_ds[key]]); // Diziden rastgele bir eleman seçin
+            cache_ds[key]++;
+            return random;
+          }
         }
       }
     }
     if (key.startsWith("p")) { // Anahtarın "p" ile başlayıp başlamadığını kontrol et
-      if(key.slice(2) == string) {
+      if (key.slice(2) == string) {
         let array = data["set"][key]; // Anahtarın değerini bir diziye at
         if (array.length > 0) { // Dizinin boş olup olmadığını kontrol et
-          if(cache_ds[key]>=array.length){
-            cache_ds[key]=0;
+          if (cache_ds[key] >= array.length) {
+            cache_ds[key] = 0;
           }
-          var random = array[cache_ds[key]] + "<br>"; // Diziden rastgele bir eleman seçin
-          cache_ds[key]++;
-          return random;
+          if (length === 'all') { // Eğer length parametresi 'all' ise
+            var result = ''; // Sonucu tutacak bir değişken tanımla
+            for (let item of array) { // Dizinin tüm elemanlarını döngü ile gez
+              result += item + "<br>"; // Her elemanı sonuca ekle ve sonuna <br> koy
+            }
+            return result; // Sonucu döndür
+          } else if (length > 0) { // Eğer length parametresi pozitif bir sayı ise
+            var result = ''; // Sonucu tutacak bir değişken tanımla
+            for (let i = 0; i < length; i++) { // Length kadar döngü yap
+              result += array[cache_ds[key]] + "<br>"; // Diziden sırayla bir eleman seçin ve sonuca ekle ve sonuna <br> koy
+              cache_ds[key]++; // Cache değerini artırın
+              if (cache_ds[key] >= array.length) { // Eğer cache değeri dizinin uzunluğunu aşıyorsa
+                cache_ds[key] = 0; // Cache değerini sıfırlayın
+              }
+            }
+            return result; // Sonucu döndür
+          } else { // Eğer length parametresi yoksa veya sıfır ise
+            var random = array[cache_ds[key]] + "<br>"; // Diziden rastgele bir eleman seçin ve sonuna <br> koy
+            cache_ds[key]++;
+            return random;
+          }
         }
       }
     }
   }
 }
 function replace_with_xxx(string) {
-    let regex = /\{([^}]+)\}/g; // Stringin içinde {} olan kısmı tanımlayan bir regex oluşturun
-    let callback = function(match, text) { // Replace metodu için bir callback fonksiyonu tanımlayın
-        return xxx(text); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
-    }
-    let result = string.replace(regex, callback); // Stringin içinde regex ile eşleşen kısmı callback fonksiyonu ile değiştirir
-    return result; // Sonucu döndürür
+  let regex = /\{([^}:]+)(?::(\d+|all))?\}/g; // Stringin içinde {text}, {text:10} veya {text:all} olan kısmı tanımlayan bir regex oluşturun
+  let callback = function(match, text, length) { // Replace metodu için bir callback fonksiyonu tanımlayın
+      if (length) { // Eğer length parametresi varsa
+          if (length === 'all') { // Eğer length parametresi 'all' ise
+              return xxx(text, 'all'); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
+          } else { // Eğer length parametresi sayı ise
+              return xxx(text, length); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
+          }
+      } else { // Eğer length parametresi yoksa
+          return xxx(text); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
+      }
+  }
+  let result = string.replace(regex, callback); // Stringin içinde regex ile eşleşen kısmı callback fonksiyonu ile değiştirir
+  return result; // Sonucu döndürür
 }
+
 function markdown_to_html_link(markdown) {
     let regex = /\[([^\]]+)\]\(([^)]+)\)/g; // Markdown bağlantısını tanımlayan bir düzenli ifade, "g" bayrağı ile global arama yapar
     let html = markdown; // HTML dizesini markdown dizisi ile başlatır

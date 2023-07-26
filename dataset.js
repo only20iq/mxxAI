@@ -1,6 +1,6 @@
 var data_raw = {
     "single":{
-        "merhaba":["Merhaba Bura İyi Mi? {sikilmamalik_videolar}","Merhaba Burayı Sevdin Mi? {sikilmamalik_videolar}"],
+        "merhaba":["Merhaba Bura İyi Mi? {sikilmamalik_videolar:3}","Merhaba Burayı Sevdin Mi? {sikilmamalik_videolar:3}"],
         "meraba":"$merhaba",
         "mrb":"$merhaba",
         "nasılsın":["ee yani {stalin_soz}","işte {nazi}","olduğum kadar {stalin_soz}","olabildiğim kadar işte {nazi}"],
@@ -17,7 +17,7 @@ var data_raw = {
         "puşt":"$hoşt",
         "test":"[Test](https://www.youtube.com/watch?v=Qc7_zRjH808)",
         "nazi":"{military}{military}{military}{nazi}{stalin_soz}",
-        "kpop":"{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{bos_yap_nj}{sozler_v1}{bts_sozler}{bos_yap_k}{troll_kpop_sozler}{bos_yap_n}",
+        "kpop":"{kpop:20}{bos_yap_nj}{sozler_v1}{bts_sozler}{bos_yap_k}{troll_kpop_sozler}{bos_yap_n}",
         "kpop,":"$kpop",
         "kpop,,":"$kpop",
         "öyle":"{dtw}{bos_yap_nj}{sozler_v1}{bts_sozler}{bos_yap_n}{troll_kpop_sozler}{bos_yap_k}",
@@ -25,7 +25,7 @@ var data_raw = {
         "motivasyon":"$nazi",
         "motiv":"$nazi",
         "motivation":"$nazi",
-        "oç":"{dtw}{dtw}{nazi}{stalin_soz}",
+        "oç":"{dtw:5}{nazi}{stalin_soz}",
         "52":"{dtw}{sikilmamalik_videolar}{dtw}{bos_yap_k}{bos_yap_nj}{bos_yap_n}",
         "orusbu":"$52",
         "orosbo":"$52",
@@ -46,12 +46,12 @@ var data_raw = {
         "seks":"$şarkısöyle",
         "sex":"$şarkısöyle",
         "sexy":"$şarkısöyle",
-        "kore":["Kpop ı çok seviyom bayağı efso {kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop} {bos_yap_k}{bos_yap_n}","Kore'ye kaçak girmenin yolu var mı? Japon donanması, Çin donanması, Kuzey... nereden girecem lütfen söyle {bos_yap_k}{bos_yap_n}","Kore çok medeni bir ülke çok seviyorum {bos_yap_k}{bos_yap_n}"],
+        "kore":["Kpop ı çok seviyom bayağı efso {kpop:5} {bos_yap_k}{bos_yap_n}","Kore'ye kaçak girmenin yolu var mı? Japon donanması, Çin donanması, Kuzey... nereden girecem lütfen söyle {bos_yap_k}{bos_yap_n}","Kore çok medeni bir ülke çok seviyorum {bos_yap_k}{bos_yap_n}"],
         "korea":"$kore",
         "şarkıaç":"$kpop",
         "şarkıaçsana":"$şarkıaç",
         "playsong":"$şarkıaç",
-        "sıkıldım":"{sikilmamalik_videolar}{dtw}{dtw}{sikilmamalik_videolar}{sikilmamalik_videolar}",
+        "sıkıldım":"{sikilmamalik_videolar}{dtw:2}{sikilmamalik_videolar}{sikilmamalik_videolar}",
         "komik":"$sıkıldım",
         "entelferidun":"[Entel Feridun](https://youtu.be/k9Y9-xueg5M?t=4)",
         "entelferdun":"$entelferidun",
@@ -279,9 +279,9 @@ var data_raw = {
         "set2.02":"kimden/kimi/sevdiğin/sevdin+hoşlanıyonmu/hoşlanıyon/hoşlanıyorsun/seviyorsun/birisi/biri,sen/kimi/hoşlandığın/azdığın/sevdiğin/seveceğin/doyamadığın+birinden/biri/birisi+var+mı,kime+aşık+sın,kimi+seviyorsun/ısındın/ısınıyorsun,kimi/çekici+bulduğun/çekici+buluyorsun/varmı,çekici/seksi/tatlı/güzel+bulduğun+biri+var+mı,çekici/seksi/tatlı/güzel/hoş+bulduğun+biri+varmı,hoşlandığın/azdığın/sevdiğin/doyamadığın+biri/birisi/hayalin+varmı=$sc2.02",
         "sc2.02":["Nmixx Sullyoon [mm](https://www.youtube.com/watch?v=6kEZEvMYKQY) {seksi_kpop}","IVE Wonyoung {bos_yap_nj}{sozler_v1}{troll_kpop_sozler}{bos_yap_k}{bts_sozler}{kpop} - {seksi_kpop}","Aespa Winter {troll_kpop_sozler}{bos_yap_nj}{sozler_v1}{bos_yap_k}{bts_sozler}{bos_yap_n}{kpop} - {seksi_kpop}"],
         "set2.03":"kore/koreyi+neden/seviyorsun/sevme/niye+amacın/seviyorsun/seviyon/sevyon/aşıksın/hastasın=$sc2.03",
-        "sc2.03":"Bilmem {dtw} {nazi}",
+        "sc2.03":"Bilmem {dtw}{nazi}",
         "set2.04":"kore/korece/seksi+şarkı/müzik/sound/music+önersene/öner/atsana/at=$sc2.04",
-        "sc2.04":"{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}{kpop}",
+        "sc2.04":"{kpop:10}",
         "set2.05":"sevdiğin/en/favori/beğendiğin/tavsiye+renk/rengin/renkler,renk/rengin/renkler+hangisi/nedir/tavsiye=$sc2.05",
         "sc2.05":"En sevdiğim renk mor {kpop}{kpop}{kpop}",
         "set2.06":"eğitim/öğretim+sistemi=$sc7",
@@ -293,8 +293,8 @@ var data_raw = {
         "set2.10":"sikimi/sikiş/siki/porno+izliyon/izliyor/izliyor/izliyo+mu/musun/müsün/acaba/sen/demek,sikimi/sikiş/siki/porno+izliyonmu/izliyormusun/izliyorsun/izliyon/musun/sun/sen/tuttun,sikişiyonmu/sikiyormu/sikiliyormu/sikişekmi=$sc2.10",
         "sc2.10":"{military}{nazi}{dtw}{sozler_v1}{sozler_v1}",
         "set2.11":"sence/ben/sizce/sence+/beyinsizmiyim/malmıyım/salakmıyım,sizce/sence/ben/salak/mal/gerizekalı/özürlü/beyinsiz/aptal+gibi/gibimi/aptalmıyım/salakmıyım/malmıyım/beyinsizmiyim/gerizekalımıyım,ben/sizce/sence+aptalım/salağım/özürlüyüm,aptalın/salağın/aptalın+tekiyim,salaklık/mallık/özürlülük/beyinsizlik/gerizekalılık+varmı,salaklık/mallık/özürlülük/beyinsizlik/gerizekalılık+var+mı=$sc2.11",
-        "sc2.11":"Sağlam durmalısın{military}{military}{military}{nazi}{nazi}",
-        "set2.12":"senin/sana+kafanı/kafa/kafana+sikim/sik/sokim/sokuyum/sokayım/s2m=$sc2.12",
+        "sc2.11":"Sağlam durmalısın{military:3}{nazi:2}",
+        "set2.12":"senin/sana+kafanı/kafa/kafana+sikim/sik/sokim/sokuyum/sokayım/s2m/sikiyim=$sc2.12",
         "sc2.12": "[sana cevabım](https://youtu.be/NXQJ9iR5BkA?t=107) {nazi}",
         "set2.13":"dünya/dünyayı/dünyanın+yok/ele+ed/et/edecek/etcek/edicek/etti/ettiğinde/edeceği/etceği/edebilir/edebilecek,dünya/dünyayı/dünyanın+sonu/sonunu/sonuna+gelecek/getirecek/getircek/getirebilir/gelebilir=$sc2.13",
         "sc2.13": "Kesinlikle kesin kesin aynen aynen... {dtw}{sikilmamalik_videolar}",
@@ -634,6 +634,8 @@ var data_raw = {
             "https://www.youtube.com/watch?v=ttiOtnPwfJk,NMIXX - Roller Coaster it's Live",
             "https://www.youtube.com/watch?v=JQGRg8XBnB4,Momoland - BBoom BBoom",
             "https://www.youtube.com/watch?v=NMHyOY4c4gI,Apink - LUV Japanese Ver",
+            "https://www.youtube.com/watch?v=mc274HUFhQQ,GFRIEND - Fallin Light",
+            "https://www.youtube.com/watch?v=v7qisJ_KuYI,Lovelyz Ah-Choo",
             "https://youtu.be/I3dezFzsNss?t=7,Exo Growl",
             "https://www.youtube.com/watch?v=p6OoY6xneI0,SHINee Don't Call Me"
         ],
@@ -878,5 +880,5 @@ var data_raw = {
         var size = new TextEncoder().encode(data_raw).length;
         var kiloBytes = size / 1024; // Bayt cinsinden boyutu 1024'e bölerek KB cinsinden boyutu hesapla
         var x = document.getElementsByTagName("x")[0]; // x elementini etiket adı seçiciyle seç, dönen dizi içinde ilk elemanı al
-        x.innerHTML = kiloBytes + " KB"; // x elementinin innerHTML özelliğine boyutu atayarak
+        x.innerHTML = kiloBytes.toFixed(1) + " KB"; // x elementinin innerHTML özelliğine boyutu atayarak
     }
