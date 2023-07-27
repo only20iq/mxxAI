@@ -398,7 +398,7 @@ function ai_cevapla(metin) {
       // alert(key);
       // ...
     }
-    if (['die','kill','clear'].includes(args[0].toLowerCase().slice(1))) {
+    if (['die','kill','clear','cls'].includes(args[0].toLowerCase().slice(1))) {
       window.location='';
     }
   }

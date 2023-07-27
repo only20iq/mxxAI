@@ -237,7 +237,11 @@ var data_raw = {
         "boşyap":"$şarkısöyle",
         "napıyorsun":"$şarkısöyle",
         "şarkıönersene":"$kpop",
-        "şarkıöner":"$kpop"
+        "şarkıöner":"$kpop",
+        "yt":"[YouTube](https://www.youtube.com/), [YouTube Music](https://music.youtube.com/)<br>[dw1:loader to](https://loader.to/)<br>[dw2:ssyoutube](https://ssyoutube.com/)<br>[dw3:savefrom](https://savefrom.net/)",
+        "youtube":"$yt",
+        "ytmusic":"$yt",
+        "youtubemusic":"$yt"
     },
     "multi" : {
         "set1": "merhaba/nasılsın/iyimisin/naber/meraba=$sc1",
@@ -421,7 +425,7 @@ var data_raw = {
             "https://www.youtube.com/watch?v=eHRo49saIHw,Love Battery",
             "https://www.youtube.com/watch?v=vdVCUDqnL0U,Happy Happy",
             "https://www.youtube.com/watch?v=QW28YKqdxe0,Make You Happy",
-            "https://www.youtube.com/watch?v=6936eOyflMk,Secret",
+            "https://www.youtube.com/watch?v=6936eOyflMk,WJSN Secret",
             "https://www.youtube.com/watch?v=qYNnBg2VQWg,Sweet Summer Day",
             "https://www.youtube.com/watch?v=846cjX0ZTrk,Hi High",
             "https://www.youtube.com/watch?v=YBnGBb1wg98,Zimzalabim",
@@ -636,6 +640,13 @@ var data_raw = {
             "https://www.youtube.com/watch?v=NMHyOY4c4gI,Apink - LUV Japanese Ver",
             "https://www.youtube.com/watch?v=mc274HUFhQQ,GFRIEND - Fallin Light",
             "https://www.youtube.com/watch?v=v7qisJ_KuYI,Lovelyz Ah-Choo",
+            "https://www.youtube.com/watch?v=futXH7nybU0,Cupid 8K",
+            "https://www.youtube.com/watch?v=5V-nF8ZaneM,What's Your Name Fromis9 Cover",
+            "https://www.youtube.com/watch?v=HWvz61jFjhw,Peaches Chaeyeon Cover",
+            "https://www.youtube.com/watch?v=Ngk0_0Rwq0I,Zig Zag 8K",
+            "https://www.youtube.com/watch?v=UE--H12gl2I,woo!ah! Purple",
+            "https://www.youtube.com/watch?v=iNCFAwCPpgw,TWICE MAMA 2020 More More icsm",
+            "https://www.youtube.com/watch?v=GsEo4_9mIMg,IZ*ONE SPACESHIP",
             "https://youtu.be/I3dezFzsNss?t=7,Exo Growl",
             "https://www.youtube.com/watch?v=p6OoY6xneI0,SHINee Don't Call Me"
         ],
