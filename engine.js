@@ -400,6 +400,15 @@ function ai_cevapla(metin) {
     }
     if (['die','kill','clear','cls'].includes(args[0].toLowerCase().slice(1))) {
       window.location='';
+      test += "İşleniyor...";
+    }
+    if (['note','notepad','notdefteri','not'].includes(args[0].toLowerCase().slice(1))) {
+      showCacheInMain('cache_note');
+      test += "İşleniyor...";
+    }
+    if (['cm','commands','comands'].includes(args[0].toLowerCase().slice(1))) {
+      showCacheInMain('cache_commands');
+      test += "İşleniyor...";
     }
   }
 

@@ -2,7 +2,7 @@
     <head>
         <link rel="icon" href="icon.jpg">
         <meta charset="utf-8">
-        <title>mxxAI ChatBot</title>
+        <title>mxxAI</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
         <base target="_blank">
         <meta name="subject" content="">
@@ -25,6 +25,7 @@
         <link rel="shortcut icon" href="ico.ico">
         <script src="dataset.js"></script>
         <script src="engine.js"></script>
+        <script src="js/md5.min.js"></script>
         <!--
         <script src="js/crypto-js.min.js"></script>
         <script src="js/jsencrypt.min.js"></script>
@@ -64,26 +65,223 @@
       transform: scale(1.1); /* Öneriyi biraz büyüt */
       transition: all 0.3s; /* Değişikliği yumuşak bir şekilde yap */
     }
+
+    .textareaxa {
+    min-width: 300px;
+    width: 92%;
+    max-width: 644px;
+    height: 300px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 18px;
+    font-family: Roboto, sans-serif;
+    resize: none;
+    background: #f0f0f0;
+    color: #333333;
+    margin: 10px auto;
+    display: block;
+    box-shadow: inset 0 -1px 0 #92979B, inset 0 1px 0 #92979B, inset -1px 0 0 #92979B, inset 1px 0 0 #92979B;
+}
+.button0x1 {
+    min-width: 100px;
+    height: 80px;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    font-family: Roboto, sans-serif;
+    box-shadow: none;
+    background: #f0f0f0;
+    color: #333333;
+    margin: 0 auto;
+    display: inline-block;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
   </style>
   
     </head>
     <body>
-        <div style="margin:0 auto;text-align:center;height:auto;color:grey;max-width:600px;">
-            <h1 style="font-family: 'Shojumaru', cursive;font-weight:1000;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;-o-user-select: none;user-select: none;color:black;"><img src="logo.png" onclick="window.location=''" height="180"></h1>
-            <form id="message-form">
-                <div id="asdasds" style="display: flex; flex-wrap:no-wrap; align-items: center; width:100%;max-width: 600px;">
-                <textarea spellcheck='false' type="text" id="message-input" class="textareaxx asdas1c" onkeypress="13===window.event.keyCode&&(event.preventDefault(),document.getElementById('message-submit').click())" placeholder="Send Message" style="height:59px;display:inline-block;font-size:16px;font-weight:1000;width: 100%!important;background-color:transparent;border:0;margin:0;border-bottom:2.5px solid #FFA000;padding:16px;color:dimgrey!important;resize: vertical!important;" autocomplete="off" autofocus required></textarea><input type="submit" id="message-submit" value=">" style="margin:0;font-size:16px;font-weight:1000;width:100%!important;max-width:40px;border:0;background-color:transparent;border-bottom:2.5px solid #FFA000;padding:16px;color:black!important;height:59px!important;display:inline-block;">
-                </div>
-                <input type="text" id="target-input" value="a" style="display:none" required>
-            </form>
-            <!-- Önerilenler kutusunu oluştur -->
-            <div class="suggestions">
-            <!-- Her bir öneriyi bir div elementi olarak ekle -->
-            <div class="suggestion">/music -s 15</div>
-            <div class="suggestion">Boş yap</div>
-            <div class="suggestion">Bana bir şeyler anlat.</div>
+      <div style="margin:0 auto;text-align:center;height:auto;color:grey;max-width:600px;position:relative;">
+        <h1 style="font-family: 'Shojumaru', cursive;font-weight:1000;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;-o-user-select: none;user-select: none;color:black;"><img src="logo.png" onclick="showCacheInMain('cache_form');" height="180"></h1>
+        <!-- Açılır kapanır menü için -->
+        <div style="position:absolute;top:0;left:0;z-index:999;user-select:none;"> <!-- Burada stil eklendi -->
+          <!-- Menü butonu -->
+          <div id="menu-button" onclick="toggleMenu()" style="width:40px;height:40px;background-color:transparent;cursor:pointer;color:black;font-size:24px;">></div>
+          <!-- Menü içeriği -->
+          <div id="menu-content" style="display:none;width:200px;height:auto;background-color:white;">
+            <!-- Menü seçenekleri -->
+            <a id="option1" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_form')">Chat</a> <!-- Burada fonksiyon ismi değiştirildi -->
+            <a id="option2" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_note')">Notepad</a> <!-- Burada fonksiyon ismi değiştirildi -->
+            <a id="option3" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_commands')">Commands</a> <!-- Burada fonksiyon ismi değiştirildi -->
+          </div>
+        </div>
+      <!-- Menüyü açıp kapamak için JavaScript fonksiyonu -->
+      <script>
+document.addEventListener('DOMContentLoaded', function() {document.getElementById('k').onclick = calistir;function calistir() {var kopyala = document.getElementById('kopyala');kopyala.select();document.execCommand('copy');}});
+
+  // Div leri gösteren fonksiyon
+  function showCacheInMain(cacheId) {
+      // Main div ini seç
+  var main = document.getElementById("main");
+    // Tıklanan div i seç
+    var cache = document.getElementById(cacheId);
+    // Tıklanan div i main e taşı
+    main.appendChild(cache);
+    // Tıklanan div i görünür yap
+    cache.style.display = "block";
+    // Diğer div leri gizle
+    hideOthers(cacheId);
+  }
+  // Diğer div leri gizleyen fonksiyon
+  function hideOthers(cacheId) {
+    // Diğer div lerin id lerini bir diziye koy
+    var others = ["cache_form","cache_note", "cache_commands"];
+    // Tıklanan div in id sini diziden çıkar
+    others.splice(others.indexOf(cacheId), 1);
+    // Dizide kalan diğer div leri seç ve gizle
+    for (var i = 0; i < others.length; i++) {
+      var other = document.getElementById(others[i]);
+      other.style.display = "none";
+      // Diğer div leri eski yerlerine geri gönder
+      main.parentNode.insertBefore(other, main); // Burada main.parentNode kullanıldı
+    }
+  }
+
+window.addEventListener("load", function() {
+  var loc_link = window.location.href;
+  // Eğer link #note içeriyorsa, konsola 2 yaz
+  //if (loc_link.includes("#note")) {
+  if(['#note','#notepad','#notdefteri','#not'].some(value => loc_link.includes(value))){
+    showCacheInMain('cache_note');
+  }
+  else if (["#chatbot", "#ai"].some(value => loc_link.includes(value))) {
+    showCacheInMain('cache_form');
+  }
+  else if (["#cm", "#commands", "#comands"].some(value => loc_link.includes(value))) {
+    showCacheInMain('cache_commands');
+  }
+  else {
+    showCacheInMain('cache_form');
+  }
+});
+        function toggleMenu() {
+          // Menü butonu ve içeriğini seç
+          var button = document.getElementById("menu-button");
+          var content = document.getElementById("menu-content");
+          // Menü içeriği görünür ise gizle, değilse göster
+          if (content.style.display == "block") {
+            content.style.display = "none";
+          } else {
+            content.style.display = "block";
+          }
+        }
+      </script>
+      <div id="cache_commands" style="display:none;">
+        Commands<br>
+        /m,/music,/şarkı,/müzik,/kpop (Suggests music)<br>
+        /m -s all,/m -s 10(value)<br>
+        /cls,/clear,/die,/kill (Refresh Page)<br>
+        /note,/not,/notepad,/notdefteri (Open Notepad)<br>
+      </div>
+      <div id="cache_note" style="display:none;">
+        <div style="text-align: center;">
+          <p id="md5a" style="font-size:12px;padding:0;"></p>
+          <textarea class="textareaxa" spellcheck="false" name="data" id="kopyala" placeholder="Text" style="background-color:transparent;border-radius: 15px;margin-bottom:10px;" autocomplete="off" required=""></textarea>
+          <script>
+            // Sayfa yüklendiğinde, cookie den değeri geri getir
+            window.addEventListener("load", function() {
+                          // Textarea elementini seç
+            var textarea = document.getElementById("kopyala");
+            // md5 elementini seç
+            var md5a = document.getElementById("md5a");
+            // Textarea elementine bir input olayı ekle
+            function save_notepad(){
+              // Textarea elementinin değerini al
+              var value = textarea.value;
+              // Eğer değer boş değilse, cookie'ye kaydet
+              if (value != "") {
+                // Değeri encodeURI ile kodla
+                var encodedValue = encodeURI(value);
+                // Değeri cookie ye kaydet
+                document.cookie = "textareaValue=" + encodedValue + "; max-age=604800"; // Süre 1 hafta olarak ayarlandı
+                // Değerin md5 ini hesapla
+                var md5Value = md5(value);
+                // md5 elementine md5 değerini yaz
+                md5a.textContent = "Saved: " + md5Value;
+              }
+            }
+            // yapistirdata fonksiyonunu event listener olarak tanımla
+window.addEventListener("yapistirdata", function() {
+  var t=document.querySelector('textarea[name="data"]');
+  t&&navigator.clipboard.readText().then(function(n){
+    t.value=n;
+    save_notepad(); // metni kaydet
+  }).catch(function(n){
+    console.error(n);
+  })
+});
+
+// cleardata fonksiyonunu event listener olarak tanımla
+window.addEventListener("cleardata", function() {
+  var textarea = document.querySelector('textarea[name="data"]');
+  textarea.value = ""; // metni seç
+});
+
+            textarea.addEventListener("input", function() {
+              save_notepad();
+            });
+            
+              // Cookie yi al
+              var cookie = document.cookie;
+              // Cookie den textareaValue isimli değeri bul
+              var index = cookie.indexOf("textareaValue=");
+              // Eğer değer varsa, textarea ya yaz
+              if (index != -1) {
+                // Değeri almak için, eşittir işaretinden sonraki kısmı al
+                var encodedValue = cookie.substring(index + 14);
+                // Değeri decodeURI ile çöz
+                var value = decodeURI(encodedValue);
+                // Textarea ya değeri yaz
+                textarea.value = value;
+                // Değerin md5 ini hesapla
+                var md5Value = md5(value);
+                // md5 elementine md5 değerini yaz
+                md5a.textContent = "Loaded: " + md5Value;
+              }
+            });
+          </script>
+          <div style="text-align: center; display:flex; justify-content: center;margin:0 auto; flex-wrap: wrap;">
+            <div style="text-align: center;">
+                <button type="button" class="button0x1" value="Kopyala" id="k" style="background-color:transparent;width: 100% !important;max-width: 620px;font-size:28px;border-radius:15px;">Copy</button>
             </div>
-            <div id="messages" style="word-wrap: break-word;">Size: <x>null</x><br>JS Based Basic ChatBot</div>
+            <div style="text-align: center;">
+                <button type="button" class="button0x1" onclick='var event=new Event("cleardata");window.dispatchEvent(event);' style="background-color:transparent;width: 100% !important;max-width: 620px;font-size:28px;border-radius:15px;">Clear</button>
+            </div>
+            <div style="text-align: center;">
+                <button type="button" class="button0x1" onclick='var event=new Event("yapistirdata");window.dispatchEvent(event);' style="background-color:transparent;width: 100% !important;max-width: 620px;font-size:28px;border-radius:15px;">Paste</button>
+            </div>
+        </div>
+        </div>
+      </div>
+      <div id="cache_form" style="display:none;">
+        <form id="message-form">
+          <div id="asdasds" style="display: flex; flex-wrap:no-wrap; align-items: center; width:100%;max-width: 600px;">
+          <textarea spellcheck='false' type="text" id="message-input" class="textareaxx asdas1c" onkeypress="13===window.event.keyCode&&(event.preventDefault(),document.getElementById('message-submit').click())" placeholder="Send Message" style="height:59px;display:inline-block;font-size:16px;font-weight:1000;width: 100%!important;background-color:transparent;border:0;margin:0;border-bottom:2.5px solid #FFA000;padding:16px;color:dimgrey!important;resize: vertical!important;" autocomplete="off" autofocus required></textarea><input type="submit" id="message-submit" value=">" style="margin:0;font-size:16px;font-weight:1000;width:100%!important;max-width:40px;border:0;background-color:transparent;border-bottom:2.5px solid #FFA000;padding:16px;color:black!important;height:59px!important;display:inline-block;">
+          </div>
+          <input type="text" id="target-input" value="a" style="display:none" required>
+      </form>
+      <!-- Önerilenler kutusunu oluştur -->
+      <div class="suggestions">
+      <!-- Her bir öneriyi bir div elementi olarak ekle -->
+      <div class="suggestion">/music -s 15</div>
+      <div class="suggestion">/note</div>
+      <div class="suggestion">Bana bir şeyler anlat.</div>
+      </div>
+      <div id="messages" style="word-wrap: break-word;">Size: <x>null</x><br>JS Based Basic ChatBot</div>
+      </div>
+      <div id="main" style="padding:0;margin:0;">
+      </div>
         </div>
         <script>
   // Önerileri seç
