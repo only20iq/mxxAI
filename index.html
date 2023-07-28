@@ -187,7 +187,7 @@ window.addEventListener("load", function() {
       <div id="cache_note" style="display:none;">
         <div style="text-align: center;">
           <p id="md5a" style="font-size:12px;padding:0;"></p>
-          <textarea class="textareaxa" spellcheck="false" name="data" id="kopyala" placeholder="Text" style="background-color:transparent;border-radius: 15px;margin-bottom:10px;" autocomplete="off" required=""></textarea>
+          <textarea class="textareaxa" maxlength="196" spellcheck="false" name="data" id="kopyala" placeholder="Text" style="background-color:transparent;border-radius: 15px;margin-bottom:10px;" autocomplete="off" required=""></textarea>
           <script>
             // Sayfa yüklendiğinde, cookie den değeri geri getir
             window.addEventListener("load", function() {
@@ -212,15 +212,18 @@ window.addEventListener("load", function() {
               }
             }
             // yapistirdata fonksiyonunu event listener olarak tanımla
-window.addEventListener("yapistirdata", function() {
+            window.addEventListener("yapistirdata", function() {
   var t=document.querySelector('textarea[name="data"]');
   t&&navigator.clipboard.readText().then(function(n){
-    t.value=n;
+    // Metni 196 karaktere kısalt
+    var truncated = n.substring(0, 200);
+    t.value=truncated;
     save_notepad(); // metni kaydet
   }).catch(function(n){
     console.error(n);
   })
 });
+
 
 // cleardata fonksiyonunu event listener olarak tanımla
 window.addEventListener("cleardata", function() {
