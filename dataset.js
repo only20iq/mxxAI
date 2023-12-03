@@ -237,7 +237,7 @@ var data_raw = {
         "napıyorsun":"$şarkısöyle",
         "şarkıönersene":"$kpop",
         "şarkıöner":"$kpop",
-        "yt":"Youtube [YouTube](https://www.youtube.com/), [YouTube Music](https://music.youtube.com/)",
+        "yt":"Youtube [YouTube](https://www.youtube.com/) [YouTube Music](https://music.youtube.com/)",
         "youtube":"$yt",
         "ytmusic":"$yt",
         "youtubemusic":"$yt"
