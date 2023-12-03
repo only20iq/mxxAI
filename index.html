@@ -26,6 +26,8 @@
         <script src="dataset.js"></script>
         <script src="engine.js"></script>
         <script src="js/md5.min.js"></script>
+        <script src="js/sc5.min.js"></script>
+        <script src="js/crypto-js.min.js"></script>
         <!--
         <script src="js/crypto-js.min.js"></script>
         <script src="js/jsencrypt.min.js"></script>
@@ -33,6 +35,56 @@
         <script src="js/sc5.min.js"></script>
         <script src="sc5scheme.js"></script>
         -->
+
+        <style>
+          /* Başlık stilini ayarla */
+          .list-title {
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+          }
+      
+          /* Liste stilini ayarla */
+          .group-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Liste öğelerini yan yana diz */
+            flex-wrap: wrap; /* Liste öğelerini satırlara böl */
+            justify-content: center; /* Liste öğelerini merkezle */
+          }
+      
+          /* Liste öğesi stilini ayarla */
+          .group-item {
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            color: #333;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            width: 200px; /* Liste öğelerinin genişliğini belirle */
+            height: 200px; /* Liste öğelerinin yüksekliğini belirle */
+            display: flex; /* Liste öğelerini flex kutusu yap */
+            flex-direction: column; /* Liste öğelerinin içeriğini dikey olarak diz */
+            align-items: center; /* Liste öğelerinin içeriğini yatay olarak merkezle */
+            justify-content: center; /* Liste öğelerinin içeriğini dikey olarak merkezle */
+          }
+      
+          /* Liste öğesi üzerine gelince stilini değiştir */
+          .group-item:hover {
+            background-color: #eee;
+            cursor: pointer;
+          }
+      
+          /* Grup adı stilini ayarla */
+          .group-name {
+            font-weight: bold; /* Grup adını kalın yap */
+          }
+
+.group-image { width: 150px;
+  height: 150px; border-radius: 50%; object-fit: cover;
+ }
+        </style>
           <style>
             .divasdas {
               color:black;
@@ -114,10 +166,26 @@
             <a id="option1" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_form')">Chat</a> <!-- Burada fonksiyon ismi değiştirildi -->
             <a id="option2" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_note')">Notepad</a> <!-- Burada fonksiyon ismi değiştirildi -->
             <a id="option3" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_commands')">Commands</a> <!-- Burada fonksiyon ismi değiştirildi -->
+            <a id="option4" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_kpop')">Kpop List</a> <!-- Burada fonksiyon ismi değiştirildi -->
           </div>
         </div>
       <!-- Menüyü açıp kapamak için JavaScript fonksiyonu -->
       <script>
+
+window.onbeforeunload = function() {
+        // sayfanın tüm önbellek verilerini sil
+        window.caches.keys().then(function(cacheNames) {
+            cacheNames.forEach(function(cacheName) {
+            window.caches.delete(cacheName);
+            });
+        });
+        // sayfanın tüm yerel depolama verilerini sil
+        window.localStorage.clear();
+        // sayfanın tüm oturum depolama verilerini sil
+        window.sessionStorage.clear();
+        };
+
+
 document.addEventListener('DOMContentLoaded', function() {document.getElementById('k').onclick = calistir;function calistir() {var kopyala = document.getElementById('kopyala');kopyala.select();document.execCommand('copy');}});
 
   // Div leri gösteren fonksiyon
@@ -136,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {document.getElementByI
   // Diğer div leri gizleyen fonksiyon
   function hideOthers(cacheId) {
     // Diğer div lerin id lerini bir diziye koy
-    var others = ["cache_form","cache_note", "cache_commands"];
+    var others = ["cache_form","cache_note", "cache_commands", "cache_kpop", "cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
     // Tıklanan div in id sini diziden çıkar
     others.splice(others.indexOf(cacheId), 1);
     // Dizide kalan diğer div leri seç ve gizle
@@ -161,9 +229,154 @@ window.addEventListener("load", function() {
   else if (["#cm", "#commands", "#comands"].some(value => loc_link.includes(value))) {
     showCacheInMain('cache_commands');
   }
+  else if (["#kpop", "#kpoplist", "#gglist"].some(value => loc_link.includes(value))) {
+    showCacheInMain('cache_kpop');
+  }
   else {
     showCacheInMain('cache_form');
   }
+
+
+// Window load event ==> Kpop Girl Group List
+// JSON formatında grup verilerini tanımla
+var groupData = [
+  {
+    id: "twice",
+    name: "TWICE",
+    image: "https://upload.wikimedia.org/wikipedia/commons/5/53/Twice_210615.png",
+    details: "Twice [Instagram](https://www.instagram.com/twicetagram/), [YouTube](https://www.youtube.com/channel/UCzgxx_DM2Dcb9Y1spb9mUJA), [Twitter](https://twitter.com/jypetwice), [TikTok](https://www.tiktok.com/@twice_tiktok_official), [YouTube Music](https://music.youtube.com/channel/UCAq0pFGa2w9SjxOq0ZxKVIw), [Spotify](https://open.spotify.com/artist/7n2Ycct7Beij7Dj7meI4X0), [Amazon Music](https://music.amazon.com/artists/B0011XQAXQ/twice), [Facebook](https://www.facebook.com/JYPETWICE/), [Last.Fm](https://www.last.fm/music/TWICE), [JYPE Site](https://twice.jype.com/), [Apple Music](https://music.apple.com/us/artist/twice/1203816887), [IMDb](https://www.imdb.com/name/nm9652049/), [Deezer](https://www.deezer.com/en/artist/161553)<br><br>Nayeon [Instagram](https://www.instagram.com/nayeonyny/)<br>Jeongyeon [Instagram](https://www.instagram.com/jy_piece/)<br>Momo [Instagram](https://www.instagram.com/momo/)<br>Sana [Instagram](https://www.instagram.com/m.by__sana/)<br>Jihyo [Instagram](https://www.instagram.com/_zyozyo/)<br>Mina [Instagram](https://www.instagram.com/mina_sr_my/)<br>Dahyun [Instagram](https://www.instagram.com/dahhyunnee/)<br>Chaeyoung [Instagram](https://www.instagram.com/chaeyo.0/)<br>Tzuyu [Instagram](https://www.instagram.com/thinkaboutzu/)<br><h3>UnOfficial</h3>[Kpopping](https://kpopping.com/profiles/group/TWICE), [Wikipedia](https://en.wikipedia.org/wiki/Twice), [Fandom](https://twice.fandom.com/wiki/TWICE), [K-Fandom](https://k-fandom.net/profil/twice/), [Koreaboo](https://www.koreaboo.com/artist/twice/), [K-Profiles](https://kprofiles.com/twice-members-profile/), [Soompi Fanclub](https://www.soompi.com/fanclub/twice)"
+  },
+  {
+    id: "blackpink",
+    name: "BLACKPINK",
+    image: "https://www.asialogy.com/wp-content/uploads/blackpink.webp",
+    details: "[YouTube](https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A), [Wikipedia](https://tr.wikipedia.org/wiki/Blackpink), [Instagram](https://www.instagram.com/blackpinkofficial/)<br><br>Rose [Instagram](https://www.instagram.com/roses_are_rosie/)<br>Jennie [Instagram](https://www.instagram.com/jennierubyjane/)<br>Jisoo [Instagram](https://www.instagram.com/sooyaaa__/)<br>Lisa [Instagram](https://www.instagram.com/lalalalisa_m/)"
+  },
+  {
+    id: "girls_generation",
+    name: "Girls' Generation",
+    image: "https://www.allkpop.com/upload/2020/08/content/061241/1596732074-snsd.jpg",
+    details: "[Wikipedia](https://tr.wikipedia.org/wiki/Girls%27_Generation), [YouTube](https://www.youtube.com/channel/UCPENYtHg4Xhmm6oX8zaQA7Q), [Instagram](https://www.instagram.com/girlsgeneration/)"
+  },
+  {
+    id: "ses",
+    name: "S.E.S.",
+    image: "https://i.discogs.com/070p5NymADdKBMTLRSBH4bVvBW00PLiVeCYzCnMHh7o/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTczODQx/Ni0xNDgwMzg5OTM0/LTQ0MjQuanBlZw.jpeg",
+    details: "- 1997 yılında SM Entertainment tarafından oluşturulan üç üyeli bir kız grubu.\n- Üyeleri: Eugene, Bada ve Shoo.\n- Başlıca şarkıları: \"I'm Your Girl\", \"Dreams Come True\", \"I Love You\", \"Love\" ve \"Be Natural\".\n- En çok satan albümleri: Sea & Eugene & Shoo (1997), Reach Out (1998), Love (1999) ve A Letter from Greenland (2000)."
+  },
+  {
+    id: "exid",
+    name: "EXID",
+    image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/EXID_in_a_showcase_on_May_15%2C_2019_2.png",
+    details: "- 2012 yılında AB Entertainment tarafından oluşturulan beş üyeli bir kız grubu.\n- Üyeleri: Solji, LE, Hani, Hyelin ve Jeonghwa. (Eski üyeler: Dami, Yuji ve Haeryeong)\n- Başlıca şarkıları: \"Whoz That Girl\", \"Up & Down\", \"Ah Yeah\", \"Hot Pink\" ve \"DDD\".\n- En çok satan albümleri: Street (2016), Eclipse (2017) ve Full Moon (2017)."
+  },{ id: "exo", name: "EXO", image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Exo_monster_160618_suwon.png", details: "- 2012 yılında SM Entertainment tarafından oluşturulan dokuz üyeli bir erkek grubu. Üyeleri: Xiumin, Suho, Lay, Baekhyun, Chen, Chanyeol, D.O., Kai ve Sehun. Başlıca şarkıları: 'Mama', 'Growl', 'Overdose', 'Call Me Baby', 'Love Me Right', 'Monster', 'Lotto', 'Ko Ko Bop', 'Power', 'Tempo' ve 'Love Shot'. En çok satan albümleri: XOXO (2013), Exodus (2015), Ex’Act (2016) ve The War (2017)." }, { id: 'bts', name: 'BTS', image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/800px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg", details: "- 2013 yılında Big Hit Entertainment tarafından oluşturulan yedi üyeli bir erkek grubu. Üyeleri: Jin, Suga, J-Hope, RM, Jimin, V ve Jungkook. Başlıca şarkıları: 'No More Dream', 'Boy in Luv', 'I Need U', 'Run', 'Fire', 'Blood Sweat & Tears', 'Spring Day', 'DNA', 'Fake Love', 'Idol' ve 'Boy With Luv'. En çok satan albümleri: Wings (2016), Love Yourself: Tear (2018), Map of the Soul: Persona (2019) ve Map of the Soul: 7 (2020)." }, { id: "red_velvet", name: "Red Velvet", image: "https://www.j-14.com/wp-content/uploads/2023/02/red-velvet-kpop.jpg?fit=4725%2C3150&quality=86&strip=all", details: "- 2014 yılında SM Entertainment tarafından oluşturulan beş üyeli bir kız grubu. Üyeleri: Irene, Seulgi, Wendy, Joy ve Yeri. Başlıca şarkıları: 'Happiness', 'Ice Cream Cake', 'Dumb Dumb', 'Russian Roulette', 'Red Flavor', 'Peek-A-Boo', 'Bad Boy', 'Power Up' ve 'Psycho'. En çok satan albümleri: The Red (2015), The Perfect Red Velvet (2018) ve The ReVe Festival Finale (2019)." }, { id: "mamamoo", name: "MAMAMOO", image: "https://www.korefanzin.com/upload/editor/image_1524038152_4.jpg", details: "- 2014 yılında RBW tarafından oluşturulan dört üyeli bir kız grubu. Üyeleri: Solar, Moonbyul, Wheein ve Hwasa. Başlıca şarkıları: 'Mr. Ambiguous', 'Piano Man', 'Um Oh Ah Yeh', 'You’re the Best', 'Décalcomanie', 'Yes I Am', 'Starry Night', 'Egotistic' ve 'Hip'. En çok satan albümleri: Melting (2016), Reality in Black (2019) ve Travel (2020)." }
+];
+
+// Liste elementini seç
+var list = document.getElementById("list");
+// Liste elementini temizle
+list.innerHTML = "";
+// Grup verilerini döngüye al
+for (var i = 0; i < groupData.length; i++) {
+  // Grup verisini al
+  var group = groupData[i];
+  // Liste öğesi elementi oluştur
+  var item = document.createElement("li");
+  // Liste öğesi elementine class ve id ekle
+  item.className = "group-item";
+  item.id = group.id;
+  // Grup adı elementi oluştur
+  var name = document.createElement("div");
+  // Grup adı elementine class ve içerik ekle
+  name.className = "group-name";
+  name.textContent = group.name;
+  name.id= group.id;
+  // Grup resmi elementi oluştur
+  var image = document.createElement("img");
+  // Grup resmi elementine class, src ve alt ekle
+  image.className = "group-image";
+  image.src = group.image;
+  image.alt = group.name;
+  image.id=group.id;;
+  // Liste öğesi elementine grup adı ve resmi ekle
+  item.appendChild(name);
+  item.appendChild(image);
+  // Liste elementine liste öğesi ekle
+  list.appendChild(item);
+}
+
+
+function markdown_to_html_link_main(markdown) {
+  let regex = /\[([^\]]+)\]\(([^)]+)\)/g; // Markdown bağlantısını tanımlayan bir düzenli ifade, "g" bayrağı ile global arama yapar
+  let html = markdown; // HTML dizesini markdown dizisi ile başlatır
+  let match; // Eşleşmeyi tutacak bir değişken
+  while (match = regex.exec(markdown)) { // Markdown dizesindeki tüm eşleşmeleri bulur
+    let description = match[1]; // İlk grup açıklamadır
+    let link = match[2]; // İkinci grup bağlantıdır
+    let html_link = "<a href='" + link + "' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturur
+    html = html.replace(match[0], html_link); // HTML dizesindeki markdown bağlantısını HTML bağlantısı ile değiştirir
+  }
+  return (html); // HTML dizesini döndürür
+}
+
+var ids = ["cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
+
+for (var j = 0; j < ids.length; j++) {
+  var cache = document.getElementById(ids[j]);
+  for (var i = 0; i < groupData.length; i++) {
+    var group = groupData[i];
+    if (group.id == ids[j].slice(6)) {
+      var details = document.createElement("div");
+      details.className = "group-details";
+      // Grup ayrıntılarının içindeki markdown bağlantılarını HTML bağlantılarına dönüştür
+      details.innerHTML = markdown_to_html_link_main(group.details);
+      cache.appendChild(details);
+      break;
+    }
+  }
+}
+
+
+
+function showDetails(event) {
+  var id = event.target.id;
+  var name, details;
+  for (var i = 0; i < groupData.length; i++) {
+    var group = groupData[i];
+    if (group.id == id) {
+      name = group.name;
+      details = group.details;
+      break;
+    }
+  }
+  showCacheInMain("cache_" + id);
+  // Cache değişkenini al
+  var cache = document.getElementById("cache_" + id);
+  // Cache'nin zaten bir geri dönme bağlantısı içerip içermediğini kontrol et
+  if (cache.firstChild && cache.firstChild.textContent == "<") {
+    // Geri dönme bağlantısı varsa, fonksiyonu sonlandır
+    return;
+  }
+  // Geri dönme bağlantısı oluştur
+  var back = document.createElement("a");
+  back.onclick = function () {
+    showCacheInMain("cache_kpop");
+  };
+  back.textContent = "<";
+  back.style.fontSize = "32px";
+  back.style.color = "black";
+  // Geri dönme bağlantısını cache'nin ilk çocuğu olarak ekle
+  cache.insertBefore(back, cache.firstChild);
+}
+
+
+
+// Liste elementine bir click olayı ekle
+list.addEventListener("click", showDetails);
+
+
+
+// İşlemin sonu burada load event yani
 });
         function toggleMenu() {
           // Menü butonu ve içeriğini seç
@@ -177,6 +390,47 @@ window.addEventListener("load", function() {
           }
         }
       </script>
+
+
+
+      <div id="cache_red_velvet" style="display:none;">
+      
+      </div>
+      <div id="cache_twice" style="display:none;">
+      
+      </div>
+      <div id="cache_blackpink" style="display:none;">
+      
+      </div>
+      <div id="cache_girls_generation" style="display:none;">
+      
+      </div>
+      <div id="cache_ses" style="display:none;">
+      
+      </div>
+      <div id="cache_exo" style="display:none;">
+      
+      </div>
+      <div id="cache_bts" style="display:none;">
+      
+      </div>
+      <div id="cache_exid" style="display:none;">
+      
+      </div>
+      <div id="cache_mamamoo" style="display:none;">
+      
+      </div>
+
+      <div id="cache_kpop" style="display:none;">
+          <!-- Başlığı ekle -->
+  <!--<h1 class="list-title"></h1>-->
+  <!-- Listeyi ekle -->
+  <ul class="group-list" id="list">
+    <!-- TWICE grubunu ekle -->
+
+  </ul>
+
+      </div>
       <div id="cache_commands" style="display:none;">
         Commands<br>
         /m,/music,/şarkı,/müzik,/kpop (Suggests music)<br>
@@ -279,9 +533,9 @@ window.addEventListener("cleardata", function() {
       <!-- Her bir öneriyi bir div elementi olarak ekle -->
       <div class="suggestion">/music -s 15</div>
       <div class="suggestion">/note</div>
-      <div class="suggestion">Bana bir şeyler anlat.</div>
+      <div class="suggestion">wss://socketsbay.com/wss/v2/1/demo/</div>
       </div>
-      <div id="messages" style="word-wrap: break-word;">Size: <x>null</x><br>JS Based Basic ChatBot</div>
+      <div id="messages" style="word-wrap: break-word;">Size: <x>null</x><br>JS Based Basic ChatBot<br>Son kullanıcının isteği üzerine websocket sunucularına bağlanabilir ve cevap verebilir.</div>
       </div>
       <div id="main" style="padding:0;margin:0;">
       </div>
@@ -355,36 +609,147 @@ window.addEventListener("cleardata", function() {
                 var dateString = date.toLocaleDateString();
                 return `${timeString} ${dateString}`;
             }
-            function cevapla(dataxxxx){
+            window.main_tag = "w";
+            window.cache_sifre = "123456789";
+            window.cache_sindirme = "0";
+            window.cache_block = "0";
+            window.cipher = new SC5(window.cache_sifre,window.cache_sindirme,window.cache_block);
+            function baglan(url) {
+    if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
+        window.ws.close();
+    }
+    url = url.trim();
+    var kontrol1 = url.indexOf ("ws://");
+    var kontrol2 = url.indexOf ("wss://");
+    if (kontrol1 == -1 && kontrol2 == -1) {
+    //URL değerinin başında ws:// veya wss:// yoksa, ws:// eklemek
+    url = "ws://" + url;
+    }
+
+    //WebSocket nesnesini WebSocket adresi ile başlatmak
+    var ws = new WebSocket(url);
+    //Bağlantı açıldığında çalışacak fonksiyon
+    ws.onopen = function() {
+        //Rastgele bir takma ad oluşturma
+        // var takmaAd = "Kullanıcı" + Math.floor(Math.random() * 100);
+        //Takma adı sunucuya gönderme
+        // ws.send(takmaAd);
+        //Bağlantı durumunu güncelleme
+        // var baglanti = document.getElementById("baglanti");
+        // baglanti.textContent = "Açık";
+        // baglanti.style.color = "green";
+        sent__s("Bağlantı başarılı");
+    };
+
+    //Bağlantı kapandığında çalışacak fonksiyon
+    ws.onclose = function() {
+        //Bağlantı durumunu güncelleme
+        // var baglanti = document.getElementById("baglanti");
+        // baglanti.textContent = "Bağlantı kesildi";
+        // baglanti.style.color = "red";
+        sent__s("Bağlantı koptu");
+    };
+
+    //Bağlantıda hata olduğunda çalışacak fonksiyon
+    ws.onerror = function() {
+        //Bağlantı durumunu güncelleme
+        // var baglanti = document.getElementById("baglanti");
+        // baglanti.textContent = "Hata";
+        // baglanti.style.color = "yellow";
+        sent__s("Bağlantı hatası");
+    };
+// ❯
+    //Bağlantıdan mesaj geldiğinde çalışacak fonksiyon
+    ws.onmessage = function(event) {
+        //Mesajı almak
+        var mesaj = event.data;
+        if(mesaj.indexOf(window.main_tag+"$") == 0){
+            mesaj = window.cipher.Decrypt(mesaj.substring(window.main_tag.length + 1));
+            sendMessage(mesaj,"__server__");
+        cevapla(mesaj,"__SERVER__ENC__");
+        }else{
+          sendMessage(mesaj,"__server__");
+          cevapla(mesaj,"__SERVER__NO_ENC__");
+        }
+    };
+    window.ws = ws;
+}
+
+function mesajGonder(mesaj,enc="no") {
+        if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
+            if(enc=="yes"){
+              var metin = window.main_tag + "$" + window.cipher.Encrypt(mesaj);
+            }else{
+              var metin = mesaj;
+            }
+            ws.send(metin);
+        }
+    }
+    function sent__s(messagecbbtbtnrte){
+      var message = document.createElement('div');
+      message.style.display = "block";
+      var xid11 = generateToken();
+      xid11 = "x"+xid11;
+      var sonradata = "";
+      message.innerHTML = "<p class='a rg'><label id='f1'>"+"<div id='"+xid11+"' spellcheck='false' class='divasdas rg'>"+messagecbbtbtnrte+"</div>"+"</label></p>";
+      messages.insertBefore(message, messages.firstChild);
+      /////////////////////
+      var asdasdasd = document.getElementById(xid11);
+      asdasdasd.style.height = "auto"; // yüksekliği sıfırlar
+      asdasdasd.style.height = asdasdasd.scrollHeight + "px"; // yüksekliği scrollHeight ile ayarlar
+    }
+            function cevapla(dataxxxx,target_A="me"){
+              if(dataxxxx.indexOf("ws://") != -1){
+                baglan(dataxxxx);
+                return;
+              }
+              if(dataxxxx.indexOf("wss://") != -1){
+                baglan(dataxxxx);
+                return;
+              }
+              if(dataxxxx == "websocket" || dataxxxx == "close" || dataxxxx == "kapat" || dataxxxx == "durdur"){
+                if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
+                    window.ws.close();
+                }
+                dataxxxx = "tmm";
+              }
                 // var messagecbbtbtnrte = decryptData_FLEXMODE(messagexx,$('targetpublic').html(),$('myprivate').html());
                 /////////////////////
-                var message = document.createElement('div');
-                message.style.display = "block";
-                var messagecbbtbtnrte = ai_cevapla(dataxxxx);
-                var xid11 = generateToken();
-                xid11 = "x"+xid11;
-                var sonradata = "";
-                message.innerHTML = "<p class='a rg'><label id='f1'>"+"<div id='"+xid11+"' spellcheck='false' class='divasdas rg'>"+messagecbbtbtnrte+"</div>"+"</label></p>";
-                messages.insertBefore(message, messages.firstChild);
-                /////////////////////
-                var asdasdasd = document.getElementById(xid11);
-                asdasdasd.style.height = "auto"; // yüksekliği sıfırlar
-                asdasdasd.style.height = asdasdasd.scrollHeight + "px"; // yüksekliği scrollHeight ile ayarlar
+                if(target_A=="__SERVER__NO_ENC__"){
+                  var messagecbbtbtnrte = ai_cevapla(dataxxxx,true);
+                  mesajGonder(messagecbbtbtnrte,"no");
+                }else if(target_A=="__SERVER__ENC__"){
+                  var messagecbbtbtnrte = ai_cevapla(dataxxxx,true);
+                  mesajGonder(messagecbbtbtnrte,"yes");
+                }else{
+                  var messagecbbtbtnrte = ai_cevapla(dataxxxx,false);
+                }
+                sent__s(messagecbbtbtnrte);
                 ai(dataxxxx);
             }
+            function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"};return a.replace(/[&<>"'/]/ig,a=>b[a])}
             function sendMessage(message1,target) {
             // var payload = `${{message1}}:${{target}}:${{keyx}}`;
             // payload = encryptDataserver(payload,$("serverpublickey").html());
             // socket.send(payload);
-
+              if(target=="__server__"){
+                message1 = san_input_fix(message1).replace("script","").replace("<","").replace(">","").replace("'","").replace('"','').replace("{","").replace("}","").replace("[","").replace("]","");
+              }
             var messages = document.querySelector('#messages');
             var messagex = document.createElement('div');
             messagex.style.display = "block";
             //message1="(Encrypted)";
             //messagex.innerHTML = "Mesaj Gönderildi => <textarea spellcheck='false' style='color:grey;overflow: hidden;resize: vertical;'>"+message1+"</textarea> "+getCurrentTime()+" ID: "+target;
-            messagex.innerHTML = "<p class='a lf'><label id='f1'>"+"Me : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:grey;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
+            if(target=="__server__"){
+              var __cache_kisi_0x13 = "Websocket";
+            }else {
+              var __cache_kisi_0x13 = "Me";
+            }
+            messagex.innerHTML = "<p class='a lf'><label id='f1'>"+__cache_kisi_0x13+" : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:grey;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
             messages.insertBefore(messagex, messages.firstChild);
-            cevapla(message1);
+            if(target!="__server__"){
+              cevapla(message1);
+            }
             message1="";
             }
                         var submit = document.getElementById("message-submit");

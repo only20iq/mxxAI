@@ -115,7 +115,7 @@ function quad_thread(text) {
   var cevap = "";
   text = text.trim();
   var wait_dataset_cache={
-    "sevme":[],"nasıl":[],"love":[],"kötü":[]
+    "sevme":[],"nasıl":[],"love":[],"kötü":[],"fart":[],"sevgili":[],"renk":[],"milliyet":[]
   };
   for (let key of Object.keys(data["quad"])) { // data["quad"] nesnesinin tüm anahtarlarını döngü ile gez
     if (key.startsWith("dataset")) { // Anahtarın "dataset" ile başlayıp başlamadığını kontrol et
@@ -147,7 +147,7 @@ function quad_thread(text) {
       }
       return result; // Sonucu döndür
     } else { // e değerinin içinde + yoksa
-      return e+"/"+e+"ımı/"+e+"imi/"+e+"nı/"+e+"ni/"+e+"ı/"+e+"i/"+e+"mi/"+e+"ğı/"+e+"yi/"+e+"yı/"+e+"mı/"+e+"am/"+e+"dan/"+e+"den/"+e+"ten/"+e+"tan";
+      return e+"/"+e+"ımı/"+e+"imi/"+e+"nı/"+e+"ni/"+e+"ı/"+e+"i/"+e+"mi/"+e+"ğı/"+e+"yi/"+e+"yı/"+e+"mı/"+e+"am/"+e+"dan/"+e+"den/"+e+"nın/"+e+"nin/"+e+"ten/"+e+"un/"+e+"ın/"+e+"in/"+e+"tan";
     }
   }  
   function _a(item) {
@@ -172,7 +172,7 @@ function quad_thread(text) {
     var result = _a(item[0]);
     for (let element of result) {
     var _cache_dataset_data = ekler(element);
-    var dataset = _cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri/düşüncelerin+"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon/musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri/düşüncelerin,"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon/musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin/seviyorum/sevyom,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri+mu/mü/ki/ben/sen/o/biz/siz/onlar/onları/düşüncelerin=this";
+    var dataset = _cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri/düşüncelerin+"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon+musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin,ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri/düşüncelerin,"+_cache_dataset_data+"+sevecen/seviyore/siver/sever/seviyor/sevyon/sev/seviyon/sewyon/seyon/musun/misin/mısın/müsün/mu/sun/san/sen/mi/cin/seviyorum/sevyom+ben/sen/o/biz/siz/onlar/beni/seni/onu/onları/sizi/kendimi/sizleri+mu/mü/ki/ben/sen/o/biz/siz/onlar/onları/düşüncelerin=this";
     var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"sevme",element);
     cevap += cevapx;
     }
@@ -204,6 +204,43 @@ function quad_thread(text) {
     cevap += cevapx;
     }
   }
+  for (let item of wait_dataset_cache["fart"]) {
+    var result = _a(item[0]);
+    for (let element of result) {
+    var _cache_dataset_data = ekler(element);
+    var dataset = _cache_dataset_data+"+osurur/osurdu/sıçtı/yellendi/zortladı/osuruyor/yelleniyor+mu/mi/mı=this";
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"fart",element);
+    cevap += cevapx;
+    }
+  }
+  for (let item of wait_dataset_cache["sevgili"]) {
+    var result = _a(item[0]);
+    for (let element of result) {
+    var _cache_dataset_data = ekler(element);
+    var dataset = _cache_dataset_data+"+sevgilisi/manitası/aşık/sevgilisinden/sevgilisini+mı/kim/belli/var/varmı/bahset/anlat=this";
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"sevgili",element);
+    cevap += cevapx;
+    }
+  }
+  for (let item of wait_dataset_cache["renk"]) {
+    var result = _a(item[0]);
+    for (let element of result) {
+    var _cache_dataset_data = ekler(element);
+    var dataset = _cache_dataset_data+"+sevdiği/ensevdiği/seveceği/beğendiği/favori+renk/rengi/renki=this";
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"renk",element);
+    cevap += cevapx;
+    }
+  }
+  for (let item of wait_dataset_cache["milliyet"]) {
+    var result = _a(item[0]);
+    for (let element of result) {
+    var _cache_dataset_data = ekler(element);
+    var dataset = _cache_dataset_data+"+ulusu/ırkı/milliyeti/hangi+ırk/ıraktan/milliyetten/ne/nedir,"+_cache_dataset_data+"+nereli/nereden=this";
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"milliyet",element);
+    cevap += cevapx;
+    }
+  }
+
   if (cevap == "") {
     return null;
   } else {
@@ -362,7 +399,12 @@ function shuffle_array(array) {
   }
   return array;
 }
-function ai_cevapla(metin) {
+function del_fff(test){
+  let regex = /\{.*?\}/g; // süslü parantezler arasındaki kısımları eşleştiren regex'i tanımla
+  let regex1 = /\[.*?\]\(.*?\)/g;
+  return test.replace(regex, "").replace(regex1, "").replace("<br>"," "); // eşleşen kısımları boşlukla değiştir
+}
+function ai_cevapla(metin,onlytext=false) {
   var test = "";
   // /enc text123hello -k 123456789 yazınca key değişkenine sorunsuz alıyor ama text değişkeni boş oluyor hep
   let args = metin.split(" "); // metin.split(" ") yerine metin.split() kullanıyoruz
@@ -398,17 +440,19 @@ function ai_cevapla(metin) {
       // alert(key);
       // ...
     }
-    if (['die','kill','clear','cls'].includes(args[0].toLowerCase().slice(1))) {
-      window.location='';
-      test += "İşleniyor...";
-    }
-    if (['note','notepad','notdefteri','not'].includes(args[0].toLowerCase().slice(1))) {
-      showCacheInMain('cache_note');
-      test += "İşleniyor...";
-    }
-    if (['cm','commands','comands'].includes(args[0].toLowerCase().slice(1))) {
-      showCacheInMain('cache_commands');
-      test += "İşleniyor...";
+    if(onlytext==false){
+      if (['die','kill','clear','cls'].includes(args[0].toLowerCase().slice(1))) {
+        window.location='';
+        test += "İşleniyor...";
+      }
+      if (['note','notepad','notdefteri','not'].includes(args[0].toLowerCase().slice(1))) {
+        showCacheInMain('cache_note');
+        test += "İşleniyor...";
+      }
+      if (['cm','commands','comands'].includes(args[0].toLowerCase().slice(1))) {
+        showCacheInMain('cache_commands');
+        test += "İşleniyor...";
+      }
     }
   }
 
@@ -446,12 +490,20 @@ function ai_cevapla(metin) {
   if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
     test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
   }
-  return markdown_to_html_link(test);
+    if(onlytext==true){
+      return del_fff(test);
+    }else{
+      return markdown_to_html_link(test);
+    }
   } else {
     if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
       test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
     }
-    return markdown_to_html_link(test);
+    if(onlytext==true){
+      return del_fff(test);
+    }else{
+      return markdown_to_html_link(test);
+    }
   }
 }
 var cache_ds = {};
