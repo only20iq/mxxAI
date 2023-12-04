@@ -155,7 +155,7 @@
     </head>
     <body>
       <div style="margin:0 auto;text-align:center;height:auto;color:grey;max-width:600px;position:relative;">
-        <h1 style="font-family: 'Shojumaru', cursive;font-weight:1000;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;-o-user-select: none;user-select: none;color:black;"><img src="logo.png" onclick="showCacheInMain('cache_form');" height="180"></h1>
+        <h1 style="font-family: 'Shojumaru', cursive;font-weight:1000;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;-o-user-select: none;user-select: none;color:black;"><img src="logo (1).png" height="120" onclick="showCacheInMain('cache_form');" height="180"></h1>
         <!-- Açılır kapanır menü için -->
         <div style="position:absolute;top:0;left:0;z-index:999;user-select:none;"> <!-- Burada stil eklendi -->
           <!-- Menü butonu -->
@@ -167,6 +167,7 @@
             <a id="option2" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_note')">Notepad</a> <!-- Burada fonksiyon ismi değiştirildi -->
             <a id="option3" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_commands')">Commands</a> <!-- Burada fonksiyon ismi değiştirildi -->
             <a id="option4" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_kpop')">Kpop List</a> <!-- Burada fonksiyon ismi değiştirildi -->
+            <a id="option5" style="display:block;padding:10px;text-decoration:none;color:black;" onclick="toggleMenu();showCacheInMain('cache_websocket')">Websocket</a> <!-- Burada fonksiyon ismi değiştirildi -->
           </div>
         </div>
       <!-- Menüyü açıp kapamak için JavaScript fonksiyonu -->
@@ -204,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {document.getElementByI
   // Diğer div leri gizleyen fonksiyon
   function hideOthers(cacheId) {
     // Diğer div lerin id lerini bir diziye koy
-    var others = ["cache_form","cache_note", "cache_commands", "cache_kpop", "cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
+    var others = ["cache_form","cache_note", "cache_commands", "cache_kpop", "cache_websocket", "cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
     // Tıklanan div in id sini diziden çıkar
     others.splice(others.indexOf(cacheId), 1);
     // Dizide kalan diğer div leri seç ve gizle
@@ -231,6 +232,9 @@ window.addEventListener("load", function() {
   }
   else if (["#kpop", "#kpoplist", "#gglist"].some(value => loc_link.includes(value))) {
     showCacheInMain('cache_kpop');
+  }
+  else if (["#websocket", "#ws", "#websocketserver","#wsserver"].some(value => loc_link.includes(value))) {
+    showCacheInMain('cache_websocket');
   }
   else {
     showCacheInMain('cache_form');
@@ -431,12 +435,27 @@ list.addEventListener("click", showDetails);
   </ul>
 
       </div>
+      <div id="cache_websocket" style="display:none;">
+        Websocket<br>
+        <p style="font-size:24px;color:grey;">Bağlantı durumu: <span id="baglanti" style="color:grey;">Kapalı</span></p>
+        <form onsubmit="baglan(ws.value),event.preventDefault()">
+          <div style="display: flex; flex-wrap:no-wrap; align-items: center; width:100%;max-width: 600px;">
+            <textarea id="ws" placeholder="ws://" spellcheck='false' type="text" class="textareaxx asdas1c" onkeypress="13===window.event.keyCode&&(event.preventDefault(),baglan(ws.value))" style="height:59px;display:inline-block;font-size:16px;font-weight:1000;width: 100%!important;background-color:transparent;border:0;margin:0;border-bottom:2.5px solid #FFA000;padding:16px;color:dimgrey!important;resize: vertical!important;" autocomplete="off"></textarea><input type="submit" value=">" style="margin:0;font-size:16px;font-weight:1000;width:100%!important;max-width:40px;border:0;background-color:transparent;border-bottom:2.5px solid #FFA000;padding:16px;color:black!important;height:59px!important;display:inline-block;">
+          </div>
+        </form>
+        <form onsubmit="changeoptions(),event.preventDefault()">
+          <div style="display: flex; flex-wrap:no-wrap; align-items: center; width:100%;max-width: 600px;">
+            <textarea id="optionsx" placeholder="Key:Digest(0):BlockSize(0,128,256):Tag" spellcheck='false' type="text" class="textareaxx asdas1c" onkeypress="13===window.event.keyCode&&(event.preventDefault(),changeoptions())" style="height:59px;display:inline-block;font-size:16px;font-weight:1000;width: 100%!important;background-color:transparent;border:0;margin:0;border-bottom:2.5px solid #FFA000;padding:16px;color:dimgrey!important;resize: vertical!important;" autocomplete="off">123456789:0:0:w</textarea><input type="submit" value=">" style="margin:0;font-size:16px;font-weight:1000;width:100%!important;max-width:40px;border:0;background-color:transparent;border-bottom:2.5px solid #FFA000;padding:16px;color:black!important;height:59px!important;display:inline-block;">
+          </div>
+        </form>
+      </div>
       <div id="cache_commands" style="display:none;">
         Commands<br>
         /m,/music,/şarkı,/müzik,/kpop (Suggests music)<br>
         /m -s all,/m -s 10(value)<br>
         /cls,/clear,/die,/kill (Refresh Page)<br>
         /note,/not,/notepad,/notdefteri (Open Notepad)<br>
+        /ws,/websocket,/websocketserver,/wsserver (Websocket)
       </div>
       <div id="cache_note" style="display:none;">
         <div style="text-align: center;">
@@ -533,7 +552,7 @@ window.addEventListener("cleardata", function() {
       <!-- Her bir öneriyi bir div elementi olarak ekle -->
       <div class="suggestion">/music -s 15</div>
       <div class="suggestion">/note</div>
-      <div class="suggestion">wss://socketsbay.com/wss/v2/1/demo/</div>
+      <div class="suggestion">/commands</div>
       </div>
       <div id="messages" style="word-wrap: break-word;">Size: <x>null</x><br>JS Based Basic ChatBot<br>Son kullanıcının isteği üzerine websocket sunucularına bağlanabilir ve cevap verebilir.</div>
       </div>
@@ -609,6 +628,7 @@ window.addEventListener("cleardata", function() {
                 var dateString = date.toLocaleDateString();
                 return `${timeString} ${dateString}`;
             }
+            window.sifrelemesorgu = 1;
             window.main_tag = "w";
             window.cache_sifre = "123456789";
             window.cache_sindirme = "0";
@@ -628,6 +648,7 @@ window.addEventListener("cleardata", function() {
 
     //WebSocket nesnesini WebSocket adresi ile başlatmak
     var ws = new WebSocket(url);
+    var baglanti = document.getElementById("baglanti");
     //Bağlantı açıldığında çalışacak fonksiyon
     ws.onopen = function() {
         //Rastgele bir takma ad oluşturma
@@ -638,7 +659,10 @@ window.addEventListener("cleardata", function() {
         // var baglanti = document.getElementById("baglanti");
         // baglanti.textContent = "Açık";
         // baglanti.style.color = "green";
+        document.getElementById("ws").value = url;
         sent__s("Bağlantı başarılı");
+        baglanti.textContent = "Açık";
+        baglanti.style.color = "green";
     };
 
     //Bağlantı kapandığında çalışacak fonksiyon
@@ -648,6 +672,8 @@ window.addEventListener("cleardata", function() {
         // baglanti.textContent = "Bağlantı kesildi";
         // baglanti.style.color = "red";
         sent__s("Bağlantı koptu");
+        baglanti.textContent = "Bağlantı kesildi";
+        baglanti.style.color = "red";
     };
 
     //Bağlantıda hata olduğunda çalışacak fonksiyon
@@ -657,6 +683,8 @@ window.addEventListener("cleardata", function() {
         // baglanti.textContent = "Hata";
         // baglanti.style.color = "yellow";
         sent__s("Bağlantı hatası");
+        baglanti.textContent = "Hata";
+        baglanti.style.color = "yellow";
     };
 // ❯
     //Bağlantıdan mesaj geldiğinde çalışacak fonksiyon
@@ -664,9 +692,11 @@ window.addEventListener("cleardata", function() {
         //Mesajı almak
         var mesaj = event.data;
         if(mesaj.indexOf(window.main_tag+"$") == 0){
+          if(window.sifrelemesorgu == 1){
             mesaj = window.cipher.Decrypt(mesaj.substring(window.main_tag.length + 1));
             sendMessage(mesaj,"__server__");
         cevapla(mesaj,"__SERVER__ENC__");
+          }else{sendMessage(mesaj,"__server__");}
         }else{
           sendMessage(mesaj,"__server__");
           cevapla(mesaj,"__SERVER__NO_ENC__");
@@ -678,7 +708,11 @@ window.addEventListener("cleardata", function() {
 function mesajGonder(mesaj,enc="no") {
         if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
             if(enc=="yes"){
-              var metin = window.main_tag + "$" + window.cipher.Encrypt(mesaj);
+              if(window.sifrelemesorgu == 1){
+                var metin = window.main_tag + "$" + window.cipher.Encrypt(mesaj);
+              }else{
+                return;
+              }
             }else{
               var metin = mesaj;
             }
@@ -776,6 +810,48 @@ function mesajGonder(mesaj,enc="no") {
             messagex2="";
             messagex="";
             }});
+            function changeoptions(){
+        try {
+    var cache000 = document.getElementById("optionsx").value;
+    if(cache000.trim() == ""){
+        window.sifrelemesorgu = 0;
+    }else {
+        window.sifrelemesorgu = 1;
+        if(cache000.trim() == "default" || cache000.trim() == "0" || cache000.trim() == "reset" || cache000.trim() == "restart"){
+        window.main_tag = "w";
+        window.cache_sifre = "123456789";
+        window.cache_sindirme = "0";
+        window.cache_block = "0";
+        window.cipher = new SC5(window.cache_sifre,window.cache_sindirme,window.cache_block);
+        document.getElementById("optionsx").value = "123456789:0:0:w";
+        alert("Successful");
+        return;
+    }
+    var parcalar = cache000.split(":");
+    window.cache_sifre = parcalar[0].trim();
+    try {
+        window.cache_sindirme = parcalar[1].trim();
+    } catch(e) {
+    }
+    try {
+        window.cache_block = parcalar[2].trim();
+     }catch(e) {
+    }
+    try {
+        var ____cache_0x0 = Cevir(parcalar[3].trim());
+        window.main_tag = ____cache_0x0;
+     }catch(e) {
+    }
+        window.cipher = new SC5(window.cache_sifre,window.cache_sindirme,window.cache_block);
+    }
+        alert("Successful");
+    }catch(e){
+        alert("Error: " + e);
+    }
+
+
+
+}
         </script>
     </body>
 </html>

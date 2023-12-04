@@ -411,7 +411,7 @@ function ai_cevapla(metin,onlytext=false) {
   let text = null; // text değişkenini varsayılan olarak null tanımlıyoruz
   let key = null; // key değişkenini varsayılan olarak null tanımlıyoruz
   if (metin.startsWith('/')) { // metin değişkeni / ile başlıyorsa bu bloğu çalıştırıyoruz
-    if (['kpop','müzik','şarkı','music','m'].includes(args[0].toLowerCase().slice(1))) {
+    if (['müzik','şarkı','music','m'].includes(args[0].toLowerCase().slice(1))) {
       if (args.includes('-s')) {
         let key_index = args.indexOf('-s') + 1;
         key = args[key_index]; // key değişkenine -k argümanının değerini atıyoruz
@@ -451,6 +451,14 @@ function ai_cevapla(metin,onlytext=false) {
       }
       if (['cm','commands','comands'].includes(args[0].toLowerCase().slice(1))) {
         showCacheInMain('cache_commands');
+        test += "İşleniyor...";
+      }
+      if (['kpop','kpoplist','gglist','girlgroup','girlgrouplist'].includes(args[0].toLowerCase().slice(1))) {
+        showCacheInMain('cache_kpop');
+        test += "İşleniyor...";
+      }
+      if (['ws','websocket','websocketserver','wsserver'].includes(args[0].toLowerCase().slice(1))) {
+        showCacheInMain('cache_websocket');
         test += "İşleniyor...";
       }
     }
