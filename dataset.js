@@ -655,6 +655,19 @@ var data_raw = {
             "https://www.youtube.com/watch?v=Z_0s7UP9Wy8,Aespa Savage 8K",
             "https://www.youtube.com/watch?v=OJzW6UqCBMk,Oh My Girl Arin SSFWL 4K"
         ],
+        "link_tatil_music":[
+            "https://www.youtube.com/watch?v=JLtWosxb_HI,Twilight Bay City",
+            "https://www.youtube.com/watch?v=xm-th_xR2s0,Scramble Cross",
+            "https://www.youtube.com/watch?v=DYVDrsCoCkI,TRANSIT IN SUMMER",
+            "https://www.youtube.com/watch?v=j9dJfgnzPe4,SUMMER SUSPICION",
+            "https://www.youtube.com/watch?v=XdfMKfOTWAQ,LIGHT MORNING",
+            "https://www.youtube.com/watch?v=OIBUrVeFbm4,SEXY HALATION",
+            "https://www.youtube.com/watch?v=inC77F0vWS0,Never Ending Summer I",
+            "https://www.youtube.com/watch?v=nzuJ90JJJNc,FUTARI NO NATSU MONOGATARI NEVER ENDING SUMMER",
+            "https://www.youtube.com/watch?v=ifmbp7W4Xnw,Misty Night Cruising",
+            "https://www.youtube.com/watch?v=75NVojFiRXs,Kimi ha 1000％",
+            "https://www.youtube.com/watch?v=QSLgj_p_dbs,SCRAMBLE CROSS Remix"
+        ],
         "p_troll_kpop_sozler":[
             "Neler olduğunu söyle, neden böyle kolaysın?",
             "Neden bu kadar güzelsin?",

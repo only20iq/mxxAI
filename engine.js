@@ -402,7 +402,8 @@ function shuffle_array(array) {
 function del_fff(test){
   let regex = /\{.*?\}/g; // süslü parantezler arasındaki kısımları eşleştiren regex'i tanımla
   let regex1 = /\[.*?\]\(.*?\)/g;
-  return test.replace(regex, "").replace(regex1, "").replace("<br>"," "); // eşleşen kısımları boşlukla değiştir
+  test =  test.replace(regex, "").replace(regex1, "").replaceAll("<br>"," "); // eşleşen kısımları boşlukla değiştir
+  return test;
 }
 function ai_cevapla(metin,onlytext=false) {
   var test = "";
@@ -464,7 +465,7 @@ function ai_cevapla(metin,onlytext=false) {
     }
   }
 
-  metin = metin.toLowerCase().replace("?", "").replace("!", "").replace(".", "").replace(",", "");
+  metin = metin.toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "");
   var test1 = single_thread(metin);
   var test2 = multi_thread(metin);
   var test3 = quad_thread(metin);
@@ -501,6 +502,7 @@ function ai_cevapla(metin,onlytext=false) {
     if(onlytext==true){
       return del_fff(test);
     }else{
+      change_latest_cache(test);
       return markdown_to_html_link(test);
     }
   } else {
@@ -510,6 +512,7 @@ function ai_cevapla(metin,onlytext=false) {
     if(onlytext==true){
       return del_fff(test);
     }else{
+      change_latest_cache(test);
       return markdown_to_html_link(test);
     }
   }

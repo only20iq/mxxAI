@@ -27,6 +27,7 @@
         <script src="engine.js"></script>
         <script src="js/md5.min.js"></script>
         <script src="js/sc5.min.js"></script>
+        <script src="js/SilverCipherMini.min.js"></script>
         <script src="js/crypto-js.min.js"></script>
         <!--
         <script src="js/crypto-js.min.js"></script>
@@ -172,7 +173,10 @@
         </div>
       <!-- Menüyü açıp kapamak için JavaScript fonksiyonu -->
       <script>
-
+window.latest_____cache_x = "";
+function change_latest_cache(text){
+  window.latest_____cache_x = text;
+}
 window.onbeforeunload = function() {
         // sayfanın tüm önbellek verilerini sil
         window.caches.keys().then(function(cacheNames) {
@@ -448,6 +452,8 @@ list.addEventListener("click", showDetails);
             <textarea id="optionsx" placeholder="Key:Digest(0):BlockSize(0,128,256):Tag" spellcheck='false' type="text" class="textareaxx asdas1c" onkeypress="13===window.event.keyCode&&(event.preventDefault(),changeoptions())" style="height:59px;display:inline-block;font-size:16px;font-weight:1000;width: 100%!important;background-color:transparent;border:0;margin:0;border-bottom:2.5px solid #FFA000;padding:16px;color:dimgrey!important;resize: vertical!important;" autocomplete="off">123456789:0:0:w</textarea><input type="submit" value=">" style="margin:0;font-size:16px;font-weight:1000;width:100%!important;max-width:40px;border:0;background-color:transparent;border-bottom:2.5px solid #FFA000;padding:16px;color:black!important;height:59px!important;display:inline-block;">
           </div>
         </form>
+        Diğer Kullanıcılarla Etkileşim
+        <p style="font-size:24px;color:grey;">Bağlantı durumu: <span id="baglantiother" style="color:grey;">Kapalı</span></p>
       </div>
       <div id="cache_commands" style="display:none;">
         Commands<br>
@@ -555,7 +561,7 @@ window.addEventListener("cleardata", function() {
       <div class="suggestion">/websocket</div>
       <div class="suggestion">/commands</div>
       </div>
-      <div id="messages" style="word-wrap: break-word;">Size: <x>null</x><br>JS Based Basic ChatBot<br>Son kullanıcının isteği üzerine websocket sunucularına bağlanabilir ve cevap verebilir. Kesinlikle kimseye hakaret edemez veya hedef alamaz böyle eğitilmemiştir. Kesinlikle özel bilgilerinizi paylaşmayınız.</div>
+      <div id="messages" style="word-wrap: break-word;">Size: <x>null</x><br>JS Based Basic ChatBot<br>Başkasının yazışmalarını görebilirsiniz lütfen saygılı olun. Son kullanıcının isteği üzerine belirtilen websocket sunucularına bağlanabilir ve cevap verebilir. Kesinlikle kimseye hakaret edemez veya hedef alamaz böyle eğitilmemiştir. Kesinlikle özel bilgilerinizi paylaşmayınız.</div>
       </div>
       <div id="main" style="padding:0;margin:0;">
       </div>
@@ -629,17 +635,100 @@ window.addEventListener("cleardata", function() {
                 var dateString = date.toLocaleDateString();
                 return `${timeString} ${dateString}`;
             }
+            window.wsmode_realtime_other = 1;
             window.sifrelemesorgu = 1;
+            window.SCMmain_tag = "u";
             window.main_tag = "w";
             window.cache_sifre = "123456789";
             window.cache_sindirme = "0";
             window.cache_block = "0";
             window.cipher = new SC5(window.cache_sifre,window.cache_sindirme,window.cache_block);
+            window.SCMcipher = new SilverCipherMini(window.cache_sifre);
+            function wsrealtimeOther(){
+if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
+    window.otherusers_realtime_ws.close();
+}
+window.otherusers_realtime_ws = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/");
+var baglantiother = document.getElementById("baglantiother");
+///////
+///////
+window.otherusers_realtime_ws.onopen = function() {
+        sent__s("Lobiye katıldın");
+        baglantiother.textContent = "Açık";
+        baglantiother.style.color = "green";
+    };
+    window.otherusers_realtime_ws.onclose = function() {
+      sent__s("Lobiden ayrıldın");
+      baglantiother.textContent = "Bağlantı kesildi";
+      baglantiother.style.color = "red";
+      if(window.wsmode_realtime_other==1){
+        setTimeout (yenidenBaglan, 2000);
+      }
+    };
+    window.otherusers_realtime_ws.onerror = function() {
+      sent__s("Lobiye bağlantı sorunu");
+      baglantiother.textContent = "Hata";
+      baglantiother.style.color = "yellow";
+    };
+    window.otherusers_realtime_ws.onmessage = function(event) {
+        var mesaj = event.data;
+        if(mesaj.indexOf(window.SCMmain_tag+"$") == 0){
+          mesaj = window.SCMcipher.Decrypt(mesaj.substring(window.SCMmain_tag.length + 1));
+          mesaj = JSON.parse(mesaj);
+          // sent__s("User:" + mesaj.a + "Diğer" + mesaj.b);
+          message1 = san_input_fix(mesaj.a).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"','').replaceAll("[","").replaceAll("]","");
+          message2 = markdown_to_html_link(san_input_fix_MOD1(mesaj.b).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"',''));
+          var messages = document.querySelector('#messages');
+          var messagex = document.createElement('div');
+          messagex.style.display = "block";
+          messagex.innerHTML = "<p class='a lf'><label id='f1'>Unknown : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:grey;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
+          messages.insertBefore(messagex, messages.firstChild);
+          message1="";
+          sent__s(message2);
+          message2="";
+        }else{
+          // sent__s("Socket Server:" + mesaj);
+        }
+    };
+///////
+///////
+            }
+            function WS__OTHER(mesaj,aicevap) {
+              var json_nesnesi = {
+                "a": mesaj,
+                "b": aicevap
+              };
+        if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
+            var metin = window.SCMmain_tag + "$" + window.SCMcipher.Encrypt(JSON.stringify(json_nesnesi));
+            window.otherusers_realtime_ws.send(metin);
+        }
+    }
+
+
+
+              try {
+                wsrealtimeOther();
+              }catch(e) {}
             function baglan(url) {
     if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
         window.ws.close();
     }
     url = url.trim();
+    if(url==""){
+      window.wsmode_realtime_other = 1;
+      window.SCMmain_tag = "u";
+      window.cache_sifre = "123456789";
+      window.cache_sindirme = "0";
+      window.cache_block = "0";
+      window.SCMcipher = new SilverCipherMini(window.cache_sifre);
+      wsrealtimeOther();
+      return;
+    }else{
+      if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
+          window.otherusers_realtime_ws.close();
+      }
+      window.wsmode_realtime_other = 0;
+    }
     var kontrol1 = url.indexOf ("ws://");
     var kontrol2 = url.indexOf ("wss://");
     if (kontrol1 == -1 && kontrol2 == -1) {
@@ -746,7 +835,9 @@ function mesajGonder(mesaj,enc="no") {
                 if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
                     window.ws.close();
                 }
-                dataxxxx = "tmm";
+                window.wsmode_realtime_other = 1;
+                wsrealtimeOther();
+                sent__s("tmm");
               }
                 // var messagecbbtbtnrte = decryptData_FLEXMODE(messagexx,$('targetpublic').html(),$('myprivate').html());
                 /////////////////////
@@ -760,15 +851,19 @@ function mesajGonder(mesaj,enc="no") {
                   var messagecbbtbtnrte = ai_cevapla(dataxxxx,false);
                 }
                 sent__s(messagecbbtbtnrte);
+                if(dataxxxx.charAt(0) != '/'){
+                  WS__OTHER(dataxxxx,window.latest_____cache_x);
+                }
                 ai(dataxxxx);
             }
+            function san_input_fix_MOD1(a){const b={"<":"&lt;",">":"&gt;",'"':"&quot;"};return a.replace(/[&<>"'/]/ig,a=>b[a])}
             function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"};return a.replace(/[&<>"'/]/ig,a=>b[a])}
             function sendMessage(message1,target) {
             // var payload = `${{message1}}:${{target}}:${{keyx}}`;
             // payload = encryptDataserver(payload,$("serverpublickey").html());
             // socket.send(payload);
               if(target=="__server__"){
-                message1 = san_input_fix(message1).replace("script","").replace("<","").replace(">","").replace("'","").replace('"','').replace("{","").replace("}","").replace("[","").replace("]","");
+                message1 = san_input_fix(message1).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"','').replaceAll("[","").replaceAll("]","");
               }
             var messages = document.querySelector('#messages');
             var messagex = document.createElement('div');
