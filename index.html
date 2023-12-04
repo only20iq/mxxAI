@@ -440,7 +440,7 @@ list.addEventListener("click", showDetails);
         <p style="font-size:24px;color:grey;">Bağlantı durumu: <span id="baglanti" style="color:grey;">Kapalı</span></p>
         <form onsubmit="baglan(ws.value),event.preventDefault()">
           <div style="display: flex; flex-wrap:no-wrap; align-items: center; width:100%;max-width: 600px;">
-            <textarea id="ws" placeholder="ws://" spellcheck='false' type="text" class="textareaxx asdas1c" onkeypress="13===window.event.keyCode&&(event.preventDefault(),baglan(ws.value))" style="height:59px;display:inline-block;font-size:16px;font-weight:1000;width: 100%!important;background-color:transparent;border:0;margin:0;border-bottom:2.5px solid #FFA000;padding:16px;color:dimgrey!important;resize: vertical!important;" autocomplete="off"></textarea><input type="submit" value=">" style="margin:0;font-size:16px;font-weight:1000;width:100%!important;max-width:40px;border:0;background-color:transparent;border-bottom:2.5px solid #FFA000;padding:16px;color:black!important;height:59px!important;display:inline-block;">
+            <textarea id="ws" placeholder="ws://" spellcheck='false' type="text" class="textareaxx asdas1c" onkeypress="13===window.event.keyCode&&(event.preventDefault(),baglan(ws.value))" style="height:59px;display:inline-block;font-size:16px;font-weight:1000;width: 100%!important;background-color:transparent;border:0;margin:0;border-bottom:2.5px solid #FFA000;padding:16px;color:dimgrey!important;resize: vertical!important;" autocomplete="off"></textarea><input type="submit" onclick="event.preventDefault(),baglan(ws.value)" value=">" style="margin:0;font-size:16px;font-weight:1000;width:100%!important;max-width:40px;border:0;background-color:transparent;border-bottom:2.5px solid #FFA000;padding:16px;color:black!important;height:59px!important;display:inline-block;">
           </div>
         </form>
         <form onsubmit="changeoptions(),event.preventDefault()">
@@ -551,10 +551,10 @@ window.addEventListener("cleardata", function() {
       <div class="suggestions">
       <!-- Her bir öneriyi bir div elementi olarak ekle -->
       <div class="suggestion">/music -s 15</div>
-      <div class="suggestion">/note</div>
+      <div class="suggestion">/websocket</div>
       <div class="suggestion">/commands</div>
       </div>
-      <div id="messages" style="word-wrap: break-word;">Size: <x>null</x><br>JS Based Basic ChatBot<br>Son kullanıcının isteği üzerine websocket sunucularına bağlanabilir ve cevap verebilir.</div>
+      <div id="messages" style="word-wrap: break-word;">Size: <x>null</x><br>JS Based Basic ChatBot<br>Son kullanıcının isteği üzerine websocket sunucularına bağlanabilir ve cevap verebilir. Kesinlikle kimseye hakaret edemez veya hedef alamaz böyle eğitilmemiştir. Kesinlikle özel bilgilerinizi paylaşmayınız.</div>
       </div>
       <div id="main" style="padding:0;margin:0;">
       </div>

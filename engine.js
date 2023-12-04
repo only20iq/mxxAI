@@ -453,7 +453,7 @@ function ai_cevapla(metin,onlytext=false) {
         showCacheInMain('cache_commands');
         test += "İşleniyor...";
       }
-      if (['kpop','kpoplist','gglist','girlgroup','girlgrouplist'].includes(args[0].toLowerCase().slice(1))) {
+      if (['kpop','kpoplist','gglist','girlgroup','girlgrouplist','gg'].includes(args[0].toLowerCase().slice(1))) {
         showCacheInMain('cache_kpop');
         test += "İşleniyor...";
       }
