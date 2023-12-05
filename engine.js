@@ -140,14 +140,14 @@ function quad_thread(text) {
     if (e.includes("+")) { // e değerinin içinde + olup olmadığını kontrol et
       let parts = e.split("+"); // e değerini + ile ayır ve bir diziye at
       let last = parts[parts.length - 1]; // Dizinin son elemanını al
-      let result = e+"/"+last+"ımı/"+last+"imi/"+last+"nı/"+last+"ni/"+last+"ı/"+last+"i/"+last+"mi/"+last+"ğı/"+last+"yi/"+last+"yı/"+last+"mı/"+last+"am/"+last+"dan/"+last+"den/"+last+"ten/"+last+"tan"; // Sonucu oluştur
+      let result = e+"/"+last+"ımı/"+last+"imi/"+last+"nı/"+last+"ni/"+last+"ı/"+last+"i/"+last+"mi/"+last+"ğı/"+last+"yi/"+last+"yı/"+last+"mı/"+last+"am/"+last+"dan/"+last+"den/"+last+"lük/"+last+"lik/"+last+"cilik/"+last+"ci/"+last+"ciyim/"+last+"çılık/"+last+"cülük/"+last+"rizm/"+last+"izm/"+last+"zm/"+last+"nın/"+last+"nin/"+last+"ten/"+last+"ın/"+last+"in/"+last+"ite/"+last+"tan"; // Sonucu oluştur
       for (let i = 0; i < parts.length - 1; i++) { // Dizinin ilk elemanından sondan bir önceki elemanına kadar döngü ile gez
         let part = parts[i]; // Dizinin i. elemanını al
         result += "/"+part+last; // Sonuca part+last değerini ekle
       }
       return result; // Sonucu döndür
     } else { // e değerinin içinde + yoksa
-      return e+"/"+e+"ımı/"+e+"imi/"+e+"nı/"+e+"ni/"+e+"ı/"+e+"i/"+e+"mi/"+e+"ğı/"+e+"yi/"+e+"yı/"+e+"mı/"+e+"am/"+e+"dan/"+e+"den/"+e+"nın/"+e+"nin/"+e+"ten/"+e+"un/"+e+"ın/"+e+"in/"+e+"tan";
+      return e+"/"+e+"ımı/"+e+"imi/"+e+"nı/"+e+"ni/"+e+"ı/"+e+"i/"+e+"mi/"+e+"ğı/"+e+"yi/"+e+"yı/"+e+"mı/"+e+"am/"+e+"dan/"+e+"den/"+e+"lük/"+e+"lik/"+e+"cilik/"+e+"ci/"+e+"ciyim/"+e+"çılık/"+e+"cülük/"+e+"rizm/"+e+"izm/"+e+"zm/"+e+"nın/"+e+"nin/"+e+"ten/"+e+"un/"+e+"ın/"+e+"in/"+e+"ite/"+e+"tan";
     }
   }  
   function _a(item) {
@@ -528,6 +528,9 @@ function link(data) {
   var description = data.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
   return "<a href='" + link + "' target='_blank' style='color:#f60000;'>" + description + "</a><br>"; // HTML bağlantısını oluşturun
 }
+function linktoimg(data) {
+  return "<img src='" + data + "' target='_blank' style='user-select:none;margin:0 auto;padding:0;width:100%;height:auto;display:block;border-radius:1vh;'>"; // HTML bağlantısını oluşturun
+}
 function xxx(string, length = 0) {
   for (let key of Object.keys(data["set"])) { // data["set"] nesnesinin tüm anahtarlarını döngü ile gez
     if (key.startsWith("link")) { // Anahtarın "link" ile başlayıp başlamadığını kontrol et
@@ -586,6 +589,37 @@ function xxx(string, length = 0) {
             return result; // Sonucu döndür
           } else { // Eğer length parametresi yoksa veya sıfır ise
             var random = array[cache_ds[key]] + "<br>"; // Diziden rastgele bir eleman seçin ve sonuna <br> koy
+            cache_ds[key]++;
+            return random;
+          }
+        }
+      }
+    }
+    if (key.startsWith("k")) { // Anahtarın "k" ile başlayıp başlamadığını kontrol et
+      if (key.slice(2) == string) {
+        let array = data["set"][key]; // Anahtarın değerini bir diziye at
+        if (array.length > 0) { // Dizinin boş olup olmadığını kontrol et
+          if (cache_ds[key] >= array.length) {
+            cache_ds[key] = 0;
+          }
+          if (length === 'all') { // Eğer length parametresi 'all' ise
+            var result = ''; // Sonucu tutacak bir değişken tanımla
+            for (let item of array) { // Dizinin tüm elemanlarını döngü ile gez
+              result += "<br>" + linktoimg(item) + "<br>"; // Her elemanı sonuca ekle ve sonuna <br> koy
+            }
+            return result; // Sonucu döndür
+          } else if (length > 0) { // Eğer length parametresi pozitif bir sayı ise
+            var result = ''; // Sonucu tutacak bir değişken tanımla
+            for (let i = 0; i < length; i++) { // Length kadar döngü yap
+              result += "<br>" + linktoimg(array[cache_ds[key]]) + "<br>"; // Diziden sırayla bir eleman seçin ve sonuca ekle ve sonuna <br> koy
+              cache_ds[key]++; // Cache değerini artırın
+              if (cache_ds[key] >= array.length) { // Eğer cache değeri dizinin uzunluğunu aşıyorsa
+                cache_ds[key] = 0; // Cache değerini sıfırlayın
+              }
+            }
+            return result; // Sonucu döndür
+          } else { // Eğer length parametresi yoksa veya sıfır ise
+            var random = "<br><br>" + linktoimg(array[cache_ds[key]]) + "<br>"; // Diziden rastgele bir eleman seçin ve sonuna <br> koy
             cache_ds[key]++;
             return random;
           }
