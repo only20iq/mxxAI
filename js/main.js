@@ -913,7 +913,7 @@ if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.ready
     window.otherusers_realtime_ws.close();
 }
 // window.otherusers_realtime_ws = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/");
-window.otherusers_realtime_ws = new WebSocket("ws://localhost:8000");
+window.otherusers_realtime_ws = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/");
 var baglantiother = document.getElementById("baglantiother");
 ///////
 ///////
