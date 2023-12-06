@@ -660,7 +660,11 @@ function replaceTextlink(text) {
     if (value == "tw") { // Eğer değer "tw" ise
       return "https://pbs.twimg.com/media/"; // Değeri https://twitter/api/ ile değiştirir
     } else if (value == "y") { // Eğer değer "tw" ise
-      return "https://www.youtube.com/watch?v="; // Değeri https://twitter/api/ ile değiştirir
+      return "https://www.youtube.com/watch?v="; // Değeri https://www.youtube.com/watch?v= ile değiştirir
+    } else if (value == "rd") { // Eğer değer "rd" ise
+      return "https://preview.redd.it/"; // Değeri https://preview.redd.it/ ile değiştirir
+    } else if (value == "i") { // Eğer değer "rd" ise
+      return "https://i.imgur.com/"; // Değeri https://i.imgur.com/ ile değiştirir
     } else { // Eğer değer "tw" değilse
       return match; // Değeri olduğu gibi bırakır
     }

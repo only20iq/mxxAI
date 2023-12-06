@@ -21,7 +21,7 @@ var data_raw = {
         "puşt":"$hoşt",
         "tierlist":"Çekicilik Tier List yaptım [img:GG Tier List]($tw$GAXc2eVX0AAnAhn?format=jpg&name=medium)",
         "newjeans":"Kpop grupları olmasa var ya [img:NewJeans]($tw$GAXRnVDa0AAZ0Uw?format=jpg&name=large)",
-        "putin":"Gerçekten demek istediğim [img:Vladimir Putin]($tw$F-_mHHRWMAAsfpw?format=jpg&name=large)",
+        "putin":"Gerçekten demek istediğim [img:Putin]($tw$F-_mHHRWMAAsfpw?format=jpg&name=large)",
         "test":"Niye test dedin ki? [Test]($y$Qc7_zRjH808)",
         "nazi":"Nasıl? {resim1}",
         "kpop":"Tamam {kpop:20}{bos_yap_nj}{bts_sozler}{bos_yap_k}{troll_kpop_sozler}{bos_yap_n}",

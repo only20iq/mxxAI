@@ -428,6 +428,7 @@ textarea.autocomplete = "off";
 textarea.autofocus = true;
 textarea.required = true;
 
+
 // Input elementini oluşturur
 var input = document.createElement("input");
 input.type = "submit";
@@ -480,7 +481,7 @@ suggestion2.className = "suggestion";
 suggestion2.textContent = "/websocket";
 var suggestion3 = document.createElement("div");
 suggestion3.className = "suggestion";
-suggestion3.textContent = "/commands";
+suggestion3.textContent = "/gallery";
 
 // Önerilenler kutusunun içine öneri elementlerini ekler
 suggestions.appendChild(suggestion1);
@@ -629,8 +630,22 @@ option5.style.textDecoration = "none";
 option5.style.color = "black";
 option5.textContent = "Websocket";
 
+var option6 = document.createElement("a");
+option6.id = "option6";
+option6.onclick = function() {
+  toggleMenu();
+  window.showCacheInMain('gallery_x',true,true);
+  gallery_s();
+};
+option6.style.display = "block";
+option6.style.padding = "10px";
+option6.style.textDecoration = "none";
+option6.style.color = "black";
+option6.textContent = "Gallery";
+
 // Menü içeriği elementinin içine menü seçenekleri elementlerini ekleyelim
 menuContent.appendChild(option1);
+menuContent.appendChild(option6);
 menuContent.appendChild(option2);
 menuContent.appendChild(option3);
 menuContent.appendChild(option4);
@@ -727,7 +742,11 @@ document.addEventListener('DOMContentLoaded', function() {document.getElementByI
     // Tıklanan div i seç
     var cache = document.getElementById(cacheId);
     // Tıklanan div i main e taşı
-    main.appendChild(cache);
+    try {
+      main.appendChild(cache);
+    } catch (error) {
+    }
+    // console.log(cache);
     // Tıklanan div i görünür yap
     cache.style.display = "block";
     // Diğer div leri gizle
@@ -939,7 +958,7 @@ var baglantiother = document.getElementById("baglantiother");
 ///////
 ///////
 window.otherusers_realtime_ws.onopen = function() {
-        sent__s("Lobiye katıldın");
+        sent__s("Merhaba " + window.__nickname__);
         baglantiother.textContent = "Açık";
         baglantiother.style.color = "green";
     };
@@ -1241,7 +1260,16 @@ function mesajGonder(mesaj,enc="no") {
 
 var _000x = 0;
 function gallery_s(){
-  if(_000x==1){return;}else{_000x=1;}
+  if(_000x==1){
+    var body = document.querySelector("body");
+    var html = document.querySelector("html");
+    html.style.backgroundColor = "#131417";
+    body.style.backgroundColor = "#131417";
+    // var ul_x = document.querySelector("#gallery_x > ul");
+    // scrollEvent(ul_x);
+    var _____t = document.getElementById("gallery_x");
+    _____t.style.Display="block";
+    return;}else{_000x=1;}
   var style = document.createElement("style");
   style.innerHTML = "@font-face{font-family:'Ephesis';src:url(Ephesis-Regular.ttf) format('woff')}";
   style.type = "text/css";
@@ -1250,6 +1278,7 @@ function gallery_s(){
 var body = document.querySelector("body");
 
 // Verdiğiniz HTML kodundaki elementleri tek tek oluşturalım
+var geridon_gallery = document.createElement("div");
 var sticky = document.createElement("div");
 var rightstick = document.createElement("div");
 var filestick = document.createElement("div");
@@ -1268,50 +1297,53 @@ prevButton.textContent = "❮";
 nextButton.id = "next-button";
 nextButton.className = "arrow-button";
 nextButton.textContent = "❯";
-
+geridon_gallery.textContent = "Geri Dön ❯";
+geridon_gallery.id = "geridon_gallery";
+geridon_gallery.style.left = "0";
+geridon_gallery.style.right = "0";
+geridon_gallery.style.bottom = "5";
+geridon_gallery.style.padding = "0";
+geridon_gallery.style.margin = "0";
+geridon_gallery.style.color = "#fff";
+geridon_gallery.style.position = "fixed";
+geridon_gallery.style.zIndex = "999";
+geridon_gallery.style.fontSize = "24px";
+geridon_gallery.addEventListener("click", ()=>{
+  // window.removeEventListener("scroll", window.throttleScroll);
+  var ul = document.querySelector("#gallery_x > ul");
+  try {
+    window.listBottom = ul.offsetTop + ul.offsetHeight;
+    window.listTop = ul.offsetTop;
+  } catch (error) {
+  }
+  showCacheInMain('header_x',true,true);
+  showCacheInMain('cache_form');
+  html.style.backgroundColor = "white";
+  body.style.backgroundColor = "white";
+  html.style.color = "black";
+  body.style.color = "black";
+});
 // Elementleri doğru sırayla birbirine bağlayalım
 rightstick.appendChild(filestick);
-body.appendChild(sticky);
-body.appendChild(rightstick);
-body.appendChild(prevButton);
-body.appendChild(nextButton);
+document.getElementById("gallery_x").appendChild(sticky);
+document.getElementById("gallery_x").appendChild(geridon_gallery);
+document.getElementById("gallery_x").appendChild(rightstick);
+document.getElementById("gallery_x").appendChild(prevButton);
+document.getElementById("gallery_x").appendChild(nextButton);
 
 var _latest_file_name = "";
 var prevSrc = "";
 var stickyDiv = document.getElementById("sticky");
 // Klasörlerin isimlerini ve yollarını bir obje olarak tanımlayın
-var foldersOLD = {
-"Twice":"/lightcity/Twice",
-"Gfriend":"/lightcity/Gfriend_VIVIZ",
-"Fromis_9":"/lightcity/Fromis_9",
-"IVE":"/lightcity/ive",
-"Nmixx":"/lightcity/nmixx",
-"NewJeans":"/lightcity/newjeans",
-"Le Sserafim": "/lightcity/lesserafim",
-"Oh My Girl": "/lightcity/ohmygirl",
-"Everglow": "/lightcity/Everglow",
-"Dreamcathcer": "/lightcity/Dreamcatcher",
-"Kep1er":"/lightcity/Kep1er",
-"StayC":"/lightcity/Stayc",
-"Itzy":"/lightcity/Itzy",
-"Aespa":"/lightcity/Aespa",
-"Loona":"/lightcity/Loona",
-"Weeekly":"/lightcity/Weeekly",
-"Blackpink":"/lightcity/Blackpink",
-"Red Velvet":"/lightcity/RedVelvet",
-"Cignature":"/lightcity/Cignature",
-"Billlie":"/lightcity/Billlie",
-"G-idle":"/lightcity/Gidle",
-"Purple Kiss":"/lightcity/PurpleKiss"/*,
-"B": "/lightcity/B",
-"A": "/lightcity/A",
-"D": "/lightcity/D",
-"FF": "/lightcity/FF",
-"FA": "/lightcity/FA",
-"F": "/lightcity/F",
-"E": "/lightcity/E",
-"C": "/lightcity/C"*/
-};
+if(window.limited_mode==false){
+  var foldersOLD = {
+    "Kpop1":"[$i$iHg88tt.mp4,$i$rgmtpJ8.mp4,$i$GasGtLF.mp4,$i$XstRTtl.mp4,$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large,$i$qfqUzqx.mp4!]"
+  };
+}else{
+  var foldersOLD = {
+    "Kpop1":"[$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large!]"
+  };
+}
 
 // Dizileri karıştırmak için bir fonksiyon tanımla
 function shuffle(array) {
@@ -1368,7 +1400,7 @@ div.className = "maindiv";
 div.style["::-webkit-scrollbar"] = "display: none";
 div.style.scrollbarWidth = "none"; // Firefox
 div.style.webkitScrollbar = "display: none"; // Chrome, Safari and Opera
-document.body.appendChild(div);
+document.getElementById("gallery_x").appendChild(div);
 
 // Div elementinin içine bir tane daha div ekleyin
 var innerDiv = document.createElement("div");
@@ -1536,49 +1568,86 @@ var newEvent = new CustomEvent("click", { detail: { target: newDiv } });
 newEvent.detail.target.textContent = _latest_file_name;
 handleFolderClick(newEvent); 
 });
-
 function handleFolderClick(event) {
-
-try {  
-  var folderName = event.target.textContent;
-} catch (err){}
-try {  
-  var folderName = event.detail.target.textContent;
-} catch (err){}
-
-_latest_file_name = folderName;
-newDiv.textContent = _latest_file_name;
-
+  try {  
+    var folderName = event.target.textContent;
+  } catch (err){}
+  try {  
+    var folderName = event.detail.target.textContent;
+  } catch (err){}
+  
+  _latest_file_name = folderName;
+  newDiv.textContent = _latest_file_name;
+  // Geri kalan kod
+  // Metne göre klasörün yolunu alın
 // Metne göre klasörün yolunu alın
 const folderPath = folders[folderName];
-// Fetch API ile klasörü isteyin
-fetch(folderPath)
-  .then(response => response.text()) // Yanıtı metin olarak dönüştürün
-  .then(parseFileNames) // Metinden dosya adlarını alın
-  .then(shuffleFileNames) // Dosya adlarını rastgele karıştırın
-  .then(fileNames => showFiles(fileNames, folderPath)) // Dosyaları göstermek için bir liste elementi oluşturun
-  .then(ul => window.addEventListener("scroll", () => toggleFiles(ul))) // Kaydırma olayını tanımlayın
-  .then(() => window.scrollTo(0, 0)); // Sayfanın en başına kaydırın
+// folderPath değişkeninin sonunda [] içinde dosya isimleri olup olmadığını kontrol edin
+if (folderPath.endsWith("]")) {
+  if (folderPath.endsWith("!]")) {
+    var kural = 1;
+  }else{
+    var kural = 0;
+  }
+  // [] içindeki dosya isimlerini almak için parseFileNames fonksiyonunu çağırın
+  const fileNames = shuffleFileNames(parseFileNames(folderPath));
+  // Dosya isimlerini showFiles fonksiyonuna gönderin
+  showFiles(fileNames, folderPath, (ul) => {
+    // Kaydırma olayını tanımlayın
+    window.addEventListener("scroll", () => toggleFiles(ul));
+    // Sayfanın en başına kaydırın
+    window.scrollTo(0, 0);
+  },kural);
+} else {
+  // Fetch API ile klasörü isteyin
+  fetch(folderPath)
+    .then(response => response.text()) // Yanıtı metin olarak dönüştürün
+    .then(parseFileNames) // Metinden dosya adlarını alın
+    .then(shuffleFileNames) // Dosya adlarını rastgele karıştırın
+    .then(fileNames => showFiles(fileNames, folderPath, (ul) => {
+      // Kaydırma olayını tanımlayın
+      window.addEventListener("scroll", () => toggleFiles(ul));
+      // Sayfanın en başına kaydırın
+      window.scrollTo(0, 0);
+    }));
+}
 }
 
 
-function parseFileNames(text) {return text.match(/href="([^"]*)"/g).map(href => href.replace(/href="/, "").replace(/"/, ""));}
+
+function parseFileNames(text) {
+  // text parametresinin sonunda [] içinde dosya isimleri olup olmadığını kontrol edin
+  if (text.endsWith("]")) {
+    // [] içindeki dosya isimlerini almak için text.match(/\[([^\]]*)\]/g) ifadesini kullanın
+    return text.match(/\[([^\]]*)\]/g).map(href => {
+      // href parametresinin başındaki [ ve sonundaki ] işaretlerini kaldırın
+      href = href.replace(/\[/, "").replace(/!\]?/, "");
+      // href parametresini virgül ile bölerek yeni bir dizi oluşturun
+      return href.split(",");
+    }).flat();
+  } else {
+    // [] içinde dosya isimleri yoksa, href niteliği içindeki dosya isimlerini almak için text.match(/href=(?:"|')?([^"'\s>]+)(?:"|')?/g) ifadesini kullanın
+    return text.match(/href="([^"]*)"/g).map(href => href.replace(/href="/, "").replace(/"/, ""));
+  }
+}
+
 function shuffleFileNames(fileNames) {return fileNames.sort(() => Math.random() - 0.5);}
 function noQuestionMark(element) { return element[0] != "?" && element[0] != "/" && element[0] != "." && element!= "desktop.ini";}
-function addATag(element,folderPath) { return "<a href='" + folderPath + "/" + element + "'>" + element + "</a>";}
-function showFiles(fileNames, folderPath) {
+function addATag(element,folderPath,kural) { if(kural==1){return "<a href='" + element + "'>" + element + "</a>";}else{return "<a href='" + folderPath + "/" + element + "'>" + element + "</a>";}}
+function showFiles(fileNames, folderPath, callback, kural=0) {
 var cssCode = "max-height: 12vh;max-width: 12vh; overflow: auto; overflow-y: auto;"; 
 var filteredFileNames = fileNames.filter(noQuestionMark);
-var fileNamesWithATag = filteredFileNames.map(function(element) { return addATag(element, folderPath); });
+var fileNamesWithATag = filteredFileNames.map(function(element) { return addATag(replaceTextlink(element), folderPath, kural); });
 var fileNamesString = "<h1>" + fileNamesWithATag.length + "</h1>" + "<div class='stickydiv' style='"+cssCode+"'>" + String(fileNamesWithATag).replaceAll(",", "<br>") + "</div>"; 
 stickyDiv.innerHTML = fileNamesString;
-const ul = document.querySelector("ul") || document.createElement("ul");
+var ul = document.querySelector("ul[id='hhh000']") || document.createElement("ul");
+if(ul.id != "hhh000"){ul.id = "hhh000";}
 while (ul.firstChild) {
   ul.removeChild(ul.firstChild);
 }
 var counter = 0;
 fileNames.forEach(fileName => {
-  const media = createMediaElement(fileName, folderPath, counter);
+  const media = createMediaElement(replaceTextlink(fileName), folderPath, counter, kural);
   if (media) {
     const li = document.createElement("li");
     li.appendChild(media);
@@ -1586,14 +1655,17 @@ fileNames.forEach(fileName => {
     counter++;
   }
 });
-document.body.appendChild(ul);
-ul.style.display = "block";
-ul.style.margin = "0 auto";
-ul.style.padding = "0";
-ul.style.textAlign = "center";
-ul.style.listStyle = "none"; // list-style özelliğini none olarak belirtin
-// Liste elementini döndürün
-return ul;
+  // Liste elementini body elementine ekleyin
+  document.getElementById("gallery_x").appendChild(ul);
+  // Liste elementini gösterin
+  ul.style.display = "block";
+  ul.style.margin = "0 auto";
+  ul.style.padding = "0";
+  ul.style.textAlign = "center";
+  ul.style.listStyle = "none"; // list-style özelliğini none olarak belirtin
+  // Promise'i liste elementi ile çözün
+  callback(ul);
+
 }
 
 function toggleFiles(ul) {
@@ -1635,30 +1707,77 @@ const observer = new IntersectionObserver(async entries => {
 mediaElements.forEach(media => {
   observer.observe(media);
 });
-
-// Listenin başlangıç ve bitiş noktalarını hesaplayın
-var listTop = ul.offsetTop; // Bu satırı ekleyin
-var listBottom = ul.offsetTop + ul.offsetHeight; // Bu satırı ekleyin
-
-window.addEventListener("scroll", () => {
-if (window.scrollY + window.innerHeight >= listBottom) {
-  var firstChild = ul.firstElementChild;
-  ul.removeChild(firstChild);
-  ul.append(firstChild); 
-} 
-/*
-if (window.scrollY <= listTop) {
-  var lastChild = ul.lastElementChild; 
-  ul.removeChild(lastChild);
-  ul.prepend(lastChild); 
-}*/
-});
+scrollEvent(ul);
+}
+// Kaydırma olayını sınırlayan bir fonksiyon oluşturun
+window.throttleScroll = function(callback, delay) {
+  // Son kaydırma zamanını ve zamanlayıcıyı tutan değişkenler tanımlayın
+  let lastScrollTime = 0;
+  let timer = null;
+  // Fonksiyonun geri dönüş değeri olarak bir fonksiyon döndürün
+  return function() {
+    // Şimdiki zamanı alın
+    let now = Date.now();
+    // Eğer zamanlayıcı yoksa
+    if (!timer) {
+      // Eğer şimdiki zaman ile son kaydırma zamanı arasındaki fark, gecikmeden büyükse
+      if (now - lastScrollTime > delay) {
+        // Geri çağırma fonksiyonunu çalıştırın
+        callback();
+        // Son kaydırma zamanını güncelleyin
+        lastScrollTime = now;
+      }
+      // Zamanlayıcıyı ayarlayın
+      timer = setTimeout(() => {
+        // Zamanlayıcıyı sıfırlayın
+        timer = null;
+        // Geri çağırma fonksiyonunu çalıştırın
+        callback();
+        // Son kaydırma zamanını güncelleyin
+        lastScrollTime = now;
+      }, delay);
+    }
+  };
 }
 
-function createMediaElement(fileName, folderPath, counter) {
+// Kaydırma olayını tanımlayan bir fonksiyon oluşturun
+function scrollEvent(ul) {
+  window.listBottom = ul.offsetTop + ul.offsetHeight;
+  window.listTop = ul.offsetTop;
+  // ul elementinin alt ve üst sınırlarını alın
+  // Kaydırma olayını tanımlayın
+  if (ul.children.length > 1) {
+  window.addEventListener("scroll", window.throttleScroll(() => {
+    if (window.scrollY + window.innerHeight >= window.listBottom) {
+      var firstChild = ul.firstElementChild;
+      ul.removeChild(firstChild);
+      ul.append(firstChild); 
+            // hide the first child
+      firstChild.style.display = "none";
+      // show the last child
+      ul.lastElementChild.style.display = "block";
+    }
+    /*
+    if (window.scrollY <= listTop) {
+      var lastChild = ul.lastElementChild; 
+      ul.removeChild(lastChild);
+      ul.prepend(lastChild); 
+    }*/
+  }, 100)); // 100 milisaniyelik bir gecikme ile kaydırma olayını sınırlayın
+} else {
+  // disable the scroll event
+  window.removeEventListener("scroll", window.throttleScroll);
+}
+}
+
+function createMediaElement(fileName, folderPath, counter, kural) {
 const ext = fileName.split(".").pop().toLowerCase();
-const url = folderPath + "/" + fileName;
-var media; if (ext == "jpg" || ext == "png" || ext == "gif") { media = new Image();
+if(kural==1){
+  var url = fileName;
+}else{
+  var url = folderPath + "/" + fileName;
+}
+var media; if (/(\.jpeg|\.jpg|\.png|\pbs.twimg.com|\.gif)/i.test(fileName)){ media = new Image();
   // Eğer sayaç değeri 3'ten küçükse src ve data-src kullanın, değilse sadece data-src kullanın
   if (counter < 3) { // Bu koşulu ekleyin
     media.src = url; // Bu satırı ekleyin
@@ -1667,7 +1786,11 @@ var media; if (ext == "jpg" || ext == "png" || ext == "gif") { media = new Image
   } else {
     media.dataset.src = url;
   } media.alt = fileName;media.style.objectFit = "contain";
-} else if (ext == "mp4" || ext == "webm" || ext == "ogg") {
+  media.style.maxWidth = "600px";  media.style.height = "100vh";
+  media.style.objectFit = "cover";
+  media.style.marginTop = "1%";
+  media.style.marginBottom = "1%";  media.style.width = "100%";
+} else if (/(\.mp4|\.webm|\.ogg|\.wmv)/i.test(fileName)){
   media = document.createElement("video");
   media.style.width = "100%";
   media.style.maxWidth = "600px";
@@ -1759,6 +1882,7 @@ rightStick.style.scrollbarWidth = "none";
 rightStick.style["::-webkit-scrollbar"] = "display: none";
 
 sticky.style.position = "fixed";
+sticky.style.textAlign = "left";
 sticky.style.left = "0";
 sticky.style.bottom = "0";
 sticky.style.padding = "10px";
@@ -1856,7 +1980,7 @@ for (var textDiv of textDivs) {
   textDiv.style.userSelect = "none";
 }
 
-
+nextButton.click();
 
 
 
@@ -2040,3 +2164,4 @@ function showDetails(event) {
 
 // Liste elementine bir click olayı ekle
 list.addEventListener("click", showDetails);
+setTimeout(()=>{var ___0000 = document.getElementById("message-input");___0000.focus();},100);
