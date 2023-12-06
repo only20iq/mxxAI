@@ -516,7 +516,7 @@ var data_raw = {
             "$y$eWoKWKIfzbI,Twice What is Love Stage Mix",
             "$y$kCSFdRf0210,Apink Only one",
             "$y$gA49EiRULLI,Weki Meki Siesta Stage Mix",
-            "$y$gA49EiRULLI,Stayc Teddy Bear 4K",
+            "$y$6fkcQGNr-g0,Stayc Teddy Bear 4K",
             "$y$QIN5_tJRiyY,Oh My Girl Secret Garden",
             "$y$Z8T9vTDhOuY,Twice Likey",
             "$y$UY3N52CrTPE,TWICE 5th Anniversary Special Live 'WITH' SAY SOMETHING",

@@ -1,4 +1,3 @@
-
 // start.js / start
 window.onbeforeunload = function() {
     window.caches.keys().then(function(cacheNames) {
@@ -31,7 +30,7 @@ div.id = "base";
 
 // <header> elementini oluşturalım
 var header = document.createElement("header");
-
+header.id = "header_x";
 // <div> elementinin içine <header> elementini ekleyelim
 div.appendChild(header);
 
@@ -82,6 +81,15 @@ cacheForm.style.display = "none";
 
 // <div> elementinin içine <div id="cache_form"> elementini ekleyelim
 div.appendChild(cacheForm);
+
+
+
+var gallery_x = document.createElement("div");
+gallery_x.id = "gallery_x";
+gallery_x.style.display = "none";
+
+div.appendChild(gallery_x);
+
 
 // <div id="main"> elementini oluşturalım
 var main = document.createElement("div");
@@ -713,9 +721,9 @@ function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;
 document.addEventListener('DOMContentLoaded', function() {document.getElementById('k').onclick = calistir;function calistir() {var kopyala = document.getElementById('kopyala');kopyala.select();document.execCommand('copy');}});
 
   // Div leri gösteren fonksiyon
-  function showCacheInMain(cacheId) {
-      // Main div ini seç
-  var main = document.getElementById("main");
+  function showCacheInMain(cacheId,all=false,tumunugizle=false) {
+    // Main div ini seç
+    var main = document.getElementById("main");
     // Tıklanan div i seç
     var cache = document.getElementById(cacheId);
     // Tıklanan div i main e taşı
@@ -723,12 +731,15 @@ document.addEventListener('DOMContentLoaded', function() {document.getElementByI
     // Tıklanan div i görünür yap
     cache.style.display = "block";
     // Diğer div leri gizle
-    hideOthers(cacheId);
+    hideOthers(cacheId,all,tumunugizle);
   }
-  // Diğer div leri gizleyen fonksiyon
-  function hideOthers(cacheId) {
+  function hideOthers(cacheId,all=false,tumunugizle=false) {
     // Diğer div lerin id lerini bir diziye koy
-    var others = ["cache_form","cache_note", "cache_commands", "cache_kpop", "cache_websocket", "cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
+    if(all==false){
+      var others = ["cache_form","cache_note", "cache_commands", "cache_kpop", "cache_websocket", "cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
+    }else{
+      var others = ["gallery_x","header_x","cache_form","cache_note", "cache_commands", "cache_kpop", "cache_websocket", "cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
+    }
     // Tıklanan div in id sini diziden çıkar
     others.splice(others.indexOf(cacheId), 1);
     // Dizide kalan diğer div leri seç ve gizle
@@ -738,7 +749,17 @@ document.addEventListener('DOMContentLoaded', function() {document.getElementByI
       // Diğer div leri eski yerlerine geri gönder
       main.parentNode.insertBefore(other, main); // Burada main.parentNode kullanıldı
     }
+    // Eğer tumunugizle true ise, others dizisindeki tüm div'lerin id'lerini al ve gizle
+    if (tumunugizle == true) {
+      // others dizisindeki tüm div'leri seç ve gizle
+      for (var i = 0; i < others.length; i++) {
+        var div = document.getElementById(others[i]);
+        div.style.display = "none";
+        main.parentNode.insertBefore(other, main);
+      }
+    }
   }
+
         function toggleMenu() {
           // Menü butonu ve içeriğini seç
           var button = document.getElementById("menu-button");
@@ -913,7 +934,7 @@ if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.ready
     window.otherusers_realtime_ws.close();
 }
 // window.otherusers_realtime_ws = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/");
-window.otherusers_realtime_ws = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/");
+window.otherusers_realtime_ws = new WebSocket("ws://localhost:8000");
 var baglantiother = document.getElementById("baglantiother");
 ///////
 ///////
@@ -1107,18 +1128,36 @@ function mesajGonder(mesaj,enc="no") {
                 /////////////////////
                 if(target_A=="__SERVER__NO_ENC__"){
                   var messagecbbtbtnrte = ai_cevapla(dataxxxx,true);
+                  if(messagecbbtbtnrte=="sil"){return;}
                   mesajGonder(messagecbbtbtnrte,"no");
                 }else if(target_A=="__SERVER__ENC__"){
                   var messagecbbtbtnrte = ai_cevapla(dataxxxx,true);
+                  if(messagecbbtbtnrte=="sil"){return;}
                   mesajGonder(messagecbbtbtnrte,"yes");
                 }else{
                   var messagecbbtbtnrte = ai_cevapla(dataxxxx,false);
+                  if(messagecbbtbtnrte=="sil"){return;}
                 }
+                sent__000(dataxxxx,"a");
                 sent__s(messagecbbtbtnrte);
                 if(dataxxxx.charAt(0) != '/'){
                   WS__OTHER(dataxxxx,window.latest_____cache_x);
                 }
                 ai(dataxxxx);
+            }
+            function sent__000(message1,target){
+              var messages = document.querySelector('#messages');
+              var messagex = document.createElement('div');
+              messagex.style.display = "block";
+              //message1="(Encrypted)";
+              //messagex.innerHTML = "Mesaj Gönderildi => <textarea spellcheck='false' style='color:grey;overflow: hidden;resize: vertical;'>"+message1+"</textarea> "+getCurrentTime()+" ID: "+target;
+              if(target=="__server__"){
+                var __cache_kisi_0x13 = "Websocket";
+              }else {
+                var __cache_kisi_0x13 = "Me";
+              }
+              messagex.innerHTML = "<p class='a lf'><label id='f1'>"+__cache_kisi_0x13+" : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:grey;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
+              messages.insertBefore(messagex, messages.firstChild);
             }
             function sendMessage(message1,target) {
             // var payload = `${{message1}}:${{target}}:${{keyx}}`;
@@ -1126,19 +1165,8 @@ function mesajGonder(mesaj,enc="no") {
             // socket.send(payload);
               if(target=="__server__"){
                 message1 = san_input_fix(message1).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"','').replaceAll("[","").replaceAll("]","");
+                sent__000(message1,target);
               }
-            var messages = document.querySelector('#messages');
-            var messagex = document.createElement('div');
-            messagex.style.display = "block";
-            //message1="(Encrypted)";
-            //messagex.innerHTML = "Mesaj Gönderildi => <textarea spellcheck='false' style='color:grey;overflow: hidden;resize: vertical;'>"+message1+"</textarea> "+getCurrentTime()+" ID: "+target;
-            if(target=="__server__"){
-              var __cache_kisi_0x13 = "Websocket";
-            }else {
-              var __cache_kisi_0x13 = "Me";
-            }
-            messagex.innerHTML = "<p class='a lf'><label id='f1'>"+__cache_kisi_0x13+" : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:grey;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
-            messages.insertBefore(messagex, messages.firstChild);
             if(target!="__server__"){
               cevapla(message1);
             }
@@ -1211,7 +1239,657 @@ function mesajGonder(mesaj,enc="no") {
 
 }
 
+var _000x = 0;
+function gallery_s(){
+  if(_000x==1){return;}else{_000x=1;}
+  var style = document.createElement("style");
+  style.innerHTML = "@font-face{font-family:'Ephesis';src:url(Ephesis-Regular.ttf) format('woff')}";
+  style.type = "text/css";
+  document.head.appendChild(style);
+// body elementini bulalım
+var body = document.querySelector("body");
 
+// Verdiğiniz HTML kodundaki elementleri tek tek oluşturalım
+var sticky = document.createElement("div");
+var rightstick = document.createElement("div");
+var filestick = document.createElement("div");
+var prevButton = document.createElement("button");
+var nextButton = document.createElement("button");
+
+// Elementlere verdiğiniz id ve class özelliklerini atayalım
+sticky.id = "sticky";
+sticky.textContent = "Null";
+rightstick.id = "rightstick";
+filestick.id = "filestick";
+filestick.textContent = "Null";
+prevButton.id = "prev-button";
+prevButton.className = "arrow-button";
+prevButton.textContent = "❮";
+nextButton.id = "next-button";
+nextButton.className = "arrow-button";
+nextButton.textContent = "❯";
+
+// Elementleri doğru sırayla birbirine bağlayalım
+rightstick.appendChild(filestick);
+body.appendChild(sticky);
+body.appendChild(rightstick);
+body.appendChild(prevButton);
+body.appendChild(nextButton);
+
+var _latest_file_name = "";
+var prevSrc = "";
+var stickyDiv = document.getElementById("sticky");
+// Klasörlerin isimlerini ve yollarını bir obje olarak tanımlayın
+var foldersOLD = {
+"Twice":"/lightcity/Twice",
+"Gfriend":"/lightcity/Gfriend_VIVIZ",
+"Fromis_9":"/lightcity/Fromis_9",
+"IVE":"/lightcity/ive",
+"Nmixx":"/lightcity/nmixx",
+"NewJeans":"/lightcity/newjeans",
+"Le Sserafim": "/lightcity/lesserafim",
+"Oh My Girl": "/lightcity/ohmygirl",
+"Everglow": "/lightcity/Everglow",
+"Dreamcathcer": "/lightcity/Dreamcatcher",
+"Kep1er":"/lightcity/Kep1er",
+"StayC":"/lightcity/Stayc",
+"Itzy":"/lightcity/Itzy",
+"Aespa":"/lightcity/Aespa",
+"Loona":"/lightcity/Loona",
+"Weeekly":"/lightcity/Weeekly",
+"Blackpink":"/lightcity/Blackpink",
+"Red Velvet":"/lightcity/RedVelvet",
+"Cignature":"/lightcity/Cignature",
+"Billlie":"/lightcity/Billlie",
+"G-idle":"/lightcity/Gidle",
+"Purple Kiss":"/lightcity/PurpleKiss"/*,
+"B": "/lightcity/B",
+"A": "/lightcity/A",
+"D": "/lightcity/D",
+"FF": "/lightcity/FF",
+"FA": "/lightcity/FA",
+"F": "/lightcity/F",
+"E": "/lightcity/E",
+"C": "/lightcity/C"*/
+};
+
+// Dizileri karıştırmak için bir fonksiyon tanımla
+function shuffle(array) {
+// Dizinin uzunluğunu al
+var length = array.length;
+// Diziyi değiştirmemek için kopyasını oluştur
+var copy = [...array];
+// Yeni bir boş dizi oluştur
+var result = [];
+// Dizinin uzunluğu kadar döngü kur
+for (var i = 0; i < length; i++) {
+  // Kopya diziden rastgele bir indeks seç
+  var index = Math.floor(Math.random() * copy.length);
+  // Seçilen indeksteki elemanı yeni diziye ekle
+  result.push(copy[index]);
+  // Seçilen elemanı kopya diziden sil
+  copy.splice(index, 1);
+}
+// Karıştırılmış diziyi döndür
+return result;
+}
+
+// Anahtarlar dizisini karıştır
+var shuffledKeys = shuffle(Object.keys(foldersOLD));
+
+// Yeni bir nesne oluştur
+var folders = {};
+
+// Karıştırılmış anahtarlar ve orijinal değerler ile yeni nesneyi doldur
+for (var i = 0; i < shuffledKeys.length; i++) {
+folders[shuffledKeys[i]] = foldersOLD[shuffledKeys[i]];
+}
+// console.log(folders);
+
+let div = document.createElement("div");
+
+div.style.position = "fixed";
+div.style.left = "0";
+div.style.top = "0";
+div.style.right = "0";
+div.style.zIndex = "1";
+div.style.backgroundColor = "transparent";
+div.style.display = "flex";
+div.style.alignItems = "center";
+div.style.justifyContent = "center";
+div.style.fontFamily = "'Ephesis', cursive";
+div.style.fontSize = "36px";
+div.style.fontWeight = "bold";
+div.style.color = "#FAAD3F";
+// div.style.borderBottomLeftRadius = "80%";
+// div.style.borderBottomRightRadius = "80%";
+div.style.width = "100%";
+div.className = "maindiv";
+div.style["::-webkit-scrollbar"] = "display: none";
+div.style.scrollbarWidth = "none"; // Firefox
+div.style.webkitScrollbar = "display: none"; // Chrome, Safari and Opera
+document.body.appendChild(div);
+
+// Div elementinin içine bir tane daha div ekleyin
+var innerDiv = document.createElement("div");
+innerDiv.style.display = "flex"; // İç div elementinin stilini ayarlayın
+// innerDiv.style.flexWrap = "wrap"; // İç div elementinin içindeki h3 elementlerinin satır atlamasını sağlayın
+innerDiv.style.backgroundColor = "transparent";
+innerDiv.style["::-webkit-scrollbar"] = "display: none";
+innerDiv.style.scrollbarWidth = "none"; // Firefox
+innerDiv.style.webkitScrollbar = "display: none"; // Chrome, Safari and Opera
+// innerDiv.style.borderBottomLeftRadius = "10px";
+// innerDiv.style.borderBottomRightRadius = "10px";
+// innerDiv.style.borderTopLeftRadius = "10px";
+// innerDiv.style.borderTopRightRadius = "10px";
+innerDiv.className = "innerdiv";
+
+div.appendChild(innerDiv); // İç div elementini dış div elementinin içine ekleyin
+
+// Sağdan ve soldan kaydırmalı olması için iki tane buton elementi oluşturun
+var leftButton = document.createElement("button");
+var rightButton = document.createElement("button");
+
+// Buton elementlerinin stilini ayarlayın
+leftButton.style.fontSize = "13";
+leftButton.style.color = "#BB5B7F";
+leftButton.style.position = "absolute";
+leftButton.style.left = "0";
+leftButton.style.top = "50%";
+leftButton.style.transform = "translateY(-50%)";
+leftButton.style.zIndex = "9";
+leftButton.style.backgroundColor = "transparent";
+leftButton.style.border = "none";
+leftButton.style.cursor = "pointer";
+leftButton.innerHTML = "◀"; // Sol ok işareti
+
+rightButton.style.fontSize = "13";
+rightButton.style.color = "#BB5B7F";
+rightButton.style.position = "absolute";
+rightButton.style.right = "0";
+rightButton.style.top = "50%";
+rightButton.style.transform = "translateY(-50%)";
+rightButton.style.zIndex = "9";
+rightButton.style.backgroundColor = "transparent";
+rightButton.style.border = "none";
+rightButton.style.cursor = "pointer";
+rightButton.innerHTML = "▶"; // Sağ ok işareti
+
+// Buton elementlerini dış div elementinin içine ekleyin
+div.appendChild(leftButton);
+div.appendChild(rightButton);
+
+// Buton elementleri için birer tıklama olayı yerine basılı tutma olayı tanımlayın
+leftButton.addEventListener("mousedown", scrollLeft);
+rightButton.addEventListener("mousedown", scrollRight);
+
+// Sol butona basılı tutulduğunda yatay kaydırma yapmak için bir fonksiyon tanımlayın
+function scrollLeft(e) {
+// İç div elementinin yatay kaydırma pozisyonunu alın
+var scrollPosition = innerDiv.scrollLeft;
+// Kaydırma miktarını pencerenin %20'si olarak belirleyin
+var scrollAmount = window.innerWidth * 0.2;
+// Kaydırma pozisyonunu kaydırma miktarı kadar azaltın
+scrollPosition = scrollPosition - scrollAmount;
+// İç div elementini yeni kaydırma pozisyonuna göre kaydırın
+innerDiv.scroll({
+  left: scrollPosition,
+  behavior: "smooth"
+});
+// Basılı tutma olayı için bir zamanlayıcı tanımlayın
+var timer = setTimeout(scrollLeft, 200);
+// Sol butonun mouseup olayında zamanlayıcıyı durdurun
+leftButton.addEventListener("mouseup", function() {
+  clearTimeout(timer); // Zamanlayıcıyı iptal edin
+});
+}
+
+// Sağ butona basılı tutulduğunda yatay kaydırma yapmak için bir fonksiyon tanımlayın
+function scrollRight(e) {
+// İç div elementinin yatay kaydırma pozisyonunu alın
+var scrollPosition = innerDiv.scrollLeft;
+// Kaydırma miktarını pencerenin %20'si olarak belirleyin
+var scrollAmount = window.innerWidth * 0.2;
+// Kaydırma pozisyonunu kaydırma miktarı kadar artırın
+scrollPosition = scrollPosition + scrollAmount;
+// İç div elementini yeni kaydırma pozisyonuna göre kaydırın
+innerDiv.scroll({
+  left: scrollPosition,
+  behavior: "smooth"
+});
+// Basılı tutma olayı için bir zamanlayıcı tanımlayın
+var timer = setTimeout(scrollRight, 200);
+// Sağ butonun mouseup olayında zamanlayıcıyı durdurun
+rightButton.addEventListener("mouseup", function() {
+  clearTimeout(timer); // Zamanlayıcıyı iptal edin
+});
+}
+
+
+
+
+var d__start__ = 0;
+// Her klasör için bir h3 elementi oluşturun ve iç div elementinin içine ekleyin
+Object.keys(folders).forEach(folder => createFolderElement(folder, innerDiv));
+
+// Bir klasör için bir h3 elementi oluşturmak için bir fonksiyon tanımlayın
+function createFolderElement(folder, innerDiv) {
+const h3 = document.createElement("h3");
+h3.textContent = folder;
+// H3 elementinin stilini ayarlayın
+h3.style.display = "inline-block";
+h3.style.margin = "10px";
+if(d__start__==0){
+h3.style.marginLeft = "0";
+d__start__++;
+}else {
+h3.style.marginLeft = "35px";
+}
+h3.style.color = "#E6E6E6";
+h3.style.fontSize = "25px";
+h3.style.fontWeight = "300";
+h3.style.whiteSpace = "nowrap";
+h3.style.textOverflow = "ellipsis"; // Taşan metinlerin sonuna üç nokta koyun
+// h3.style.textDecoration = "underline";
+h3.className = "textdiv1";
+h3.style.fontFamily = "'Ephesis', cursive";
+
+// H3 elementi için bir tıklama olayı tanımlayın
+h3.addEventListener("click", handleFolderClick);
+// H3 elementini iç div elementinin içine ekleyin
+
+innerDiv.appendChild(h3);
+}
+
+var prevButton = document.getElementById("prev-button");
+var nextButton = document.getElementById("next-button");
+
+var newDiv = document.createElement("div");
+newDiv.style.color = "#E6E6E6";
+newDiv.style.fontSize = "24px";
+newDiv.style.fontWeight = "300";
+newDiv.style.whiteSpace = "nowrap";
+newDiv.style.fontFamily = "'Ephesis', cursive";
+// newDiv.style.display = "none";
+newDiv.textContent = _latest_file_name;
+document.getElementById("rightstick").prepend(newDiv);
+
+prevButton.addEventListener("click", function () {
+var keys = Object.keys(folders);
+var index = keys.indexOf(_latest_file_name); 
+index--;
+if (index < 0) { index = keys.length - 1; } 
+_latest_file_name = keys[index]; 
+newDiv.textContent = _latest_file_name;
+var newEvent = new CustomEvent("click", { detail: { target: newDiv } }); 
+newEvent.detail.target.textContent = _latest_file_name;
+handleFolderClick(newEvent); 
+});
+nextButton.addEventListener("click", function () {
+var keys = Object.keys(folders);
+var index = keys.indexOf(_latest_file_name);
+index++;
+if (index >= keys.length) { index = 0; } 
+_latest_file_name = keys[index];
+newDiv.textContent = _latest_file_name;
+var newEvent = new CustomEvent("click", { detail: { target: newDiv } }); 
+newEvent.detail.target.textContent = _latest_file_name;
+handleFolderClick(newEvent); 
+});
+
+function handleFolderClick(event) {
+
+try {  
+  var folderName = event.target.textContent;
+} catch (err){}
+try {  
+  var folderName = event.detail.target.textContent;
+} catch (err){}
+
+_latest_file_name = folderName;
+newDiv.textContent = _latest_file_name;
+
+// Metne göre klasörün yolunu alın
+const folderPath = folders[folderName];
+// Fetch API ile klasörü isteyin
+fetch(folderPath)
+  .then(response => response.text()) // Yanıtı metin olarak dönüştürün
+  .then(parseFileNames) // Metinden dosya adlarını alın
+  .then(shuffleFileNames) // Dosya adlarını rastgele karıştırın
+  .then(fileNames => showFiles(fileNames, folderPath)) // Dosyaları göstermek için bir liste elementi oluşturun
+  .then(ul => window.addEventListener("scroll", () => toggleFiles(ul))) // Kaydırma olayını tanımlayın
+  .then(() => window.scrollTo(0, 0)); // Sayfanın en başına kaydırın
+}
+
+
+function parseFileNames(text) {return text.match(/href="([^"]*)"/g).map(href => href.replace(/href="/, "").replace(/"/, ""));}
+function shuffleFileNames(fileNames) {return fileNames.sort(() => Math.random() - 0.5);}
+function noQuestionMark(element) { return element[0] != "?" && element[0] != "/" && element[0] != "." && element!= "desktop.ini";}
+function addATag(element,folderPath) { return "<a href='" + folderPath + "/" + element + "'>" + element + "</a>";}
+function showFiles(fileNames, folderPath) {
+var cssCode = "max-height: 12vh;max-width: 12vh; overflow: auto; overflow-y: auto;"; 
+var filteredFileNames = fileNames.filter(noQuestionMark);
+var fileNamesWithATag = filteredFileNames.map(function(element) { return addATag(element, folderPath); });
+var fileNamesString = "<h1>" + fileNamesWithATag.length + "</h1>" + "<div class='stickydiv' style='"+cssCode+"'>" + String(fileNamesWithATag).replaceAll(",", "<br>") + "</div>"; 
+stickyDiv.innerHTML = fileNamesString;
+const ul = document.querySelector("ul") || document.createElement("ul");
+while (ul.firstChild) {
+  ul.removeChild(ul.firstChild);
+}
+var counter = 0;
+fileNames.forEach(fileName => {
+  const media = createMediaElement(fileName, folderPath, counter);
+  if (media) {
+    const li = document.createElement("li");
+    li.appendChild(media);
+    ul.appendChild(li);
+    counter++;
+  }
+});
+document.body.appendChild(ul);
+ul.style.display = "block";
+ul.style.margin = "0 auto";
+ul.style.padding = "0";
+ul.style.textAlign = "center";
+ul.style.listStyle = "none"; // list-style özelliğini none olarak belirtin
+// Liste elementini döndürün
+return ul;
+}
+
+function toggleFiles(ul) {
+const mediaElements = ul.querySelectorAll(".media[data-src], video[data-src]");
+const observer = new IntersectionObserver(async entries => {
+  for (var entry of entries) {
+    observer.unobserve(entry.target);
+    if (entry.target.classList.contains("media") || entry.target.tagName == "VIDEO") {
+      if (entry.isIntersecting) {
+        if (!entry.target.dataset.loaded) {
+          entry.target.src = entry.target.dataset.src;
+          entry.target.dataset.loaded = true;
+        }
+        if (!document.querySelector("video[autoplay]")) {
+          if (entry.target.tagName != "IMG") {
+            entry.target.play();
+            entry.target.setAttribute("autoplay", true);
+          }
+        }
+        if (entry.target.src != prevSrc) {
+          // console.log("media type: " + entry.target.tagName); // Bu satırı ekleyin
+          // console.log("media src: " + entry.target.src); // Bu satırı ekleyin
+          document.getElementById("filestick").innerHTML = entry.target.tagName + "<br>" + "<a onclick=\"window.open(this.innerText)\">" + entry.target.src + "</a>";
+          prevSrc = entry.target.src;
+        }
+      } else {
+        if (entry.target.tagName != "IMG") {
+          entry.target.pause();
+          entry.target.removeAttribute("autoplay");
+        }
+      }
+    }
+  }
+}, {
+  root: null,
+  rootMargin: "0px 0px 0px 0px",
+  threshold: 0.75
+});
+mediaElements.forEach(media => {
+  observer.observe(media);
+});
+
+// Listenin başlangıç ve bitiş noktalarını hesaplayın
+var listTop = ul.offsetTop; // Bu satırı ekleyin
+var listBottom = ul.offsetTop + ul.offsetHeight; // Bu satırı ekleyin
+
+window.addEventListener("scroll", () => {
+if (window.scrollY + window.innerHeight >= listBottom) {
+  var firstChild = ul.firstElementChild;
+  ul.removeChild(firstChild);
+  ul.append(firstChild); 
+} 
+/*
+if (window.scrollY <= listTop) {
+  var lastChild = ul.lastElementChild; 
+  ul.removeChild(lastChild);
+  ul.prepend(lastChild); 
+}*/
+});
+}
+
+function createMediaElement(fileName, folderPath, counter) {
+const ext = fileName.split(".").pop().toLowerCase();
+const url = folderPath + "/" + fileName;
+var media; if (ext == "jpg" || ext == "png" || ext == "gif") { media = new Image();
+  // Eğer sayaç değeri 3'ten küçükse src ve data-src kullanın, değilse sadece data-src kullanın
+  if (counter < 3) { // Bu koşulu ekleyin
+    media.src = url; // Bu satırı ekleyin
+    media.dataset.src = url; // Bu satırı ekleyin
+    media.dataset.loaded = true;
+  } else {
+    media.dataset.src = url;
+  } media.alt = fileName;media.style.objectFit = "contain";
+} else if (ext == "mp4" || ext == "webm" || ext == "ogg") {
+  media = document.createElement("video");
+  media.style.width = "100%";
+  media.style.maxWidth = "600px";
+  media.style.height = "100vh";
+  media.style.objectFit = "cover";
+  media.style.marginTop = "1%";
+  media.style.marginBottom = "1%";
+  media.style.Display = "block";
+  if (counter < 3) {
+    media.src = url; media.dataset.src = url; media.dataset.loaded = true; media.volume = 0.0;
+  } else {
+    media.dataset.src = url;
+  } media.controls = true; media.loop = true;  media.volume = 0.0;
+    media.style.objectFit = "contain";
+    // media.controlsList.add("nofullscreen");
+    // media.style["::-webkit-media-controls-fullscreen-button"] = "display: none !important";
+    // media.addEventListener("click", function() {
+    //     // Video oynatılıyorsa, durdurun
+    //     if (media.paused == false) {
+    //       media.pause();
+    //     }
+    //     // Video durdurulmuşsa, oynatın
+    //     else {
+    //       media.play();
+    //     }
+    //   });
+  media.requestFullscreen = function() {}; // tam ekran modunu iptal edin
+} else {
+  return null;
+}
+media.className = "media";
+if (media instanceof HTMLVideoElement) {
+  media.className += " video";
+} return media;
+}
+
+// CSS kodunu bir dize olarak tanımlamak yerine, doğrudan JavaScript ile elementlerin stil özelliklerini değiştirelim
+// Önce seçiciye uyan elementleri bulalım
+var arrowButtons = document.querySelectorAll(".arrow-button");
+var prevButton = document.querySelector("#prev-button");
+var nextButton = document.querySelector("#next-button");
+var rightStick = document.querySelector("#rightstick");
+var sticky = document.querySelector("#sticky");
+var stickyDivs = document.querySelectorAll(".stickydiv");
+var links = document.querySelectorAll("a:active,a:hover,a:link,a:visited");
+var html = document.querySelector("html");
+var body = document.querySelector("body");
+var medias = document.querySelectorAll(".media");
+var videos = document.querySelectorAll(".video");
+var videoContainers = document.querySelectorAll(".video-container");
+var mainDivs = document.querySelectorAll(".maindiv");
+var innerDivs = document.querySelectorAll(".innerdiv");
+var textDivs = document.querySelectorAll(".textdiv1");
+
+// Elementlerin her biri için stil özelliklerini CSS kodundaki değerlerle değiştirelim
+for (var arrowButton of arrowButtons) {
+  arrowButton.style.zIndex = "999";
+  arrowButton.style.width = "50px";
+  arrowButton.style.height = "50px";
+  arrowButton.style.fontSize = "30px";
+  arrowButton.style.border = "none";
+  arrowButton.style.background = "transparent";
+  arrowButton.style.cursor = "pointer";
+  arrowButton.style.position = "fixed";
+  arrowButton.style.top = "50%";
+  arrowButton.style.transform = "translateY(-50%)";
+}
+
+prevButton.style.left = "10px";
+prevButton.style.padding = "0";
+prevButton.style.margin = "0";
+prevButton.style.color = "#fff";
+
+nextButton.style.right = "10px";
+nextButton.style.padding = "0";
+nextButton.style.margin = "0";
+nextButton.style.color = "#fff";
+
+rightStick.style.position = "fixed";
+rightStick.style.right = "0";
+rightStick.style.bottom = "0";
+rightStick.style.padding = "10px";
+rightStick.style.fontSize = "8px";
+rightStick.style.zIndex = "999";
+rightStick.style.textAlign = "right";
+rightStick.style.maxHeight = "12vh";
+rightStick.style.maxWidth = "24vh";
+rightStick.style.scrollbarWidth = "none";
+rightStick.style["::-webkit-scrollbar"] = "display: none";
+
+sticky.style.position = "fixed";
+sticky.style.left = "0";
+sticky.style.bottom = "0";
+sticky.style.padding = "10px";
+sticky.style.fontSize = "8px";
+sticky.style.zIndex = "999";
+sticky.style.scrollbarWidth = "none";
+sticky.style["::-webkit-scrollbar"] = "display: none";
+
+for (var stickyDiv of stickyDivs) {
+  stickyDiv.style.scrollbarWidth = "none";
+  stickyDiv.style["::-webkit-scrollbar"] = "display: none";
+}
+
+for (var link of links) {
+  link.style.textDecoration = "none";
+  link.style.color = "#fff";
+}
+
+html.style.backgroundColor = "#131417";
+html.style.color = "#FFF";
+html.style["::-webkit-scrollbar"] = "display: none";
+
+body.style.backgroundColor = "#131417";
+body.style.color = "#FFF";
+body.style["::-webkit-scrollbar"] = "display: none";
+
+for (var media of medias) {
+  media.style.width = "100%";
+  media.style.margin = "0 auto";
+  media.style.textAlign = "center";
+  media.style.maxWidth = "600px";
+  media.style.height = "100vh";
+  media.style.objectFit = "cover";
+}
+
+for (var video of videos) {
+  video.style.width = "100%";
+  video.style.maxWidth = "600px";
+  video.style.height = "100vh";
+  video.style.objectFit = "cover";
+  video.style.marginTop = "1%";
+  video.style.marginBottom = "1%";
+  video.style.Display = "block";
+}
+
+for (var videoContainer of videoContainers) {
+  videoContainer.style.display = "flex";
+  videoContainer.style.alignItems = "center";
+  videoContainer.style.justifyContent = "center";
+}
+
+for (var mainDiv of mainDivs) {
+  mainDiv.style.zIndex = "3";
+  mainDiv.style.backdropFilter = "blur(20px)";
+  mainDiv.style["-webkit-backdrop-filter"] = "blur(20px)";
+  mainDiv.style["::-webkit-scrollbar"] = "display: none";
+  mainDiv.style.overflowY = "hidden";
+
+  mainDiv.style.msOverflowStyle = "none"; // IE and Edge
+  mainDiv.style.scrollbarWidth = "none"; // Firefox
+  mainDiv.style.webkitScrollbar = "display: none"; // Chrome, Safari and Opera
+
+  mainDiv.style["scrollbar-width"] = "none";
+  mainDiv.style["-ms-overflow-style"] = "none";
+}
+
+for (var innerDiv of innerDivs) {
+  innerDiv.style.zIndex = "2";
+  innerDiv.style.objectFit = "cover";
+  innerDiv.style.paddingTop = "0";
+  innerDiv.style.display = "flex";
+  innerDiv.style.flexWrap = "nowrap";
+  innerDiv.style.overflowX = "auto"; // Burada değişiklik yaptım
+  innerDiv.style.overflowY = "hidden";
+  innerDiv.style.margin = "0 auto";
+  innerDiv.style.textAlign = "center";
+  innerDiv.style.width = "92%";
+
+  innerDiv.style.msOverflowStyle = "none"; // IE and Edge
+  innerDiv.style.scrollbarWidth = "none"; // Firefox
+  innerDiv.style.webkitScrollbar = "display: none"; // Chrome, Safari and Opera
+
+  innerDiv.style["scrollbar-width"] = "none";
+  innerDiv.style["::-webkit-scrollbar"] = "display: none";
+  innerDiv.style["-ms-overflow-style"] = "none";
+}
+
+
+for (var textDiv of textDivs) {
+  textDiv.style.zIndex = "3";
+  textDiv.style.filter = "none";
+  textDiv.style.backgroundColor = "transparent";
+  textDiv.style["-webkit-user-select"] = "none";
+  textDiv.style["-ms-user-select"] = "none";
+  textDiv.style.userSelect = "none";
+}
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////
 var size = new TextEncoder().encode(data_raw).length;
 var kiloBytes = size / 1024; // Bayt cinsinden boyutu 1024'e bölerek KB cinsinden boyutu hesapla
 var x = document.getElementsByTagName("x")[0]; // x elementini etiket adı seçiciyle seç, dönen dizi içinde ilk elemanı al
@@ -1362,151 +2040,3 @@ function showDetails(event) {
 
 // Liste elementine bir click olayı ekle
 list.addEventListener("click", showDetails);
-
-
-  var loc_link = window.location.href;
-  // Eğer link #note içeriyorsa, konsola 2 yaz
-  //if (loc_link.includes("#note")) {
-  if(['#note','#notepad','#notdefteri','#not'].some(value => loc_link.includes(value))){
-    showCacheInMain('cache_note');
-  }
-  else if (["#chatbot", "#ai"].some(value => loc_link.includes(value))) {
-    showCacheInMain('cache_form');
-  }
-  else if (["#cm", "#commands", "#comands"].some(value => loc_link.includes(value))) {
-    showCacheInMain('cache_commands');
-  }
-  else if (["#kpop", "#kpoplist", "#gglist"].some(value => loc_link.includes(value))) {
-    showCacheInMain('cache_kpop');
-  }
-  else if (["#websocket", "#ws", "#websocketserver","#wsserver"].some(value => loc_link.includes(value))) {
-    showCacheInMain('cache_websocket');
-  }
-  else {
-    showCacheInMain('cache_form');
-  }
-
-
-// Window load event ==> Kpop Girl Group List
-// JSON formatında grup verilerini tanımla
-var groupData = [
-  {
-    id: "twice",
-    name: "TWICE",
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/53/Twice_210615.png",
-    details: "Twice [Instagram](https://www.instagram.com/twicetagram/), [YouTube](https://www.youtube.com/channel/UCzgxx_DM2Dcb9Y1spb9mUJA), [Twitter](https://twitter.com/jypetwice), [TikTok](https://www.tiktok.com/@twice_tiktok_official), [YouTube Music](https://music.youtube.com/channel/UCAq0pFGa2w9SjxOq0ZxKVIw), [Spotify](https://open.spotify.com/artist/7n2Ycct7Beij7Dj7meI4X0), [Amazon Music](https://music.amazon.com/artists/B0011XQAXQ/twice), [Facebook](https://www.facebook.com/JYPETWICE/), [Last.Fm](https://www.last.fm/music/TWICE), [JYPE Site](https://twice.jype.com/), [Apple Music](https://music.apple.com/us/artist/twice/1203816887), [IMDb](https://www.imdb.com/name/nm9652049/), [Deezer](https://www.deezer.com/en/artist/161553)<br><br>Nayeon [Instagram](https://www.instagram.com/nayeonyny/)<br>Jeongyeon [Instagram](https://www.instagram.com/jy_piece/)<br>Momo [Instagram](https://www.instagram.com/momo/)<br>Sana [Instagram](https://www.instagram.com/m.by__sana/)<br>Jihyo [Instagram](https://www.instagram.com/_zyozyo/)<br>Mina [Instagram](https://www.instagram.com/mina_sr_my/)<br>Dahyun [Instagram](https://www.instagram.com/dahhyunnee/)<br>Chaeyoung [Instagram](https://www.instagram.com/chaeyo.0/)<br>Tzuyu [Instagram](https://www.instagram.com/thinkaboutzu/)<br><h3>UnOfficial</h3>[Kpopping](https://kpopping.com/profiles/group/TWICE), [Wikipedia](https://en.wikipedia.org/wiki/Twice), [Fandom](https://twice.fandom.com/wiki/TWICE), [K-Fandom](https://k-fandom.net/profil/twice/), [Koreaboo](https://www.koreaboo.com/artist/twice/), [K-Profiles](https://kprofiles.com/twice-members-profile/), [Soompi Fanclub](https://www.soompi.com/fanclub/twice)"
-  },
-  {
-    id: "blackpink",
-    name: "BLACKPINK",
-    image: "https://www.asialogy.com/wp-content/uploads/blackpink.webp",
-    details: "[YouTube](https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A), [Wikipedia](https://tr.wikipedia.org/wiki/Blackpink), [Instagram](https://www.instagram.com/blackpinkofficial/)<br><br>Rose [Instagram](https://www.instagram.com/roses_are_rosie/)<br>Jennie [Instagram](https://www.instagram.com/jennierubyjane/)<br>Jisoo [Instagram](https://www.instagram.com/sooyaaa__/)<br>Lisa [Instagram](https://www.instagram.com/lalalalisa_m/)"
-  },
-  {
-    id: "girls_generation",
-    name: "Girls' Generation",
-    image: "https://www.allkpop.com/upload/2020/08/content/061241/1596732074-snsd.jpg",
-    details: "[Wikipedia](https://tr.wikipedia.org/wiki/Girls%27_Generation), [YouTube](https://www.youtube.com/channel/UCPENYtHg4Xhmm6oX8zaQA7Q), [Instagram](https://www.instagram.com/girlsgeneration/)"
-  },
-  {
-    id: "ses",
-    name: "S.E.S.",
-    image: "https://i.discogs.com/070p5NymADdKBMTLRSBH4bVvBW00PLiVeCYzCnMHh7o/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTczODQx/Ni0xNDgwMzg5OTM0/LTQ0MjQuanBlZw.jpeg",
-    details: "- 1997 yılında SM Entertainment tarafından oluşturulan üç üyeli bir kız grubu.\n- Üyeleri: Eugene, Bada ve Shoo.\n- Başlıca şarkıları: \"I'm Your Girl\", \"Dreams Come True\", \"I Love You\", \"Love\" ve \"Be Natural\".\n- En çok satan albümleri: Sea & Eugene & Shoo (1997), Reach Out (1998), Love (1999) ve A Letter from Greenland (2000)."
-  },
-  {
-    id: "exid",
-    name: "EXID",
-    image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/EXID_in_a_showcase_on_May_15%2C_2019_2.png",
-    details: "- 2012 yılında AB Entertainment tarafından oluşturulan beş üyeli bir kız grubu.\n- Üyeleri: Solji, LE, Hani, Hyelin ve Jeonghwa. (Eski üyeler: Dami, Yuji ve Haeryeong)\n- Başlıca şarkıları: \"Whoz That Girl\", \"Up & Down\", \"Ah Yeah\", \"Hot Pink\" ve \"DDD\".\n- En çok satan albümleri: Street (2016), Eclipse (2017) ve Full Moon (2017)."
-  },{ id: "exo", name: "EXO", image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Exo_monster_160618_suwon.png", details: "- 2012 yılında SM Entertainment tarafından oluşturulan dokuz üyeli bir erkek grubu. Üyeleri: Xiumin, Suho, Lay, Baekhyun, Chen, Chanyeol, D.O., Kai ve Sehun. Başlıca şarkıları: 'Mama', 'Growl', 'Overdose', 'Call Me Baby', 'Love Me Right', 'Monster', 'Lotto', 'Ko Ko Bop', 'Power', 'Tempo' ve 'Love Shot'. En çok satan albümleri: XOXO (2013), Exodus (2015), Ex’Act (2016) ve The War (2017)." }, { id: 'bts', name: 'BTS', image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/800px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg", details: "- 2013 yılında Big Hit Entertainment tarafından oluşturulan yedi üyeli bir erkek grubu. Üyeleri: Jin, Suga, J-Hope, RM, Jimin, V ve Jungkook. Başlıca şarkıları: 'No More Dream', 'Boy in Luv', 'I Need U', 'Run', 'Fire', 'Blood Sweat & Tears', 'Spring Day', 'DNA', 'Fake Love', 'Idol' ve 'Boy With Luv'. En çok satan albümleri: Wings (2016), Love Yourself: Tear (2018), Map of the Soul: Persona (2019) ve Map of the Soul: 7 (2020)." }, { id: "red_velvet", name: "Red Velvet", image: "https://www.j-14.com/wp-content/uploads/2023/02/red-velvet-kpop.jpg?fit=4725%2C3150&quality=86&strip=all", details: "- 2014 yılında SM Entertainment tarafından oluşturulan beş üyeli bir kız grubu. Üyeleri: Irene, Seulgi, Wendy, Joy ve Yeri. Başlıca şarkıları: 'Happiness', 'Ice Cream Cake', 'Dumb Dumb', 'Russian Roulette', 'Red Flavor', 'Peek-A-Boo', 'Bad Boy', 'Power Up' ve 'Psycho'. En çok satan albümleri: The Red (2015), The Perfect Red Velvet (2018) ve The ReVe Festival Finale (2019)." }, { id: "mamamoo", name: "MAMAMOO", image: "https://www.korefanzin.com/upload/editor/image_1524038152_4.jpg", details: "- 2014 yılında RBW tarafından oluşturulan dört üyeli bir kız grubu. Üyeleri: Solar, Moonbyul, Wheein ve Hwasa. Başlıca şarkıları: 'Mr. Ambiguous', 'Piano Man', 'Um Oh Ah Yeh', 'You’re the Best', 'Décalcomanie', 'Yes I Am', 'Starry Night', 'Egotistic' ve 'Hip'. En çok satan albümleri: Melting (2016), Reality in Black (2019) ve Travel (2020)." }
-];
-
-// Liste elementini seç
-var list = document.getElementById("list");
-// Liste elementini temizle
-list.innerHTML = "";
-// Grup verilerini döngüye al
-for (var i = 0; i < groupData.length; i++) {
-  // Grup verisini al
-  var group = groupData[i];
-  // Liste öğesi elementi oluştur
-  var item = document.createElement("li");
-  // Liste öğesi elementine class ve id ekle
-  item.className = "group-item";
-  item.id = group.id;
-  // Grup adı elementi oluştur
-  var name1 = document.createElement("div");
-  // Grup adı elementine class ve içerik ekle
-  name1.className = "group-name";
-  name1.textContent = group.name;
-  name1.id= group.id;
-  // Grup resmi elementi oluştur
-  var image = document.createElement("img");
-  // Grup resmi elementine class, src ve alt ekle
-  image.className = "group-image";
-  image.src = group.image;
-  image.alt = group.name;
-  image.id=group.id;;
-  // Liste öğesi elementine grup adı ve resmi ekle
-  item.appendChild(name1);
-  item.appendChild(image);
-  // Liste elementine liste öğesi ekle
-  list.appendChild(item);
-}
-
-var ids = ["cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
-
-for (var j = 0; j < ids.length; j++) {
-  var cache = document.getElementById(ids[j]);
-  for (var i = 0; i < groupData.length; i++) {
-    var group = groupData[i];
-    if (group.id == ids[j].slice(6)) {
-      var details = document.createElement("div");
-      details.className = "group-details";
-      // Grup ayrıntılarının içindeki markdown bağlantılarını HTML bağlantılarına dönüştür
-      details.innerHTML = markdown_to_html_link_main(group.details);
-      cache.appendChild(details);
-      break;
-    }
-  }
-}
-
-
-
-function showDetails(event) {
-  var id = event.target.id;
-  var name, details;
-  for (var i = 0; i < groupData.length; i++) {
-    var group = groupData[i];
-    if (group.id == id) {
-      name = group.name;
-      details = group.details;
-      break;
-    }
-  }
-  showCacheInMain("cache_" + id);
-  // Cache değişkenini al
-  var cache = document.getElementById("cache_" + id);
-  // Cache'nin zaten bir geri dönme bağlantısı içerip içermediğini kontrol et
-  if (cache.firstChild && cache.firstChild.textContent == "<") {
-    // Geri dönme bağlantısı varsa, fonksiyonu sonlandır
-    return;
-  }
-  // Geri dönme bağlantısı oluştur
-  var back = document.createElement("a");
-  back.onclick = function () {
-    showCacheInMain("cache_kpop");
-  };
-  back.textContent = "<";
-  back.style.fontSize = "32px";
-  back.style.color = "black";
-  // Geri dönme bağlantısını cache'nin ilk çocuğu olarak ekle
-  cache.insertBefore(back, cache.firstChild);
-}
-
-
-
-// Liste elementine bir click olayı ekle
-list.addEventListener("click", showDetails);
-

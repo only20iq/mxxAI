@@ -444,23 +444,28 @@ function ai_cevapla(metin,onlytext=false) {
     if(onlytext==false){
       if (['die','kill','clear','cls'].includes(args[0].toLowerCase().slice(1))) {
         window.location='';
-        test += "İşleniyor...";
+        test += "sil";
       }
       if (['note','notepad','notdefteri','not'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_note');
-        test += "İşleniyor...";
+        test += "sil";
       }
       if (['cm','commands','comands'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_commands');
-        test += "İşleniyor...";
+        test += "sil";
       }
       if (['kpop','kpoplist','gglist','girlgroup','girlgrouplist','gg'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_kpop');
-        test += "İşleniyor...";
+        test += "sil";
       }
       if (['ws','websocket','websocketserver','wsserver'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_websocket');
-        test += "İşleniyor...";
+        test += "sil";
+      }
+      if (['galeri','gallery','foto','fotoğraf',"fotoğraflar"].includes(args[0].toLowerCase().slice(1))) {
+        window.showCacheInMain('gallery_x',true,true);
+        gallery_s();
+        test += "sil";
       }
     }
   }
