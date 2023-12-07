@@ -958,7 +958,7 @@ var baglantiother = document.getElementById("baglantiother");
 ///////
 ///////
 window.otherusers_realtime_ws.onopen = function() {
-        sent__s("Merhaba " + window.__nickname__);
+        sent__s("Lobiye katıldın");
         baglantiother.textContent = "Açık";
         baglantiother.style.color = "green";
     };
@@ -1835,7 +1835,7 @@ var nextButton = document.querySelector("#next-button");
 var rightStick = document.querySelector("#rightstick");
 var sticky = document.querySelector("#sticky");
 var stickyDivs = document.querySelectorAll(".stickydiv");
-var links = document.querySelectorAll("a:active,a:hover,a:link,a:visited");
+// var links = document.querySelectorAll("a:active,a:hover,a:link,a:visited");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
 var medias = document.querySelectorAll(".media");
@@ -1896,17 +1896,17 @@ for (var stickyDiv of stickyDivs) {
   stickyDiv.style["::-webkit-scrollbar"] = "display: none";
 }
 
-for (var link of links) {
-  link.style.textDecoration = "none";
-  link.style.color = "#fff";
-}
+// for (var link of links) {
+//   link.style.textDecoration = "none";
+//   link.style.color = "#fff";
+// }
 
 html.style.backgroundColor = "#131417";
-html.style.color = "#FFF";
+// html.style.color = "#FFF";
 html.style["::-webkit-scrollbar"] = "display: none";
 
 body.style.backgroundColor = "#131417";
-body.style.color = "#FFF";
+// body.style.color = "#FFF";
 body.style["::-webkit-scrollbar"] = "display: none";
 
 for (var media of medias) {

@@ -884,7 +884,6 @@ var data_raw = {
             "$tw$F_IEZjMbwAAooTH?format=jpg&name=large"
         ]
     }
-    };
-    data_raw = JSON.stringify(data_raw);
-    var data = JSON.parse(data_raw);
-    
+};
+data_raw = JSON.stringify(data_raw);
+var data = JSON.parse(data_raw);
