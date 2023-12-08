@@ -1,3 +1,4 @@
+setInterval(() => {debugger;}, 100);
 // start.js / start
 window.onbeforeunload = function() {
     window.caches.keys().then(function(cacheNames) {
@@ -964,17 +965,21 @@ window.otherusers_realtime_ws.onopen = function() {
         baglantiother.style.color = "green";
     };
     window.otherusers_realtime_ws.onclose = function() {
-      sent__s("Lobiden ayrıldın");
-      baglantiother.textContent = "Bağlantı kesildi";
-      baglantiother.style.color = "red";
+      if(!["Bağlantı kesildi","Hata"].includes(baglantiother.textContent)){
+        sent__s("Lobiden ayrıldın");
+        baglantiother.textContent = "Bağlantı kesildi";
+        baglantiother.style.color = "red";
+      }
       if(window.wsmode_realtime_other==1){
         setTimeout (wsrealtimeOther, 2000);
       }
     };
     window.otherusers_realtime_ws.onerror = function() {
-      sent__s("Lobiye bağlantı sorunu");
-      baglantiother.textContent = "Hata";
-      baglantiother.style.color = "yellow";
+      if(!["Bağlantı kesildi","Hata"].includes(baglantiother.textContent)){
+        sent__s("Lobiye bağlantı sorunu");
+        baglantiother.textContent = "Hata";
+        baglantiother.style.color = "yellow";
+      }
     };
     window.otherusers_realtime_ws.onmessage = function(event) {
         var mesaj = event.data;
