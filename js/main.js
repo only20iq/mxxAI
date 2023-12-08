@@ -984,13 +984,14 @@ window.otherusers_realtime_ws.onopen = function() {
           // sent__s("User:" + mesaj.a + "Diğer" + mesaj.b);
           message1 = san_input_fix(mesaj.a).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"','').replaceAll("[","").replaceAll("]","");
           message2 = markdown_to_html_link(san_input_fix_MOD1(mesaj.b.replaceAll("<br>","\n")).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"',''));
+          console.log(message2);
           var messages = document.querySelector('#messages');
           var messagex = document.createElement('div');
           messagex.style.display = "block";
           messagex.innerHTML = "<p class='a lf'><label id='f1'>Unknown : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:grey;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
           messages.insertBefore(messagex, messages.firstChild);
           message1="";
-          sent__s(message2);
+          sent__s(message2.replaceAll("\n","<br>"));
           message2="";
         }else{
           // sent__s("Socket Server:" + mesaj);
