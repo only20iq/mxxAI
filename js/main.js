@@ -1099,11 +1099,15 @@ window.otherusers_realtime_ws.onopen = function() {
         if(mesaj.indexOf(window.main_tag+"$") == 0){
           if(window.sifrelemesorgu == 1){
             mesaj = window.cipher.Decrypt(mesaj.substring(window.main_tag.length + 1));
-            setTimeout(() => {sendMessage(mesaj,"__server__"),cevapla(mesaj,"__SERVER__ENC__",lang)}, 1500);
+            translate_Target_TR(mesaj,"tr").then(function(result) {
+              setTimeout(() => {sendMessage(result[0],"__server__"),cevapla(result[0],"__SERVER__ENC__",result[1])}, 1500);
+            }).catch(function(error) {
+              console.error(error);
+            });
           }else{sendMessage(mesaj,"__server__");}
         }else{
-          translate_Target_TR(mesaj,lang).then(function(result,lang) {
-            setTimeout(() => {sendMessage(result,"__server__"),cevapla(result,"__SERVER__NO_ENC__",lang)}, 1500);
+          translate_Target_TR(mesaj,"tr").then(function(result) {
+            setTimeout(() => {sendMessage(result[0],"__server__"),cevapla(result[0],"__SERVER__NO_ENC__",result[1])}, 1500);
           }).catch(function(error) {
             console.error(error);
           });
@@ -1172,7 +1176,7 @@ function mesajGonder(mesaj,enc="no") {
             }
             console.log("F:" + finaltext)
             // Verinin ilk elemanının ilk elemanının ilk elemanını döndürelim
-            resolve(finaltext.replaceAll("%26","&").replaceAll("%3F","?"),data[2]);
+            resolve([finaltext.replaceAll("%26","&").replaceAll("%3F","?"),data[2]]);
           } else {
             // İstek başarısız ise
             reject(new Error("İstek hatası"));
@@ -1285,9 +1289,16 @@ function mesajGonder(mesaj,enc="no") {
                   if(messagecbbtbtnrte=="sil"){return;}
                   translate___PROC=true;
                   translate(messagecbbtbtnrte,"server",lang).then(function(result) {
-                    mesajGonder(result, "no");
-                    messagecbbtbtnrte=result;
-                    sent__s(messagecbbtbtnrte);
+                    if(result[1]==lang){
+                      var veri__0 = messagecbbtbtnrte;
+                      var ___text__0 = messagecbbtbtnrte;
+                    }else {
+                      var veri__0 = result[0];
+                      var ___text__0 = veri__0 + " Translated:" + messagecbbtbtnrte;
+                    }
+                    mesajGonder(veri__0, "no");
+                    messagecbbtbtnrte=veri__0;
+                    sent__s(___text__0);
                     if(dataxxxx.charAt(0) != '/'){
                       WS__OTHER(dataxxxx,window.latest_____cache_x);
                     }
@@ -1300,9 +1311,16 @@ function mesajGonder(mesaj,enc="no") {
                   if(messagecbbtbtnrte=="sil"){return;}
                   translate___PROC=true;
                   translate(messagecbbtbtnrte,"server",lang).then(function(result) {
-                    mesajGonder(result,"yes");
-                    messagecbbtbtnrte=result;
-                    sent__s(messagecbbtbtnrte);
+                    if(result[1]==lang){
+                      var veri__0 = messagecbbtbtnrte;
+                      var ___text__0 = messagecbbtbtnrte;
+                    }else {
+                      var veri__0 = result[0];
+                      var ___text__0 = veri__0 + " Translated:" + messagecbbtbtnrte;
+                    }
+                    mesajGonder(veri__0,"yes");
+                    messagecbbtbtnrte=veri__0;
+                    sent__s(___text__0);
                     if(dataxxxx.charAt(0) != '/'){
                       WS__OTHER(dataxxxx,window.latest_____cache_x);
                     }
