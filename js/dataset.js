@@ -444,6 +444,21 @@ var data_raw = {
         "love":"$sevme",
         "kötü":"$sevme"
         }
+    },"random":{
+        "sullyoon" : "Bir tane kıza aşık oldum, Gözleri iri ve masmavi, Saçları uzun ve sarı. Yüzü tatlı ve sevimli, Bakışları da öyle.",
+        "wonyoung" : "Bir tane kıza aşık oldum, Gözleri büyük ve siyah, Saçları sarı ve parlak. Yüzünde hep bir gülümseme, Gözlerinde hep bir ışık var.",
+        "nayeon" : "Bir tane kıza aşık oldum, Siyah saçlı,Gül gözlü,Yüz hatları ince, Gülüşü tatlı,Gözleri masum,Kalbi temiz,Sevgisi sonsuz",
+        "r1" : "Gözlerine baktığımda, masmavi bir gökyüzünü görüyorum. Gözbebekleri sanki iki küçük evreni andırıyor. Gülümsediğinde, gözleri daha da parlaklaşıyor ve yüzü bir gül bahçesine dönüşüyor.",
+        "sana" : "Bir kız sevdim, siyah saçlı, ela gözlü. Gülümsemesi bir bahar çiçeği gibi,Yüreği bir deniz gibi derin.",
+        "chaeyoung" : "Bir kız sevdim saçları, uzun ve dalgalı. Gözleri ise, büyük ve iri. Gözbebekleri ise koyu kahverengi. Yüzü oval, burnu küçük ve kalkık. Dudakları ise dolgun ve pembe.",
+        "tzuyu" : "Bir kız sevdim, saçları uzun ve siyahtı. Gözleri ise iri ve kahverengiydi. Yüzü oval ve pürüzsüzdü. Burnu küçük ve kalkıktı. Dudakları ise dolgun ve pembeydi.",
+        "r2" : "Gözlerine baktığımda kendimi cennette gibi hissediyorum. Saçlarına dokunmak için kendimi zor tutuyorum. Gülüşünü gördüğümde içimde bir şey kıpırdanıyor. Onunla birlikteyken çok mutluyum. Onu her zaman yanımda istiyorum.",
+        "momo" : "Bir kız sevdim, siyah saçlı, ela gözlü. Gözlerine bakınca kendimi kaybediyorum, Saçlarına dokununca dünyadan kopuyorum.",
+        "r3" : "Bir kız sevdim, Gözleri iri, ela, Gözlerine bakınca, Dünya sanki duruyor.",
+        "r4" : "Saçları uzun, siyah, parlak. Gözleri ise zümrüt yeşili, derin ve anlamlı. Yüzü masum ve saf, gülümsemesi ise bir meleğinki gibi. Vücudu ince ve uzun, dans ederken bir prenses gibi.",
+        "bae" : "Boyu 167 cm, kilosu ise 49 kg. Burçları ise İkizler. Favori renkleri siyah ve beyaz. Favori yiyecekleri ise pizza ve pasta. Favori içeceği ise kahve. Favori sanatçıları ise Beyoncé ve Rihanna.",
+        "chaehyun" : "Siyah saçları, karanlık bir gece gibi parlıyordu. Ela gözleri, derin bir göl gibi huzur veriyordu. Yüzü, bir çiçeğe benziyordu. Gülümsediğinde, çiçekler açar gibiydi. Vücudu, bir balinanınkine benziyordu. İnce ve zarif, ama aynı zamanda güçlü ve dayanıklı. Sesi, bir kuşunkine benziyordu. İnce ve melodik, ama aynı zamanda güçlü ve etkileyici. Kişiliği, bir güneş ışınına benziyordu. Parlak ve sıcak, ama aynı zamanda nazik ve şefkatli.",
+        "r5" : "Onu ilk gördüğümde nefesim kesildi. Siyah saçları omuzlarına kadar uzanıyordu ve iri kahverengi gözleri beni adeta içine çekiyordu. İnce ve uzun boylu, narin bir vücudu vardı. Yüzünde her zaman tatlı bir gülümseme vardı. Onunla tanıştığımda, onun ne kadar güzel ve yetenekli bir kız olduğunu daha iyi anladım. Sahnede dans ederken inanılmazdı. Vücudu sanki müzikle birlikte hareket ediyordu. Sesi de çok güzeldi. Onunla tanıştıktan sonra hayatım değişti. Daha mutlu ve daha enerjik oldum. Onunla birlikteyken her zaman gülümseyerek geziyordum."
     },"set":{
         "link_kpop":[
             "$y$RIWRyggt-QY,April Story",

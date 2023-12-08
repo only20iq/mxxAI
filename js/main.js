@@ -982,7 +982,7 @@ window.otherusers_realtime_ws.onopen = function() {
           mesaj = JSON.parse(mesaj);
           // sent__s("User:" + mesaj.a + "Diğer" + mesaj.b);
           message1 = san_input_fix(mesaj.a).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"','').replaceAll("[","").replaceAll("]","");
-          message2 = markdown_to_html_link(san_input_fix_MOD1(mesaj.b).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"',''));
+          message2 = markdown_to_html_link(san_input_fix_MOD1(mesaj.b.replaceAll("<br>","\n")).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"',''));
           var messages = document.querySelector('#messages');
           var messagex = document.createElement('div');
           messagex.style.display = "block";

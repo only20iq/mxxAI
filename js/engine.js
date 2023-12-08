@@ -340,6 +340,31 @@ function rand_single() {
   let randomKey = keys[Math.floor(Math.random() * keys.length)]; // Diziden rastgele bir anahtar seç
   return single_thread(randomKey); // Seçilen anahtarı single_thread fonksiyonuna gönder ve sonucu döndür
 }
+function r_thread(text) {
+  text = text.trim().replace(/\s/g, "");
+  if (text in data["random"]) {
+    let response = data["random"][text];
+    if (Array.isArray(response)) { // Değerin bir dizi olup olmadığını kontrol eder
+      if (response.length == 1) {
+        cevap = response[0] + " ";
+      } else {
+        cevap = random_choice(response) + " ";
+      }
+    } else if (typeof response == "string" && response.startsWith("$")) { // Değerin bir dize olup başında "$" işareti olup olmadığını kontrol eder
+      cevap = r_thread(response.slice(1)); // Değerin başındaki "$" işaretini atlayarak aynı fonksiyonu çağırır
+    } else { // Değer bir dizi değilse, doğrudan kullanır
+      cevap = response + " ";
+    }
+    return cevap.trim();
+  } else {
+    return null;
+  }
+}
+function rand_r() {
+  let keys = Object.keys(data["random"]); // data["single"] nesnesinin tüm anahtarlarını bir diziye at
+  let randomKey = keys[Math.floor(Math.random() * keys.length)]; // Diziden rastgele bir anahtar seç
+  return r_thread(randomKey); // Seçilen anahtarı single_thread fonksiyonuna gönder ve sonucu döndür
+}
 function rand_multi() {
   let keys = Object.keys(data["multi"]); // data["multi"] nesnesinin tüm anahtarlarını bir diziye at
   let scKeys = keys.filter(key => key.startsWith("sc")); // Diziden sadece "sc" ile başlayan anahtarları seç ve bir diziye at
@@ -484,7 +509,7 @@ function ai_cevapla(metin,onlytext=false) {
     test+=test3;
   }
   if (test == "") {
-  var array = [1,2,3];
+  var array = [1,2,3,4];
   array = shuffle_array(array);
   array = [array[0]];
   for (let i = 0; i < array.length; i++) {
@@ -496,6 +521,12 @@ function ai_cevapla(metin,onlytext=false) {
     }
     else if (array[i] == 3) {
       test += rand_quad() + " ";
+    }
+    else if (array[i] == 4) {
+      test += rand_r() + " ";
+    }
+    else if (array[i] == 5) {
+      test += rand_r() + " ";
     }
     if (i != array.length - 1) {
       test += " ";
