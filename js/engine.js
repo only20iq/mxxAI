@@ -514,7 +514,7 @@ function ai_cevapla(metin,onlytext=false) {
     test+=test3;
   }
   if (test == "") {
-  var array = [1,2,3,4];
+  var array = [1,2,4];
   array = shuffle_array(array);
   array = [array[0]];
   for (let i = 0; i < array.length; i++) {
@@ -524,15 +524,15 @@ function ai_cevapla(metin,onlytext=false) {
     else if (array[i] == 2) {
       test += rand_multi() + " ";
     }
-    else if (array[i] == 3) {
-      test += rand_quad() + " ";
-    }
+    // else if (array[i] == 3) {
+    //   test += rand_quad() + " ";
+    // }
     else if (array[i] == 4) {
       test += rand_r() + " ";
     }
-    else if (array[i] == 5) {
-      test += rand_r() + " ";
-    }
+    // else if (array[i] == 5) {
+    //   test += rand_r() + " ";
+    // }
     if (i != array.length - 1) {
       test += " ";
     }
@@ -541,7 +541,7 @@ function ai_cevapla(metin,onlytext=false) {
     test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
   }
     if(onlytext==true){
-      return del_fff(test);
+      return del_fff(replace_with_xxx(test,true));
     }else{
       window.latest_____cache_x = test;
       return markdown_to_html_link(test);
@@ -551,7 +551,7 @@ function ai_cevapla(metin,onlytext=false) {
       test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
     }
     if(onlytext==true){
-      return del_fff(test);
+      return del_fff(replace_with_xxx(test,true));
     }else{
       window.latest_____cache_x = test;
       return markdown_to_html_link(test);
@@ -572,9 +572,10 @@ function link(data) {
 function linktoimg(data) {
   return "<img src='" + replaceTextlink(data) + "' target='_blank' style='user-select:none;margin:0 auto;padding:0;width:100%;height:auto;display:block;border-radius:1vh;'>"; // HTML bağlantısını oluşturun
 }
-function xxx(string, length = 0) {
+function xxx(string, length = 0,onlytext=false) {
   for (let key of Object.keys(data["set"])) { // data["set"] nesnesinin tüm anahtarlarını döngü ile gez
     if (key.startsWith("link")) { // Anahtarın "link" ile başlayıp başlamadığını kontrol et
+      if(onlytext==true){return "";}
       if (key.slice(5) == string) {
         let array = data["set"][key]; // Anahtarın değerini bir diziye at
         if (array.length > 0) { // Dizinin boş olup olmadığını kontrol et
@@ -637,6 +638,7 @@ function xxx(string, length = 0) {
       }
     }
     if (key.startsWith("k")) { // Anahtarın "k" ile başlayıp başlamadığını kontrol et
+      if(onlytext==true){return "";}
       if (key.slice(2) == string) {
         let array = data["set"][key]; // Anahtarın değerini bir diziye at
         if (array.length > 0) { // Dizinin boş olup olmadığını kontrol et
@@ -669,22 +671,22 @@ function xxx(string, length = 0) {
     }
   }
 }
-function replace_with_xxx(string) {
+function replace_with_xxx(string,onlytext=false) {
   let regex = /\{([^}:]+)(?::([^}]+))?\}/g; // Stringin içinde {text}, {text:10}, {text:all} veya {text:10ü} gibi olan kısmı tanımlayan bir regex oluşturun
   let callback = function(match, text, length) { // Replace metodu için bir callback fonksiyonu tanımlayın
       if (length) { // Eğer length parametresi varsa
           if (length === 'all') { // Eğer length parametresi 'all' ise
-              return xxx(text, 'all'); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
+              return xxx(text, 'all',onlytext); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
           } else { // Eğer length parametresi sayı veya başka bir şey ise
               length = Number(length); // Length parametresini Number() fonksiyonu ile dönüştür
               if (isNaN(length)) { // Eğer length parametresi sayı değilse
-                return xxx(text); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
+                return xxx(text,0,onlytext); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
               } else { // Eğer length parametresi sayı ise
-                return xxx(text, length); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
+                return xxx(text, length,onlytext); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
               }
           }
       } else { // Eğer length parametresi yoksa
-          return xxx(text); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
+          return xxx(text,0,onlytext); // Callback fonksiyonu xxx fonksiyonunun çıktısını döndürür
       }
   }
   let result = string.replace(regex, callback); // Stringin içinde regex ile eşleşen kısmı callback fonksiyonu ile değiştirir

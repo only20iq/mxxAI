@@ -1,4 +1,4 @@
-setInterval(() => {debugger;}, 100);
+// setInterval(() => {debugger;}, 100);
 // start.js / start
 window.onbeforeunload = function() {
     window.caches.keys().then(function(cacheNames) {
@@ -1099,10 +1099,14 @@ window.otherusers_realtime_ws.onopen = function() {
         if(mesaj.indexOf(window.main_tag+"$") == 0){
           if(window.sifrelemesorgu == 1){
             mesaj = window.cipher.Decrypt(mesaj.substring(window.main_tag.length + 1));
-            setTimeout(() => {sendMessage(mesaj,"__server__"),cevapla(mesaj,"__SERVER__ENC__")}, 350);
+            setTimeout(() => {sendMessage(mesaj,"__server__"),cevapla(mesaj,"__SERVER__ENC__",lang)}, 1500);
           }else{sendMessage(mesaj,"__server__");}
         }else{
-          setTimeout(() => {sendMessage(mesaj,"__server__"),cevapla(mesaj,"__SERVER__NO_ENC__")}, 350);
+          translate_Target_TR(mesaj,lang).then(function(result,lang) {
+            setTimeout(() => {sendMessage(result,"__server__"),cevapla(result,"__SERVER__NO_ENC__",lang)}, 1500);
+          }).catch(function(error) {
+            console.error(error);
+          });
           
         }
     };
@@ -1136,7 +1140,93 @@ function mesajGonder(mesaj,enc="no") {
       // asdasdasd.style.height = "auto"; // yüksekliği sıfırlar
       // asdasdasd.style.height = asdasdasd.scrollHeight + "px"; // yüksekliği scrollHeight ile ayarlar
     }
-            function cevapla(dataxxxx,target_A="me"){
+
+    function translate(textasdas,mode,lang){
+      var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
+      var sourceLang = 'auto';
+      if(mode=="self"){
+        var targetLang = 'en';
+      }else{
+        var targetLang = lang;
+        console.log("TARGETX "+ lang);
+      }
+      var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="+ sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURIComponent(sourceText);
+      
+      // Promise nesnesi oluşturalım
+      return new Promise(function(resolve, reject) {
+        // XMLHttpRequest nesnesi oluşturalım
+        let request = new XMLHttpRequest();
+        
+        // URL'ye GET isteği gönderelim
+        request.open("GET", url, true);
+        
+        // İstek tamamlandığında çalışacak fonksiyonu tanımlayalım
+        request.onload = function() {
+          // İstek başarılı ise
+          if (this.status >= 200 && this.status < 400) {
+            // JSON verisini parse edelim
+            let data = JSON.parse(request.responseText);
+            let finaltext = '';
+            for (let i = 0; i < data[0].length; i++) {
+              finaltext += data[0][i][0];
+            }
+            console.log("F:" + finaltext)
+            // Verinin ilk elemanının ilk elemanının ilk elemanını döndürelim
+            resolve(finaltext.replaceAll("%26","&").replaceAll("%3F","?"),data[2]);
+          } else {
+            // İstek başarısız ise
+            reject(new Error("İstek hatası"));
+          }
+        };
+        
+        // İsteği gönderelim
+        request.send();
+      });
+    }
+
+
+
+    function translate_Target_TR(textasdas,target){
+      var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
+      var sourceLang = 'auto';
+      var targetLang = target;
+      
+      var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="+ sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURIComponent(sourceText);
+      
+      // Promise nesnesi oluşturalım
+      return new Promise(function(resolve, reject) {
+        // XMLHttpRequest nesnesi oluşturalım
+        let request = new XMLHttpRequest();
+        
+        // URL'ye GET isteği gönderelim
+        request.open("GET", url, true);
+        
+        // İstek tamamlandığında çalışacak fonksiyonu tanımlayalım
+        request.onload = function() {
+          // İstek başarılı ise
+          if (this.status >= 200 && this.status < 400) {
+            // JSON verisini parse edelim
+            let data = JSON.parse(request.responseText);
+            let finaltext = '';
+            for (let i = 0; i < data[0].length; i++) {
+              finaltext += data[0][i][0];
+            }
+            console.log("X:" + finaltext)
+            console.log("DİL :" + data[2]);
+            // Verinin ilk elemanının ilk elemanının ilk elemanını döndürelim
+            resolve([finaltext.replaceAll("%26","&").replaceAll("%3F","?"),data[2]]);
+          } else {
+            // İstek başarısız ise
+            reject(new Error("İstek hatası"));
+          }
+        };
+        
+        // İsteği gönderelim
+        request.send();
+      });
+    }
+    
+            function cevapla(dataxxxx,target_A="me",lang="tr"){
               if(dataxxxx.indexOf("ws://") != -1){
                 try{baglan(dataxxxx);}catch(e){
                   sent__s(e);
@@ -1189,24 +1279,70 @@ function mesajGonder(mesaj,enc="no") {
               }
                 // var messagecbbtbtnrte = decryptData_FLEXMODE(messagexx,$('targetpublic').html(),$('myprivate').html());
                 /////////////////////
+                var translate___PROC = false;
                 if(target_A=="__SERVER__NO_ENC__"){
                   var messagecbbtbtnrte = ai_cevapla(dataxxxx,true);
                   if(messagecbbtbtnrte=="sil"){return;}
-                  mesajGonder(messagecbbtbtnrte,"no");
+                  translate___PROC=true;
+                  translate(messagecbbtbtnrte,"server",lang).then(function(result) {
+                    mesajGonder(result, "no");
+                    messagecbbtbtnrte=result;
+                    sent__s(messagecbbtbtnrte);
+                    if(dataxxxx.charAt(0) != '/'){
+                      WS__OTHER(dataxxxx,window.latest_____cache_x);
+                    }
+                  }).catch(function(error) {
+                    console.error(error);
+                  });
+
                 }else if(target_A=="__SERVER__ENC__"){
                   var messagecbbtbtnrte = ai_cevapla(dataxxxx,true);
                   if(messagecbbtbtnrte=="sil"){return;}
-                  mesajGonder(messagecbbtbtnrte,"yes");
+                  translate___PROC=true;
+                  translate(messagecbbtbtnrte,"server",lang).then(function(result) {
+                    mesajGonder(result,"yes");
+                    messagecbbtbtnrte=result;
+                    sent__s(messagecbbtbtnrte);
+                    if(dataxxxx.charAt(0) != '/'){
+                      WS__OTHER(dataxxxx,window.latest_____cache_x);
+                    }
+                  }).catch(function(error) {
+                    console.error(error);
+                  });
                 }else{
-                  var messagecbbtbtnrte = ai_cevapla(dataxxxx,false);
-                  if(messagecbbtbtnrte=="sil"){return;}
+                  translate___PROC=true;
+                  translate_Target_TR(dataxxxx,"tr").then(function(result) {
+                    console.log("Alıcı",result[1]);
+                    var lang__x = result[1];
+                    var asdasdassd = ai_cevapla(result[0],false);
+                    if(asdasdassd=="sil"){return;}
+                    if(result[1]=="tr"){
+                      sent__000(dataxxxx,"a");
+                      result = dataxxxx;
+                    }else {
+                      sent__000(dataxxxx + " Translated: "+result[0],"a");
+                    }
+                    // mesajGonder(result, "no");
+                    translate(asdasdassd,"xxx",lang__x).then(function(resultxxx) {
+                      sent__s(resultxxx);
+                      if(dataxxxx.charAt(0) != '/'){
+                        WS__OTHER(dataxxxx + " Translated: "+result,window.latest_____cache_x);
+                      }
+                    }).catch(function(error) {
+                      console.error(error);
+                    });
+                  }).catch(function(error) {
+                    console.error(error);
+                  });
                 }
-                if(!["__SERVER__ENC__","__SERVER__NO_ENC__"].includes(target_A)){
-                  sent__000(dataxxxx,"a");
-                }
-                sent__s(messagecbbtbtnrte);
-                if(dataxxxx.charAt(0) != '/'){
-                  WS__OTHER(dataxxxx,window.latest_____cache_x);
+                if(translate___PROC==false){
+                  if(!["__SERVER__ENC__","__SERVER__NO_ENC__"].includes(target_A)){
+                    sent__000(dataxxxx,"a");
+                  }
+                  sent__s(messagecbbtbtnrte);
+                  if(dataxxxx.charAt(0) != '/'){
+                    WS__OTHER(dataxxxx,window.latest_____cache_x);
+                  }
                 }
                 ai(dataxxxx);
             }
@@ -1368,6 +1504,7 @@ geridon_gallery.addEventListener("click", ()=>{
   body.style.backgroundColor = "white";
   html.style.color = "black";
   body.style.color = "black";
+  window.scrollTo(0, 0);
 });
 // Elementleri doğru sırayla birbirine bağlayalım
 rightstick.appendChild(filestick);
@@ -1422,7 +1559,6 @@ var folders = {};
 for (var i = 0; i < shuffledKeys.length; i++) {
 folders[shuffledKeys[i]] = foldersOLD[shuffledKeys[i]];
 }
-// console.log(folders);
 
 let div = document.createElement("div");
 
@@ -2210,4 +2346,4 @@ function showDetails(event) {
 
 // Liste elementine bir click olayı ekle
 list.addEventListener("click", showDetails);
-setTimeout(()=>{var ___0000 = document.getElementById("message-input");___0000.focus();},100);
+setTimeout(()=>{var ___0000 = document.getElementById("message-input");___0000.focus();sent__s("元気ですか");sent__s("어떻게 지내세요");},100);
