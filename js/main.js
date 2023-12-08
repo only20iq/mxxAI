@@ -1134,11 +1134,11 @@ function mesajGonder(mesaj,enc="no") {
     }
             function cevapla(dataxxxx,target_A="me"){
               if(dataxxxx.indexOf("ws://") != -1){
-                try{baglan(dataxxxx);}catch(e){}
+                try{baglan(dataxxxx);}catch(e){window.wsmode_realtime_other = 1;wsrealtimeOther();}
                 return;
               }
               if(dataxxxx.indexOf("wss://") != -1){
-                try{baglan(dataxxxx);}catch(e){}
+                try{baglan(dataxxxx);}catch(e){window.wsmode_realtime_other = 1;wsrealtimeOther();}
                 return;
               }
               if(dataxxxx == "websocket" || dataxxxx == "close" || dataxxxx == "kapat" || dataxxxx == "durdur"){
