@@ -138,7 +138,7 @@ textarea1.placeholder = "ws://";
 textarea1.spellcheck = false;
 textarea1.type = "text";
 textarea1.className = "textareaxx asdas1c";
-textarea1.onkeypress = function() { if (window.event.keyCode == 13) { event.preventDefault(); baglan(ws.value); } };
+textarea1.onkeypress = function() { if (window.event.keyCode == 13) { event.preventDefault(); baglan(textarea1.value); } };
 textarea1.style.height = "59px";
 textarea1.style.display = "inline-block";
 textarea1.style.fontSize = "16px";
@@ -154,7 +154,7 @@ textarea1.style.resize = "vertical";
 textarea1.autocomplete = "off";
 var input1 = document.createElement("input");
 input1.type = "submit";
-input1.onclick = function() { event.preventDefault(); baglan(ws.value); };
+input1.onclick = function() { event.preventDefault(); baglan(textarea1.value); };
 input1.value = ">";
 input1.style.margin = "0";
 input1.style.fontSize = "16px";
@@ -989,7 +989,6 @@ window.otherusers_realtime_ws.onopen = function() {
           // sent__s("User:" + mesaj.a + "Diğer" + mesaj.b);
           message1 = san_input_fix(mesaj.a).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"','').replaceAll("[","").replaceAll("]","");
           message2 = markdown_to_html_link(san_input_fix_MOD1(mesaj.b.replaceAll("<br>","\n")).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"',''));
-          console.log(message2);
           var messages = document.querySelector('#messages');
           var messagex = document.createElement('div');
           messagex.style.display = "block";
@@ -1164,7 +1163,9 @@ function mesajGonder(mesaj,enc="no") {
                   var messagecbbtbtnrte = ai_cevapla(dataxxxx,false);
                   if(messagecbbtbtnrte=="sil"){return;}
                 }
-                sent__000(dataxxxx,"a");
+                if(!["__SERVER__ENC__","__SERVER__NO_ENC__"].includes(target_A)){
+                  sent__000(dataxxxx,"a");
+                }
                 sent__s(messagecbbtbtnrte);
                 if(dataxxxx.charAt(0) != '/'){
                   WS__OTHER(dataxxxx,window.latest_____cache_x);
