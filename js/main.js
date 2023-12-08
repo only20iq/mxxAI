@@ -264,7 +264,8 @@ var br = document.createElement("br");
 var explanations = [
   "/m,/music,/şarkı,/müzik,/kpop (Suggests music)",
   "/m -s all,/m -s 10(value)",
-  "/cls,/clear,/die,/kill (Refresh Page)",
+  "/gallery,/galeri,/foto,/fotoğraf,/fotoğraflar (Gallery)",
+  "/cls,/clear,/die,/kill (Delete Chat)",
   "/note,/not,/notepad,/notdefteri (Open Notepad)",
   "/ws,/websocket,/websocketserver,/wsserver (Websocket)",
   "/gg,/girlgrouplist,/girlgroup,/gglist,/kpoplist,/kpop (Kpop List)"

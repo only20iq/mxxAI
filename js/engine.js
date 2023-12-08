@@ -468,7 +468,8 @@ function ai_cevapla(metin,onlytext=false) {
     }
     if(onlytext==false){
       if (['die','kill','clear','cls'].includes(args[0].toLowerCase().slice(1))) {
-        window.location='';
+        var __t = document.getElementById("messages");
+        __t.innerHTML = "";
         test += "sil";
       }
       if (['note','notepad','notdefteri','not'].includes(args[0].toLowerCase().slice(1))) {
@@ -496,6 +497,10 @@ function ai_cevapla(metin,onlytext=false) {
   }
 
   metin = metin.toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "");
+  var regex = new RegExp(data.yasak.join("|"));
+  if (regex.test(metin)) {
+    return "sil";
+  }
   var test1 = single_thread(metin);
   var test2 = multi_thread(metin);
   var test3 = quad_thread(metin);
