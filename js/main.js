@@ -971,7 +971,11 @@ window.otherusers_realtime_ws.onopen = function() {
         baglantiother.style.color = "red";
       }
       if(window.wsmode_realtime_other==1){
-        setTimeout (wsrealtimeOther, 2000);
+        setTimeout (()=>{
+          if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
+            wsrealtimeOther();
+          }
+          }, 2000);
       }
     };
     window.otherusers_realtime_ws.onerror = function() {
@@ -1134,15 +1138,45 @@ function mesajGonder(mesaj,enc="no") {
     }
             function cevapla(dataxxxx,target_A="me"){
               if(dataxxxx.indexOf("ws://") != -1){
-                try{baglan(dataxxxx);}catch(e){if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
-                  window.ws.close();
-              }window.wsmode_realtime_other = 1;wsrealtimeOther();}
+                try{baglan(dataxxxx);}catch(e){
+                  sent__s(e);
+                  window.wsmode_realtime_other = 0;
+                  if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
+                    window.otherusers_realtime_ws.close();
+                  }
+                  setTimeout(()=>{
+                    if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
+                      window.wsmode_realtime_other = 1;
+                      window.SCMmain_tag = "u";
+                      window.cache_sifre = "123456789";
+                      window.cache_sindirme = "0";
+                      window.cache_block = "0";
+                      window.SCMcipher = new SilverCipherMini(window.cache_sifre);
+                      wsrealtimeOther();
+                    }
+                  },2200);
+                }
                 return;
               }
               if(dataxxxx.indexOf("wss://") != -1){
-                try{baglan(dataxxxx);}catch(e){if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
-                  window.ws.close();
-              }window.wsmode_realtime_other = 1;wsrealtimeOther();}
+                try{baglan(dataxxxx);}catch(e){
+                  sent__s(e);
+                  window.wsmode_realtime_other = 0;
+                  if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
+                    window.otherusers_realtime_ws.close();
+                  }
+                  setTimeout(()=>{
+                    if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
+                      window.wsmode_realtime_other = 1;
+                      window.SCMmain_tag = "u";
+                      window.cache_sifre = "123456789";
+                      window.cache_sindirme = "0";
+                      window.cache_block = "0";
+                      window.SCMcipher = new SilverCipherMini(window.cache_sifre);
+                      wsrealtimeOther();
+                    }
+                  },2200);
+                }
                 return;
               }
               if(dataxxxx == "websocket" || dataxxxx == "close" || dataxxxx == "kapat" || dataxxxx == "durdur"){
