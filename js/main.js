@@ -1342,7 +1342,7 @@ function mesajGonder(mesaj,enc="no") {
                     }
                     // mesajGonder(result, "no");
                     translate(asdasdassd,"xxx",lang__x).then(function(resultxxx) {
-                      sent__s(resultxxx);
+                      sent__s(resultxxx[0]);
                       if(dataxxxx.charAt(0) != '/'){
                         WS__OTHER(dataxxxx + " Translated: "+result,window.latest_____cache_x);
                       }
