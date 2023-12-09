@@ -544,7 +544,7 @@ function ai_cevapla(metin,onlytext=false) {
       return del_fff(replace_with_xxx(test,true));
     }else{
       window.latest_____cache_x = test;
-      return markdown_to_html_link(test);
+      return replaceTags(markdown_to_html_link(test));
     }
   } else {
     if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
@@ -554,7 +554,7 @@ function ai_cevapla(metin,onlytext=false) {
       return del_fff(replace_with_xxx(test,true));
     }else{
       window.latest_____cache_x = test;
-      return markdown_to_html_link(test);
+      return replaceTags(markdown_to_html_link(test));
     }
   }
 }
@@ -563,6 +563,34 @@ for (let key of Object.keys(data["set"])) { // data["set"] nesnesinin tüm anaht
   cache_ds[key] = 0; // cache_ds nesnesine anahtarları 0 değeri ile ekle
   shuffle(data["set"][key]);
 }
+window.list = [];
+// Bir fonksiyon tanımlayalım
+function replaceTags(text) {
+  let list = [];
+  // Metni  <a></a> <img> ile eşleşen bir regex ile bölüyoruz
+  var parts = text.split(/(\[\]\([^\)]*\)|<a[^>]*>[^<]*<\/a>|<img[^>]*>)/);
+  // Parçaları döngüye sokuyoruz
+  for (var i = 0; i < parts.length; i++) {
+    // Eğer parça bir etiket ise
+    if (parts[i].match(/[\\[\\]\\(\\)]|<a.*?>|<\/a>|<img.*?>/)) {
+      // Parçayı listeye ekliyoruz
+      list.push(parts[i]);
+      // Parçayı _ ile değiştiriyoruz
+      parts[i] = "_";
+    }
+  }
+  var newText = parts.join("");
+  window.list = list;
+  return newText;
+}
+function restoreTags(text, list) {
+  let index = 0;
+  text = text.replace(/[_]/g, function(match) {
+    return list[index++];
+  });
+  return text;
+}
+
 
 function link(data) {
   var link = data.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın

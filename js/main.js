@@ -1342,7 +1342,8 @@ function mesajGonder(mesaj,enc="no") {
                     }
                     // mesajGonder(result, "no");
                     translate(asdasdassd,"xxx",lang__x).then(function(resultxxx) {
-                      sent__s(resultxxx[0]);
+                      var __cevap__ = restoreTags(resultxxx[0],window.list);
+                      sent__s(__cevap__);
                       if(dataxxxx.charAt(0) != '/'){
                         WS__OTHER(dataxxxx + " Translated: "+result[0],window.latest_____cache_x);
                       }

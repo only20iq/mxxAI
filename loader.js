@@ -13,7 +13,9 @@ async function __init__(){
     let sayac__1 = 3;
     window.zamanlayici = setInterval(function() {
         var ___dat_1 = document.querySelector("#sayacx1");
-        ___dat_1.textContent = sayac__1.toString();
+        try{
+          ___dat_1.textContent = sayac__1.toString();
+        }catch(e){}
         sayac__1--;
     if (sayac__1 == 0) {
         clearInterval(window.zamanlayici);
@@ -112,6 +114,7 @@ form.onsubmit = function(event) {
     document.body.removeChild(box);
     window.__nickname__ = "Anon";
     window.limited_mode=false;
+    clearInterval(window.zamanlayici);
     start(0);
   } else {
     document.body.removeChild(box);
