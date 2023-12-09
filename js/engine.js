@@ -432,8 +432,6 @@ function del_fff(test){
 }
 function ai_cevapla(metin,onlytext=false) {
   var test = "";
-  var __stop__ = 0;
-  // /enc text123hello -k 123456789 yazınca key değişkenine sorunsuz alıyor ama text değişkeni boş oluyor hep
   let args = metin.split(" "); // metin.split(" ") yerine metin.split() kullanıyoruz
   let text = null; // text değişkenini varsayılan olarak null tanımlıyoruz
   let key = null; // key değişkenini varsayılan olarak null tanımlıyoruz
@@ -468,32 +466,45 @@ function ai_cevapla(metin,onlytext=false) {
       // ...
     }
     if(onlytext==false){
-      if (['die','kill','clear','cls'].includes(args[0].toLowerCase().slice(1))) {
+      if (['clear','cls','delete','del'].includes(args[0].toLowerCase().slice(1))) {
         var __t = document.getElementById("messages");
         __t.innerHTML = "";
-        test = "sil";
+        return "sil";
       }
       if (['note','notepad','notdefteri','not'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_note');
-        test = "sil";
+        return "sil";
       }
       if (['cm','commands','comands','komutlar','komut'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_commands');
-        test = "sil";
+        return "sil";
       }
       if (['kpop','kpoplist','gglist','girlgroup','girlgrouplist','gg'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_kpop');
-        test = "sil";
+        return "sil";
       }
       if (['ws','websocket','websocketserver','wsserver'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_websocket');
-        test = "sil";
+        return "sil";
       }
       if (['galeri','gallery','foto','fotoğraf',"fotoğraflar"].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('gallery_x',true,true);
         gallery_s();
-        test = "sil";
+        return "sil";
       }
+      if (['kill','die','destroy','destruct',"destruction",'reset'].includes(args[0].toLowerCase().slice(1))) {
+        window.caches.keys().then(function(cacheNames) {
+          cacheNames.forEach(function(cacheName) {
+          window.caches.delete(cacheName);
+          });
+        });
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        var __t = document.getElementById("messages");
+        __t.innerHTML = "";
+      return "sil";
+      }
+      
     }
 
     if (['size','boyut','filesize','dosyaboyutu','datasetsize'].includes(args[0].toLowerCase().slice(1))) {
@@ -539,7 +550,9 @@ function ai_cevapla(metin,onlytext=false) {
   tip == "array" ? result_0_data.splice(result_0_data.indexOf(cikti[0]), 1) : result_0_data.splice(result_0_data.indexOf(cikti), 1);
   }catch(e){}
   result_0_data.length == 0 ? result_0_data = getAllValues(data) : ()=>{};
-  document.querySelector("#message-input").placeholder = tip == "array" ? cikti[1] : "0";
+  if(onlytext==false){
+    document.querySelector("#message-input").placeholder = tip == "array" ? cikti[1] : "0";
+  }
   if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
     test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
   }

@@ -1,14 +1,15 @@
 // setInterval(() => {debugger;}, 100);
 // start.js / start
-window.onbeforeunload = function() {
-    window.caches.keys().then(function(cacheNames) {
-        cacheNames.forEach(function(cacheName) {
-        window.caches.delete(cacheName);
-        });
-    });
-    window.localStorage.clear();
-    window.sessionStorage.clear();
-    };
+
+// window.onbeforeunload = function() {
+//     window.caches.keys().then(function(cacheNames) {
+//         cacheNames.forEach(function(cacheName) {
+//         window.caches.delete(cacheName);
+//         });
+//     });
+//     window.localStorage.clear();
+//     window.sessionStorage.clear();
+//     };
     
     window.latest_____cache_x = "";
     function change_latest_cache(text){
@@ -319,11 +320,12 @@ var explanations = [
   "/m,/music,/şarkı,/müzik,/kpop (Suggests music)",
   "/m -s all,/m -s 10(value)",
   "/gallery,/galeri,/foto,/fotoğraf,/fotoğraflar (Gallery)",
-  "/cls,/clear,/die,/kill (Delete Chat)",
+  "/cls,/clear,/delete,/del (Delete Chat)",
   "/note,/not,/notepad,/notdefteri (Open Notepad)",
   "/ws,/websocket,/websocketserver,/wsserver (Websocket)",
   "/gg,/girlgrouplist,/girlgroup,/gglist,/kpoplist,/kpop (Kpop List)",
-  "/size,/boyut,/filesize,/dosyaboyutu,/datasetsize (Dataset Size)"
+  "/size,/boyut,/filesize,/dosyaboyutu,/datasetsize (Dataset Size)",
+  "/kill,/die,/destroy,/destruct,/destruction,/reset (Session Delete)"
 ];
 
 // Dizideki her açıklama için bir döngü başlatır
@@ -362,7 +364,7 @@ var textarea = document.createElement("textarea");
 textarea.className = "textareaxa";
 textarea.maxLength = "196";
 textarea.spellcheck = false;
-textarea.name = "data";
+textarea.name = "data_note";
 textarea.id = "kopyala";
 textarea.placeholder = "Text";
 textarea.style.backgroundColor = "transparent";
@@ -376,7 +378,7 @@ var button1 = document.createElement("button");
 button1.type = "button";
 button1.className = "button0x1";
 button1.value = "Kopyala";
-button1.id = "k";
+button1.id = "kxxf";
 button1.style.backgroundColor = "transparent";
 button1.style.width = "100%";
 button1.style.maxWidth = "620px";
@@ -432,12 +434,12 @@ div2.appendChild(button3_div);
 
 var div3 = document.createElement("div");
 div3.style.textAlign = "center";
-div3.textContent = "Commands";
+div3.textContent = "Note";
 
 // Oluşturulan elementleri div elementinin içine ekler
+div.appendChild(div3);
 div.appendChild(div1);
 div.appendChild(div2);
-div.appendChild(div3);
 
 
 
@@ -790,7 +792,6 @@ window.SCMcipher = new SilverCipherMini(window.cache_sifre);
 
 function san_input_fix_MOD1(a){const b={"<":"&lt;",">":"&gt;",'"':"&quot;"};return a.replace(/[<>"']/ig,a=>b[a])}
 function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"};return a.replace(/[&<>"'/]/ig,a=>b[a])}
-document.addEventListener('DOMContentLoaded', function() {document.getElementById('k').onclick = calistir;function calistir() {var kopyala = document.getElementById('kopyala');kopyala.select();document.execCommand('copy');}});
 
   // Div leri gösteren fonksiyon
   function showCacheInMain(cacheId,all=false,tumunugizle=false) {
@@ -868,16 +869,15 @@ document.addEventListener('DOMContentLoaded', function() {document.getElementByI
 
 
 
-// Sayfa yüklendiğinde, cookie den değeri geri getir
-              window.addEventListener("load", function() {
-                // Textarea elementini seç
-  var textarea = document.getElementById("kopyala");
+
+
+  var textarexr = document.getElementById("kopyala");
   // md5 elementini seç
   var md5a = document.getElementById("md5a");
-  // Textarea elementine bir input olayı ekle
+
   function save_notepad(){
-    // Textarea elementinin değerini al
-    var value = textarea.value;
+
+    var value = textarexr.value;
     // Eğer değer boş değilse, cookie'ye kaydet
     if (value != "") {
       // Değeri encodeURI ile kodla
@@ -892,7 +892,7 @@ document.addEventListener('DOMContentLoaded', function() {document.getElementByI
   }
   // yapistirdata fonksiyonunu event listener olarak tanımla
   window.addEventListener("yapistirdata", function() {
-var t=document.querySelector('textarea[name="data"]');
+var t=document.querySelector('textarea[name="data_note"]');
 t&&navigator.clipboard.readText().then(function(n){
 // Metni 196 karaktere kısalt
 var truncated = n.substring(0, 200);
@@ -906,11 +906,11 @@ console.error(n);
 
 // cleardata fonksiyonunu event listener olarak tanımla
 window.addEventListener("cleardata", function() {
-var textarea = document.querySelector('textarea[name="data"]');
-textarea.value = ""; // metni seç
+  var textarexr = document.getElementById("kopyala");
+  textarexr.value = ""; // metni seç
 });
 
-  textarea.addEventListener("input", function() {
+textarexr.addEventListener("input", function() {
     save_notepad();
   });
   
@@ -925,14 +925,15 @@ textarea.value = ""; // metni seç
       // Değeri decodeURI ile çöz
       var value = decodeURI(encodedValue);
       // Textarea ya değeri yaz
-      textarea.value = value;
+      textarexr.value = value;
       // Değerin md5 ini hesapla
       var md5Value = md5(value);
       // md5 elementine md5 değerini yaz
       md5a.textContent = "Loaded: " + md5Value;
     }
-  });
-  
+    document.getElementById('kxxf').addEventListener('click', function() {
+      var kopyala = document.getElementById('kopyala');kopyala.select();document.execCommand('copy');
+    });
   
   
   
