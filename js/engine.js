@@ -432,6 +432,7 @@ function del_fff(test){
 }
 function ai_cevapla(metin,onlytext=false) {
   var test = "";
+  var __stop__ = 0;
   // /enc text123hello -k 123456789 yazınca key değişkenine sorunsuz alıyor ama text değişkeni boş oluyor hep
   let args = metin.split(" "); // metin.split(" ") yerine metin.split() kullanıyoruz
   let text = null; // text değişkenini varsayılan olarak null tanımlıyoruz
@@ -470,33 +471,34 @@ function ai_cevapla(metin,onlytext=false) {
       if (['die','kill','clear','cls'].includes(args[0].toLowerCase().slice(1))) {
         var __t = document.getElementById("messages");
         __t.innerHTML = "";
-        test += "sil";
+        test = "sil";
       }
       if (['note','notepad','notdefteri','not'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_note');
-        test += "sil";
+        test = "sil";
       }
       if (['cm','commands','comands','komutlar','komut'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_commands');
-        test += "sil";
+        test = "sil";
       }
       if (['kpop','kpoplist','gglist','girlgroup','girlgrouplist','gg'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_kpop');
-        test += "sil";
+        test = "sil";
       }
       if (['ws','websocket','websocketserver','wsserver'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_websocket');
-        test += "sil";
+        test = "sil";
       }
       if (['galeri','gallery','foto','fotoğraf',"fotoğraflar"].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('gallery_x',true,true);
         gallery_s();
-        test += "sil";
+        test = "sil";
       }
     }
 
     if (['size','boyut','filesize','dosyaboyutu','datasetsize'].includes(args[0].toLowerCase().slice(1))) {
-      test += "MY FILE SIZE: " + kiloBytes.toFixed(1)+"KB";
+      test += "MY FILE SIZE: " + kiloBytes.toFixed(1)+"KB ";
+      return test;
     }
   }
 
@@ -517,30 +519,27 @@ function ai_cevapla(metin,onlytext=false) {
   if(test3!=null && test3!=""){
     test+=test3;
   }
-  if (test == "") {
-  var array = [1,2,4];
-  array = shuffle_array(array);
-  array = [array[0]];
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] == 1) {
-      test += rand_single() + " ";
-    }
-    else if (array[i] == 2) {
-      test += rand_multi() + " ";
-    }
-    // else if (array[i] == 3) {
-    //   test += rand_quad() + " ";
-    // }
-    else if (array[i] == 4) {
-      test += rand_r() + " ";
-    }
-    // else if (array[i] == 5) {
-    //   test += rand_r() + " ";
-    // }
-    if (i != array.length - 1) {
-      test += " ";
-    }
-  }
+//   let r = rand_r(); // rand_r() fonksiyonunun çıktısını r değişkenine atıyoruz
+// result_0_data.contains(r) ? (array[i] = r + " ", result_0_data.remove(r)) : printf("Hata: rand_r() fonksiyonunun ciktisi result_0_data listinin icinde degil.\n");
+  if (test.length < 500 && test != "sil") {
+    var r = random_generate_bonus(metin,1);
+    result_0_data.indexOf(r) != -1 ? (test += r,console.log("Random Başarılı: "+r),result_0_data.splice(result_0_data.indexOf(r), 1)) : console.log("Random Başarısız: "+r);
+
+  var cikti = compareInput(metin, result_0_data, 0);
+  // Çıktının tipini kontrol ediyoruz
+  var tip = Array.isArray(cikti) ? "array" : "string";
+  // Ternary fonksiyon ile farklı işlemler yapıyoruz
+  test += tip == "array" ? cikti[0] + " " : cikti + " ";
+  // console.log(result_0_data.length);
+  // while (result_0_data.length > 1) {
+  //   // Diziden son elemanı siliyoruz
+  //   result_0_data.pop();
+  // }
+  try{
+  tip == "array" ? result_0_data.splice(result_0_data.indexOf(cikti[0]), 1) : result_0_data.splice(result_0_data.indexOf(cikti), 1);
+  }catch(e){}
+  result_0_data.length == 0 ? result_0_data = getAllValues(data) : ()=>{};
+  document.querySelector("#message-input").placeholder = tip == "array" ? cikti[1] : "0";
   if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
     test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
   }
@@ -566,6 +565,46 @@ var cache_ds = {};
 for (let key of Object.keys(data["set"])) { // data["set"] nesnesinin tüm anahtarlarını döngü ile gez
   cache_ds[key] = 0; // cache_ds nesnesine anahtarları 0 değeri ile ekle
   shuffle(data["set"][key]);
+}
+function random_generate_bonus(metin,sayi){
+  var test = "";
+  var array = [1,2,3,4,5,1,1];
+  array = shuffle_array(array);
+  if(sayi==1 || sayi==true){
+    array = [array[0]];
+  }
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] == 1) {
+      array[i] = rand_single();
+    }
+    else if (array[i] == 2) {
+      array[i] = rand_multi();
+    }
+    else if (array[i] == 3) {
+      array[i] = rand_quad();
+    }
+    else if (array[i] == 4) {
+      array[i] = rand_r();
+    }
+    else if (array[i] == 5) {
+      array[i] = rand_r();
+    }
+    // if (i != array.length - 1) {
+    //   test += "";
+    // }
+  }
+
+  
+  var ___c___ = selectSentences(array,metin,0.5);
+  var tip = Array.isArray(___c___) ? "array" : "string";
+  ___c___ = tip == "array" ? ___c___[0] : ___c___;
+  // try{
+  //   tip == "array" ? result_0_data.splice(result_0_data.indexOf(___c___[0]), 1) : result_0_data.splice(result_0_data.indexOf(___c___), 1);
+  // }catch(e){}
+  result_0_data.length == 0 ? result_0_data = getAllValues(data) : ()=>{};
+  // console.log("Random: " + ___c___);
+  ___c___ == null ? test+="" : test += ___c___;
+  return test;
 }
 window.list = [];
 // Bir fonksiyon tanımlayalım
@@ -759,3 +798,123 @@ function markdown_to_html_link(markdown) {
     }
     return replace_with_xxx(html); // HTML dizesini döndürür
 }
+
+// Bir benzeme oranı algoritması seçin ve bir fonksiyon olarak tanımlayın
+// Örnek olarak, Dice katsayısını kullandım
+function similarity (text1, text2) {
+  // Metinleri harflerine ayırın
+  const letters1 = text1.split ("");
+  const letters2 = text2.split ("");
+
+  // Ortak harflerin sayısını bulun
+  let common = 0;
+  for (let letter of letters1) {
+    if (letters2.includes (letter)) {
+      common++;
+    }
+  }
+
+  // Dice katsayısını hesaplayın
+  return (2 * common) / (letters1.length + letters2.length);
+}
+
+// List içindeki her cümle için, kullanıcının girdiği cümle ile benzeme oranını hesaplayın
+// Benzeme oranını, belirlediğiniz bir eşik değeriyle karşılaştırın
+// Seçtiğiniz cümleleri bir dizi içinde saklayın
+function selectSentences (list, input, threshold) {
+  // Seçilen cümleleri tutacak bir dizi tanımlayın
+  const selected = [];
+
+  // List içindeki her cümle için döngü başlatın
+  for (let sentence of list) {
+    // Cümle ile kullanıcının girdiği cümle arasındaki benzeme oranını hesaplayın
+    const ratio = similarity (sentence, input);
+
+    // Benzeme oranı eşik değerinden büyük veya eşitse, cümleyi seçin
+    if (ratio >= threshold) {
+      selected.push (sentence);
+    }
+  }
+
+  // Seçilen cümleleri döndürün
+  return selected;
+}
+
+// Data nın içindeki tüm değerleri alan bir fonksiyon tanımlıyoruz
+function getAllValues(data) {
+  // Sonuçları tutacak bir dizi tanımlıyoruz
+  const results = [];
+
+  // data.single içindeki değerleri alıyoruz
+  for (let key in data.single) {
+    // Her özelliğin değerini alıyoruz
+    let value = data.single[key];
+    if(typeof value == "string") {
+      if (!value.startsWith("$")) {
+        results.push(value);
+      }
+    }
+    // Eğer değer bir liste ise, listin içindeki tüm değerleri sonuçlara ekliyoruz
+    if (Array.isArray(value)) { for (let item of value) { if (!item.startsWith("$")) { results.push(item); } } }
+  }
+
+  // data.multi içindeki değerleri alıyoruz
+  for (let key in data.multi) {
+    // Her özelliğin değerini alıyoruz
+    if(key.startsWith("set")){continue;}
+    let value = data.multi[key];
+    if(typeof value == "string"){
+      if (!value.startsWith("$")) {
+        results.push(value);
+      }
+    }
+    // Eğer değer bir liste ise, listin içindeki tüm değerleri sonuçlara ekliyoruz
+    if (Array.isArray(value)) { for (let item of value) { if (!item.startsWith("$")) { results.push(item); } } }
+  }
+
+  // data.quad içindeki değerleri alıyoruz
+  for (let key in data.quad) {
+    // Her değer için bir alt nesne tanımlıyoruz
+    let subobj = data.quad[key];
+    for (let subkey in subobj) {
+      // Her alt özelliğin değerini alıyoruz
+      let value = subobj[subkey];
+      if(typeof value == "string") {
+        if(subkey=="n"){continue;}
+        if (!value.startsWith("$")) {
+          results.push(value);
+        }
+      }
+      // Eğer değer bir liste ise, listin içindeki tüm değerleri sonuçlara ekliyoruz
+      if (Array.isArray(value)) { for (let item of value) { if (!item.startsWith("$")) { results.push(item); } } }
+    }
+  }
+
+  // Sonuçları döndürüyoruz
+  return results;
+}
+
+var result_0_data = getAllValues(data);
+
+// Kullanıcının girdiği değeri list içindeki cümlelerle karşılaştıran bir fonksiyon tanımlayın
+function compareInput (userInput, list, threshold) {
+  // selectSentences fonksiyonunu kullanarak, benzeme oranı eşik değerinden büyük veya eşit olan cümleleri seçin
+  const selected = selectSentences (list, userInput, threshold);
+  // Seçilen cümlelerin sayısını kontrol edin
+  if (selected.length === 0) {
+    // Eğer hiç cümle seçilmediyse, bir hata mesajı döndürün
+    return "Maalesef, girdiğiniz değer ile eşleşen bir cümle bulamadım.";
+  } else if (selected.length === 1) {
+    // Eğer sadece bir cümle seçildiyse, o cümleyi döndürün
+    return [selected[0],similarity(selected[0],userInput)];
+  } else {
+    // Eğer birden fazla cümle seçildiyse, benzeme oranına göre sıralayın
+    selected.sort((a, b) => similarity(b, userInput) - similarity(a, userInput));
+    // En yüksek benzeme oranına sahip olan cümleyi döndürün
+    return [selected[0],similarity(selected[0],userInput)];
+  }
+}
+
+// // Fonksiyonu test edin
+// const resultx1 = compareInput ("Merhaba nasılsın iyi misin nasıl gidiyor?", result_0_data, 1);
+// console.log (resultx1); // "Bana herhangi bir soru sorabilirsiniz."

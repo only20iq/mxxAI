@@ -14,6 +14,7 @@ window.onbeforeunload = function() {
     function change_latest_cache(text){
       window.latest_____cache_x = text;
     }
+window.disable_translate = false;
 // start.js / end
 
 // <body> etiketini seçelim
@@ -533,10 +534,11 @@ suggestion1.className = "suggestion";
 suggestion1.textContent = "/music -s 15";
 var suggestion2 = document.createElement("div");
 suggestion2.className = "suggestion";
-suggestion2.textContent = "/websocket";
+suggestion2.textContent = "/gallery";
 var suggestion3 = document.createElement("div");
 suggestion3.className = "suggestion";
-suggestion3.textContent = "/gallery";
+suggestion3.id = "translatex";
+suggestion3.textContent = "Translate: Auto";
 
 // Önerilenler kutusunun içine öneri elementlerini ekler
 suggestions.appendChild(suggestion1);
@@ -961,6 +963,18 @@ textarea.value = ""; // metni seç
 
   // Her bir öneri için bir event listener ekle
   for (var suggestion of suggestions) {
+    if(suggestion.id == "translatex"){
+      suggestion.addEventListener('click', function() {
+        if(window.disable_translate==false){
+          window.disable_translate = true;
+          this.textContent="Translate: tr";
+        }else{
+          window.disable_translate = false;
+          this.textContent="Translate: Auto";
+        }
+      });
+      continue;
+    }
     suggestion.addEventListener('click', function() {
       // Tıklanan önerinin textini al
       let text = this.textContent;
@@ -1099,6 +1113,7 @@ window.otherusers_realtime_ws.onopen = function() {
 
               try {
                 var otherwsurl = "wss://socketsbay.com/wss/v2/1/demo/";
+                // var otherwsurl = "ws://localhost:8000";
                 wsrealtimeOther(otherwsurl);
                 var ___d_cac = document.getElementById("ws3");
                 ___d_cac.value = otherwsurl;
@@ -1238,7 +1253,7 @@ function mesajGonder(mesaj,enc="no") {
     }
 
     function translate(textasdas,mode,lang){
-      if(textasdas.startsWith('/')) {
+      if(textasdas.startsWith('/') || window.disable_translate==true) {
         return new Promise(function(resolve, reject) {
           try{resolve([textasdas,"tr"]);}catch(e){reject(new Error("/ error"));}
         });
@@ -1288,7 +1303,7 @@ function mesajGonder(mesaj,enc="no") {
 
 
     function translate_Target_TR(textasdas,target){
-      if(textasdas.startsWith('/')) {
+      if(textasdas.startsWith('/') || window.disable_translate==true) {
         return new Promise(function(resolve, reject) {
           try{resolve([textasdas,"tr"]);}catch(e){reject(new Error("/ error"));}
         });
