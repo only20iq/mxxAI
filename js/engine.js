@@ -476,7 +476,7 @@ function ai_cevapla(metin,onlytext=false) {
         window.showCacheInMain('cache_note');
         test += "sil";
       }
-      if (['cm','commands','comands'].includes(args[0].toLowerCase().slice(1))) {
+      if (['cm','commands','comands','komutlar','komut'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_commands');
         test += "sil";
       }
@@ -493,6 +493,10 @@ function ai_cevapla(metin,onlytext=false) {
         gallery_s();
         test += "sil";
       }
+    }
+
+    if (['size','boyut','filesize','dosyaboyutu','datasetsize'].includes(args[0].toLowerCase().slice(1))) {
+      test += "MY FILE SIZE: " + kiloBytes.toFixed(1)+"KB";
     }
   }
 

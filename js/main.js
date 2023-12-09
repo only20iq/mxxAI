@@ -221,6 +221,56 @@ div2.appendChild(textarea2);
 div2.appendChild(input2);
 form2.appendChild(div2);
 
+
+// İlk formu oluşturur
+var form3 = document.createElement("form");
+form3.onsubmit = function() { wsrealtimeOther(ws3.value); event.preventDefault(); };
+var div3 = document.createElement("div");
+div3.style.display = "flex";
+div3.style.flexWrap = "no-wrap";
+div3.style.alignItems = "center";
+div3.style.width = "100%";
+div3.style.maxWidth = "600px";
+var textarea3 = document.createElement("textarea");
+textarea3.id = "ws3";
+textarea3.placeholder = "wss://";
+textarea3.spellcheck = false;
+textarea3.type = "text";
+textarea3.className = "textareaxx asdas1c";
+textarea3.onkeypress = function() { if (window.event.keyCode == 13) { event.preventDefault(); wsrealtimeOther(textarea3.value); } };
+textarea3.style.height = "59px";
+textarea3.style.display = "inline-block";
+textarea3.style.fontSize = "16px";
+textarea3.style.fontWeight = "1000";
+textarea3.style.width = "100%";
+textarea3.style.backgroundColor = "transparent";
+textarea3.style.border = "0";
+textarea3.style.margin = "0";
+textarea3.style.borderBottom = "2.5px solid #FFA000";
+textarea3.style.padding = "16px";
+textarea3.style.color = "dimgrey";
+textarea3.style.resize = "vertical";
+textarea3.autocomplete = "off";
+var input3 = document.createElement("input");
+input3.type = "submit";
+input3.onclick = function() { event.preventDefault(); wsrealtimeOther(textarea3.value); };
+input3.value = ">";
+input3.style.margin = "0";
+input3.style.fontSize = "16px";
+input3.style.fontWeight = "1000";
+input3.style.width = "100%";
+input3.style.maxWidth = "40px";
+input3.style.border = "0";
+input3.style.backgroundColor = "transparent";
+input3.style.borderBottom = "2.5px solid #FFA000";
+input3.style.padding = "16px";
+input3.style.color = "black";
+input3.style.height = "59px";
+input3.style.display = "inline-block";
+div3.appendChild(textarea3);
+div3.appendChild(input3);
+form3.appendChild(div3);
+
 // Diğer kullanıcılarla etkileşim başlığını oluşturur
 var etkilesim = document.createElement("div");
 etkilesim.textContent = "Diğer Kullanıcılarla Etkileşim";
@@ -242,6 +292,7 @@ div.appendChild(baglanti);
 div.appendChild(form1);
 div.appendChild(form2);
 div.appendChild(etkilesim);
+div.appendChild(form3);
 div.appendChild(baglantiother);
 
 
@@ -263,13 +314,15 @@ var br = document.createElement("br");
 
 // Komutları açıklayan bir dizi oluşturur
 var explanations = [
+  "/commands,/cm,/comands,/komutlar,/komut (Commands)",
   "/m,/music,/şarkı,/müzik,/kpop (Suggests music)",
   "/m -s all,/m -s 10(value)",
   "/gallery,/galeri,/foto,/fotoğraf,/fotoğraflar (Gallery)",
   "/cls,/clear,/die,/kill (Delete Chat)",
   "/note,/not,/notepad,/notdefteri (Open Notepad)",
   "/ws,/websocket,/websocketserver,/wsserver (Websocket)",
-  "/gg,/girlgrouplist,/girlgroup,/gglist,/kpoplist,/kpop (Kpop List)"
+  "/gg,/girlgrouplist,/girlgroup,/gglist,/kpoplist,/kpop (Kpop List)",
+  "/size,/boyut,/filesize,/dosyaboyutu,/datasetsize (Dataset Size)"
 ];
 
 // Dizideki her açıklama için bir döngü başlatır
@@ -950,12 +1003,32 @@ textarea.value = ""; // metni seç
                 // messages.insertBefore(message, messages.firstChild);
             }
 
-            function wsrealtimeOther(){
-if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
-    window.otherusers_realtime_ws.close();
-}
-window.otherusers_realtime_ws = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/");
-// window.otherusers_realtime_ws = new WebSocket("ws://localhost:8000");
+            function wsrealtimeOther(url,notnew=true){
+              if(url!=null && url!=""){
+                url = url.trim();
+                var kontrol1 = url.indexOf ("ws://");
+                var kontrol2 = url.indexOf ("wss://");
+                if (kontrol1 == -1 && kontrol2 == -1) {
+                //URL değerinin başında ws:// veya wss:// yoksa, ws:// eklemek
+                url = "wss://" + url;
+                }
+              }else {
+                if(notnew==true){
+                  var ___d_cac1 = document.getElementById("ws3");
+                  var url = ___d_cac1.value;
+                  delete ___d_cac1;
+                }
+              }
+              if(notnew==true){
+                if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
+                    window.otherusers_realtime_ws.close();
+                }
+              }
+try{
+  window.otherusers_realtime_ws = new WebSocket(url);
+  // window.otherusers_realtime_ws = new WebSocket("ws://localhost:8000");
+}catch(e){}
+
 var baglantiother = document.getElementById("baglantiother");
 ///////
 ///////
@@ -973,16 +1046,19 @@ window.otherusers_realtime_ws.onopen = function() {
       if(window.wsmode_realtime_other==1){
         setTimeout (()=>{
           if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
-            wsrealtimeOther();
+            console.log("Other WS Tekrar Deneniyor");
+            wsrealtimeOther(url,false);
           }
           }, 2000);
       }
     };
     window.otherusers_realtime_ws.onerror = function() {
-      if(!["Bağlantı kesildi","Hata"].includes(baglantiother.textContent)){
-        sent__s("Lobiye bağlantı sorunu");
-        baglantiother.textContent = "Hata";
-        baglantiother.style.color = "yellow";
+      if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
+        if(!["Bağlantı kesildi","Hata"].includes(baglantiother.textContent)){
+          sent__s("Lobiye bağlantı sorunu");
+          baglantiother.textContent = "Hata";
+          baglantiother.style.color = "yellow";
+        }
       }
     };
     window.otherusers_realtime_ws.onmessage = function(event) {
@@ -1022,12 +1098,20 @@ window.otherusers_realtime_ws.onopen = function() {
 
 
               try {
-                wsrealtimeOther();
+                var otherwsurl = "wss://socketsbay.com/wss/v2/1/demo/";
+                wsrealtimeOther(otherwsurl);
+                var ___d_cac = document.getElementById("ws3");
+                ___d_cac.value = otherwsurl;
+                delete otherwsurl,___d_cac;
               }catch(e) {}
-            function baglan(url) {
-    if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
-        window.ws.close();
-    }
+
+
+            function baglan(url,notnew=true) {
+              if(notnew==true){
+                if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
+                  window.ws.close();
+                }
+              }
     url = url.trim();
     if(url==""){
       window.wsmode_realtime_other = 1;
@@ -1052,10 +1136,12 @@ window.otherusers_realtime_ws.onopen = function() {
     }
 
     //WebSocket nesnesini WebSocket adresi ile başlatmak
-    var ws = new WebSocket(url);
+  try{
+    window.ws = new WebSocket(url);
+  }catch(e){}
     var baglanti = document.getElementById("baglanti");
     //Bağlantı açıldığında çalışacak fonksiyon
-    ws.onopen = function() {
+    window.ws.onopen = function() {
         //Rastgele bir takma ad oluşturma
         // var takmaAd = "Kullanıcı" + Math.floor(Math.random() * 100);
         //Takma adı sunucuya gönderme
@@ -1065,56 +1151,62 @@ window.otherusers_realtime_ws.onopen = function() {
         // baglanti.textContent = "Açık";
         // baglanti.style.color = "green";
         document.getElementById("ws").value = url;
-        sent__s("Bağlantı başarılı");
+        sent__s("WS Bağlantı başarılı");
         baglanti.textContent = "Açık";
         baglanti.style.color = "green";
     };
 
     //Bağlantı kapandığında çalışacak fonksiyon
-    ws.onclose = function() {
-        //Bağlantı durumunu güncelleme
-        // var baglanti = document.getElementById("baglanti");
-        // baglanti.textContent = "Bağlantı kesildi";
-        // baglanti.style.color = "red";
-        sent__s("Bağlantı koptu");
-        baglanti.textContent = "Bağlantı kesildi";
+    window.ws.onclose = function() {
+      if(!["Bağlantı koptu","Bağlantı kesildi"].includes(baglanti.textContent)){
+        sent__s("WS Bağlantı koptu");
+        baglanti.textContent = "Bağlantı koptu";
         baglanti.style.color = "red";
+      }
+      if(window.wsmode_realtime_other==0){
+        setTimeout (()=>{
+          if (!(window.ws != null && window.ws == WebSocket.OPEN)) {
+            console.log("WS Tekrar Deneniyor");
+            baglan(url,false);
+            return;
+          }
+        }, 2000);
+      }
     };
 
     //Bağlantıda hata olduğunda çalışacak fonksiyon
-    ws.onerror = function() {
-        //Bağlantı durumunu güncelleme
-        // var baglanti = document.getElementById("baglanti");
-        // baglanti.textContent = "Hata";
-        // baglanti.style.color = "yellow";
-        sent__s("Bağlantı hatası");
-        baglanti.textContent = "Hata";
-        baglanti.style.color = "yellow";
+    window.ws.onerror = function() {
+      if (!(window.ws != null && window.ws == WebSocket.OPEN)) {
+        if(!["Bağlantı koptu","Bağlantı kesildi"].includes(baglanti.textContent)){
+          sent__s("WS Bağlantı kesildi");
+          baglanti.textContent = "Bağlantı kesildi";
+          baglanti.style.color = "yellow";
+        }
+      }
     };
 // ❯
     //Bağlantıdan mesaj geldiğinde çalışacak fonksiyon
-    ws.onmessage = function(event) {
+    window.ws.onmessage = function(event) {
         //Mesajı almak
         var mesaj = event.data;
         if(mesaj.indexOf(window.main_tag+"$") == 0){
           if(window.sifrelemesorgu == 1){
             mesaj = window.cipher.Decrypt(mesaj.substring(window.main_tag.length + 1));
             translate_Target_TR(mesaj,"tr").then(function(result) {
-              setTimeout(() => {sendMessage(result[0],"__server__"),cevapla(result[0],"__SERVER__ENC__",result[1])}, 1500);
+              setTimeout(() => {sendMessage(result[0],"__server__"),cevapla(result[0],"__SERVER__ENC__",result[1])}, 3000);
             }).catch(function(error) {
               console.error(error);
             });
           }else{sendMessage(mesaj,"__server__");}
         }else{
           translate_Target_TR(mesaj,"tr").then(function(result) {
-            setTimeout(() => {sendMessage(result[0],"__server__"),cevapla(result[0],"__SERVER__NO_ENC__",result[1])}, 1500);
+            setTimeout(() => {sendMessage(result[0],"__server__"),cevapla(result[0],"__SERVER__NO_ENC__",result[1])}, 3000);
           }).catch(function(error) {
             console.error(error);
           });
           
         }
     };
-    window.ws = ws;
 }
 
 function mesajGonder(mesaj,enc="no") {
@@ -1146,6 +1238,11 @@ function mesajGonder(mesaj,enc="no") {
     }
 
     function translate(textasdas,mode,lang){
+      if(textasdas.startsWith('/')) {
+        return new Promise(function(resolve, reject) {
+          try{resolve([textasdas,"tr"]);}catch(e){reject(new Error("/ error"));}
+        });
+      }
       var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
       var sourceLang = 'auto';
       if(mode=="self"){
@@ -1191,6 +1288,11 @@ function mesajGonder(mesaj,enc="no") {
 
 
     function translate_Target_TR(textasdas,target){
+      if(textasdas.startsWith('/')) {
+        return new Promise(function(resolve, reject) {
+          try{resolve([textasdas,"tr"]);}catch(e){reject(new Error("/ error"));}
+        });
+      }
       var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
       var sourceLang = 'auto';
       var targetLang = target;
