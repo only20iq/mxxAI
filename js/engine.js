@@ -523,7 +523,7 @@ function ai_cevapla(metin,onlytext=false) {
 // result_0_data.contains(r) ? (array[i] = r + " ", result_0_data.remove(r)) : printf("Hata: rand_r() fonksiyonunun ciktisi result_0_data listinin icinde degil.\n");
   if (test.length < 500 && test != "sil") {
     var r = random_generate_bonus(metin,1);
-    result_0_data.indexOf(r) != -1 ? (test += r,console.log("Random Başarılı: "+r),result_0_data.splice(result_0_data.indexOf(r), 1)) : console.log("Random Başarısız: "+r);
+    result_0_data.indexOf(r) != -1 ? (test += r,/*console.log("Random Başarılı: "+r),*/result_0_data.splice(result_0_data.indexOf(r), 1)) : /*console.log("Random Başarısız: "+r)*/()=>{};
 
   var cikti = compareInput(metin, result_0_data, 0);
   // Çıktının tipini kontrol ediyoruz
