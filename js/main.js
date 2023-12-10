@@ -465,7 +465,7 @@ div1.style.maxWidth = "600px";
 // Textarea elementini oluşturur
 var textarea = document.createElement("textarea");
 textarea.spellcheck = false;
-textarea.type = "text";
+textarea.type = "search";
 textarea.id = "message-input";
 textarea.className = "textareaxx asdas1c";
 textarea.onkeypress = function() { if (window.event.keyCode == 13) { event.preventDefault(); document.getElementById('message-submit').click(); } };
@@ -485,6 +485,18 @@ textarea.style.resize = "vertical";
 textarea.autocomplete = "off";
 textarea.autofocus = true;
 textarea.required = true;
+// Div elementini oluşturur
+var arama_sonuclari = document.createElement("div");
+arama_sonuclari.id = "sonuclar";
+// Div elementinin konumunu, yüksekliğini ve genişliğini ayarlar
+arama_sonuclari.style.position = "relative";
+arama_sonuclari.style.display = "none";
+arama_sonuclari.style.width = "100%";
+arama_sonuclari.style.height = "auto";
+arama_sonuclari.style.backgroundColor = "white";
+arama_sonuclari.style.overflow = "auto";
+arama_sonuclari.style.padding = "10px";
+// Diğer stilleri buraya ekle
 
 
 // Input elementini oluşturur
@@ -509,6 +521,7 @@ input.style.display = "inline-block";
 div1.appendChild(textarea);
 div1.appendChild(input);
 
+
 // Form elementinin içine div elementini ekler
 form.appendChild(div1);
 
@@ -525,6 +538,7 @@ form.appendChild(input2);
 
 // Div elementinin içine form elementini ekler
 div.appendChild(form);
+div.appendChild(arama_sonuclari);
 
 // Önerilenler kutusunu oluşturur
 var suggestions = document.createElement("div");
@@ -546,6 +560,71 @@ suggestion3.textContent = "Translate: Auto";
 suggestions.appendChild(suggestion1);
 suggestions.appendChild(suggestion2);
 suggestions.appendChild(suggestion3);
+
+
+// input elementine bir event listener ekle
+// data_raw değişkenini bir diziye dönüştür
+function similarity_3 (text1, text2) {
+  // Metinleri harflerine ayırın ve küçük harfe dönüştürün
+  const letters1 = text1.toLowerCase().split ("");
+  const letters2 = text2.toLowerCase().split ("");
+
+  // Metinlerin uzunluklarını alın
+  const length1 = letters1.length;
+  const length2 = letters2.length;
+
+  // Metinler arasındaki ortak harfleri bulun
+  const common = letters1.filter (letter => letters2.includes (letter)).length;
+
+  // Benzeme oranını hesaplayın
+  return common / (length1 + length2 - common);
+}
+var _ax_a;
+  function kontrolEtAAA() {
+    try {
+      _ax_a = document.querySelector(".suggestions");
+      if (_ax_a) {
+        clearInterval(intervalId);
+      } else {throw new Error("_ax_a değişkeni null");}
+    }catch{}
+  }
+  var intervalId = setInterval(kontrolEtAAA, 300);
+
+textarea.addEventListener("input", function() {
+    // input elementinin değerini al ve küçük harfe çevir
+    var aranan = textarea.value.toLowerCase();
+
+ // liste içinde en çok benzeyen değeri bulmak için bir değişken tanımla
+ var enCokBenzeyen = null;
+ // en çok benzeyen değerin benzeme oranını tutmak için bir değişken tanımla
+ var enYuksekOran = 0;
+ // liste verisini döngüye sok
+ result_0_data.forEach(function(obje) {
+     // öge değerini al
+     var deger = obje;
+     // değer ile aranan değer arasındaki benzeme oranını hesapla
+     var oran = similarity_3(deger, aranan);
+     // eğer oran en yüksek orandan büyükse
+     if (oran > enYuksekOran) {
+         // en yüksek oranı güncelle
+         enYuksekOran = oran;
+         // en çok benzeyen değeri güncelle
+         enCokBenzeyen = deger;
+     }
+ });
+ // eğer en çok benzeyen değer varsa
+ if (enCokBenzeyen) {
+     // bulundu mesajı ver
+     arama_sonuclari.innerHTML = enCokBenzeyen;
+     arama_sonuclari.style.display = "block";
+     _ax_a.style.display = "none";
+ }else{
+      arama_sonuclari.style.display = "none";
+      _ax_a.style.display = "";
+ }
+});
+
+
 
 // Div elementinin içine önerilenler kutusunu ekler
 div.appendChild(suggestions);
