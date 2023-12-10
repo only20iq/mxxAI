@@ -532,7 +532,7 @@ function ai_cevapla(metin,onlytext=false) {
   }
 //   let r = rand_r(); // rand_r() fonksiyonunun çıktısını r değişkenine atıyoruz
 // result_0_data.contains(r) ? (array[i] = r + " ", result_0_data.remove(r)) : printf("Hata: rand_r() fonksiyonunun ciktisi result_0_data listinin icinde degil.\n");
-  if (test.length < 500 && test != "sil") {
+  if (test.length < 500 && test != "sil" && (!metin.startsWith('/'))) {
     var r = random_generate_bonus(metin,1);
     result_0_data.indexOf(r) != -1 ? (test += r,/*console.log("Random Başarılı: "+r),*/result_0_data.splice(result_0_data.indexOf(r), 1)) : /*console.log("Random Başarısız: "+r)*/()=>{};
 
@@ -624,11 +624,11 @@ window.list = [];
 function replaceTags(text) {
   let list = [];
   // Metni  <a></a> <img> ile eşleşen bir regex ile bölüyoruz
-  var parts = text.split(/(\[\]\([^\)]*\)|<a[^>]*>[^<]*<\/a>|<img[^>]*>)/);
+  var parts = text.split(/(\[\]\([^\)]*\)|<a[^>]*>[^<]*<\/a>|<img[^>]*>|<br[^>]*>)/);
   // Parçaları döngüye sokuyoruz
   for (var i = 0; i < parts.length; i++) {
     // Eğer parça bir etiket ise
-    if (parts[i].match(/[\\[\\]\\(\\)]|<a.*?>|<\/a>|<img.*?>/)) {
+    if (parts[i].match(/(\[\]\([^\)]*\)|<a[^>]*>[^<]*<\/a>|<img[^>]*>|<br[^>]*>)/)) {
       // Parçayı listeye ekliyoruz
       list.push(parts[i]);
       // Parçayı _ ile değiştiriyoruz
@@ -811,47 +811,99 @@ function markdown_to_html_link(markdown) {
     }
     return replace_with_xxx(html); // HTML dizesini döndürür
 }
+// Levenshtein mesafesini hesaplayan bir fonksiyon
+function levenshtein(text1, text2) {
+  // Metinlerin uzunluklarını alın
+  const len1 = text1.length;
+  const len2 = text2.length;
 
-// Bir benzeme oranı algoritması seçin ve bir fonksiyon olarak tanımlayın
-// Örnek olarak, Dice katsayısını kullandım
-function similarity (text1, text2) {
-  // Metinleri harflerine ayırın
-  const letters1 = text1.split ("");
-  const letters2 = text2.split ("");
+  // Metinlerden biri boşsa, mesafe diğerinin uzunluğudur
+  if (len1 === 0) return len2;
+  if (len2 === 0) return len1;
 
-  // Ortak harflerin sayısını bulun
-  let common = 0;
-  for (let letter of letters1) {
-    if (letters2.includes (letter)) {
-      common++;
+  // Mesafeleri tutmak için bir matris oluşturun
+  let matrix = [];
+
+  // Matrisin ilk satırını ve sütununu doldurun
+  for (let i = 0; i <= len1; i++) {
+    matrix[i] = [i];
+  }
+  for (let j = 0; j <= len2; j++) {
+    matrix[0][j] = j;
+  }
+
+  // Matrisin geri kalanını doldurun
+  for (let i = 1; i <= len1; i++) {
+    for (let j = 1; j <= len2; j++) {
+      // Metinlerin i ve j indisli harflerini karşılaştırın
+      if (text1[i - 1] === text2[j - 1]) {
+        // Eğer aynıysa, mesafe değişmez
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        // Eğer farklıysa, mesafe bir artar
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // Değiştirme
+          matrix[i][j - 1] + 1, // Ekleme
+          matrix[i - 1][j] + 1 // Silme
+        );
+      }
     }
   }
 
-  // Dice katsayısını hesaplayın
-  return (2 * common) / (letters1.length + letters2.length);
+  // Matrisin sağ alt köşesindeki değer mesafedir
+  return matrix[len1][len2];
 }
 
-// List içindeki her cümle için, kullanıcının girdiği cümle ile benzeme oranını hesaplayın
-// Benzeme oranını, belirlediğiniz bir eşik değeriyle karşılaştırın
-// Seçtiğiniz cümleleri bir dizi içinde saklayın
-function selectSentences (list, input, threshold) {
+// Metinler arasındaki benzeme oranını hesaplayan bir fonksiyon
+function similarity(text1, text2) {
+  // Metinlerin uzunluklarını alın
+  const len1 = text1.length;
+  const len2 = text2.length;
+
+  // Metinlerden biri boşsa, benzeme oranı 0'dır
+  if (len1 === 0 || len2 === 0) return 0;
+
+  // Metinler arasındaki Levenshtein mesafesini bulun
+  const distance = levenshtein(text1.toLowerCase(), text2.toLowerCase());
+
+  // Benzeme oranını hesaplayın
+  return 1 - distance / Math.max(len1, len2);
+}
+
+function similarity_1 (text1, text2) {
+  // Metinleri harflerine ayırın ve küçük harfe dönüştürün
+  const letters1 = text1.toLowerCase().split ("");
+  const letters2 = text2.toLowerCase().split ("");
+ 
+  // Metinler arasındaki benzeme oranını hesaplayın
+  const matches = letters1.filter (letter => letters2.includes (letter)).length;
+  const differences = letters1.length + letters2.length - 2 * matches;
+ 
+  // Benzeme oranını hesaplayın
+  return matches / (matches + differences);
+ }
+ function selectSentences (list, input, threshold) {
   // Seçilen cümleleri tutacak bir dizi tanımlayın
   const selected = [];
-
+ 
   // List içindeki her cümle için döngü başlatın
   for (let sentence of list) {
-    // Cümle ile kullanıcının girdiği cümle arasındaki benzeme oranını hesaplayın
-    const ratio = similarity (sentence, input);
+     // Cümle ile kullanıcının girdiği cümle arasındaki benzeme oranlarını hesaplayın
+     const ratio1 = similarity (sentence, input); // Levenshtein mesafesi ile
+     const ratio2 = similarity_1 (sentence, input); // Harf kesişimi ile
 
-    // Benzeme oranı eşik değerinden büyük veya eşitse, cümleyi seçin
-    if (ratio >= threshold) {
-      selected.push (sentence);
-    }
+     // Benzeme oranlarının ortalamasını alın
+     const average = (ratio1 + ratio2) / 2;
+
+     // Ortalama eşik değerinden büyük veya eşitse, cümleyi seçin
+     if (average >= threshold) {
+       selected.push (sentence);
+     }
   }
-
+ 
   // Seçilen cümleleri döndürün
   return selected;
-}
+ }
 
 // Data nın içindeki tüm değerleri alan bir fonksiyon tanımlıyoruz
 function getAllValues(data) {
@@ -918,13 +970,13 @@ function compareInput (userInput, list, threshold) {
     // Eğer hiç cümle seçilmediyse, bir hata mesajı döndürün
     return "Maalesef, girdiğiniz değer ile eşleşen bir cümle bulamadım.";
   } else if (selected.length === 1) {
-    // Eğer sadece bir cümle seçildiyse, o cümleyi döndürün
-    return [selected[0],similarity(selected[0],userInput)];
+    // Eğer sadece bir cümle seçildiyse, o cümleyi ve benzeme oranlarını döndürün
+    return [selected[0], similarity(selected[0], userInput), similarity_1(selected[0], userInput)];
   } else {
-    // Eğer birden fazla cümle seçildiyse, benzeme oranına göre sıralayın
-    selected.sort((a, b) => similarity(b, userInput) - similarity(a, userInput));
-    // En yüksek benzeme oranına sahip olan cümleyi döndürün
-    return [selected[0],similarity(selected[0],userInput)];
+    // Eğer birden fazla cümle seçildiyse, benzeme oranlarının ortalamalarına göre sıralayın
+    selected.sort((a, b) => ((similarity(b, userInput) + similarity_1(b, userInput)) / 2) - ((similarity(a, userInput) + similarity_1(a, userInput)) / 2));
+    // En yüksek ortalama benzeme oranına sahip olan cümleyi ve benzeme oranlarını döndürün
+    return [selected[0], similarity(selected[0], userInput), similarity_1(selected[0], userInput)];
   }
 }
 
