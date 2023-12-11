@@ -1184,6 +1184,57 @@ function applyOperator(operator, left, right) {
   }
  }
 
+// String içindeki boşlukları kaldıran fonksiyon
+function removeSpaces(string) {
+  // Boşluk karakterini tanımlayan regular expression
+  let regex = /\s/g;
+  // Stringdeki boşluk karakterlerini boş string ile değiştir
+  let newString = string.replace(regex, "");
+  // Yeni stringi döndür
+  return newString;
+}
+
+// String içindeki matematik ifadelerini ayıran fonksiyon
+function splitMathExpressions(string) {
+  // Matematik ifadelerini tutacak bir dizi oluştur
+  let expressions = [];
+  // Stringi işlem önceliklerine göre böl
+  let parts = string.split("");
+  // Her parçayı döngüyle kontrol et
+  var cache_list = "";
+  for (let part of parts) {
+    // Eğer parça boş değilse ve bir matematik ifadesi ise, diziye ekle
+    if (isMathExpression(part)) {
+      cache_list += part;
+    }else {
+      if(part !== "" && cache_list.length !== 0){
+        expressions.push(cache_list);
+        cache_list = "";
+      }
+    }
+  }
+  expressions.push(cache_list);
+  console.log(cache_list);
+  // Diziyi döndür
+  return expressions;
+}
+
+// Bir stringin matematik ifadesi olup olmadığını kontrol eden fonksiyon
+function isMathExpression(string) {
+  // Matematik ifadesinin bir parçası olabilecek karakterleri tanımla
+  let validChars = "0123456789.+-/*()%";
+  // Stringin her karakterini döngüyle kontrol et
+  for (let char of string) {
+    // Eğer karakter geçerli karakterlerden biri değilse, false döndür
+    if (!validChars.includes(char)) {
+      return false;
+    }
+  }
+  // Eğer stringin tüm karakterleri geçerli ise, true döndür
+  return true;
+}
+
+
 // matematik işlemini ayıklayan ve değerlendiren bir fonksiyon tanımla
 function extractAndEvaluateMath(expression) {
   // matematik işlemini tanımlayan bir regular expression tanımla
@@ -1192,21 +1243,48 @@ function extractAndEvaluateMath(expression) {
   // let regex = /(\s|\()*(\d+(\.\d+)?\s*[\+\-\*\/\^%]?\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^%]?\s*\d+(\.\d+)?|\s*\))*(\s|\))*$/;
   // let regex = /(.|\s|\()*(\d+(\.\d+)?\s*[\+\-\*\/\^%]?\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^%]?\s*\d+(\.\d+)?|\s*\))*(\s|\))*$/;
 // Regex'i basitleştirin
-// Parantezleri algılayan regex
-let regex = /^\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*([\+\-\*\/\^%]\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*)*$/;
 
-  // ifade içinde regular expression ile eşleşen bir matematik işlemi ara
+// İçindeki stringleri ayıklayan ama her şeyi matematik işlemi olarak kabul eden
+// let regex = /(.|\s|\()*(\d+(\.\d+)?\s*[\+\-\*\/\^%]?\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^%]?\s*\d+(\.\d+)?|\s*\))*(\s|\))*$/;
+// İçindeki stringleri ayıklamayan ama her şeyi matematik işlemi kabul etmeyen
+// let regex = /^\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*([\+\-\*\/\^%]\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*)*$/;
+// Hem stringleri ayıklayabilen hem de her şeyi matematik işlemi olarak algılamayan regex
+
+
+// Başarılı olan bu
+// let regex = /(\d+(?!\.)\.\d+|\d+|\(.*\))\s*([\+\-\*\/\^%]\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*)*/;
+
+// let regex = /(\d+(?!\.)\.\d+|\d+|\(.*\))\s*([\+\-\*\/\^%]\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*)*(?=\s*([^0-9\+\-\*\/\^%\(\)\s]+|[^0-9\+\-\*\/\^%\(\)\s][^0-9\+\-\*\/\^%\(\)]*)\s*|$)/g;
+
+
+
+let regex = /(\b\d+(?!\.)\.\d+|\b\d+|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*([\+\-\*\/\^%]\s*(\b\d+(?!\.)\.\d+|\b\d+|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*)+/g;
   let match = expression.match(regex);
-
   // eğer bir matematik işlemi bulunursa
   if (match) {
+    match = match.map(m => m.replace(/\s+/g, ''));
+    console.log(match);
     // matematik işlemini al
-    let mathExpression = match[0];
-
-    // matematik işlemini evaluateMath fonksiyonuna gönder ve sonucu al
-    let result = evaluateMath(mathExpression);
-    // sonucu döndür
-    return match[0] + "=" + result + "<br>";
+    let regex = /[^0123456789.+\-/*()%]/g;
+    var mathExpression=[];
+    for (let i = 0; i < match.length; i++) {
+        let input = match[i];
+        if (regex.test(input)) {
+          console.log("çalıştı: " + input);
+            var _l = splitMathExpressions(removeSpaces(input));
+            for (let ix = 0; ix < _l.length; ix++) {
+              mathExpression.push(_l[ix]);
+            }
+        } else {
+            mathExpression.push(input)
+        }
+    }
+    var output = "";
+    for (let part of mathExpression) {
+      let result = evaluateMath(part);
+      output += part + "=" + result + "<br>";
+    }
+    return output;
   }
   // eğer bir matematik işlemi bulunmazsa
   else {
