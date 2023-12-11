@@ -1342,7 +1342,7 @@ function mesajGonder(mesaj,enc="no") {
           try{resolve([textasdas,"tr"]);}catch(e){reject(new Error("/ error"));}
         });
       }
-try{
+
       var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
       var sourceLang = 'auto';
       if(mode=="self"){
@@ -1368,9 +1368,11 @@ try{
             // JSON verisini parse edelim
             let data = JSON.parse(request.responseText);
             let finaltext = '';
+            try{
             for (let i = 0; i < data[0].length; i++) {
               finaltext += data[0][i][0];
             }
+            }catch(e){}
             console.log("F:" + finaltext)
             // Verinin ilk elemanının ilk elemanının ilk elemanını döndürelim
             resolve([finaltext.replaceAll("%26","&").replaceAll("%3F","?"),data[2]]);
@@ -1383,7 +1385,7 @@ try{
         // İsteği gönderelim
         request.send();
       });
-}catch(e){}
+
     }
 
 
@@ -1394,7 +1396,7 @@ try{
           try{resolve([textasdas,"tr"]);}catch(e){reject(new Error("/ error"));}
         });
       }
-try{
+
       var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
       var sourceLang = 'auto';
       var targetLang = target;
@@ -1416,9 +1418,11 @@ try{
             // JSON verisini parse edelim
             let data = JSON.parse(request.responseText);
             let finaltext = '';
+            try{
             for (let i = 0; i < data[0].length; i++) {
               finaltext += data[0][i][0];
             }
+            }catch(e){}
             console.log("X:" + finaltext)
             console.log("DİL :" + data[2]);
             // Verinin ilk elemanının ilk elemanının ilk elemanını döndürelim
@@ -1432,7 +1436,7 @@ try{
         // İsteği gönderelim
         request.send();
       });
-}catch(e){}
+
     }
     
             function cevapla(dataxxxx,target_A="me",lang="tr"){
