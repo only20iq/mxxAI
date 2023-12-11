@@ -1014,17 +1014,37 @@ function compareInput (userInput, list, threshold) {
   }
 }
 
-
-// matematik ifadesini ayrıştıran ve değerlendiren bir fonksiyon tanımla
-function evaluateMath(expression) {
-  // ifadeyi, operatörleri ve sayıları ayıran bir diziye ayır
-  let tokens = expression.split(/(\+|-|\*|\/|\^|\(|\))/).filter(x => x.trim() !== "");
-  // diziyi, işlem önceliğine göre grupla
-  let grouped = groupTokens(tokens);
-  // gruplanmış ifadeyi değerlendir ve sonucu döndür
-  return evaluateGrouped(grouped);
-}
-
+function evaluateMath(a) {
+  // Check if the input string is empty or contains only white spaces
+  if (!a || a.trim() === '') {
+     throw new Error('Empty input string');
+  }
+ 
+  // Remove outer parentheses
+  while (a.startsWith('(') && a.endsWith(')')) {
+     a = a.substring(1, a.length - 1);
+  }
+ 
+  // Check if the input string is still wrapped in parentheses
+  if (a.startsWith('(') && a.endsWith(')')) {
+     let innerExpression = a.substring(1, a.length - 1);
+     let result = evaluateMath(innerExpression);
+     return a + "=" + result + "<br>";
+  }
+ 
+  let b = a.split(/(\+|-|\*|\/|\^|\(|\)|%)/).filter(a => "" !== a.trim());
+ 
+  // Check if the array of tokens contains any unexpected tokens
+  for (let i = 0; i < b.length; i++) {
+     if (!isNumber(b[i]) && !isOperator(b[i]) && b[i] !== '(' && b[i] !== ')') {
+       throw new Error('Unexpected token: ' + b[i]);
+     }
+  }
+ 
+  let c = groupTokens(b);
+  return evaluateGrouped(c);
+ }
+ 
 // diziyi, işlem önceliğine göre gruplayan bir fonksiyon tanımla
 function groupTokens(tokens) {
   // parantezleri işlemek için bir yığın tanımla
@@ -1132,64 +1152,66 @@ function evaluateGrouped(grouped) {
 
 // bir öğenin operatör olup olmadığını kontrol eden bir fonksiyon tanımla
 function isOperator(token) {
-  return token === "+" || token === "-" || token === "*" || token === "/" || token === "^";
-}
+  return token === "+" || token === "-" || token === "*" || token === "/" || token === "^" || token === "%";
+ }
 
 // bir öğenin sayı olup olmadığını kontrol eden bir fonksiyon tanımla
 function isNumber(token) {
   return !isNaN(token);
-}
+ }
 
 // bir operatörün önceliğini döndüren bir fonksiyon tanımla
 function getPrecedence(operator) {
   if (operator === "+" || operator === "-") {
-    return 1;
+     return 1;
   }
-  else if (operator === "*" || operator === "/") {
-    return 2;
+  else if (operator === "*" || operator === "/" || operator === "%") {
+     return 2;
   }
   else if (operator === "^") {
-    return 3;
+     return 3;
   }
   else {
-    return 0;
+     return 0;
   }
-}
+ }
 
 // bir operatörün, başka bir operatörden daha yüksek veya eşit önceliğe sahip olup olmadığını kontrol eden bir fonksiyon tanımla
 function hasHigherOrEqualPrecedence(operator1, operator2) {
   return getPrecedence(operator1) >= getPrecedence(operator2);
-}
+ }
 
 // iki sayıya bir operatör uygulayan bir fonksiyon tanımla
 function applyOperator(operator, left, right) {
   if (operator === "+") {
-    return left + right;
+     return left + right;
   }
   else if (operator === "-") {
-    return left - right;
+     return left - right;
   }
   else if (operator === "*") {
-    return left * right;
+     return left * right;
   }
   else if (operator === "/") {
-    return left / right;
+     return left / right;
   }
   else if (operator === "^") {
-    return Math.pow(left, right);
+     return Math.pow(left, right);
+  }
+  else if (operator === "%") {
+     return left % right;
   }
   else {
-    return 0;
+     return 0;
   }
-}
+ }
 
 // matematik işlemini ayıklayan ve değerlendiren bir fonksiyon tanımla
 function extractAndEvaluateMath(expression) {
   // matematik işlemini tanımlayan bir regular expression tanımla
   // bu regular expression, sayılar, operatörler ve parantezler içeren basit bir matematik işlemini yakalar
-  // örneğin, "5+2=?", "6.2/2*1.5 cevabı nedir?" veya "5/5/2+2+9.6*2 kaç yapar?" gibi ifadelerdeki matematik işlemlerini yakalar
-  let regex = /\s*(\d+(\.\d+)?\s*[\+\-\*\/\^]\s*|\(\s*)*(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^]\s*\d+(\.\d+)?|\s*\))*\s*/;
-
+  // let regex = /(\d+(\.\d+)?\s*[\+\-\*\/\^]\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^]\s*\d+(\.\d+)?|\s*\))*(\s|$)/;
+  let regex = /(\s|\()*(\d+(\.\d+)?\s*[\+\-\*\/\^%]?\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^%]?\s*\d+(\.\d+)?|\s*\))*(\s|\))*$/;
 
   // ifade içinde regular expression ile eşleşen bir matematik işlemi ara
   let match = expression.match(regex);
