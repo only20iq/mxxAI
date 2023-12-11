@@ -1016,7 +1016,7 @@ function compareInput (userInput, list, threshold) {
 
 function evaluateMath(expression) {
   // ifadeyi, operatörleri ve sayıları ayıran bir diziye ayır
-  let tokens = expression.split(/(\+|-|\*|\/|\^|\(|\)|%)/).filter(x => x.trim() !== "");
+  let tokens = expression.replaceAll(",",".").split(/(\+|-|\*|\/|\^|\(|\)|%)/).filter(x => x.trim() !== "");
   // diziyi, işlem önceliğine göre grupla
   let grouped = groupTokens(tokens);
   // gruplanmış ifadeyi değerlendir ve sonucu döndür
@@ -1222,7 +1222,7 @@ function splitMathExpressions(string) {
 // Bir stringin matematik ifadesi olup olmadığını kontrol eden fonksiyon
 function isMathExpression(string) {
   // Matematik ifadesinin bir parçası olabilecek karakterleri tanımla
-  let validChars = "0123456789.+-/*()%^";
+  let validChars = "0123456789.,+-/*()%^";
   // Stringin her karakterini döngüyle kontrol et
   for (let char of string) {
     // Eğer karakter geçerli karakterlerden biri değilse, false döndür
@@ -1258,14 +1258,14 @@ function extractAndEvaluateMath(expression) {
 
 
 
-let regex = /(\b\d+(?!\.)\.\d+|\b\d+|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*([\+\-\*\/\^%]\s*(\b\d+(?!\.)\.\d+|\b\d+|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*)+/g;
+let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*)+/g;
   let match = expression.match(regex);
   // eğer bir matematik işlemi bulunursa
   if (match) {
-    match = match.map(m => m.replace(/\s+/g, ''));
+    match = match.map(m => m.replace(/\s+/g, '').replaceAll(",","."));
     console.log(match);
     // matematik işlemini al
-    let regex = /[^0123456789.+\-/*()%^]/g;
+    let regex = /[^0123456789.,+\-/*()%^]/g;
     var mathExpression=[];
     for (let i = 0; i < match.length; i++) {
         let input = match[i];
