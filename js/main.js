@@ -1192,8 +1192,8 @@ window.otherusers_realtime_ws.onopen = function() {
 
 
               try {
-                var otherwsurl = "wss://socketsbay.com/wss/v2/1/demo/";
-                // var otherwsurl = "ws://localhost:8000";
+                var otherwsurl;
+                window.dev_mode ? otherwsurl = "ws://localhost:8000/" : otherwsurl = "wss://socketsbay.com/wss/v2/1/demo/";
                 wsrealtimeOther(otherwsurl);
                 var ___d_cac = document.getElementById("ws3");
                 ___d_cac.value = otherwsurl;

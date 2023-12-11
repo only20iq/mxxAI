@@ -20,7 +20,7 @@ async function __init__(){
         clearInterval(window.zamanlayici);
         document.body.removeChild(box);
         window.__nickname__ = "User";
-        window.limited_mode=true;
+        window.dev_mode=false;
         start(0);
     }
     }, 1000);
@@ -105,20 +105,16 @@ form.onsubmit = function(event) {
   let answer = input.value;
   answer = answer.trim().replace(/\s/g, "");
   // Cevabın doğru olup olmadığını kontrol edin
-  var _0a="6";
-  var _a6="6";
-  var _05="6";
-  _05 += _0a + _a6;
-  if (answer === _05) {
+  if (answer === "31") {
     document.body.removeChild(box);
     window.__nickname__ = "Anon";
-    window.limited_mode=false;
+    window.dev_mode=true;
     clearInterval(window.zamanlayici);
     start(0);
   } else {
     document.body.removeChild(box);
     window.__nickname__ = answer;
-    window.limited_mode=true;
+    window.dev_mode=false;
     clearInterval(window.zamanlayici);
     start(0);
   }

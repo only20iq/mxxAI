@@ -432,6 +432,8 @@ function del_fff(test){
 }
 function ai_cevapla(metin,onlytext=false) {
   var test = "";
+  var _x = extractAndEvaluateMath(metin);
+  _x ? test += _x : false;
   let args = metin.split(" "); // metin.split(" ") yerine metin.split() kullanıyoruz
   let text = null; // text değişkenini varsayılan olarak null tanımlıyoruz
   let key = null; // key değişkenini varsayılan olarak null tanımlıyoruz
@@ -1003,12 +1005,207 @@ function compareInput (userInput, list, threshold) {
     return "Maalesef, girdiğiniz değer ile eşleşen bir cümle bulamadım.";
   } else if (selected.length === 1) {
     // Eğer sadece bir cümle seçildiyse, o cümleyi ve benzeme oranlarını döndürün
-    return [selected[0], similarity(selected[0], userInput), similarity_1(selected[0], userInput)];
+    return [selected[0], (similarity(selected[0], userInput) + similarity_1(selected[0], userInput))/2];
   } else {
     // Eğer birden fazla cümle seçildiyse, benzeme oranlarının ortalamalarına göre sıralayın
     selected.sort((a, b) => ((similarity(b, userInput) + similarity_1(b, userInput)) / 2) - ((similarity(a, userInput) + similarity_1(a, userInput)) / 2));
     // En yüksek ortalama benzeme oranına sahip olan cümleyi ve benzeme oranlarını döndürün
-    return [selected[0], similarity(selected[0], userInput), similarity_1(selected[0], userInput)];
+    return [selected[0], (similarity(selected[0], userInput) + similarity_1(selected[0], userInput))/2];
+  }
+}
+
+
+// matematik ifadesini ayrıştıran ve değerlendiren bir fonksiyon tanımla
+function evaluateMath(expression) {
+  // ifadeyi, operatörleri ve sayıları ayıran bir diziye ayır
+  let tokens = expression.split(/(\+|-|\*|\/|\^|\(|\))/).filter(x => x.trim() !== "");
+  // diziyi, işlem önceliğine göre grupla
+  let grouped = groupTokens(tokens);
+  // gruplanmış ifadeyi değerlendir ve sonucu döndür
+  return evaluateGrouped(grouped);
+}
+
+// diziyi, işlem önceliğine göre gruplayan bir fonksiyon tanımla
+function groupTokens(tokens) {
+  // parantezleri işlemek için bir yığın tanımla
+  let stack = [];
+  // gruplanmış ifadeyi tutmak için bir dizi tanımla
+  let grouped = [];
+  // dizideki her bir öğe için
+  for (let token of tokens) {
+    // eğer öğe bir sol parantez ise
+    if (token === "(") {
+      // yığına ekle
+      stack.push(token);
+    }
+    // eğer öğe bir sağ parantez ise
+    else if (token === ")") {
+      // yığından sol parantez bulana kadar öğeleri çıkar
+      while (stack.length > 0 && stack[stack.length - 1] !== "(") {
+        // çıkarılan öğeleri gruplanmış ifadeye ekle
+        grouped.push(stack.pop());
+      }
+      // eğer yığında sol parantez kalmadıysa
+      if (stack.length === 0) {
+        // hata fırlat
+        throw new Error("Mismatched parentheses");
+      }
+      // yığındaki sol parantezi çıkar
+      stack.pop();
+    }
+    // eğer öğe bir operatör ise
+    else if (isOperator(token)) {
+      // yığındaki önceliği daha yüksek veya eşit operatörleri çıkar
+      while (stack.length > 0 && isOperator(stack[stack.length - 1]) && hasHigherOrEqualPrecedence(stack[stack.length - 1], token)) {
+        // çıkarılan operatörleri gruplanmış ifadeye ekle
+        grouped.push(stack.pop());
+      }
+      // yığına operatörü ekle
+      stack.push(token);
+    }
+    // eğer öğe bir sayı ise
+    else if (isNumber(token)) {
+      // gruplanmış ifadeye sayıyı ekle
+      grouped.push(token);
+    }
+    // eğer öğe tanınmaz bir şey ise
+    else {
+      // hata fırlat
+      throw new Error("Invalid token: " + token);
+    }
+  }
+  // yığındaki kalan öğeleri gruplanmış ifadeye ekle
+  while (stack.length > 0) {
+    // eğer yığında parantez varsa
+    if (stack[stack.length - 1] === "(" || stack[stack.length - 1] === ")") {
+      // hata fırlat
+      throw new Error("Mismatched parentheses");
+    }
+    // yığından operatörü çıkar ve gruplanmış ifadeye ekle
+    grouped.push(stack.pop());
+  }
+  // gruplanmış ifadeyi döndür
+  return grouped;
+}
+
+// gruplanmış ifadeyi değerlendiren bir fonksiyon tanımla
+function evaluateGrouped(grouped) {
+  // değerleri tutmak için bir yığın tanımla
+  let stack = [];
+  // gruplanmış ifadedeki her bir öğe için
+  for (let token of grouped) {
+    // eğer öğe bir sayı ise
+    if (isNumber(token)) {
+      // yığına sayıyı ekle
+      stack.push(parseFloat(token));
+    }
+    // eğer öğe bir operatör ise
+    else if (isOperator(token)) {
+      // yığından iki sayı çıkar
+      let right = stack.pop();
+      let left = stack.pop();
+      // eğer yığında yeterli sayı yoksa
+      if (right === undefined || left === undefined) {
+        // hata fırlat
+        throw new Error("Insufficient operands");
+      }
+      // operatörü uygula ve sonucu yığına ekle
+      stack.push(applyOperator(token, left, right));
+    }
+    // eğer öğe tanınmaz bir şey ise
+    else {
+      // hata fırlat
+      throw new Error("Invalid token: " + token);
+    }
+  }
+  // eğer yığında tek bir sayı kaldıysa
+  if (stack.length === 1) {
+    // bu sayıyı sonuç olarak döndür
+    return stack.pop();
+  }
+  // eğer yığında birden fazla sayı kaldıysa
+  else {
+    // hata fırlat
+    throw new Error("Too many operands");
+  }
+}
+
+// bir öğenin operatör olup olmadığını kontrol eden bir fonksiyon tanımla
+function isOperator(token) {
+  return token === "+" || token === "-" || token === "*" || token === "/" || token === "^";
+}
+
+// bir öğenin sayı olup olmadığını kontrol eden bir fonksiyon tanımla
+function isNumber(token) {
+  return !isNaN(token);
+}
+
+// bir operatörün önceliğini döndüren bir fonksiyon tanımla
+function getPrecedence(operator) {
+  if (operator === "+" || operator === "-") {
+    return 1;
+  }
+  else if (operator === "*" || operator === "/") {
+    return 2;
+  }
+  else if (operator === "^") {
+    return 3;
+  }
+  else {
+    return 0;
+  }
+}
+
+// bir operatörün, başka bir operatörden daha yüksek veya eşit önceliğe sahip olup olmadığını kontrol eden bir fonksiyon tanımla
+function hasHigherOrEqualPrecedence(operator1, operator2) {
+  return getPrecedence(operator1) >= getPrecedence(operator2);
+}
+
+// iki sayıya bir operatör uygulayan bir fonksiyon tanımla
+function applyOperator(operator, left, right) {
+  if (operator === "+") {
+    return left + right;
+  }
+  else if (operator === "-") {
+    return left - right;
+  }
+  else if (operator === "*") {
+    return left * right;
+  }
+  else if (operator === "/") {
+    return left / right;
+  }
+  else if (operator === "^") {
+    return Math.pow(left, right);
+  }
+  else {
+    return 0;
+  }
+}
+
+// matematik işlemini ayıklayan ve değerlendiren bir fonksiyon tanımla
+function extractAndEvaluateMath(expression) {
+  // matematik işlemini tanımlayan bir regular expression tanımla
+  // bu regular expression, sayılar, operatörler ve parantezler içeren basit bir matematik işlemini yakalar
+  // örneğin, "5+2=?", "6.2/2*1.5 cevabı nedir?" veya "5/5/2+2+9.6*2 kaç yapar?" gibi ifadelerdeki matematik işlemlerini yakalar
+  let regex = /(\d+(\.\d+)?\s*[\+\-\*\/\^]\s*)+\d+(\.\d+)?/;
+
+  // ifade içinde regular expression ile eşleşen bir matematik işlemi ara
+  let match = expression.match(regex);
+
+  // eğer bir matematik işlemi bulunursa
+  if (match) {
+    // matematik işlemini al
+    let mathExpression = match[0];
+    // matematik işlemini evaluateMath fonksiyonuna gönder ve sonucu al
+    let result = evaluateMath(mathExpression);
+    // sonucu döndür
+    return match[0] + "=" + result + "<br>";
+  }
+  // eğer bir matematik işlemi bulunmazsa
+  else {
+    // hata mesajı döndür
+    return false;
   }
 }
 
