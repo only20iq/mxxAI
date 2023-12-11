@@ -1126,6 +1126,7 @@ try{
 var baglantiother = document.getElementById("baglantiother");
 ///////
 ///////
+try{
 window.otherusers_realtime_ws.onopen = function() {
         sent__s("Lobiye katıldın");
         baglantiother.textContent = "Açık";
@@ -1175,6 +1176,7 @@ window.otherusers_realtime_ws.onopen = function() {
           // sent__s("Socket Server:" + mesaj);
         }
     };
+  }catch(e){}
 ///////
 ///////
             }
@@ -1236,6 +1238,7 @@ window.otherusers_realtime_ws.onopen = function() {
   }catch(e){}
     var baglanti = document.getElementById("baglanti");
     //Bağlantı açıldığında çalışacak fonksiyon
+try{
     window.ws.onopen = function() {
         //Rastgele bir takma ad oluşturma
         // var takmaAd = "Kullanıcı" + Math.floor(Math.random() * 100);
@@ -1302,6 +1305,7 @@ window.otherusers_realtime_ws.onopen = function() {
           
         }
     };
+}catch(e){}
 }
 
 function mesajGonder(mesaj,enc="no") {
@@ -1338,6 +1342,7 @@ function mesajGonder(mesaj,enc="no") {
           try{resolve([textasdas,"tr"]);}catch(e){reject(new Error("/ error"));}
         });
       }
+try{
       var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
       var sourceLang = 'auto';
       if(mode=="self"){
@@ -1378,6 +1383,7 @@ function mesajGonder(mesaj,enc="no") {
         // İsteği gönderelim
         request.send();
       });
+}catch(e){}
     }
 
 
@@ -1388,6 +1394,7 @@ function mesajGonder(mesaj,enc="no") {
           try{resolve([textasdas,"tr"]);}catch(e){reject(new Error("/ error"));}
         });
       }
+try{
       var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
       var sourceLang = 'auto';
       var targetLang = target;
@@ -1425,6 +1432,7 @@ function mesajGonder(mesaj,enc="no") {
         // İsteği gönderelim
         request.send();
       });
+}catch(e){}
     }
     
             function cevapla(dataxxxx,target_A="me",lang="tr"){
