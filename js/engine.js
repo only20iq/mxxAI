@@ -534,7 +534,7 @@ function ai_cevapla(metin,onlytext=false) {
 // result_0_data.contains(r) ? (array[i] = r + " ", result_0_data.remove(r)) : printf("Hata: rand_r() fonksiyonunun ciktisi result_0_data listinin icinde degil.\n");
   if (test.length < 500 && test != "sil" && (!metin.startsWith('/'))) {
     var r = random_generate_bonus(metin,1);
-    result_0_data.indexOf(r) != -1 ? (test += r,/*console.log("Random Başarılı: "+r),*/result_0_data.splice(result_0_data.indexOf(r), 1)) : /*console.log("Random Başarısız: "+r)*/()=>{};
+    result_0_data.indexOf(r) != -1 ? (test += (" "+r+" "),/*console.log("Random Başarılı: "+r),*/result_0_data.splice(result_0_data.indexOf(r), 1)) : /*console.log("Random Başarısız: "+r)*/()=>{};
 
   var cikti = compareInput(metin, result_0_data, 0);
   // Çıktının tipini kontrol ediyoruz
@@ -556,6 +556,7 @@ function ai_cevapla(metin,onlytext=false) {
   if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
     test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
   }
+  test = test.trim();
     if(onlytext==true){
       return del_fff(replace_with_xxx(test,true));
     }else{
@@ -909,6 +910,37 @@ function similarity_1 (text1, text2) {
 function getAllValues(data) {
   // Sonuçları tutacak bir dizi tanımlıyoruz
   const results = [];
+
+  // data.set içindeki değerleri alıyoruz
+  for (let key in data.set) {
+    // Her değer için bir alt nesne tanımlıyoruz
+    if(!key.startsWith("p_")){continue;}
+    let subobj = data.set[key];
+    for (let subkey in subobj) {
+      // Her alt özelliğin değerini alıyoruz
+      let value = subobj[subkey];
+      if(typeof value == "string") {
+        if (!value.startsWith("$")) {
+          results.push(value);
+        }
+      }
+      // Eğer değer bir liste ise, listin içindeki tüm değerleri sonuçlara ekliyoruz
+      if (Array.isArray(value)) { for (let item of value) { if (!item.startsWith("$")) { results.push(item); } } }
+    }
+  }
+
+  // data.random içindeki değerleri alıyoruz
+  for (let key in data.random) {
+    // Her özelliğin değerini alıyoruz
+    let value = data.random[key];
+    if(typeof value == "string") {
+      if (!value.startsWith("$")) {
+        results.push(value);
+      }
+    }
+    // Eğer değer bir liste ise, listin içindeki tüm değerleri sonuçlara ekliyoruz
+    if (Array.isArray(value)) { for (let item of value) { if (!item.startsWith("$")) { results.push(item); } } }
+  }
 
   // data.single içindeki değerleri alıyoruz
   for (let key in data.single) {

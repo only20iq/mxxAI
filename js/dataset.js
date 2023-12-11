@@ -490,8 +490,8 @@ var data_raw = {
         "kötü":"$sevme"
         },
         "dataset12":{
-        "n":"feminizm/feminist/çevre",
-        "sevme":["Feminizmin mesela Avrupa ülkeleri veya herhangi bir pazarlama ile alakası olmamalı aynı şekilde çevreciyim diyorsan batıcılıkla farklı kavramlar bence ya daha ne diyebilirim?"],
+        "n":"feminizm/feminist",
+        "sevme":["Feminizmin mesela Avrupa ülkeleri veya herhangi bir pazarlama ile alakası olmamalı daha ne diyebilirim?"],
         "nasıl":"$sevme",
         "love":"$sevme",
         "kötü":"$sevme"

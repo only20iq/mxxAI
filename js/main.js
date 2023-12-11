@@ -810,7 +810,7 @@ header.appendChild(div);
 
 
 
-let values = ["red_velvet", "twice", "blackpink", "girls_generation", "ses", "exo", "bts", "exid", "mamamoo"]; // Değerleri tutacak bir liste oluşturur
+let values = ["kissoflife", "twice", "nmixx", "everglow", "ive", "aespa", "kep1er", "newjeans", "lesserafim"]; // Değerleri tutacak bir liste oluşturur
 for (let i = 0; i < values.length; i++) { // Listedeki her değer için bir döngü başlatır
     let a = document.createElement("div"); // Bir div elementi oluşturur
     a.style.display = "none"; // Elementin görünmez olmasını sağlar
@@ -892,9 +892,9 @@ function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;
   function hideOthers(cacheId,all=false,tumunugizle=false) {
     // Diğer div lerin id lerini bir diziye koy
     if(all==false){
-      var others = ["cache_form","cache_note", "cache_commands", "cache_kpop", "cache_websocket", "cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
+      var others = ["cache_form","cache_note", "cache_commands", "cache_kpop", "cache_websocket", "cache_kissoflife", "cache_twice", "cache_nmixx", "cache_everglow", "cache_ive", "cache_aespa", "cache_kep1er", "cache_newjeans", "cache_lesserafim"];
     }else{
-      var others = ["gallery_x","header_x","cache_form","cache_note", "cache_commands", "cache_kpop", "cache_websocket", "cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
+      var others = ["gallery_x","header_x","cache_form","cache_note", "cache_commands", "cache_kpop", "cache_websocket", "cache_kissoflife", "cache_twice", "cache_nmixx", "cache_everglow", "cache_ive", "cache_aespa", "cache_kep1er", "cache_newjeans", "cache_lesserafim"];
     }
     // Tıklanan div in id sini diziden çıkar
     others.splice(others.indexOf(cacheId), 1);
@@ -1603,6 +1603,8 @@ function mesajGonder(mesaj,enc="no") {
             var form = document.querySelector('#message-form');
             form.addEventListener('submit', function(event) {{
             event.preventDefault();
+            arama_sonuclari.style.display = "none";
+            _ax_a.style.display = "";
             var messageInput = document.querySelector('#message-input');
             var targetInput = document.querySelector('#target-input');
             var messagex2 = messageInput.value;
@@ -1734,15 +1736,11 @@ var _latest_file_name = "";
 var prevSrc = "";
 var stickyDiv = document.getElementById("sticky");
 // Klasörlerin isimlerini ve yollarını bir obje olarak tanımlayın
-if(window.limited_mode==false){
-  var foldersOLD = {
-    "Kpop1":"[$i$iHg88tt.mp4,$i$rgmtpJ8.mp4,$i$GasGtLF.mp4,$i$XstRTtl.mp4,$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large,$i$qfqUzqx.mp4!]"
-  };
-}else{
+
   var foldersOLD = {
     "Kpop1":"[$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large!]"
   };
-}
+
 
 // Dizileri karıştırmak için bir fonksiyon tanımla
 function shuffle(array) {
@@ -2450,29 +2448,30 @@ var groupData = [
     details: "Twice [Instagram](https://www.instagram.com/twicetagram/), [YouTube](https://www.youtube.com/channel/UCzgxx_DM2Dcb9Y1spb9mUJA), [Twitter](https://twitter.com/jypetwice), [TikTok](https://www.tiktok.com/@twice_tiktok_official), [YouTube Music](https://music.youtube.com/channel/UCAq0pFGa2w9SjxOq0ZxKVIw), [Spotify](https://open.spotify.com/artist/7n2Ycct7Beij7Dj7meI4X0), [Amazon Music](https://music.amazon.com/artists/B0011XQAXQ/twice), [Facebook](https://www.facebook.com/JYPETWICE/), [Last.Fm](https://www.last.fm/music/TWICE), [JYPE Site](https://twice.jype.com/), [Apple Music](https://music.apple.com/us/artist/twice/1203816887), [IMDb](https://www.imdb.com/name/nm9652049/), [Deezer](https://www.deezer.com/en/artist/161553)<br><br>Nayeon [Instagram](https://www.instagram.com/nayeonyny/)<br>Jeongyeon [Instagram](https://www.instagram.com/jy_piece/)<br>Momo [Instagram](https://www.instagram.com/momo/)<br>Sana [Instagram](https://www.instagram.com/m.by__sana/)<br>Jihyo [Instagram](https://www.instagram.com/_zyozyo/)<br>Mina [Instagram](https://www.instagram.com/mina_sr_my/)<br>Dahyun [Instagram](https://www.instagram.com/dahhyunnee/)<br>Chaeyoung [Instagram](https://www.instagram.com/chaeyo.0/)<br>Tzuyu [Instagram](https://www.instagram.com/thinkaboutzu/)<br><h3>UnOfficial</h3>[Kpopping](https://kpopping.com/profiles/group/TWICE), [Wikipedia](https://en.wikipedia.org/wiki/Twice), [Fandom](https://twice.fandom.com/wiki/TWICE), [K-Fandom](https://k-fandom.net/profil/twice/), [Koreaboo](https://www.koreaboo.com/artist/twice/), [K-Profiles](https://kprofiles.com/twice-members-profile/), [Soompi Fanclub](https://www.soompi.com/fanclub/twice)"
   },
   {
-    id: "blackpink",
-    name: "BLACKPINK",
-    image: "https://www.asialogy.com/wp-content/uploads/blackpink.webp",
-    details: "[YouTube](https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A), [Wikipedia](https://tr.wikipedia.org/wiki/Blackpink), [Instagram](https://www.instagram.com/blackpinkofficial/)<br><br>Rose [Instagram](https://www.instagram.com/roses_are_rosie/)<br>Jennie [Instagram](https://www.instagram.com/jennierubyjane/)<br>Jisoo [Instagram](https://www.instagram.com/sooyaaa__/)<br>Lisa [Instagram](https://www.instagram.com/lalalalisa_m/)"
+    id: "nmixx",
+    name: "NMIXX",
+    image: "https://6.soompi.io/wp-content/uploads/image/20231125012522_NMIXX.jpg?s=900x600&e=t",
+    details: "[YouTube](https://www.youtube.com/c/nmixxofficial), [Wikipedia](https://tr.wikipedia.org/wiki/Nmixx), [Instagram](https://www.instagram.com/nmixx_official/)"
   },
   {
-    id: "girls_generation",
-    name: "Girls' Generation",
-    image: "https://www.allkpop.com/upload/2020/08/content/061241/1596732074-snsd.jpg",
-    details: "[Wikipedia](https://tr.wikipedia.org/wiki/Girls%27_Generation), [YouTube](https://www.youtube.com/channel/UCPENYtHg4Xhmm6oX8zaQA7Q), [Instagram](https://www.instagram.com/girlsgeneration/)"
+    id: "everglow",
+    name: "Everglow",
+    image: "https://upload.wikimedia.org/wikipedia/commons/d/d5/20230901_EVERGLOW_%28%EC%97%90%EB%B2%84%EA%B8%80%EB%A1%9C%EC%9A%B0%29.jpg",
+    details: "[Wikipedia](https://en.wikipedia.org/wiki/Everglow), [YouTube](https://www.youtube.com/channel/UCVXzBnzP5i5W-3snrxu8kfg), [Instagram](https://www.instagram.com/official_everglow/)"
   },
   {
-    id: "ses",
-    name: "S.E.S.",
-    image: "https://i.discogs.com/070p5NymADdKBMTLRSBH4bVvBW00PLiVeCYzCnMHh7o/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTczODQx/Ni0xNDgwMzg5OTM0/LTQ0MjQuanBlZw.jpeg",
-    details: "- 1997 yılında SM Entertainment tarafından oluşturulan üç üyeli bir kız grubu.\n- Üyeleri: Eugene, Bada ve Shoo.\n- Başlıca şarkıları: \"I'm Your Girl\", \"Dreams Come True\", \"I Love You\", \"Love\" ve \"Be Natural\".\n- En çok satan albümleri: Sea & Eugene & Shoo (1997), Reach Out (1998), Love (1999) ve A Letter from Greenland (2000)."
+    id: "ive",
+    name: "IVE",
+    image: "https://www.billboard.com/wp-content/uploads/2023/04/IVE-cr-Starship-Entertainment-billboard-1548.jpg?w=942&h=623&crop=1",
+    details: "[YouTube](https://www.youtube.com/IVEstarship), [Wikipedia](https://en.wikipedia.org/wiki/Ive_%28group%29), [Instagram](https://www.instagram.com/ivestarship)"
   },
   {
-    id: "exid",
-    name: "EXID",
-    image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/EXID_in_a_showcase_on_May_15%2C_2019_2.png",
-    details: "- 2012 yılında AB Entertainment tarafından oluşturulan beş üyeli bir kız grubu.\n- Üyeleri: Solji, LE, Hani, Hyelin ve Jeonghwa. (Eski üyeler: Dami, Yuji ve Haeryeong)\n- Başlıca şarkıları: \"Whoz That Girl\", \"Up & Down\", \"Ah Yeah\", \"Hot Pink\" ve \"DDD\".\n- En çok satan albümleri: Street (2016), Eclipse (2017) ve Full Moon (2017)."
-  },{ id: "exo", name: "EXO", image: "https://upload.wikimedia.org/wikipedia/commons/9/91/Exo_monster_160618_suwon.png", details: "- 2012 yılında SM Entertainment tarafından oluşturulan dokuz üyeli bir erkek grubu. Üyeleri: Xiumin, Suho, Lay, Baekhyun, Chen, Chanyeol, D.O., Kai ve Sehun. Başlıca şarkıları: 'Mama', 'Growl', 'Overdose', 'Call Me Baby', 'Love Me Right', 'Monster', 'Lotto', 'Ko Ko Bop', 'Power', 'Tempo' ve 'Love Shot'. En çok satan albümleri: XOXO (2013), Exodus (2015), Ex’Act (2016) ve The War (2017)." }, { id: 'bts', name: 'BTS', image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg/800px-BTS_during_a_White_House_press_conference_May_31%2C_2022_%28cropped%29.jpg", details: "- 2013 yılında Big Hit Entertainment tarafından oluşturulan yedi üyeli bir erkek grubu. Üyeleri: Jin, Suga, J-Hope, RM, Jimin, V ve Jungkook. Başlıca şarkıları: 'No More Dream', 'Boy in Luv', 'I Need U', 'Run', 'Fire', 'Blood Sweat & Tears', 'Spring Day', 'DNA', 'Fake Love', 'Idol' ve 'Boy With Luv'. En çok satan albümleri: Wings (2016), Love Yourself: Tear (2018), Map of the Soul: Persona (2019) ve Map of the Soul: 7 (2020)." }, { id: "red_velvet", name: "Red Velvet", image: "https://www.j-14.com/wp-content/uploads/2023/02/red-velvet-kpop.jpg?fit=4725%2C3150&quality=86&strip=all", details: "- 2014 yılında SM Entertainment tarafından oluşturulan beş üyeli bir kız grubu. Üyeleri: Irene, Seulgi, Wendy, Joy ve Yeri. Başlıca şarkıları: 'Happiness', 'Ice Cream Cake', 'Dumb Dumb', 'Russian Roulette', 'Red Flavor', 'Peek-A-Boo', 'Bad Boy', 'Power Up' ve 'Psycho'. En çok satan albümleri: The Red (2015), The Perfect Red Velvet (2018) ve The ReVe Festival Finale (2019)." }, { id: "mamamoo", name: "MAMAMOO", image: "https://www.korefanzin.com/upload/editor/image_1524038152_4.jpg", details: "- 2014 yılında RBW tarafından oluşturulan dört üyeli bir kız grubu. Üyeleri: Solar, Moonbyul, Wheein ve Hwasa. Başlıca şarkıları: 'Mr. Ambiguous', 'Piano Man', 'Um Oh Ah Yeh', 'You’re the Best', 'Décalcomanie', 'Yes I Am', 'Starry Night', 'Egotistic' ve 'Hip'. En çok satan albümleri: Melting (2016), Reality in Black (2019) ve Travel (2020)." }
+    id: "newjeans",
+    name: "NewJeans",
+    image: "https://i1.sndcdn.com/artworks-IFyHNEShhAMpMx78-Bhvecg-t500x500.jpg",
+    details: "[YouTube](https://www.youtube.com/@NewJeans_official), [Wikipedia](https://en.wikipedia.org/wiki/NewJeans), [Instagram](https://www.instagram.com/newjeans_official/)"
+  },{ id: "aespa", name: "Aespa", image: "https://upload.wikimedia.org/wikipedia/commons/b/b2/20211115_%EC%9D%B4%ED%84%B0%EB%84%90_%EB%A6%AC%ED%84%B4_X_aespa_%281%29.jpg", details: "[YouTube](https://www.youtube.com/channel/UCs-QBT4qkj_YiQw1ZntDO3g), [Wikipedia](https://en.wikipedia.org/wiki/Le_Sserafim), [Instagram](https://www.instagram.com/le_sserafim)" }, { id: 'kep1er', name: 'Kep1er', image: "https://upload.wikimedia.org/wikipedia/commons/3/30/%EC%BC%80%ED%94%8C%EB%9F%AC_Kep1er.png", details: "[YouTube](https://www.youtube.com/channel/UC8whlOg70m2Yr3qSMjUhh0g), [Wikipedia](https://en.wikipedia.org/wiki/Kep1er), [Instagram](https://www.instagram.com/official.kep1er)" }, { id: "kissoflife", name: "Kiss Of Life", image: "https://upload.wikimedia.org/wikipedia/commons/0/03/MMA_2023_Kiss_of_Life.jpg", details: "[YouTube](https://www.youtube.com/channel/UCvEEeBssb4XxIfWWIB8IjMw), [Wikipedia](https://en.wikipedia.org/wiki/Kiss_of_Life_%28group%29), [Instagram](https://www.instagram.com/kissoflife_s2/)" }, 
+  { id: "lesserafim", name: "LE SSERAFIM", image: "https://upload.wikimedia.org/wikipedia/commons/1/10/%EB%A5%B4%EC%84%B8%EB%9D%BC%ED%95%8C_-_%EB%AE%A4%EC%A7%81%EB%B1%85%ED%81%AC_%EC%B6%9C%EA%B7%BC%EA%B8%B8_%EC%A7%81%EC%BA%A0_MusicBank_Fancam_220624.jpg", details: "[YouTube](https://www.youtube.com/channel/UCs-QBT4qkj_YiQw1ZntDO3g), [Wikipedia](https://en.wikipedia.org/wiki/Le_Sserafim), [Instagram](https://www.instagram.com/le_sserafim)" }
 ];
 
 // Liste elementini seç
@@ -2508,7 +2507,7 @@ for (var i = 0; i < groupData.length; i++) {
   list.appendChild(item);
 }
 
-var ids = ["cache_red_velvet", "cache_twice", "cache_blackpink", "cache_girls_generation", "cache_ses", "cache_exo", "cache_bts", "cache_exid", "cache_mamamoo"];
+var ids = ["cache_kissoflife", "cache_twice", "cache_nmixx", "cache_everglow", "cache_ive", "cache_aespa", "cache_kep1er", "cache_newjeans", "cache_lesserafim"];
 
 for (var j = 0; j < ids.length; j++) {
   var cache = document.getElementById(ids[j]);
