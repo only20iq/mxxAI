@@ -1188,7 +1188,8 @@ function extractAndEvaluateMath(expression) {
   // matematik işlemini tanımlayan bir regular expression tanımla
   // bu regular expression, sayılar, operatörler ve parantezler içeren basit bir matematik işlemini yakalar
   // örneğin, "5+2=?", "6.2/2*1.5 cevabı nedir?" veya "5/5/2+2+9.6*2 kaç yapar?" gibi ifadelerdeki matematik işlemlerini yakalar
-  let regex = /(\d+(\.\d+)?\s*[\+\-\*\/\^]\s*)+\d+(\.\d+)?/;
+  let regex = /\s*(\d+(\.\d+)?\s*[\+\-\*\/\^]\s*|\(\s*)*(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^]\s*\d+(\.\d+)?|\s*\))*\s*/;
+
 
   // ifade içinde regular expression ile eşleşen bir matematik işlemi ara
   let match = expression.match(regex);
