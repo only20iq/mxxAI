@@ -1222,7 +1222,7 @@ function splitMathExpressions(string) {
 // Bir stringin matematik ifadesi olup olmadığını kontrol eden fonksiyon
 function isMathExpression(string) {
   // Matematik ifadesinin bir parçası olabilecek karakterleri tanımla
-  let validChars = "0123456789.+-/*()%";
+  let validChars = "0123456789.+-/*()%^";
   // Stringin her karakterini döngüyle kontrol et
   for (let char of string) {
     // Eğer karakter geçerli karakterlerden biri değilse, false döndür
@@ -1265,7 +1265,7 @@ let regex = /(\b\d+(?!\.)\.\d+|\b\d+|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))
     match = match.map(m => m.replace(/\s+/g, ''));
     console.log(match);
     // matematik işlemini al
-    let regex = /[^0123456789.+\-/*()%]/g;
+    let regex = /[^0123456789.+\-/*()%^]/g;
     var mathExpression=[];
     for (let i = 0; i < match.length; i++) {
         let input = match[i];
