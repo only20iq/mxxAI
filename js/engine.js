@@ -510,8 +510,16 @@ function ai_cevapla(metin,onlytext=false) {
     }
 
     if (['size','boyut','filesize','dosyaboyutu','datasetsize'].includes(args[0].toLowerCase().slice(1))) {
-      test += "MY FILE SIZE: " + kiloBytes.toFixed(1)+"KB ";
-      return test;
+      if(onlytext=="true"){
+        return window.total_file_size;
+      }else{
+        sent__s(window.total_file_size);
+        return "sil";
+      }
+    }
+    if (['resetsize','checksize','checkfilesize','resetfilesize','resetsizes','checksizes'].includes(args[0].toLowerCase().slice(1))) {
+      get_code_data(true).then(result => console.log("Reset File Size")).catch(error => console.error(error));
+      return "sil";
     }
   }
 

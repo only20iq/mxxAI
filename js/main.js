@@ -10,7 +10,7 @@
 //     window.localStorage.clear();
 //     window.sessionStorage.clear();
 //     };
-    
+window.total_file_size="";
     window.latest_____cache_x = "";
     function change_latest_cache(text){
       window.latest_____cache_x = text;
@@ -325,7 +325,8 @@ var explanations = [
   "/ws,/websocket,/websocketserver,/wsserver (Websocket)",
   "/gg,/girlgrouplist,/girlgroup,/gglist,/kpoplist,/kpop (Kpop List)",
   "/size,/boyut,/filesize,/dosyaboyutu,/datasetsize (Dataset Size)",
-  "/kill,/die,/destroy,/destruct,/destruction,/reset (Session Delete)"
+  "/kill,/die,/destroy,/destruct,/destruction,/reset (Session Delete)",
+  "/resetsize,/checksize,/checkfilesize,/resetfilesize,/resetsizes,/checksizes (Reset Total File Size)"
 ];
 
 // Dizideki her açıklama için bir döngü başlatır
@@ -543,6 +544,7 @@ div.appendChild(arama_sonuclari);
 // Önerilenler kutusunu oluşturur
 var suggestions = document.createElement("div");
 suggestions.className = "suggestions";
+suggestions.style.display = "";
 
 // Her bir öneriyi bir div elementi olarak ekle
 var suggestion1 = document.createElement("div");
@@ -560,7 +562,6 @@ suggestion3.textContent = "Translate: Auto";
 suggestions.appendChild(suggestion1);
 suggestions.appendChild(suggestion2);
 suggestions.appendChild(suggestion3);
-
 
 // input elementine bir event listener ekle
 // data_raw değişkenini bir diziye dönüştür
@@ -617,10 +618,14 @@ textarea.addEventListener("input", function() {
      // bulundu mesajı ver
      arama_sonuclari.innerHTML = enCokBenzeyen;
      arama_sonuclari.style.display = "block";
-     _ax_a.style.display = "none";
+     try{
+      _ax_a.style.display = "none";
+     }catch(e){}
  }else{
-      arama_sonuclari.style.display = "none";
-      _ax_a.style.display = "";
+    arama_sonuclari.style.display = "none";
+    try{
+    _ax_a.style.display = "";
+    }catch(e){}
  }
 });
 
@@ -1116,6 +1121,9 @@ textarexr.addEventListener("input", function() {
               if(notnew==true){
                 if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
                     window.otherusers_realtime_ws.close();
+                }
+                if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
+                  window.ws.close();
                 }
               }
 try{
@@ -2570,6 +2578,81 @@ function showDetails(event) {
 }
 
 
+function get_code_data(goster=false){
+  // Dosya isimlerini bir diziye atıyoruz
+  const dosyalar = ['js/main.js', 'js/engine.js', 'js/dataset.js', 'loader.js', 'index.html'];
+  let dosyaSayisi = dosyalar.length;
+
+  // Toplam kod sayısını tutacak bir değişken tanımlıyoruz
+  let toplamKodSayisi = 0;
+  let toplamKBSayisi = 0;
+  let output = "";
+
+  let sayac=0;
+  // Bir promise nesnesi oluşturuyoruz
+  return new Promise((resolve, reject) => {
+    // Dosyalar dizisini döngüye alıyoruz
+    dosyalar.forEach(dosya => {
+      // Her dosya için bir XMLHttpRequest nesnesi oluşturuyoruz
+      let xhr = new XMLHttpRequest();
+      // open() metodu ile GET isteği açıyoruz
+      xhr.open('GET', window.location.href+dosya);
+      // send() metodu ile isteği gönderiyoruz
+      xhr.send();
+      // console.log(window.location.href+dosya);
+      // onreadystatechange olayı ile yanıtı işlemek için bir fonksiyon belirtiyoruz
+      xhr.onreadystatechange = function() {
+        // readyState özelliği XMLHttpRequest.DONE durumunda ise
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          // status özelliği 200 ise, yani başarılı ise
+          if (xhr.status === 200) {
+            // responseText özelliği ile yanıt verisini alıyoruz
+            let veri = xhr.responseText;
+            // Dosyadaki satır sayısını bulmak için veriyi \n karakterine göre bölüyoruz
+            let satirlar = veri.split('\n');
+            // Satır sayısını toplam kod sayısına ekliyoruz
+            toplamKodSayisi += satirlar.length;
+            // Dosyanın boyutunu almak için responseText'in uzunluğunu kullanıyoruz
+            let boyut = veri.length;
+            // Boyutu KB cinsine çevirmek için 1024'e bölüyoruz
+            boyut = boyut / 1024;
+
+            toplamKBSayisi += boyut;
+            // Sonucu ekrana yazdırıyoruz
+            output += (`<br>${dosya} ${satirlar.length} lines ${boyut.toFixed(2)}KB`);
+            // Promise'i çözüyoruz
+            sayac++;
+          if (sayac === dosyaSayisi) {
+            var ___y = ("Total File Size: " + toplamKBSayisi.toFixed(1) + "KB<br>Total Lines Of Code:" + toplamKodSayisi + output);
+            if(goster==true){
+              sent__s(___y);
+            }
+            window.total_file_size=___y;
+          }
+
+          }
+          // status özelliği 200 değil ise, yani başarısız ise
+          else {
+            // Hata mesajı ekrana yazdırıyoruz
+            console.error(`${dosya} dosyası indirilemedi: ${xhr.status}`);
+            // Promise'i reddediyoruz
+            sayac++;
+            if (sayac === dosyaSayisi) {
+              var ___y = ("Total File Size: " + toplamKBSayisi.toFixed(1) + "<br>Total Lines Of Code:" + toplamKodSayisi + output);
+              if(goster==true){
+                sent__s(___y);
+              }
+              window.total_file_size=___y;
+            }
+            reject(`${dosya} dosyası indirilemedi: ${xhr.status}`);
+          }
+        }
+      };
+    });
+    resolve("");
+  });
+}
+get_code_data(false);
 
 // Liste elementine bir click olayı ekle
 list.addEventListener("click", showDetails);
