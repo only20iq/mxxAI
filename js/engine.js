@@ -510,8 +510,8 @@ function ai_cevapla(metin,onlytext=false) {
     }
 
     if (['size','boyut','filesize','dosyaboyutu','datasetsize'].includes(args[0].toLowerCase().slice(1))) {
-      if(onlytext=="true"){
-        return window.total_file_size;
+      if(onlytext==true){
+        test += window.total_file_size;
       }else{
         sent__s(window.total_file_size);
         return "sil";
