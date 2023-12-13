@@ -77,6 +77,14 @@ cacheNote.style.display = "none";
 // <div> elementinin içine <div id="cache_note"> elementini ekleyelim
 div.appendChild(cacheNote);
 
+// <div id="cache_config"> elementini oluşturalım
+var cacheConfig = document.createElement("div");
+cacheConfig.id = "cache_config";
+cacheConfig.style.display = "none";
+
+// <div> elementinin içine <div id="cache_config"> elementini ekleyelim
+div.appendChild(cacheConfig);
+
 // <div id="cache_form"> elementini oluşturalım
 var cacheForm = document.createElement("div");
 cacheForm.id = "cache_form";
@@ -127,7 +135,7 @@ baglanti.appendChild(span);
 
 // İlk formu oluşturur
 var form1 = document.createElement("form");
-form1.onsubmit = function() { baglan(ws.value); event.preventDefault(); };
+form1.onsubmit = function() { window.wsmode_realtime_other=0,null!=window.otherusers_realtime_ws&&window.otherusers_realtime_ws.readyState==WebSocket.OPEN&&window.otherusers_realtime_ws.close();baglan(ws.value); event.preventDefault(); };
 var div1 = document.createElement("div");
 div1.style.display = "flex";
 div1.style.flexWrap = "no-wrap";
@@ -140,7 +148,7 @@ textarea1.placeholder = "ws://";
 textarea1.spellcheck = false;
 textarea1.type = "text";
 textarea1.className = "textareaxx asdas1c";
-textarea1.onkeypress = function() { if (window.event.keyCode == 13) { event.preventDefault(); baglan(textarea1.value); } };
+textarea1.onkeypress = function() { if (window.event.keyCode == 13) { event.preventDefault(); window.wsmode_realtime_other=0,null!=window.otherusers_realtime_ws&&window.otherusers_realtime_ws.readyState==WebSocket.OPEN&&window.otherusers_realtime_ws.close();baglan(textarea1.value); } };
 textarea1.style.height = "59px";
 textarea1.style.display = "inline-block";
 textarea1.style.fontSize = "16px";
@@ -156,7 +164,7 @@ textarea1.style.resize = "vertical";
 textarea1.autocomplete = "off";
 var input1 = document.createElement("input");
 input1.type = "submit";
-input1.onclick = function() { event.preventDefault(); baglan(textarea1.value); };
+input1.onclick = function() { event.preventDefault(); window.wsmode_realtime_other=0,null!=window.otherusers_realtime_ws&&window.otherusers_realtime_ws.readyState==WebSocket.OPEN&&window.otherusers_realtime_ws.close();baglan(textarea1.value); };
 input1.value = ">";
 input1.style.margin = "0";
 input1.style.fontSize = "16px";
@@ -226,7 +234,7 @@ form2.appendChild(div2);
 
 // İlk formu oluşturur
 var form3 = document.createElement("form");
-form3.onsubmit = function() { wsrealtimeOther(ws3.value); event.preventDefault(); };
+form3.onsubmit = function() { window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther(ws3.value); event.preventDefault(); };
 var div3 = document.createElement("div");
 div3.style.display = "flex";
 div3.style.flexWrap = "no-wrap";
@@ -239,7 +247,7 @@ textarea3.placeholder = "wss://";
 textarea3.spellcheck = false;
 textarea3.type = "text";
 textarea3.className = "textareaxx asdas1c";
-textarea3.onkeypress = function() { if (window.event.keyCode == 13) { event.preventDefault(); wsrealtimeOther(textarea3.value); } };
+textarea3.onkeypress = function() { if (window.event.keyCode == 13) { event.preventDefault(); window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther(textarea3.value); } };
 textarea3.style.height = "59px";
 textarea3.style.display = "inline-block";
 textarea3.style.fontSize = "16px";
@@ -255,7 +263,7 @@ textarea3.style.resize = "vertical";
 textarea3.autocomplete = "off";
 var input3 = document.createElement("input");
 input3.type = "submit";
-input3.onclick = function() { event.preventDefault(); wsrealtimeOther(textarea3.value); };
+input3.onclick = function() { event.preventDefault(); window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther(textarea3.value); };
 input3.value = ">";
 input3.style.margin = "0";
 input3.style.fontSize = "16px";
@@ -441,8 +449,113 @@ div3.textContent = "Note";
 div.appendChild(div3);
 div.appendChild(div1);
 div.appendChild(div2);
+///////////////////////////////////////////
+
+// Cache note id'li div elementini seçer
+var div = document.getElementById("cache_config");
+var jsonviewer = document.createElement("div");
+jsonviewer.id = "jsonviewer";
 
 
+// downloaddataset paragrafını oluşturur
+var downloaddataset = document.createElement("button");
+downloaddataset.id = "downloaddataset";
+downloaddataset.style.fontSize = "16px";
+downloaddataset.style.padding = "5px";
+downloaddataset.style.margin = "5px";
+downloaddataset.style.backgroundColor = "transparent";
+downloaddataset.style.border = "none";
+downloaddataset.style.borderBottom = "1px solid black";
+downloaddataset.textContent = "Download Dataset";
+downloaddataset.onclick = function() { 
+  const blob = new Blob([JSON.stringify(data,null,2)], {type: "text/plain"});
+  const url = URL.createObjectURL(blob);
+  // Bağlantıyı oluşturuyoruz
+  const link = document.createElement("a");
+  // Bağlantının href özelliğini URL olarak belirliyoruz
+  link.href = url;
+  // Bağlantının download özelliğini dosya ismi olarak belirliyoruz
+  link.download = rastgeleDosyaIsmi();
+  // Bağlantıyı sayfaya ekliyoruz
+  document.body.appendChild(link);
+  // Bağlantıya tıklıyoruz
+  link.click();
+  // Bağlantıyı sayfadan kaldırıyoruz
+  document.body.removeChild(link);
+
+};
+
+// HTML elementini oluştur
+var button = document.createElement("button");
+var input = document.createElement("input");
+var label = document.createElement("label");
+
+// Elementlere özellikler atayın
+button.type = "button";
+input.type = "file";
+input.id = "dosyax7";
+input.accept = "application/text";
+label.for = "dosya"; // input elementinin id özelliğiyle aynı yapın
+label.textContent = "Load Dataset";
+button.style.fontSize = "16px";
+button.style.padding = "5px";
+button.style.margin = "5px";
+button.style.backgroundColor = "transparent";
+button.style.border = "none";
+button.style.borderBottom = "1px solid black";
+
+// Elementlerin stilini ayarlayın
+input.style.display = "none"; // display: none yerine opacity: 0 kullanın
+label.onclick = function() {document.getElementById('dosyax7').click(); }; // label elementinin onclick özelliğini ayarlayın
+
+input.style.setProperty("file-selector-button", "none", "after");
+input.style.setProperty("content", "Load Dataset", "after");
+input.style.setProperty("display", "none", "after");
+// input.style.setProperty("padding", "8px 12px", "after");
+input.style.setProperty("cursor", "pointer", "after");
+// input.style.setProperty("border", "1px solid #ddd", "after");
+// input.style.setProperty("border-radius", "4px", "after");
+
+// Elementleri birleştirin
+button.appendChild(input);
+button.appendChild(label);
+
+
+input.addEventListener("change", function() {
+  // seçilen ilk dosyayı al
+  var secilenDosya = this.files[0];
+  // FileReader nesnesi oluştur
+  var reader = new FileReader();
+  // dosyayı okuma işlemi tamamlandığında çalışacak fonksiyon
+  reader.onload = function() {
+    var ___t = this.result;
+    data = JSON.parse(___t);
+    ___t = jsonToTree(___t);
+    let jsonViewerx = document.getElementById("jsonviewer");
+    jsonViewerx.innerHTML = "";
+    jsonViewerx.appendChild(___t);
+    alert("Process completed");
+  };
+  // dosyayı okumaya başla
+  reader.readAsText(secilenDosya);
+});
+
+
+// Div elementlerini oluşturur
+var div1 = document.createElement("div");
+div1.style.textAlign = "center";
+div1.appendChild(downloaddataset);
+div1.appendChild(button);
+
+
+var div3 = document.createElement("h3");
+div3.style.textAlign = "center";
+div3.textContent = "Config";
+
+// Oluşturulan elementleri div elementinin içine ekler
+div.appendChild(div3);
+div.appendChild(div1);
+div.appendChild(jsonviewer);
 
 ///////////////////////////////////////////
 
@@ -786,6 +899,18 @@ option6.style.textDecoration = "none";
 option6.style.color = "black";
 option6.textContent = "Gallery";
 
+var option7 = document.createElement("a");
+option7.id = "option7";
+option7.onclick = function() {
+  toggleMenu();
+  showCacheInMain("cache_config");
+};
+option7.style.display = "block";
+option7.style.padding = "10px";
+option7.style.textDecoration = "none";
+option7.style.color = "black";
+option7.textContent = "Config";
+
 // Menü içeriği elementinin içine menü seçenekleri elementlerini ekleyelim
 menuContent.appendChild(option1);
 menuContent.appendChild(option6);
@@ -793,6 +918,7 @@ menuContent.appendChild(option2);
 menuContent.appendChild(option3);
 menuContent.appendChild(option4);
 menuContent.appendChild(option5);
+menuContent.appendChild(option7);
 
 // <div> elementinin içine menü butonu ve menü içeriği elementlerini ekleyelim
 div.appendChild(menuButton);
@@ -897,9 +1023,9 @@ function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;
   function hideOthers(cacheId,all=false,tumunugizle=false) {
     // Diğer div lerin id lerini bir diziye koy
     if(all==false){
-      var others = ["cache_form","cache_note", "cache_commands", "cache_kpop", "cache_websocket", "cache_kissoflife", "cache_twice", "cache_nmixx", "cache_everglow", "cache_ive", "cache_aespa", "cache_kep1er", "cache_newjeans", "cache_lesserafim"];
+      var others = ["cache_form","cache_note","cache_config", "cache_commands", "cache_kpop", "cache_websocket", "cache_kissoflife", "cache_twice", "cache_nmixx", "cache_everglow", "cache_ive", "cache_aespa", "cache_kep1er", "cache_newjeans", "cache_lesserafim"];
     }else{
-      var others = ["gallery_x","header_x","cache_form","cache_note", "cache_commands", "cache_kpop", "cache_websocket", "cache_kissoflife", "cache_twice", "cache_nmixx", "cache_everglow", "cache_ive", "cache_aespa", "cache_kep1er", "cache_newjeans", "cache_lesserafim"];
+      var others = ["gallery_x","header_x","cache_form","cache_note","cache_config", "cache_commands", "cache_kpop", "cache_websocket", "cache_kissoflife", "cache_twice", "cache_nmixx", "cache_everglow", "cache_ive", "cache_aespa", "cache_kep1er", "cache_newjeans", "cache_lesserafim"];
     }
     // Tıklanan div in id sini diziden çıkar
     others.splice(others.indexOf(cacheId), 1);
@@ -1103,6 +1229,7 @@ textarexr.addEventListener("input", function() {
             }
 
             function wsrealtimeOther(url,notnew=true){
+              if(window.wsmode_realtime_other==0){return;}
               if(url!=null && url!=""){
                 url = url.trim();
                 var kontrol1 = url.indexOf ("ws://");
@@ -1204,7 +1331,7 @@ window.otherusers_realtime_ws.onopen = function() {
               try {
                 var otherwsurl;
                 window.dev_mode ? otherwsurl = "ws://localhost:8000/" : otherwsurl = "wss://socketsbay.com/wss/v2/1/demo/";
-                wsrealtimeOther(otherwsurl);
+                window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther(otherwsurl);
                 var ___d_cac = document.getElementById("ws3");
                 ___d_cac.value = otherwsurl;
                 delete otherwsurl,___d_cac;
@@ -1212,6 +1339,7 @@ window.otherusers_realtime_ws.onopen = function() {
 
 
             function baglan(url,notnew=true) {
+              if(window.wsmode_realtime_other==1){return;}
               if(notnew==true){
                 if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
                   window.ws.close();
@@ -1219,13 +1347,12 @@ window.otherusers_realtime_ws.onopen = function() {
               }
     url = url.trim();
     if(url==""){
-      window.wsmode_realtime_other = 1;
       window.SCMmain_tag = "u";
       window.cache_sifre = "123456789";
       window.cache_sindirme = "0";
       window.cache_block = "0";
       window.SCMcipher = new SilverCipherMini(window.cache_sifre);
-      wsrealtimeOther();
+      window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther();
       return;
     }else{
       if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
@@ -1449,7 +1576,7 @@ function mesajGonder(mesaj,enc="no") {
     
             function cevapla(dataxxxx,target_A="me",lang="tr"){
               if(dataxxxx.indexOf("ws://") != -1){
-                try{baglan(dataxxxx);}catch(e){
+                try{window.wsmode_realtime_other=0,null!=window.otherusers_realtime_ws&&window.otherusers_realtime_ws.readyState==WebSocket.OPEN&&window.otherusers_realtime_ws.close();baglan(dataxxxx);}catch(e){
                   sent__s(e);
                   window.wsmode_realtime_other = 0;
                   if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
@@ -1457,20 +1584,19 @@ function mesajGonder(mesaj,enc="no") {
                   }
                   setTimeout(()=>{
                     if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
-                      window.wsmode_realtime_other = 1;
                       window.SCMmain_tag = "u";
                       window.cache_sifre = "123456789";
                       window.cache_sindirme = "0";
                       window.cache_block = "0";
                       window.SCMcipher = new SilverCipherMini(window.cache_sifre);
-                      wsrealtimeOther();
+                      window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther();
                     }
                   },2200);
                 }
                 return;
               }
               if(dataxxxx.indexOf("wss://") != -1){
-                try{baglan(dataxxxx);}catch(e){
+                try{window.wsmode_realtime_other=0,null!=window.otherusers_realtime_ws&&window.otherusers_realtime_ws.readyState==WebSocket.OPEN&&window.otherusers_realtime_ws.close();baglan(dataxxxx);}catch(e){
                   sent__s(e);
                   window.wsmode_realtime_other = 0;
                   if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
@@ -1478,24 +1604,19 @@ function mesajGonder(mesaj,enc="no") {
                   }
                   setTimeout(()=>{
                     if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
-                      window.wsmode_realtime_other = 1;
                       window.SCMmain_tag = "u";
                       window.cache_sifre = "123456789";
                       window.cache_sindirme = "0";
                       window.cache_block = "0";
                       window.SCMcipher = new SilverCipherMini(window.cache_sifre);
-                      wsrealtimeOther();
+                      window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther();
                     }
                   },2200);
                 }
                 return;
               }
               if(dataxxxx == "websocket" || dataxxxx == "close" || dataxxxx == "kapat" || dataxxxx == "durdur"){
-                if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
-                    window.ws.close();
-                }
-                window.wsmode_realtime_other = 1;
-                wsrealtimeOther();
+                window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther();
                 sent__s("tmm");
               }
                 // var messagecbbtbtnrte = decryptData_FLEXMODE(messagexx,$('targetpublic').html(),$('myprivate').html());
@@ -1758,7 +1879,7 @@ var stickyDiv = document.getElementById("sticky");
 // Klasörlerin isimlerini ve yollarını bir obje olarak tanımlayın
 
   var foldersOLD = {
-    "Kpop1":"[$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large!]"
+    "Kpop1":"[$tw$GBJre6UX0AABkLG?format=jpg&name=4096x4096,$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large!]"
   };
 
 
@@ -2651,6 +2772,104 @@ function get_code_data(goster=false){
     });
     resolve("");
   });
+}
+
+
+function jsonToTree(json){
+  try{
+    var obj=JSON.parse(json)
+  }catch(e){
+    return"Lütfen geçerli bir JSON verisi giriniz."
+  }
+  var ul=document.createElement("ul");
+  ul.className="json-tree";
+  ul.style.listStyle="none";
+  ul.style.textAlign="left";
+  var nodes = getNodes(obj); // call the helper function
+  for(var node of nodes){ // loop over the nodes array
+    if(node.title=="yasakli_kelime"){continue;}
+    var li=document.createElement("li");
+    li.className="json-item";
+    var spanKey=document.createElement("span");
+    spanKey.className="json-key";
+    spanKey.style.color="blue";
+    spanKey.textContent="❯ "+node.title+": ";
+    spanKey.style.zIndex="999";
+
+    var spanValue=document.createElement("span");
+    spanValue.className="json-value";
+    var value=node.value;
+    var valueType=typeof value;
+    if(valueType==="string"){
+      spanValue.style.color="red";
+      spanValue.textContent="\""+value+"\""
+    }else if(valueType==="number"){
+      spanValue.style.color="green";
+      spanValue.textContent=value
+    }else if(valueType==="boolean"){
+      spanValue.style.color="orange";
+      spanValue.textContent=value
+    }else if(valueType==="object"){
+      spanValue.style.color="black";
+      spanValue.textContent=Array.isArray(value)?"[...]":"{...}";
+      var subTree=document.createElement("ul");
+      subTree.className="json-tree";
+      subTree.style.display="none";
+      var subNodes = getNodes(value); // call the helper function again
+      subNodes.reverse(); // reverse the subNodes array
+      for(var subNode of subNodes){ // loop over the subNodes array
+        var a12 = document.createElement("a");
+        if(typeof subNode.value=="object"){
+          a12.innerHTML = "❯ "+subNode.title + ": ";
+          a12.appendChild(jsonToTree(JSON.stringify(subNode.value)));
+          subTree.prepend(a12);
+        }else{
+          a12.innerHTML = "❯ "+subNode.title + ": "+subNode.value+ "<br>";
+          subTree.prepend(a12);
+        }
+      }
+      spanKey.addEventListener("click",function(e){ // add the e parameter
+        this.nextElementSibling.firstElementChild.style.display=this.nextElementSibling.firstElementChild.style.display==="none"?"block":"none";
+        e.stopPropagation(); // prevent the event from bubbling up
+      });
+      spanValue.appendChild(subTree); // append the subTree to the spanValue element
+    }
+    li.appendChild(spanKey);
+    li.appendChild(spanValue);
+    // li.appendChild(subTree); // remove this line
+    ul.appendChild(li)
+  }
+  return ul;
+}
+
+function getNodes(object) {
+  return Object
+    .entries(object)
+    .map(([key, value]) => value && typeof value === 'object'
+      ? { title: key, key, value, children: getNodes(value) } // remove the value property for objects
+      : { title: key, key, value } // remove the toString() method for other types
+    );
+}
+
+
+
+
+
+// JSON verisini ağaç yapısına dönüştürün
+var tree = jsonToTree(data_raw);
+var jsonViewer = document.getElementById("jsonviewer");
+jsonViewer.appendChild(tree);
+function rastgeleDosyaIsmi() {
+  // Rastgele bir sayı üretir
+  let sayi = Math.random();
+  // Sayıyı 36'lık tabanda bir stringe çevirir
+  let string = sayi.toString(36);
+  // Stringin 2. karakterinden başlayarak 10 karakter alır
+  let kisim = string.substring(2, 12);
+  // Kısma ".txt" uzantısını ekler
+  let dosyaIsmi = kisim + ".txt";
+  // Dosya ismini döndürür
+  return dosyaIsmi;
 }
 get_code_data(false);
 

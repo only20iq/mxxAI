@@ -494,14 +494,28 @@ function ai_cevapla(metin,onlytext=false) {
         gallery_s();
         return "sil";
       }
+      if (['config','ayar','ayarlar','configs'].includes(args[0].toLowerCase().slice(1))) {
+        window.showCacheInMain('cache_config');
+        return "sil";
+      }
       if (['kill','die','destroy','destruct',"destruction",'reset'].includes(args[0].toLowerCase().slice(1))) {
-        window.caches.keys().then(function(cacheNames) {
-          cacheNames.forEach(function(cacheName) {
-          window.caches.delete(cacheName);
-          });
-        });
-        window.localStorage.clear();
-        window.sessionStorage.clear();
+        // window.caches.keys().then(function(cacheNames) {
+        //   cacheNames.forEach(function(cacheName) {
+        //   window.caches.delete(cacheName);
+        //   });
+        // });
+        // window.localStorage.clear();
+        // window.sessionStorage.clear();
+        localStorage.clear();
+        sessionStorage.clear();
+        var cookies = document.cookie;
+        for (var i = 0; i < cookies.split(";").length; ++i)
+        {
+            var myCookie = cookies[i];
+            var pos = myCookie.indexOf("=");
+            var name = pos > -1 ? myCookie.substr(0, pos) : myCookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
         var __t = document.getElementById("messages");
         __t.innerHTML = "";
       return "sil";
@@ -524,7 +538,7 @@ function ai_cevapla(metin,onlytext=false) {
   }
 
   metin = metin.toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "");
-  var regex = new RegExp(data.yasak.join("|"));
+  var regex = new RegExp(data.yasakli_kelime.join("|"));
   if (regex.test(metin)) {
     return "sil";
   }
