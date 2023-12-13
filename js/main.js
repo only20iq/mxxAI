@@ -325,6 +325,7 @@ var br = document.createElement("br");
 // Komutları açıklayan bir dizi oluşturur
 var explanations = [
   "/commands,/cm,/comands,/komutlar,/komut (Commands)",
+  "/config,/ayar,/ayarlar,/configs (Settings)",
   "/m,/music,/şarkı,/müzik,/kpop (Suggests music)",
   "/m -s all,/m -s 10(value)",
   "/gallery,/galeri,/foto,/fotoğraf,/fotoğraflar (Gallery)",
