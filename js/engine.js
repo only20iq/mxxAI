@@ -140,14 +140,14 @@ function quad_thread(text) {
     if (e.includes("+")) { // e değerinin içinde + olup olmadığını kontrol et
       let parts = e.split("+"); // e değerini + ile ayır ve bir diziye at
       let last = parts[parts.length - 1]; // Dizinin son elemanını al
-      let result = e+"/"+last+"ımı/"+last+"imi/"+last+"nı/"+last+"ni/"+last+"ı/"+last+"i/"+last+"mi/"+last+"ğı/"+last+"yi/"+last+"yı/"+last+"mı/"+last+"am/"+last+"dan/"+last+"den/"+last+"lük/"+last+"lik/"+last+"cilik/"+last+"ci/"+last+"ciyim/"+last+"çılık/"+last+"cülük/"+last+"rizm/"+last+"izm/"+last+"zm/"+last+"nın/"+last+"nin/"+last+"ten/"+last+"ın/"+last+"in/"+last+"ite/"+last+"tan"; // Sonucu oluştur
+      let result = e+"/"+last+"ımı/"+last+"imi/"+last+"nı/"+last+"ni/"+last+"ı/"+last+"i/"+last+"mi/"+last+"ğı/"+last+"yi/"+last+"yı/"+last+"mı/"+last+"am/"+last+"dan/"+last+"den/"+last+"lük/"+last+"lik/"+last+"cilik/"+last+"ci/"+last+"ciyim/"+last+"çılık/"+last+"cülük/"+last+"rizm/"+last+"izm/"+last+"zm/"+last+"nın/"+last+"nin/"+last+"ten/"+last+"tım/"+last+"ın/"+last+"in/"+last+"ite/"+last+"ma/"+last+"tan"; // Sonucu oluştur
       for (let i = 0; i < parts.length - 1; i++) { // Dizinin ilk elemanından sondan bir önceki elemanına kadar döngü ile gez
         let part = parts[i]; // Dizinin i. elemanını al
         result += "/"+part+last; // Sonuca part+last değerini ekle
       }
       return result; // Sonucu döndür
     } else { // e değerinin içinde + yoksa
-      return e+"/"+e+"ımı/"+e+"imi/"+e+"nı/"+e+"ni/"+e+"ı/"+e+"i/"+e+"mi/"+e+"ğı/"+e+"yi/"+e+"yı/"+e+"mı/"+e+"am/"+e+"dan/"+e+"den/"+e+"lük/"+e+"lik/"+e+"cilik/"+e+"ci/"+e+"ciyim/"+e+"çılık/"+e+"cülük/"+e+"rizm/"+e+"izm/"+e+"zm/"+e+"nın/"+e+"nin/"+e+"ten/"+e+"un/"+e+"ın/"+e+"in/"+e+"ite/"+e+"tan";
+      return e+"/"+e+"ımı/"+e+"imi/"+e+"nı/"+e+"ni/"+e+"ı/"+e+"i/"+e+"mi/"+e+"ğı/"+e+"yi/"+e+"yı/"+e+"mı/"+e+"am/"+e+"dan/"+e+"den/"+e+"lük/"+e+"lik/"+e+"cilik/"+e+"ci/"+e+"ciyim/"+e+"çılık/"+e+"cülük/"+e+"rizm/"+e+"izm/"+e+"zm/"+e+"nın/"+e+"nin/"+e+"ten/"+e+"tım/"+e+"un/"+e+"ın/"+e+"in/"+e+"ite/"+e+"ma/"+e+"tan";
     }
   }  
   function _a(item) {
@@ -540,6 +540,7 @@ function ai_cevapla(metin,onlytext=false) {
   metin = metin.toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "");
   var regex = new RegExp(data.yasakli_kelime.join("|"));
   if (regex.test(metin)) {
+    if(onlytext==false){kill();}
     return "sil";
   }
   var test1 = single_thread(metin);
@@ -807,7 +808,7 @@ function replaceTextlink(text) {
     if (value == "tw") { // Eğer değer "tw" ise
       return "https://pbs.twimg.com/media/"; // Değeri https://twitter/api/ ile değiştirir
     } else if (value == "y") { // Eğer değer "tw" ise
-      return "https://www.youtube.com/watch?v="; // Değeri https://www.youtube.com/watch?v= ile değiştirir
+      return "https://youtu.be/"; // Değeri https://youtu.be/ ile değiştirir
     } else if (value == "rd") { // Eğer değer "rd" ise
       return "https://preview.redd.it/"; // Değeri https://preview.redd.it/ ile değiştirir
     } else if (value == "i") { // Eğer değer "rd" ise

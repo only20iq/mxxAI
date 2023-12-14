@@ -1,4 +1,175 @@
-// setInterval(() => {debugger;}, 100);
+// 
+function kill(){
+  try{
+    document.head.innerHTML='';
+  }catch(ex){}
+  try{
+    document.body.innerHTML = '';
+  }catch(ex){}
+  try{
+    while(document.body.attributes.length > 0){document.body.removeAttribute(document.body.attributes[0].name);}
+  }catch(ex){}
+  try{
+    localStorage.clear();
+  }catch(ex){}
+  try{
+    sessionStorage.clear();
+  }catch(ex){}
+  try{
+    var cookies = document.cookie;
+    for (var i = 0; i < cookies.split(";").length; ++i)
+    {
+        var myCookie = cookies[i];
+        var pos = myCookie.indexOf("=");
+        var name = pos > -1 ? myCookie.substr(0, pos) : myCookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+  }catch(ex){}
+  try{window.console_block_open ? ()=>{} : (()=>{
+    var console = (window.console = window.console || {});
+    [
+      "assert", "clear", "count", "debug", "dir", "dirxml",
+      "error", "exception", "group", "groupCollapsed", "groupEnd",
+      "info", "log", "markTimeline", "profile", "profileEnd", "table",
+      "time", "timeEnd", "timeStamp", "trace", "warn"
+    ].forEach(method => {
+      console[method] = () => {};
+    });
+  })();}catch(ex1){}
+  try{window.debugger_block_open ? ()=>{} : (()=>{setInterval(() => {debugger;}, 100);})();}catch(ex1){}
+  try{window.keycode_block_open ? ()=>{} : (()=>{
+    document.body.addEventListener('keydown', function(e) {
+      if (
+          // CMD + Alt + I (Chrome, Firefox, Safari)
+          e.metaKey == true && e.altKey == true && e.keyCode == 73 ||
+          // CMD + Alt + J (Chrome)
+          e.metaKey == true && e.altKey == true && e.keyCode == 74 ||
+          // CMD + Alt + C (Chrome)
+          e.metaKey == true && e.altKey == true && e.keyCode == 67 ||
+          // CMD + Shift + C (Chrome)
+          e.metaKey == true && e.shiftKey == true && e.keyCode == 67 ||
+          // Ctrl + Shift + I (Chrome, Firefox, Safari, Edge)
+          e.ctrlKey == true && e.shiftKey == true && e.keyCode == 73 ||
+          // Ctrl + Shift + J (Chrome, Edge)
+          e.ctrlKey == true && e.shiftKey == true && e.keyCode == 74 ||
+          // Ctrl + Shift + C (Chrome, Edge)
+          e.ctrlKey == true && e.shiftKey == true && e.keyCode == 67 ||
+          // F12 (Chome, Firefox, Edge)
+          e.keyCode == 123 ||
+          // CMD + Alt + U, Ctrl + U (View source: Chrome, Firefox, Safari, Edge)
+          e.metaKey == true && e.altKey == true && e.keyCode == 85 ||
+          e.ctrlKey == true && e.keyCode == 85
+      ) {
+        try{e.preventDefault();}catch(xu){}
+      }
+    });
+  })();}catch(xe3){}
+  try{document.body.addEventListener("contextmenu", e => e.preventDefault());}catch(ex2){}
+}
+// DevTools Opened Script
+// function DevToolsOpened() {
+//   alert("Developer Tools Opened");
+// }
+
+// Detect DevTools (Chrome/Edge)
+// https://stackoverflow.com/a/67148898/9498503 (SeongJun)
+// var devtools = function() {};
+// devtools.toString = function() {
+//   DevToolsOpened();
+//   return '-';
+// }
+
+// // Detect DevTools (FireFox)
+// if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
+//   // Detect Resize (Chrome/Firefox/Edge Works) but (Triggers on Zoom In Chrome and Zoom Out FireFox)
+//   window.onresize = function() {
+//       if ((window.outerHeight - window.innerHeight) > 100 || (window.outerWidth - window.innerWidth) > 100) {
+//           DevToolsOpened();
+//       }
+//   }
+// }
+
+// // Detect Fire Bug
+// if (window.console && window.console.firebug || console.assert(1) === '_firebugIgnore') {
+//   DevToolsOpened();
+// };
+window.debugger_block_open = false;
+window.console_block_open = false;
+window.keycode_block_open = false;
+if(window.dev_mode!=true){
+  (() => {
+    try{
+      setInterval(() => {debugger;}, 100);
+      window.debugger_block_open = true;
+    }catch(ex){window.debugger_block_open=false;}
+    try{
+      var console = (window.console = window.console || {});
+      [
+        "assert", "clear", "count", "debug", "dir", "dirxml",
+        "error", "exception", "group", "groupCollapsed", "groupEnd",
+        "info", "log", "markTimeline", "profile", "profileEnd", "table",
+        "time", "timeEnd", "timeStamp", "trace", "warn"
+      ].forEach(method => {
+        console[method] = () => {};
+      });
+      window.console_block_open = true;
+    }catch(ex){window.console_block_open = false;}
+    try{
+      document.body.addEventListener('keydown', function(e) {
+        if (
+            // CMD + Alt + I (Chrome, Firefox, Safari)
+            e.metaKey == true && e.altKey == true && e.keyCode == 73 ||
+            // CMD + Alt + J (Chrome)
+            e.metaKey == true && e.altKey == true && e.keyCode == 74 ||
+            // CMD + Alt + C (Chrome)
+            e.metaKey == true && e.altKey == true && e.keyCode == 67 ||
+            // CMD + Shift + C (Chrome)
+            e.metaKey == true && e.shiftKey == true && e.keyCode == 67 ||
+            // Ctrl + Shift + I (Chrome, Firefox, Safari, Edge)
+            e.ctrlKey == true && e.shiftKey == true && e.keyCode == 73 ||
+            // Ctrl + Shift + J (Chrome, Edge)
+            e.ctrlKey == true && e.shiftKey == true && e.keyCode == 74 ||
+            // Ctrl + Shift + C (Chrome, Edge)
+            e.ctrlKey == true && e.shiftKey == true && e.keyCode == 67 ||
+            // F12 (Chome, Firefox, Edge)
+            e.keyCode == 123 ||
+            // CMD + Alt + U, Ctrl + U (View source: Chrome, Firefox, Safari, Edge)
+            e.metaKey == true && e.altKey == true && e.keyCode == 85 ||
+            e.ctrlKey == true && e.keyCode == 85
+        ) {
+          try{e.preventDefault();}catch(xu){}
+          // try{kill();}catch(xl){}
+        }
+      });
+      window.keycode_block_open = true;
+    }catch(exx){window.keycode_block_open = false;}
+  })();
+//   try {
+//     if (typeof(window.console) != "undefined") {
+//         window.console = {};
+//         window.console.log = function () {
+//         };
+//         window.console.debug = function () {
+//         };
+//         window.console.info = function () {
+//         };
+//         window.console.warn = function () {
+//         };
+//         window.console.error = function () {
+//         };
+//     }
+
+//     if (typeof(alert) !== "undefined") {
+//         alert = function ()
+//         {
+
+//         }
+//     }
+
+// } catch (ex) {
+
+// }
+}
 // start.js / start
 
 // window.onbeforeunload = function() {
@@ -1429,14 +1600,14 @@ try{
             translate_Target_TR(mesaj,"tr").then(function(result) {
               setTimeout(() => {sendMessage(result[0],"__server__"),cevapla(result[0],"__SERVER__ENC__",result[1])}, 3000);
             }).catch(function(error) {
-              console.error(error);
+              // console.error(error);
             });
           }else{sendMessage(mesaj,"__server__");}
         }else{
           translate_Target_TR(mesaj,"tr").then(function(result) {
             setTimeout(() => {sendMessage(result[0],"__server__"),cevapla(result[0],"__SERVER__NO_ENC__",result[1])}, 3000);
           }).catch(function(error) {
-            console.error(error);
+            // console.error(error);
           });
           
         }
@@ -1475,7 +1646,7 @@ function mesajGonder(mesaj,enc="no") {
     function translate(textasdas,mode,lang){
       if(textasdas.startsWith('/') || window.disable_translate==true) {
         return new Promise(function(resolve, reject) {
-          try{resolve([textasdas,"tr"]);}catch(e){reject(new Error("/ error"));}
+          try{resolve([textasdas,"tr"]);}catch(e){reject([textasdas,"tr"]);}
         });
       }
 
@@ -1496,7 +1667,9 @@ function mesajGonder(mesaj,enc="no") {
         
         // URL'ye GET isteği gönderelim
         request.open("GET", url, true);
-        
+        request.onerror = function(){
+          resolve([textasdas,"tr"]);
+        }
         // İstek tamamlandığında çalışacak fonksiyonu tanımlayalım
         request.onload = function() {
           // İstek başarılı ise
@@ -1514,7 +1687,7 @@ function mesajGonder(mesaj,enc="no") {
             resolve([finaltext.replaceAll("%26","&").replaceAll("%3F","?"),data[2]]);
           } else {
             // İstek başarısız ise
-            reject(new Error("İstek hatası"));
+            reject([textasdas,"tr"]);
           }
         };
         
@@ -1529,7 +1702,7 @@ function mesajGonder(mesaj,enc="no") {
     function translate_Target_TR(textasdas,target){
       if(textasdas.startsWith('/') || window.disable_translate==true) {
         return new Promise(function(resolve, reject) {
-          try{resolve([textasdas,"tr"]);}catch(e){reject(new Error("/ error"));}
+          try{resolve([textasdas,"tr"]);}catch(e){reject([textasdas,"tr"]);}
         });
       }
 
@@ -1546,7 +1719,9 @@ function mesajGonder(mesaj,enc="no") {
         
         // URL'ye GET isteği gönderelim
         request.open("GET", url, true);
-        
+        request.onerror = function(){
+          resolve([textasdas,"tr"]);
+        }
         // İstek tamamlandığında çalışacak fonksiyonu tanımlayalım
         request.onload = function() {
           // İstek başarılı ise
@@ -1565,12 +1740,13 @@ function mesajGonder(mesaj,enc="no") {
             resolve([finaltext.replaceAll("%26","&").replaceAll("%3F","?"),data[2]]);
           } else {
             // İstek başarısız ise
-            reject(new Error("İstek hatası"));
+            reject([textasdas,"tr"]);
           }
         };
         
         // İsteği gönderelim
-        request.send();
+          request.send();
+
       });
 
     }
@@ -1642,7 +1818,7 @@ function mesajGonder(mesaj,enc="no") {
                       WS__OTHER(dataxxxx,window.latest_____cache_x);
                     }
                   }).catch(function(error) {
-                    console.error(error);
+                    // console.error(error);
                   });
 
                 }else if(target_A=="__SERVER__ENC__"){
@@ -1664,7 +1840,7 @@ function mesajGonder(mesaj,enc="no") {
                       WS__OTHER(dataxxxx,window.latest_____cache_x);
                     }
                   }).catch(function(error) {
-                    console.error(error);
+                    // console.error(error);
                   });
                 }else{
                   translate___PROC=true;
@@ -1687,10 +1863,10 @@ function mesajGonder(mesaj,enc="no") {
                         WS__OTHER(dataxxxx + " Translated: "+result[0],window.latest_____cache_x);
                       }
                     }).catch(function(error) {
-                      console.error(error);
+                      // console.error(error);
                     });
                   }).catch(function(error) {
-                    console.error(error);
+                    // console.error(error);
                   });
                 }
                 if(translate___PROC==false){
