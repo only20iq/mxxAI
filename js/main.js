@@ -804,15 +804,6 @@ arama_sonuclari.style.padding = "10px";
 // Diğer stilleri buraya ekle
 
 var ytpanel = document.createElement("div");
-ytpanel.style.position = "fixed";
-ytpanel.style.bottom = "0";
-ytpanel.style.left = "0";
-ytpanel.style.right = "0";
-ytpanel.style.textAlign = "center";
-ytpanel.style.margin = "0 auto";
-ytpanel.style.width = "100%";
-ytpanel.style.height = "auto";
-ytpanel.style.maxWidth = "600";
 ytpanel.id = "ytpanel";
 ytpanel.innerHTML = "<Youtube Embed Panel>";
 
