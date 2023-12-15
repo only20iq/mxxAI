@@ -11,6 +11,51 @@ function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
   }
   return array; // Diziyi döndürün
 }
+function uint8ArrayToString(uint8Array) {
+  return new TextDecoder().decode(uint8Array);
+}
+function StringTouint8Array(str) {
+  return new TextEncoder().encode(str);
+}
+function base64_encode(array) {
+  var base64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  var result = '';
+  var i, j, triplet;
+
+  for (i = 0; i < array.length; i += 3) {
+    triplet = (array[i] << 16) | (array[i + 1] << 8) | array[i + 2];
+    for (j = 0; j < 4; j += 1) {
+      if (i * 8 + j * 6 <= array.length * 8) {
+        result += base64.charAt((triplet >> 18 - j * 6) & 0x3F);
+      }
+    }
+  }
+  return result;
+}
+function base64_decode(str) {
+  let buffer = [];
+  let bits = 0;
+  let value = 0;
+  let index = 0;
+  for (let i = 0; i < str.length; i++) {
+    const charCode = str.charCodeAt(i);
+    let digit = charCode > 64 && charCode < 91 ? charCode - 65
+      : charCode > 96 && charCode < 123 ? charCode - 71
+      : charCode > 47 && charCode < 58 ? charCode + 4
+      : charCode === 43 ? 62
+      : charCode === 47 ? 63
+      : -1;
+    if (digit !== -1) {
+      value = (value << 6) | digit;
+      bits += 6;
+      if (bits >= 8) {
+        buffer[index++] = (value >> (bits - 8)) & 255;
+        bits -= 8;
+      }
+    }
+  }
+  return new Uint8Array(buffer);
+}
 function quad_core([dataset, text, name],database_0,sub_item_name,sub_item_keyx) {
   let cevap = "";
   let metin = text.split(" "); // Metni boşluklara göre bölün
@@ -430,14 +475,25 @@ function del_fff(test){
   test =  test.replace(regex, "").replace(regex1, "").replaceAll("<br>"," "); // eşleşen kısımları boşlukla değiştir
   return test;
 }
+var Wax0_ = '<iframe width="1275" height="717" src="https://www.youtube.com/embed/';
+var Wax1 = '" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
 function ai_cevapla(metin,onlytext=false) {
   var test = "";
   var _x = extractAndEvaluateMath(metin);
   _x ? test += _x : false;
-  let args = metin.split(" "); // metin.split(" ") yerine metin.split() kullanıyoruz
+  var _000 = youtubetest(metin.trim());
+  var _return = 0
+  var ytpanelx = document.getElementById("ytpanel");
+  if(_000 != false){
+    ytpanelx.innerHTML = '<iframe width="1275" height="717" src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    _return = 1;
+    return "sil";
+  }
+  let args = metin.trim().split(" "); // metin.split(" ") yerine metin.split() kullanıyoruz
   let text = null; // text değişkenini varsayılan olarak null tanımlıyoruz
   let key = null; // key değişkenini varsayılan olarak null tanımlıyoruz
   if (metin.startsWith('/')) { // metin değişkeni / ile başlıyorsa bu bloğu çalıştırıyoruz
+    test += "%notr%";
     if (['müzik','şarkı','music','m'].includes(args[0].toLowerCase().slice(1))) {
       if (args.includes('-s')) {
         let key_index = args.indexOf('-s') + 1;
@@ -534,6 +590,12 @@ function ai_cevapla(metin,onlytext=false) {
       get_code_data(true).then(result => console.log("Reset File Size")).catch(error => console.error(error));
       return "sil";
     }
+    if (['base64encode','b64encode','b64e'].includes(args[0].toLowerCase().slice(1))) {
+      try{test += base64_encode(StringTouint8Array(args.slice(1).join(" ")));}catch(ex){test += "Base64 Encode İşlem Başarısız";}
+    }
+    if (['base64decode','b64decode','b64d'].includes(args[0].toLowerCase().slice(1))) {
+      try{test += "%noeval%"+uint8ArrayToString(base64_decode(args.slice(1).join(" ")));}catch(ex){test += "Base64 Decode İşlem Başarısız";}
+    }
     if (['dd','decryptdataset','decdataset','addencdataset'].includes(args[0].toLowerCase().slice(1))) {
       let name,key,round;
       if (args.includes('-n')) {
@@ -561,12 +623,12 @@ function ai_cevapla(metin,onlytext=false) {
         return "Server > "+ex;
       }
     }
-    if(test==""){
-      return "Command not found";
+    if(test=="%notr%"){
+      return "Command not found"+" %notr%";
     }
   }
 
-  metin = metin.toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "");
+  metin = metin.trim().toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "");
   var regex = new RegExp(data.yasakli_kelime.join("|"));
   if (regex.test(metin)) {
     if(onlytext==false){kill();}
@@ -586,7 +648,7 @@ function ai_cevapla(metin,onlytext=false) {
   }
 //   let r = rand_r(); // rand_r() fonksiyonunun çıktısını r değişkenine atıyoruz
 // result_0_data.contains(r) ? (array[i] = r + " ", result_0_data.remove(r)) : printf("Hata: rand_r() fonksiyonunun ciktisi result_0_data listinin icinde degil.\n");
-  if (test.length < 500 && test != "sil" && (!metin.startsWith('/'))) {
+  if (test.length < 500 && test != "sil" && (!metin.startsWith('/')) && _return == 0) {
     var r = random_generate_bonus(metin,1);
     result_0_data.indexOf(r) != -1 ? (test += (" "+r+" "),/*console.log("Random Başarılı: "+r),*/result_0_data.splice(result_0_data.indexOf(r), 1)) : /*console.log("Random Başarısız: "+r)*/()=>{};
 
@@ -676,11 +738,11 @@ window.list = [];
 function replaceTags(text) {
   let list = [];
   // Metni  <a></a> <img> ile eşleşen bir regex ile bölüyoruz
-  var parts = text.split(/(\[\]\([^\)]*\)|<a[^>]*>[^<]*<\/a>|<img[^>]*>|<br[^>]*>)/);
+  var parts = text.split(/(\[\]\([^\)]*\)|<a[^>]*>[^<]*<\/a>|<img[^>]*>|<iframe[^>]*>[^<]*<\/iframe>|<br[^>]*>)/);
   // Parçaları döngüye sokuyoruz
   for (var i = 0; i < parts.length; i++) {
     // Eğer parça bir etiket ise
-    if (parts[i].match(/(\[\]\([^\)]*\)|<a[^>]*>[^<]*<\/a>|<img[^>]*>|<br[^>]*>)/)) {
+    if (parts[i].match(/(\[\]\([^\)]*\)|<a[^>]*>[^<]*<\/a>|<img[^>]*>|<iframe[^>]*>[^<]*<\/iframe>|<br[^>]*>)/)) {
       // Parçayı listeye ekliyoruz
       list.push(parts[i]);
       // Parçayı _ ile değiştiriyoruz
@@ -703,7 +765,7 @@ function restoreTags(text, list) {
 function link(data) {
   var link = data.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
   var description = data.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
-  return "<a href='" + replaceTextlink(link) + "' target='_blank' style='color:#f60000;'>" + description + "</a><br>"; // HTML bağlantısını oluşturun
+  return "<a href='#"+link+"' onclick='event.preventDefault(),youtubeatag(\"" + replaceTextlink(link) + "\")' style='color:#f60000;'>" + description + "</a><br>"; // HTML bağlantısını oluşturun
 }
 function linktoimg(data) {
   return "<img src='" + replaceTextlink(data) + "' target='_blank' style='user-select:none;margin:0 auto;padding:0;width:100%;height:auto;display:block;border-radius:1vh;'>"; // HTML bağlantısını oluşturun
@@ -856,8 +918,25 @@ function markdown_to_html_link(markdown) {
         let new_text = replaceTextlink(text);
         if (description.startsWith("img:")) {
           var html_link = description.substring(4) + "<img src='" + new_text + "' target='_blank' style='user-select:none;margin:0 auto;padding:0;width:100%;height:auto;display:block;border-radius:1vh;'>";
+        }else if (description.startsWith("iframeb64:")) {
+          new_text = uint8ArrayToString(base64_decode(new_text));
+          // HTML taglarını bulmak için bir regex tanımla
+          let regex = /<([a-z][a-z0-9]*)\b[^>]*>/gi;
+          // Stringdeki tüm HTML taglarını bir diziye al
+          let tags = new_text.match(regex);
+          // Eğer dizi boş değilse, yani HTML tagı varsa
+          if (tags) {
+            // Dizideki her tag için
+            for (let tag of tags) {
+              // Tagin iframe olup olmadığını kontrol et
+              if (tag.toLowerCase().slice(0,7) !== "<iframe") {
+                return;
+              }
+            }
+          }
+          var html_link = description.substring(10) + new_text;
         }else{
-          var html_link = "<a href='" + new_text + "' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturur
+          var html_link = "<a href='#" + new_text + "' onclick='event.preventDefault(),youtubeatag(\"" + new_text + "\")' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturur
         }
         html = html.replace(match[0], html_link); // HTML dizesindeki markdown bağlantısını HTML bağlantısı ile değiştirir
     }
@@ -1263,7 +1342,6 @@ function splitMathExpressions(string) {
     }
   }
   expressions.push(cache_list);
-  console.log(cache_list);
   // Diziyi döndür
   return expressions;
 }
@@ -1312,7 +1390,6 @@ let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*([\+
   // eğer bir matematik işlemi bulunursa
   if (match) {
     match = match.map(m => m.replace(/\s+/g, '').replaceAll(",","."));
-    console.log(match);
     // matematik işlemini al
     let regex = /[^0123456789.,+\-/*()%^]/g;
     var mathExpression=[];
@@ -1444,6 +1521,48 @@ try{
   jsonViewerx.appendChild(jsonToTree(JSON.stringify(data)));
 }catch(ex){console.log(ex);}
 
+}
+function isYouTubeLink(url){
+  // YouTube linki olup olmadığını algılayan regex
+  var regExp = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+  // URL ile regex'i eşleştir
+  var match = url.match(regExp);
+  // Eşleşme varsa, true döndür
+  if (match) {
+    return true;
+  }
+  // Eşleşme yoksa, false döndür
+  else {
+    return false;
+  }
+}
+// function YouTubeGetID(url){
+//   url = url.split(/(vi\/|v%3D|v=|\/v\/|youtube\/|youtu\.be\/|\/embed\/)/);
+//   return undefined !== url[2]?url[2].split(/[^0-9a-z_\-]/i)[0]:url[0];
+// }
+function YouTubeGetID(url){
+  url = url.split(/(vi\/|v%3D|v=|\/v\/|youtube\/|youtu\.be\/|\/embed\/)/);
+  var id = undefined !== url[2]?url[2].split(/[^0-9a-z_\-]/i)[0]:url[0];
+  var t = url[2].match(/t=([0-9]+)/); // ?t= parametresini bul
+  if (t) { // eğer varsa
+    id = id + '?start=' + t[1]; // video kimliğine ekle
+  }
+  return id;
+}
+
+function youtubetest(url){
+  return isYouTubeLink(url) ? YouTubeGetID(url): false;
+}
+
+function youtubeatag(data){
+  var _000 = youtubetest(data.trim());
+  var _return = 0
+  var ytpanelx = document.getElementById("ytpanel");
+  if(_000 != false){
+    ytpanelx.innerHTML = '<iframe width="1275" height="717" src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    _return = 1;
+    return "sil";
+  }
 }
 // // Fonksiyonu test edin
 // const resultx1 = compareInput ("Merhaba nasılsın iyi misin nasıl gidiyor?", result_0_data, 1);

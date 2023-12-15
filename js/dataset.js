@@ -335,7 +335,16 @@ var data_raw = {
         "ilham":"Bir projeye başlarken ilham almak tutkulu olmak bunlar yakın kavramlar gibi geliyor",
         "ilhamalmak":"$ilham",
         "azap":"Hayatı azap olarak tanımlayabiliriz",
-        "şanssızlık":"Şanssızlık mı diyeyim ne diyeyim o kadar uğursuz bir kelime ki"
+        "şanssızlık":"Şanssızlık mı diyeyim ne diyeyim o kadar uğursuz bir kelime ki",
+        "tellme":"Bu müziği gerçekten seviyom ya [iframeb64:𝘍𝘐𝘍𝘛𝘠 𝘍𝘐𝘍𝘛𝘠- 𝘛𝘦𝘭𝘭 𝘮𝘦](PGlmcmFtZSB3aWR0aD0iNTYwIiBoZWlnaHQ9IjMxNSIgc3JjPSJodHRwczovL3d3dy55b3V0dWJlLmNvbS9lbWJlZC9GOHJwX2VTT3R4QT9zaT1OUUctQmY0LWE4VWw2YXNoIiB0aXRsZT0iWW91VHViZSB2aWRlbyBwbGF5ZXIiIGZyYW1lYm9yZGVyPSIwIiBhbGxvdz0iYWNjZWxlcm9tZXRlcjsgYXV0b3BsYXk7IGNsaXBib2FyZC13cml0ZTsgZW5jcnlwdGVkLW1lZGlhOyBneXJvc2NvcGU7IHBpY3R1cmUtaW4tcGljdHVyZTsgd2ViLXNoYXJlIiBhbGxvd2Z1bGxzY3JlZW4+PC9pZnJhbWU+)",
+        "uupx":"$tellme",
+        "söylebana":"$tellme",
+        "cupid":"Boş zamanlarımda dinlemeye çalışıyorum [iframeb64:FIFTY FIFTY Cupid](PGlmcmFtZSB3aWR0aD0iNTYwIiBoZWlnaHQ9IjMxNSIgc3JjPSJodHRwczovL3d3dy55b3V0dWJlLmNvbS9lbWJlZC84S3YyQ0tpcEctWT9zaT1FTHliRXVuSXJYVWJfZ190IiB0aXRsZT0iWW91VHViZSB2aWRlbyBwbGF5ZXIiIGZyYW1lYm9yZGVyPSIwIiBhbGxvdz0iYWNjZWxlcm9tZXRlcjsgYXV0b3BsYXk7IGNsaXBib2FyZC13cml0ZTsgZW5jcnlwdGVkLW1lZGlhOyBneXJvc2NvcGU7IHBpY3R1cmUtaW4tcGljdHVyZTsgd2ViLXNoYXJlIiBhbGxvd2Z1bGxzY3JlZW4+PC9pZnJhbWU+)",
+        "aşktanrısı":"$cupid",
+        "destiny":"Tamamıyla zevkine dinlediğim bir müzik [iframeb64:IZ*ONE Destiny](PGlmcmFtZSB3aWR0aD0iNTYwIiBoZWlnaHQ9IjMxNSIgc3JjPSJodHRwczovL3d3dy55b3V0dWJlLmNvbS9lbWJlZC9lbGhfeEFIWTI2UT9zaT1vSUJmNlVNanFEbk5vSENMIiB0aXRsZT0iWW91VHViZSB2aWRlbyBwbGF5ZXIiIGZyYW1lYm9yZGVyPSIwIiBhbGxvdz0iYWNjZWxlcm9tZXRlcjsgYXV0b3BsYXk7IGNsaXBib2FyZC13cml0ZTsgZW5jcnlwdGVkLW1lZGlhOyBneXJvc2NvcGU7IHBpY3R1cmUtaW4tcGljdHVyZTsgd2ViLXNoYXJlIiBhbGxvd2Z1bGxzY3JlZW4+PC9pZnJhbWU+)",
+        "kader":"$destiny",
+        "izonedestiny":"$destiny",
+        "izonekaderi":"$destiny"
     },
     "multi" : {
         "set1": "merhaba/nasılsın/iyimisin/naber/meraba=$sc1",
@@ -418,6 +427,8 @@ var data_raw = {
         "sc9":["Al sana bombe [Link]($y$7Fmk0IyUoaM?t=76)","Entel Feridun diyecem ama [Entel Feridun]($y$k9Y9-xueg5M?t=34)"],
         "set10":"sıkılmamalık/komik/eğlenceli+video/şeyler/aç/youtube/yt=$sc10",
         "sc10":"Tamam",
+        "set11":"kafa+dinlemelik/dinleme/dinleme+müzik/muzik/müziği=$sc11",
+        "sc11":"Kafa dinlemelik müzik bu sanırım [iframeb64:](PGlmcmFtZSB3aWR0aD0iNTYwIiBoZWlnaHQ9IjMxNSIgc3JjPSJodHRwczovL3d3dy55b3V0dWJlLmNvbS9lbWJlZC9nUVhJcndYUU05dz9zaT1OaWxNcXhJbmRhZGJyRTB2JmFtcDtzdGFydD05MSIgdGl0bGU9IllvdVR1YmUgdmlkZW8gcGxheWVyIiBmcmFtZWJvcmRlcj0iMCIgYWxsb3c9ImFjY2VsZXJvbWV0ZXI7IGF1dG9wbGF5OyBjbGlwYm9hcmQtd3JpdGU7IGVuY3J5cHRlZC1tZWRpYTsgZ3lyb3Njb3BlOyBwaWN0dXJlLWluLXBpY3R1cmU7IHdlYi1zaGFyZSIgYWxsb3dmdWxsc2NyZWVuPjwvaWZyYW1lPg)",
         "set100":"şarkı/play/sarki/şarki/şark+söyle/soyle/song/music=$sc100",
         "sc100":"Şarkı pek bilmem ama umm {bos_yap_k}{bos_yap_nj}{bos_yap_n}{bos_yap_k}{bos_yap_n}{bos_yap_nj}{troll_kpop_sozler}{bos_yap_k}{kpop}",
         "default": ["-"]
@@ -910,7 +921,8 @@ var data_raw = {
             "$y$MBdVXkSdhwU,BTS DNA",
             "$y$uxmP4b2a0uY,EXO Obsession",
             "$y$-ToHbHcolfA,MONSTA X Love Killa",
-            "$y$p6OoY6xneI0,SHINee Don't Call Me"
+            "$y$p6OoY6xneI0,SHINee Don't Call Me",
+            "$y$4Ri5fVaJvlk,Weeekly Aplus Performance Video"
         ],
         "link_seksi_kpop":[
             "$y$dNayEt_IXog,Cookie 8K",

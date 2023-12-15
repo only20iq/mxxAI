@@ -188,7 +188,7 @@ window.version_x="";
       window.latest_____cache_x = text;
     }
 window.disable_translate = false;
-window.disable_voice = false;
+window.disable_voice = true;
 // start.js / end
 
 // <body> etiketini seçelim
@@ -509,6 +509,8 @@ var explanations = [
   "Session Delete ❯ /kill,/die,/destroy,/destruct,/destruction,/reset",
   "Reset Total File Size ❯ /resetsize,/checksize,/checkfilesize,/resetfilesize,/resetsizes,/checksizes",
   "Add Encrypted Dataset ❯ /dd,/decryptdataset,/decdataset,/addencdataset Example: /dd -n (name) -s (password) -r (number:0,128,256 default:0)",
+  "Base64 Encode ❯ /base64encode,/b64encode,/b64e Example: /b64e (Plain Text)",
+  "Base64 Decode ❯ /base64decode,/b64decode,/b64d Example: /b64d (Base64 Encoded Text)"
 ];
 
 // Dizideki her açıklama için bir döngü başlatır
@@ -523,7 +525,7 @@ for (let i = 0; i < explanations.length; i++) {
   explanation.style.paddingRight = "5px";
   explanation.style.paddingBottom = "5px";
   explanation.style.fontWeight = "1000";
-  explanation.style.fontFamily = "URW Chancery L, cursive";
+  explanation.style.fontFamily = "cursive";
   explanation.style.textAlign = "left";
   // Div elementini div elementinin içine ekler
   div.appendChild(explanation);
@@ -801,6 +803,18 @@ arama_sonuclari.style.overflow = "auto";
 arama_sonuclari.style.padding = "10px";
 // Diğer stilleri buraya ekle
 
+var ytpanel = document.createElement("div");
+ytpanel.style.position = "fixed";
+ytpanel.style.bottom = "0";
+ytpanel.style.left = "0";
+ytpanel.style.right = "0";
+ytpanel.style.textAlign = "center";
+ytpanel.style.margin = "0 auto";
+ytpanel.style.width = "100%";
+ytpanel.style.height = "auto";
+ytpanel.style.maxWidth = "600px";
+ytpanel.id = "ytpanel";
+ytpanel.innerHTML = "123";
 
 // Input elementini oluşturur
 var input = document.createElement("input");
@@ -842,6 +856,7 @@ form.appendChild(input2);
 // Div elementinin içine form elementini ekler
 div.appendChild(form);
 div.appendChild(arama_sonuclari);
+div.appendChild(ytpanel);
 
 // Önerilenler kutusunu oluşturur
 var suggestions = document.createElement("div");
@@ -862,7 +877,7 @@ suggestion3.textContent = "Tr: Auto";
 var suggestion4 = document.createElement("div");
 suggestion4.className = "suggestion";
 suggestion4.id = "voicex";
-suggestion4.textContent = "Vc: On";
+suggestion4.textContent = "Vc: Off";
 
 // Önerilenler kutusunun içine öneri elementlerini ekler
 suggestions.appendChild(suggestion1);
@@ -1196,8 +1211,12 @@ window.SCMcipher = new SilverCipherMini(window.cache_sifre);
 
 function san_input_fix_MOD1(a){const b={"<":"&lt;",">":"&gt;",'"':"&quot;"};return a.replace(/[<>"']/ig,a=>b[a])}
 function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"};return a.replace(/[&<>"'/]/ig,a=>b[a])}
-
+window.old_form_height = "auto";
+window.old_form_width = "600px";
+window.old_header_x_height = "120px";
+window.old_header_x_width = "600px";
   // Div leri gösteren fonksiyon
+  var __index__C = 0;
   function showCacheInMain(cacheId,all=false,tumunugizle=false) {
     // Main div ini seç
     var main = document.getElementById("main");
@@ -1205,12 +1224,36 @@ function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;
     var cache = document.getElementById(cacheId);
     // Tıklanan div i main e taşı
     try {
-      main.appendChild(cache);
+      if(cacheId!="cache_form" && cacheId!="header_x"){
+        main.appendChild(cache);
+      }
     } catch (error) {
     }
+    // console.log("OLD_FORMS",window.old_form_height,window.old_form_width);
+    // console.log("OLD_HEADER_X",window.old_header_x_height,window.old_header_x_width);
     // console.log(cache);
     // Tıklanan div i görünür yap
-    cache.style.display = "block";
+    if(cacheId=="cache_form" || cacheId=="header_x"){
+      if(__index__C==0){__index__C++;cache.style.display = "block";}
+      cache.style.visibility = "visible";
+      if(cacheId=="cache_form"){
+        if(cache.style.height == "0px" || cache.style.width == "0px" || cache.style.height == 0 || cache.style.width == 0){
+          cache.style.height = window.old_form_height;
+          cache.style.width = window.old_form_width;
+        }
+      }
+      if(cacheId=="header_x"){
+        if(cache.style.height == "0px" || cache.style.width == "0px" || cache.style.height == 0 || cache.style.width == 0){
+          cache.style.height = window.old_header_x_height;
+          cache.style.width = window.old_header_x_width;
+        }
+      }
+    }else{
+      cache.style.display = "block";
+    }
+
+    // console.log("ZZZ OLD_FORMS",window.old_form_height,window.old_form_width);
+    // console.log("ZZZ OLD_HEADER_X",window.old_header_x_height,window.old_header_x_width);
     // Diğer div leri gizle
     hideOthers(cacheId,all,tumunugizle);
   }
@@ -1223,20 +1266,80 @@ function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;
     }
     // Tıklanan div in id sini diziden çıkar
     others.splice(others.indexOf(cacheId), 1);
+    // console.log("OLD_FORMS",window.old_form_height,window.old_form_width);
+    // console.log("OLD_HEADER_X",window.old_header_x_height,window.old_header_x_width);
     // Dizide kalan diğer div leri seç ve gizle
     for (var i = 0; i < others.length; i++) {
       var other = document.getElementById(others[i]);
-      other.style.display = "none";
-      // Diğer div leri eski yerlerine geri gönder
-      main.parentNode.insertBefore(other, main); // Burada main.parentNode kullanıldı
+      if(others[i]=="cache_form" || others[i]=="header_x"){
+        // console.log(other);
+        // console.log(others[i] + "BAŞLANGIÇ");
+        // console.log(other.style.height);
+        // console.log(other.style.width);
+        if(others[i]=="cache_form"){
+          if(other.style.height == "0px" || other.style.width == "0px" || other.style.height == 0 || other.style.width == 0){}else{
+            window.old_form_height = other.style.height;
+            window.old_form_width = other.style.width;
+          }
+        }
+        if(others[i]=="header_x"){
+          if(other.style.height == "0px" || other.style.width == "0px" || other.style.height == 0 || other.style.width == 0){}else{
+            window.old_header_x_height = other.style.height;
+            window.old_header_x_width = other.style.width;
+          }
+        }
+        // console.log(others[i] + "BİTİŞ");
+        // console.log(other.style.height);
+        // console.log(other.style.width);
+        other.style.visibility = "hidden";
+        other.style.height = 0;
+        other.style.width = 0;
+      } else{
+        other.style.display = "none";
+        main.parentNode.insertBefore(other, main);
+      }
     }
     // Eğer tumunugizle true ise, others dizisindeki tüm div'lerin id'lerini al ve gizle
     if (tumunugizle == true) {
+      // console.log("OLD_FORMS",window.old_form_height,window.old_form_width);
+      // console.log("OLD_HEADER_X",window.old_header_x_height,window.old_header_x_width);
       // others dizisindeki tüm div'leri seç ve gizle
       for (var i = 0; i < others.length; i++) {
         var div = document.getElementById(others[i]);
-        div.style.display = "none";
-        main.parentNode.insertBefore(other, main);
+        if(others[i]=="cache_form" || others[i]=="header_x"){
+          // console.log(others[i] + "BAŞLANGIÇ");
+          // console.log(div.style.height);
+          // console.log(div.style.width);
+          if(others[i]=="cache_form"){
+            if(div.style.height == "0px" || div.style.width == "0px" || div.style.height == 0 || div.style.width == 0){}else{
+              // console.log(others[i]);
+              // console.log(div.style.height);
+              // console.log(div.style.width);
+              window.old_form_height = div.style.height;
+              window.old_form_width = div.style.width;
+            }
+          }
+          if(others[i]=="header_x"){
+            if(div.style.height == "0px" || div.style.width == "0px" || div.style.height == 0 || div.style.width == 0){}else{
+              // console.log(others[i]);
+              // console.log(div.style.height);
+              // console.log(div.style.width);
+              window.old_header_x_height = div.style.height;
+              window.old_header_x_width = div.style.width;
+            }
+          }
+          // console.log(others[i] + "BİTİŞ");
+          // console.log(div.style.height);
+          // console.log(div.style.width);
+          div.style.visibility = "hidden";
+          div.style.height = 0;
+          div.style.width = 0;
+        } else{
+          div.style.display = "none";
+          main.parentNode.insertBefore(other, main);
+        }
+        // console.log("YYY OLD_FORMS",window.old_form_height,window.old_form_width);
+        // console.log("YYY OLD_HEADER_X",window.old_header_x_height,window.old_header_x_width);
       }
     }
   }
@@ -1666,14 +1769,30 @@ function mesajGonder(mesaj,enc="no") {
             ws.send(metin);
         }
     }
-    function sent__s(messagecbbtbtnrte){
+    function sent__s(messagecbbtbtnrte,noeval=false){
       var message = document.createElement('div');
       message.style.display = "block";
       var xid11 = generateToken();
       xid11 = "x"+xid11;
       var sonradata = "";
-      message.innerHTML = "<p class='a rg'><label id='f1'>"+"<div id='"+xid11+"' spellcheck='false' class='divasdas rg'>"+messagecbbtbtnrte+"</div>"+"</label></p>";
+      if(noeval==false){
+        message.innerHTML = "<p class='a rg'><label id='f1'>"+"<div id='"+xid11+"' spellcheck='false' class='divasdas rg'>"+messagecbbtbtnrte+"</div>"+"</label></p>";
+      }else{
+        let _1a = document.createElement("p");
+        _1a.className = "a rg";
+        let _2a = document.createElement("label");
+        _2a.id = "f1";
+        let _3a = document.createElement("div");
+        _3a.id = xid11;
+        _3a.spellcheck = false;
+        _3a.className = "divasdas rg";
+        _3a.textContent = messagecbbtbtnrte;
+        _2a.appendChild(_3a);
+        _1a.appendChild(_2a);
+        message.appendChild(_1a);
+      }
       messages.insertBefore(message, messages.firstChild);
+
       /////////////////////
       // var asdasdasd = document.getElementById(xid11);
       // asdasdasd.style.height = "auto"; // yüksekliği sıfırlar
@@ -1681,13 +1800,13 @@ function mesajGonder(mesaj,enc="no") {
     }
 
     function translate(textasdas,mode,lang){
-      if(textasdas.startsWith('/') || window.disable_translate==true) {
+      if(textasdas.startsWith('/') || window.disable_translate==true || new RegExp("%notr%").test(textasdas)==true) {
         return new Promise(function(resolve, reject) {
-          try{resolve([textasdas,"tr"]);}catch(e){reject([textasdas,"tr"]);}
+          try{resolve([textasdas.replaceAll("%notr%",""),"tr"]);}catch(e){reject([textasdas.replaceAll("%notr%",""),"tr"]);}
         });
       }
-
       var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
+      let count = sourceText.split("_").length - 1;
       var sourceLang = 'auto';
       if(mode=="self"){
         var targetLang = 'en';
@@ -1719,6 +1838,13 @@ function mesajGonder(mesaj,enc="no") {
               finaltext += data[0][i][0];
             }
             }catch(e){}
+            let count2 = finaltext.split("_").length - 1;
+            if (count2 < count) {
+              // Eksik olan _ sayısı kadar text'in sonuna _ ekle
+              for (let i = 0; i < count - count2; i++) {
+                finaltext += "_";
+              }
+            }
             console.log("F:" + finaltext)
             // Verinin ilk elemanının ilk elemanının ilk elemanını döndürelim
             resolve([finaltext.replaceAll("%26","&").replaceAll("%3F","?"),data[2]]);
@@ -1737,16 +1863,16 @@ function mesajGonder(mesaj,enc="no") {
 
 
     function translate_Target_TR(textasdas,target){
-      if(textasdas.startsWith('/') || window.disable_translate==true) {
+      if(textasdas.startsWith('/') || window.disable_translate==true || new RegExp("%notr%").test(textasdas)==true) {
         return new Promise(function(resolve, reject) {
-          try{resolve([textasdas,"tr"]);}catch(e){reject([textasdas,"tr"]);}
+          try{resolve([textasdas.replaceAll("%notr%",""),"tr"]);}catch(e){reject([textasdas.replaceAll("%notr%",""),"tr"]);}
         });
       }
 
       var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
+      let count = sourceText.split("_").length - 1;
       var sourceLang = 'auto';
       var targetLang = target;
-      
       var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="+ sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURIComponent(sourceText);
       
       // Promise nesnesi oluşturalım
@@ -1771,6 +1897,13 @@ function mesajGonder(mesaj,enc="no") {
               finaltext += data[0][i][0];
             }
             }catch(e){}
+            let count2 = finaltext.split("_").length - 1;
+            if (count2 < count) {
+              // Eksik olan _ sayısı kadar text'in sonuna _ ekle
+              for (let i = 0; i < count - count2; i++) {
+                finaltext += "_";
+              }
+            }
             console.log("X:" + finaltext)
             console.log("DİL :" + data[2]);
             // Verinin ilk elemanının ilk elemanının ilk elemanını döndürelim
@@ -1885,6 +2018,8 @@ function mesajGonder(mesaj,enc="no") {
                     console.log("Alıcı",result[1]);
                     var lang__x = result[1];
                     var asdasdassd = ai_cevapla(result[0],false);
+                    var noeval = false;
+                    if(new RegExp("%noeval%").test(asdasdassd)){asdasdassd = asdasdassd.replaceAll("%noeval%","");noeval=true;}
                     if(asdasdassd=="sil"){return;}
                     if(result[1]=="tr"){
                       sent__000(dataxxxx,"a");
@@ -1895,7 +2030,7 @@ function mesajGonder(mesaj,enc="no") {
                     // mesajGonder(result, "no");
                     translate(asdasdassd,"xxx",lang__x).then(function(resultxxx) {
                       var __cevap__ = restoreTags(resultxxx[0],window.list);
-                      sent__s(__cevap__);
+                      sent__s(__cevap__,noeval);
                       if(dataxxxx.charAt(0) != '/'){
                         if(lang__x=="tr" && window.disable_voice!=true){try{if(resultxxx[0].length>200){var _abc = resultxxx[0].split("_");console.log(_abc);_abc = _abc[0];}else{var _abc = resultxxx[0].replaceAll("_"," ");}responsiveVoice.speak(_abc,'Turkish Female');}catch(ex){}}
                         WS__OTHER(dataxxxx + " Translated: "+result,window.latest_____cache_x);
@@ -3098,7 +3233,7 @@ var intervalu = setInterval(function() {
     delete _asldas;}catch(ex){alert(ex);}})();
   }
 }, 100); // Aralık süresi 1000 milisaniye
-});;
+});
 
 // Liste elementine bir click olayı ekle
 list.addEventListener("click", showDetails);
