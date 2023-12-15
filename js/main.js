@@ -2197,7 +2197,7 @@ geridon_gallery.style.padding = "0";
 geridon_gallery.style.margin = "0";
 geridon_gallery.style.color = "#fff";
 geridon_gallery.style.position = "fixed";
-geridon_gallery.style.zIndex = "999";
+geridon_gallery.style.zIndex = "9999";
 geridon_gallery.style.fontSize = "24px";
 geridon_gallery.addEventListener("click", ()=>{
   // window.removeEventListener("scroll", window.throttleScroll);
