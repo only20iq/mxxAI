@@ -49,3 +49,16 @@ textarea:focus {
   }
   textarea::-webkit-resizer { background-color: white!important; border:none;border-right: 2px solid grey!important;border-bottom: 2px solid grey!important; border-top-left-radius: 50%!important; border-bottom-right-radius: 50%!important; transform: rotate(45deg)!important; }
   .asdas1c::-webkit-resizer {border:none!important;}
+
+  #ytpanel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    max-width: 600px;
+  }
+  iframe{width:100%;height:auto;max-width: 600px;max-height: 360px;}

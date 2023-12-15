@@ -475,7 +475,7 @@ function del_fff(test){
   test =  test.replace(regex, "").replace(regex1, "").replaceAll("<br>"," "); // eşleşen kısımları boşlukla değiştir
   return test;
 }
-var Wax0_ = '<iframe width="1275" height="717" src="https://www.youtube.com/embed/';
+var Wax0_ = '<iframe src="https://www.youtube.com/embed/';
 var Wax1 = '" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
 function ai_cevapla(metin,onlytext=false) {
   var test = "";
@@ -485,7 +485,7 @@ function ai_cevapla(metin,onlytext=false) {
   var _return = 0
   var ytpanelx = document.getElementById("ytpanel");
   if(_000 != false){
-    ytpanelx.innerHTML = '<iframe width="1275" height="717" src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    ytpanelx.innerHTML = '<iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
     _return = 1;
     return "sil";
   }
@@ -1559,7 +1559,7 @@ function youtubeatag(data){
   var _return = 0
   var ytpanelx = document.getElementById("ytpanel");
   if(_000 != false){
-    ytpanelx.innerHTML = '<iframe width="1275" height="717" src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    ytpanelx.innerHTML = '<iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
     _return = 1;
     return "sil";
   }
