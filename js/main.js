@@ -812,9 +812,9 @@ ytpanel.style.textAlign = "center";
 ytpanel.style.margin = "0 auto";
 ytpanel.style.width = "100%";
 ytpanel.style.height = "auto";
-ytpanel.style.maxWidth = "600px";
+ytpanel.style.maxWidth = "600";
 ytpanel.id = "ytpanel";
-ytpanel.innerHTML = "123";
+ytpanel.innerHTML = "<Youtube Embed Panel>";
 
 // Input elementini oluşturur
 var input = document.createElement("input");
