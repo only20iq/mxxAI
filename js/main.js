@@ -182,11 +182,13 @@ if(window.dev_mode!=true){
 //     window.sessionStorage.clear();
 //     };
 window.total_file_size="";
+window.version_x="";
     window.latest_____cache_x = "";
     function change_latest_cache(text){
       window.latest_____cache_x = text;
     }
 window.disable_translate = false;
+window.disable_voice = false;
 // start.js / end
 
 // <body> etiketini seçelim
@@ -336,7 +338,7 @@ textarea1.autocomplete = "off";
 var input1 = document.createElement("input");
 input1.type = "submit";
 input1.onclick = function() { event.preventDefault(); window.wsmode_realtime_other=0,null!=window.otherusers_realtime_ws&&window.otherusers_realtime_ws.readyState==WebSocket.OPEN&&window.otherusers_realtime_ws.close();baglan(textarea1.value); };
-input1.value = ">";
+input1.value = "❯";
 input1.style.margin = "0";
 input1.style.fontSize = "16px";
 input1.style.fontWeight = "1000";
@@ -385,7 +387,7 @@ textarea2.autocomplete = "off";
 textarea2.textContent = "123456789:0:0:w";
 var input2 = document.createElement("input");
 input2.type = "submit";
-input2.value = ">";
+input2.value = "❯";
 input2.style.margin = "0";
 input2.style.fontSize = "16px";
 input2.style.fontWeight = "1000";
@@ -435,7 +437,7 @@ textarea3.autocomplete = "off";
 var input3 = document.createElement("input");
 input3.type = "submit";
 input3.onclick = function() { event.preventDefault(); window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther(textarea3.value); };
-input3.value = ">";
+input3.value = "❯";
 input3.style.margin = "0";
 input3.style.fontSize = "16px";
 input3.style.fontWeight = "1000";
@@ -495,18 +497,18 @@ var br = document.createElement("br");
 
 // Komutları açıklayan bir dizi oluşturur
 var explanations = [
-  "/commands,/cm,/comands,/komutlar,/komut (Commands)",
-  "/config,/ayar,/ayarlar,/configs (Settings)",
-  "/m,/music,/şarkı,/müzik,/kpop (Suggests music)",
-  "/m -s all,/m -s 10(value)",
-  "/gallery,/galeri,/foto,/fotoğraf,/fotoğraflar (Gallery)",
-  "/cls,/clear,/delete,/del (Delete Chat)",
-  "/note,/not,/notepad,/notdefteri (Open Notepad)",
-  "/ws,/websocket,/websocketserver,/wsserver (Websocket)",
-  "/gg,/girlgrouplist,/girlgroup,/gglist,/kpoplist,/kpop (Kpop List)",
-  "/size,/boyut,/filesize,/dosyaboyutu,/datasetsize (Dataset Size)",
-  "/kill,/die,/destroy,/destruct,/destruction,/reset (Session Delete)",
-  "/resetsize,/checksize,/checkfilesize,/resetfilesize,/resetsizes,/checksizes (Reset Total File Size)"
+  "Open Commands Panel ❯ /commands,/cm,/comands,/komutlar,/komut",
+  "Open Settings Panel ❯ /config,/ayar,/ayarlar,/configs",
+  "Generate Music List ❯ /m,/music,/şarkı,/müzik Example: /m -s all,/m -s 10(number)",
+  "Open Gallery ❯ /g,/gallery,/galeri,/foto,/fotoğraf,/fotoğraflar",
+  "Delete Chat ❯ /cls,/clear,/delete,/del",
+  "Open Notepad Panel ❯ /note,/not,/notepad,/notdefteri",
+  "Open Websocket Panel ❯ /ws,/websocket,/websocketserver,/wsserver",
+  "Open Kpop List Panel ❯ /gg,/girlgrouplist,/girlgroup,/gglist,/kpoplist,/kpop",
+  "View File and Code Size ❯ /size,/boyut,/filesize,/dosyaboyutu,/datasetsize",
+  "Session Delete ❯ /kill,/die,/destroy,/destruct,/destruction,/reset",
+  "Reset Total File Size ❯ /resetsize,/checksize,/checkfilesize,/resetfilesize,/resetsizes,/checksizes",
+  "Add Encrypted Dataset ❯ /dd,/decryptdataset,/decdataset,/addencdataset Example: /dd -n (name) -s (password) -r (number:0,128,256 default:0)",
 ];
 
 // Dizideki her açıklama için bir döngü başlatır
@@ -514,6 +516,15 @@ for (let i = 0; i < explanations.length; i++) {
   // Açıklamayı içeren bir div elementi oluşturur
   var explanation = document.createElement("div");
   explanation.textContent = explanations[i];
+  explanation.style.borderBottom = "1px dashed grey";
+  explanation.style.marginBottom = "5px";
+  explanation.style.marginTop = "10px";
+  explanation.style.paddingLeft = "5px";
+  explanation.style.paddingRight = "5px";
+  explanation.style.paddingBottom = "5px";
+  explanation.style.fontWeight = "1000";
+  explanation.style.fontFamily = "URW Chancery L, cursive";
+  explanation.style.textAlign = "left";
   // Div elementini div elementinin içine ekler
   div.appendChild(explanation);
   // Br elementini div elementinin içine ekler
@@ -724,7 +735,13 @@ var div3 = document.createElement("h3");
 div3.style.textAlign = "center";
 div3.textContent = "Config";
 
+var div4 = document.createElement("div");
+div4.style.textAlign = "center";
+div4.id="version_conf";
+div4.style.color = "#c59722";
+
 // Oluşturulan elementleri div elementinin içine ekler
+div.appendChild(div4);
 div.appendChild(div3);
 div.appendChild(div1);
 div.appendChild(jsonviewer);
@@ -789,7 +806,7 @@ arama_sonuclari.style.padding = "10px";
 var input = document.createElement("input");
 input.type = "submit";
 input.id = "message-submit";
-input.value = ">";
+input.value = "❯";
 input.style.margin = "0";
 input.style.fontSize = "16px";
 input.style.fontWeight = "1000";
@@ -834,19 +851,24 @@ suggestions.style.display = "";
 // Her bir öneriyi bir div elementi olarak ekle
 var suggestion1 = document.createElement("div");
 suggestion1.className = "suggestion";
-suggestion1.textContent = "/music -s 15";
+suggestion1.textContent = "/m -s 15";
 var suggestion2 = document.createElement("div");
 suggestion2.className = "suggestion";
-suggestion2.textContent = "/gallery";
+suggestion2.textContent = "/g";
 var suggestion3 = document.createElement("div");
 suggestion3.className = "suggestion";
 suggestion3.id = "translatex";
-suggestion3.textContent = "Translate: Auto";
+suggestion3.textContent = "Tr: Auto";
+var suggestion4 = document.createElement("div");
+suggestion4.className = "suggestion";
+suggestion4.id = "voicex";
+suggestion4.textContent = "Vc: On";
 
 // Önerilenler kutusunun içine öneri elementlerini ekler
 suggestions.appendChild(suggestion1);
 suggestions.appendChild(suggestion2);
 suggestions.appendChild(suggestion3);
+suggestions.appendChild(suggestion4);
 
 // input elementine bir event listener ekle
 // data_raw değişkenini bir diziye dönüştür
@@ -923,8 +945,8 @@ div.appendChild(suggestions);
 var messages = document.createElement("div");
 messages.id = "messages";
 messages.style.wordWrap = "break-word";
-messages.innerHTML = "Size: <x>null</x><br>JS Based Basic ChatBot<br>Başkasının yazışmalarını görebilirsiniz lütfen saygılı olun. Son kullanıcının isteği üzerine belirtilen websocket sunucularına bağlanabilir ve cevap verebilir. Kesinlikle kimseye hakaret edemez veya hedef alamaz böyle eğitilmemiştir. Kesinlikle özel bilgilerinizi paylaşmayınız.";
-
+messages.innerHTML = "<br><y style='color:#c59722'></y><p style='color:#c43f22'>(!) Başkasının yazışmalarını görebilirsiniz</p>Size: <x>null</x>";
+// <p style='color:#c59722'>Kesinlikle kimseye hakaret edemez veya hedef alamaz böyle eğitilmemiştir.<p/>
 // Div elementinin içine mesajları ekler
 div.appendChild(messages);
 
@@ -1350,10 +1372,22 @@ textarexr.addEventListener("input", function() {
       suggestion.addEventListener('click', function() {
         if(window.disable_translate==false){
           window.disable_translate = true;
-          this.textContent="Translate: tr";
+          this.textContent="Tr: tr";
         }else{
           window.disable_translate = false;
-          this.textContent="Translate: Auto";
+          this.textContent="Tr: Auto";
+        }
+      });
+      continue;
+    }
+    if(suggestion.id == "voicex"){
+      suggestion.addEventListener('click', function() {
+        if(window.disable_voice==false){
+          window.disable_voice = true;
+          this.textContent="Vc: Off";
+        }else{
+          window.disable_voice = false;
+          this.textContent="Vc: On";
         }
       });
       continue;
@@ -1557,6 +1591,7 @@ try{
         // baglanti.style.color = "green";
         document.getElementById("ws").value = url;
         sent__s("WS Bağlantı başarılı");
+        if(window.disable_voice!=true){try{responsiveVoice.speak("Websocket bağlantısı kuruldu",'Turkish Female');}catch(ex){}}
         baglanti.textContent = "Açık";
         baglanti.style.color = "green";
     };
@@ -1565,6 +1600,7 @@ try{
     window.ws.onclose = function() {
       if(!["Bağlantı koptu","Bağlantı kesildi"].includes(baglanti.textContent)){
         sent__s("WS Bağlantı koptu");
+        if(window.disable_voice!=true){try{responsiveVoice.speak("Websocket bağlantısı koptu",'Turkish Female');}catch(ex){}}
         baglanti.textContent = "Bağlantı koptu";
         baglanti.style.color = "red";
       }
@@ -1584,6 +1620,7 @@ try{
       if (!(window.ws != null && window.ws == WebSocket.OPEN)) {
         if(!["Bağlantı koptu","Bağlantı kesildi"].includes(baglanti.textContent)){
           sent__s("WS Bağlantı kesildi");
+          if(window.disable_voice!=true){try{responsiveVoice.speak("Websocket bağlantısı hatalı",'Turkish Female');}catch(ex){}}
           baglanti.textContent = "Bağlantı kesildi";
           baglanti.style.color = "yellow";
         }
@@ -1860,7 +1897,8 @@ function mesajGonder(mesaj,enc="no") {
                       var __cevap__ = restoreTags(resultxxx[0],window.list);
                       sent__s(__cevap__);
                       if(dataxxxx.charAt(0) != '/'){
-                        WS__OTHER(dataxxxx + " Translated: "+result[0],window.latest_____cache_x);
+                        if(lang__x=="tr" && window.disable_voice!=true){try{if(resultxxx[0].length>200){var _abc = resultxxx[0].split("_");console.log(_abc);_abc = _abc[0];}else{var _abc = resultxxx[0].replaceAll("_"," ");}responsiveVoice.speak(_abc,'Turkish Female');}catch(ex){}}
+                        WS__OTHER(dataxxxx + " Translated: "+result,window.latest_____cache_x);
                       }
                     }).catch(function(error) {
                       // console.error(error);
@@ -2056,7 +2094,7 @@ var stickyDiv = document.getElementById("sticky");
 // Klasörlerin isimlerini ve yollarını bir obje olarak tanımlayın
 
   var foldersOLD = {
-    "Kpop1":"[$tw$GBJre6UX0AABkLG?format=jpg&name=4096x4096,$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large!]"
+    "Kpop1":"[$tw$GBJre6UX0AABkLG?format=jpg&name=4096x4096,$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large,$tw$GBI18AZWkAARxfv?format=jpg&name=large,$tw$GBF9DdRbcAAz7DD?format=jpg&name=large,$tw$GA9wJPpXIAAoamf?format=jpg&name=4096x4096,$tw$GA_m5KKasAA7L_4?format=jpg&name=large,$tw$GA7xysbXsAE9Ia5?format=jpg&name=large,$tw$GAy8vVEbIAAYNHL?format=jpg&name=4096x4096!]"
   };
 
 
@@ -2921,11 +2959,12 @@ function get_code_data(goster=false){
             // Promise'i çözüyoruz
             sayac++;
           if (sayac === dosyaSayisi) {
-            var ___y = ("Total File Size: " + toplamKBSayisi.toFixed(1) + "KB<br>Total Lines Of Code:" + toplamKodSayisi + output);
+            var ___y = ("Total File Size: " + toplamKBSayisi.toFixed(1) + "KB<br>Total Lines Of Code: " + toplamKodSayisi + output);
             if(goster==true){
               sent__s(___y);
             }
             window.total_file_size=___y;
+            window.version_x=md5(toplamKBSayisi.toString());
           }
 
           }
@@ -2936,11 +2975,12 @@ function get_code_data(goster=false){
             // Promise'i reddediyoruz
             sayac++;
             if (sayac === dosyaSayisi) {
-              var ___y = ("Total File Size: " + toplamKBSayisi.toFixed(1) + "<br>Total Lines Of Code:" + toplamKodSayisi + output);
+              var ___y = ("Total File Size: " + toplamKBSayisi.toFixed(1) + "<br>Total Lines Of Code: " + toplamKodSayisi + output);
               if(goster==true){
                 sent__s(___y);
               }
               window.total_file_size=___y;
+              window.version_x=md5(toplamKBSayisi.toString());
             }
             reject(`${dosya} dosyası indirilemedi: ${xhr.status}`);
           }
@@ -2964,7 +3004,7 @@ function jsonToTree(json){
   ul.style.textAlign="left";
   var nodes = getNodes(obj); // call the helper function
   for(var node of nodes){ // loop over the nodes array
-    if(node.title=="yasakli_kelime"){continue;}
+    if(node.title=="yasakli_kelime" || node.title=="enc"){continue;}
     var li=document.createElement("li");
     li.className="json-item";
     var spanKey=document.createElement("span");
@@ -3048,7 +3088,17 @@ function rastgeleDosyaIsmi() {
   // Dosya ismini döndürür
   return dosyaIsmi;
 }
-get_code_data(false);
+get_code_data(false).then(result => console.log("Set File Size")).catch(error => console.error(error)).finally(() => {
+var intervalu = setInterval(function() {
+  if (window.version_x != "") {
+    clearInterval(intervalu);
+    (()=>{try{document.getElementsByTagName("y")[0].innerHTML = "Version_EA_"+window.version_x;
+    var _asldas = document.getElementById("version_conf");
+    _asldas.innerHTML = "Version_EA_"+window.version_x;
+    delete _asldas;}catch(ex){alert(ex);}})();
+  }
+}, 100); // Aralık süresi 1000 milisaniye
+});;
 
 // Liste elementine bir click olayı ekle
 list.addEventListener("click", showDetails);

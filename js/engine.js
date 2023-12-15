@@ -489,7 +489,7 @@ function ai_cevapla(metin,onlytext=false) {
         window.showCacheInMain('cache_websocket');
         return "sil";
       }
-      if (['galeri','gallery','foto','fotoğraf',"fotoğraflar"].includes(args[0].toLowerCase().slice(1))) {
+      if (['g','galeri','gallery','foto','fotoğraf',"fotoğraflar"].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('gallery_x',true,true);
         gallery_s();
         return "sil";
@@ -534,6 +534,36 @@ function ai_cevapla(metin,onlytext=false) {
     if (['resetsize','checksize','checkfilesize','resetfilesize','resetsizes','checksizes'].includes(args[0].toLowerCase().slice(1))) {
       get_code_data(true).then(result => console.log("Reset File Size")).catch(error => console.error(error));
       return "sil";
+    }
+    if (['dd','decryptdataset','decdataset','addencdataset'].includes(args[0].toLowerCase().slice(1))) {
+      let name,key,round;
+      if (args.includes('-n')) {
+        let name_index = args.indexOf('-n') + 1;
+        name = args[name_index];
+      }else {
+        return '/dd -n (dataset name) -s (key) -r (round number default:0)';
+      }
+      if (args.includes('-s')) {
+        let key_index = args.indexOf('-s') + 1;
+        key = args[key_index];
+      }else {
+        return '/dd -n (dataset name) -s (key) -r (round number default:0)';
+      }
+      if (args.includes('-r')) {
+        let round_index = args.indexOf('-r') + 1;
+        round = args[round_index];
+      }else {
+        round = "0";
+      }
+      try {
+        enc_text_add_data(name,key,round);
+        return "Başarılı";
+      }catch(ex){
+        return "Server > "+ex;
+      }
+    }
+    if(test==""){
+      return "Command not found";
     }
   }
 
@@ -607,7 +637,7 @@ for (let key of Object.keys(data["set"])) { // data["set"] nesnesinin tüm anaht
 }
 function random_generate_bonus(metin,sayi){
   var test = "";
-  var array = [1,2,3,4,5,1,1];
+  var array = [1,2,3,4,1,1];
   array = shuffle_array(array);
   if(sayi==1 || sayi==true){
     array = [array[0]];
@@ -623,9 +653,6 @@ function random_generate_bonus(metin,sayi){
       array[i] = rand_quad();
     }
     else if (array[i] == 4) {
-      array[i] = rand_r();
-    }
-    else if (array[i] == 5) {
       array[i] = rand_r();
     }
     // if (i != array.length - 1) {
@@ -1316,6 +1343,109 @@ let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*([\+
   }
 }
 
+// Eklenecek veriyi dizi olarak eklemek için fonksiyon
+function addData(data, decryptedObj) {
+  // Eklenecek veriyi dizi olarak eklemek
+  for (var prop in decryptedObj) {
+    if (data.hasOwnProperty(prop)) {
+      // Eğer data objesinde aynı özellik varsa, sonuna ekle
+      if (typeof decryptedObj[prop] === "object") {
+        // Eğer eklenecek veri obje ise, hepsini teker teker ekle
+        for (var key in decryptedObj[prop]) {
+          // Eğer data[prop] bir obje ise, önceki değeri al
+          if (typeof data[prop] === "object") {
+            var onceki_deger = data[prop][key];
+          } else {
+            // Eğer data[prop] bir obje değilse, önceki değer yok
+            var onceki_deger = null;
+          }
+          // Eğer önceki değer varsa, yeni bir dizi oluştur ve sonuna ekle
+          if (onceki_deger) {
+            // Eğer önceki değer ile eklenecek değer aynı değilse, sonuna ekle
+            if (onceki_deger !== decryptedObj[prop][key]) {
+              data[prop][key] = [onceki_deger, decryptedObj[prop][key]];
+            }
+          } else {
+            // Eğer önceki değer yoksa, tek bir değer olarak ekle
+            data[prop][key] = decryptedObj[prop][key];
+          }
+        }
+      } else if (Array.isArray(decryptedObj[prop])) {
+        // Eğer eklenecek veri liste ise, hepsini teker teker ekle
+        for (var i = 0; i < decryptedObj[prop].length; i++) {
+          // Eğer data[prop] bir dizi ise, sonuna ekle
+          if (Array.isArray(data[prop])) {
+            // Eğer data[prop] içinde eklenecek değer yoksa, sonuna ekle
+            if (!data[prop].includes(decryptedObj[prop][i])) {
+              data[prop].push(decryptedObj[prop][i]);
+            }
+          } else {
+            // Eğer data[prop] bir dizi değilse, yeni bir dizi oluştur ve sonuna ekle
+            data[prop] = [data[prop], decryptedObj[prop][i]];
+          }
+        }
+      } else {
+        // Eğer eklenecek veri obje veya liste değilse, tek bir değer olarak ekle
+        // Eğer data[prop] bir dizi ise, sonuna ekle
+        if (Array.isArray(data[prop])) {
+          // Eğer data[prop] içinde eklenecek değer yoksa, sonuna ekle
+          if (!data[prop].includes(decryptedObj[prop])) {
+            data[prop].push(decryptedObj[prop]);
+          }
+        } else {
+          // Eğer data[prop] bir dizi değilse, yeni bir dizi oluştur ve sonuna ekle
+          data[prop] = [data[prop], decryptedObj[prop]];
+        }
+      }
+    } else {
+      // Eğer data objesinde aynı özellik yoksa, yeni bir dizi oluştur
+      if (typeof decryptedObj[prop] === "object") {
+        // Eğer eklenecek veri obje ise, yeni bir dizi oluştur ve hepsini ekle
+        data[prop] = [];
+        for (var key in decryptedObj[prop]) {
+          // Eğer eklenecek veri obje ise, fonksiyonu tekrar çağır
+          addData(data[prop], decryptedObj[prop][key]);
+        }
+      } else if (Array.isArray(decryptedObj[prop])) {
+        // Eğer eklenecek veri liste ise, yeni bir dizi oluştur ve hepsini ekle
+        data[prop] = [];
+        for (var i = 0; i < decryptedObj[prop].length; i++) {
+          data[prop].push(decryptedObj[prop][i]);
+        }
+      } else {
+        // Eğer eklenecek veri obje veya liste değilse, yeni bir dizi oluştur ve tek bir değer olarak ekle
+        data[prop] = [decryptedObj[prop]];
+      }
+    }
+  }
+}
+function enc_text_add_data(data_name,data_key,data_round){
+  // Şifreleme/deşifreleme fonksiyonu
+const cipher = new SC5(data_key,data_round,"128"); // key required
+// OR
+// cipher.setkey("123");
+// cipher.setdigest("0");
+// cipher.setblocksize("128"); // 0,128,256
+
+// Deşifreleme işlemi
+try {
+var dataset_x = data['enc'][data_name];
+if(dataset_x=="" || dataset_x==null){throw new Error("Dataset undefined", { cause: err });}
+}catch(err){throw new Error("Dataset undefined", { cause: err });}
+try {
+  var decryptedText = cipher.Decrypt(dataset_x);
+  var decryptedObj = JSON.parse(decryptedText);
+}catch(err){throw new Error("Decrypt Error", { cause: err });}
+
+// Eklenecek veriyi dizi olarak eklemek
+try{
+  addData(data, decryptedObj);
+  let jsonViewerx = document.getElementById("jsonviewer");
+  jsonViewerx.innerHTML = "";
+  jsonViewerx.appendChild(jsonToTree(JSON.stringify(data)));
+}catch(ex){console.log(ex);}
+
+}
 // // Fonksiyonu test edin
 // const resultx1 = compareInput ("Merhaba nasılsın iyi misin nasıl gidiyor?", result_0_data, 1);
 // console.log (resultx1); // "Bana herhangi bir soru sorabilirsiniz."
