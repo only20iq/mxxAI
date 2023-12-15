@@ -522,7 +522,11 @@ function ai_cevapla(metin,onlytext=false) {
       }
       
     }
-
+    if (['help','yardım','helper'].includes(args[0].toLowerCase().slice(1))) {
+      for (let i = 0; i < explanations.length; i++) {if(i < explanations.length-1){test += explanations[i]+"<br>";}else{test += explanations[i];}}
+      sent__s(test);
+      return "sil";
+    }
     if (['size','boyut','filesize','dosyaboyutu','datasetsize'].includes(args[0].toLowerCase().slice(1))) {
       if(onlytext==true){
         test += window.total_file_size;
