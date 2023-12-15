@@ -1212,9 +1212,9 @@ window.SCMcipher = new SilverCipherMini(window.cache_sifre);
 function san_input_fix_MOD1(a){const b={"<":"&lt;",">":"&gt;",'"':"&quot;"};return a.replace(/[<>"']/ig,a=>b[a])}
 function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"};return a.replace(/[&<>"'/]/ig,a=>b[a])}
 window.old_form_height = "auto";
-window.old_form_width = "600px";
+window.old_form_width = "100%";
 window.old_header_x_height = "120px";
-window.old_header_x_width = "600px";
+window.old_header_x_width = "100%";
   // Div leri gösteren fonksiyon
   var __index__C = 0;
   function showCacheInMain(cacheId,all=false,tumunugizle=false) {
