@@ -805,6 +805,8 @@ arama_sonuclari.style.padding = "10px";
 
 var ytpanel = document.createElement("div");
 ytpanel.id = "ytpanel";
+ytpanel.style.borderTopLeftRadius = "25px";
+ytpanel.style.borderTopRightRadius = "25px";
 ytpanel.innerHTML = "<Youtube Embed Panel>";
 
 // Input elementini oluşturur
@@ -1966,15 +1968,17 @@ function mesajGonder(mesaj,enc="no") {
                   translate___PROC=true;
                   translate(messagecbbtbtnrte,"server",lang).then(function(result) {
                     if(result[1]==lang){
+                      messagecbbtbtnrte = messagecbbtbtnrte.replaceAll("%notr%","");
                       var veri__0 = messagecbbtbtnrte;
                       var ___text__0 = messagecbbtbtnrte;
                     }else {
                       var veri__0 = result[0];
-                      var ___text__0 = veri__0 + " Translated:" + messagecbbtbtnrte;
+                      var ___text__0 = veri__0 + " Translated:" + messagecbbtbtnrte.replaceAll("%notr%","");
                     }
-                    mesajGonder(veri__0, "no");
+                    mesajGonder(veri__0.replaceAll("%noeval%",""), "no");
                     messagecbbtbtnrte=veri__0;
-                    sent__s(___text__0);
+                    if(new RegExp("%noeval%").test(___text__0)){___text__0 = ___text__0.replaceAll("%noeval%","");noeval=true;}
+                    sent__s(___text__0,noeval);
                     if(dataxxxx.charAt(0) != '/'){
                       WS__OTHER(dataxxxx,window.latest_____cache_x);
                     }
@@ -1988,15 +1992,17 @@ function mesajGonder(mesaj,enc="no") {
                   translate___PROC=true;
                   translate(messagecbbtbtnrte,"server",lang).then(function(result) {
                     if(result[1]==lang){
+                      messagecbbtbtnrte = messagecbbtbtnrte.replaceAll("%notr%","");
                       var veri__0 = messagecbbtbtnrte;
                       var ___text__0 = messagecbbtbtnrte;
                     }else {
                       var veri__0 = result[0];
-                      var ___text__0 = veri__0 + " Translated:" + messagecbbtbtnrte;
+                      var ___text__0 = veri__0 + " Translated:" + messagecbbtbtnrte.replaceAll("%notr%","");
                     }
-                    mesajGonder(veri__0,"yes");
+                    mesajGonder(veri__0.replaceAll("%noeval%",""),"yes");
                     messagecbbtbtnrte=veri__0;
-                    sent__s(___text__0);
+                    if(new RegExp("%noeval%").test(___text__0)){___text__0 = ___text__0.replaceAll("%noeval%","");noeval=true;}
+                    sent__s(___text__0,noeval);
                     if(dataxxxx.charAt(0) != '/'){
                       WS__OTHER(dataxxxx,window.latest_____cache_x);
                     }
