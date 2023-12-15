@@ -497,8 +497,7 @@ var br = document.createElement("br");
 
 // Komutları açıklayan bir dizi oluşturur
 var explanations = [
-  "Commands ❯ /help,/yardım,/helper",
-  "Open Commands Panel ❯ /commands,/cm,/comands,/komutlar,/komut",
+  "Open Commands Panel ❯ /help,/yardım,/helper,/commands,/cm,/comands,/komutlar,/komut",
   "Open Settings Panel ❯ /config,/ayar,/ayarlar,/configs",
   "Generate Music List ❯ /m,/music,/şarkı,/müzik Example: /m -s all,/m -s 10(number)",
   "Open Gallery ❯ /g,/gallery,/galeri,/foto,/fotoğraf,/fotoğraflar",

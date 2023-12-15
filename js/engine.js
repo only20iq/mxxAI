@@ -477,7 +477,7 @@ function ai_cevapla(metin,onlytext=false) {
         window.showCacheInMain('cache_note');
         return "sil";
       }
-      if (['cm','commands','comands','komutlar','komut'].includes(args[0].toLowerCase().slice(1))) {
+      if (['cm','commands','comands','komutlar','komut','help','helper','yardım'].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('cache_commands');
         return "sil";
       }
@@ -521,11 +521,6 @@ function ai_cevapla(metin,onlytext=false) {
       return "sil";
       }
       
-    }
-    if (['help','yardım','helper'].includes(args[0].toLowerCase().slice(1))) {
-      for (let i = 0; i < explanations.length; i++) {if(i < explanations.length-1){test += explanations[i]+"<br>";}else{test += explanations[i];}}
-      sent__s(test);
-      return "sil";
     }
     if (['size','boyut','filesize','dosyaboyutu','datasetsize'].includes(args[0].toLowerCase().slice(1))) {
       if(onlytext==true){
