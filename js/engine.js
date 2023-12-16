@@ -478,10 +478,11 @@ function del_fff(test){
 var Wax0_ = '<iframe src="https://www.youtube.com/embed/';
 var Wax1 = '" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
 function ai_cevapla(metin,onlytext=false) {
+  metin = metin.trim();
   var test = "";
   var _x = extractAndEvaluateMath(metin);
   _x ? test += _x : false;
-  var _000 = youtubetest(metin.trim());
+  var _000 = youtubetest(metin);
   var _return = 0
   var ytpanelx = document.getElementById("ytpanel");
   if(_000 != false){
@@ -489,7 +490,7 @@ function ai_cevapla(metin,onlytext=false) {
     _return = 1;
     return "sil";
   }
-  let args = metin.trim().split(" "); // metin.split(" ") yerine metin.split() kullanıyoruz
+  let args = metin.split(" "); // metin.split(" ") yerine metin.split() kullanıyoruz
   let text = null; // text değişkenini varsayılan olarak null tanımlıyoruz
   let key = null; // key değişkenini varsayılan olarak null tanımlıyoruz
   if (metin.startsWith('/')) { // metin değişkeni / ile başlıyorsa bu bloğu çalıştırıyoruz
@@ -547,7 +548,7 @@ function ai_cevapla(metin,onlytext=false) {
       }
       if (['g','galeri','gallery','foto','fotoğraf',"fotoğraflar"].includes(args[0].toLowerCase().slice(1))) {
         window.showCacheInMain('gallery_x',true,true);
-        gallery_s();
+        gallery_s(foldersOLD);
         return "sil";
       }
       if (['config','ayar','ayarlar','configs'].includes(args[0].toLowerCase().slice(1))) {
@@ -577,25 +578,6 @@ function ai_cevapla(metin,onlytext=false) {
       return "sil";
       }
       
-    }
-    if (['size','boyut','filesize','dosyaboyutu','datasetsize'].includes(args[0].toLowerCase().slice(1))) {
-      if(onlytext==true){
-        test += window.total_file_size;
-      }else{
-        sent__s(window.total_file_size);
-        return "sil";
-      }
-    }
-    if (['resetsize','checksize','checkfilesize','resetfilesize','resetsizes','checksizes'].includes(args[0].toLowerCase().slice(1))) {
-      get_code_data(true).then(result => console.log("Reset File Size")).catch(error => console.error(error));
-      return "sil";
-    }
-    if (['base64encode','b64encode','b64e'].includes(args[0].toLowerCase().slice(1))) {
-      try{test += base64_encode(StringTouint8Array(args.slice(1).join(" ")));}catch(ex){test += "Base64 Encode İşlem Başarısız";}
-    }
-    if (['base64decode','b64decode','b64d'].includes(args[0].toLowerCase().slice(1))) {
-      try{test += "%noeval%"+uint8ArrayToString(base64_decode(args.slice(1).join(" ")));}catch(ex){test += "Base64 Decode İşlem Başarısız";}
-    }
     if (['dd','decryptdataset','decdataset','addencdataset'].includes(args[0].toLowerCase().slice(1))) {
       let name,key,round;
       if (args.includes('-n')) {
@@ -620,15 +602,94 @@ function ai_cevapla(metin,onlytext=false) {
         enc_text_add_data(name,key,round);
         return "Başarılı";
       }catch(ex){
-        return "Server > "+ex;
+        return "Server >%notr% "+ex;
       }
+    }
+    if (['gd','gallerydecryptdataset','gallerydecdataset','galleryaddencdataset'].includes(args[0].toLowerCase().slice(1))) {
+      let name,key,round;
+      if (args.includes('-n')) {
+        let name_index = args.indexOf('-n') + 1;
+        name = args[name_index];
+      }else {
+        return '/gd -n (dataset name) -s (key) -r (round number default:0)';
+      }
+      if (args.includes('-s')) {
+        let key_index = args.indexOf('-s') + 1;
+        key = args[key_index];
+      }else {
+        return '/gd -n (dataset name) -s (key) -r (round number default:0)';
+      }
+      if (args.includes('-r')) {
+        let round_index = args.indexOf('-r') + 1;
+        round = args[round_index];
+      }else {
+        round = "0";
+      }
+      try {
+        gallery_enc_text_add_data(name,key,round);
+        return "Başarılı";
+      }catch(ex){
+        return "Server >%notr% "+ex;
+      }
+    }
+    if (['sn','snote','snotes','secretnote','secretnotes'].includes(args[0].toLowerCase().slice(1))) {
+      let name,key,round;
+      if (args.includes('-n')) {
+        let name_index = args.indexOf('-n') + 1;
+        name = args[name_index];
+      }else {
+        return '/sn -n (dataset name) -s (key) -r (round number default:0)';
+      }
+      if (args.includes('-s')) {
+        let key_index = args.indexOf('-s') + 1;
+        key = args[key_index];
+      }else {
+        return '/sn -n (dataset name) -s (key) -r (round number default:0)';
+      }
+      if (args.includes('-r')) {
+        let round_index = args.indexOf('-r') + 1;
+        round = args[round_index];
+      }else {
+        round = "0";
+      }
+      try {
+        return "Server >%notr% "+note_enc_text_read_data(name,key,round);
+      }catch(ex){
+        return "Server >%notr% "+ex;
+      }
+    }
+
+
+
+
+
+
+
+    }
+    if (['size','boyut','filesize','dosyaboyutu','datasetsize'].includes(args[0].toLowerCase().slice(1))) {
+      if(onlytext==true){
+        test += window.total_file_size;
+      }else{
+        sent__s(window.total_file_size);
+        return "sil";
+      }
+    }
+    if (['resetsize','checksize','checkfilesize','resetfilesize','resetsizes','checksizes'].includes(args[0].toLowerCase().slice(1))) {
+      get_code_data(true).then(result => console.log("Reset File Size")).catch(error => console.error(error));
+      return "sil";
+    }
+    if (['base64encode','b64encode','b64e'].includes(args[0].toLowerCase().slice(1))) {
+      try{test += base64_encode(StringTouint8Array(args.slice(1).join(" ")));}catch(ex){test += "Base64 Encode İşlem Başarısız";}
+    }
+    if (['base64decode','b64decode','b64d'].includes(args[0].toLowerCase().slice(1))) {
+      try{test += "%noeval%"+uint8ArrayToString(base64_decode(args.slice(1).join(" ")));}catch(ex){test += "Base64 Decode İşlem Başarısız";}
     }
     if(test=="%notr%"){
       return "Command not found"+" %notr%";
     }
   }
 
-  metin = metin.trim().toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "");
+  metin = metin.toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "");
   var regex = new RegExp(data.yasakli_kelime.join("|"));
   if (regex.test(metin)) {
     if(onlytext==false){kill();}
@@ -901,6 +962,10 @@ function replaceTextlink(text) {
       return "https://preview.redd.it/"; // Değeri https://preview.redd.it/ ile değiştirir
     } else if (value == "i") { // Eğer değer "rd" ise
       return "https://i.imgur.com/"; // Değeri https://i.imgur.com/ ile değiştirir
+    } else if (value == "v1pin") { // Eğer değer "rd" ise
+      return "https://v1.pinimg.com/"; // Değeri https://v1.pinimg.com/ ile değiştirir
+    } else if (value == "ipin") { // Eğer değer "rd" ise
+      return "https://i.pinimg.com/"; // Değeri https://i.pinimg.com/ ile değiştirir
     } else { // Eğer değer "tw" değilse
       return match; // Değeri olduğu gibi bırakır
     }
@@ -1470,7 +1535,9 @@ function addData(data, decryptedObj) {
           }
         } else {
           // Eğer data[prop] bir dizi değilse, yeni bir dizi oluştur ve sonuna ekle
-          data[prop] = [data[prop], decryptedObj[prop]];
+          if(data[prop] !== decryptedObj[prop]){
+            data[prop] = [data[prop], decryptedObj[prop]];
+          }
         }
       }
     } else {
@@ -1490,7 +1557,7 @@ function addData(data, decryptedObj) {
         }
       } else {
         // Eğer eklenecek veri obje veya liste değilse, yeni bir dizi oluştur ve tek bir değer olarak ekle
-        data[prop] = [decryptedObj[prop]];
+        data[prop] = decryptedObj[prop];
       }
     }
   }
@@ -1521,6 +1588,53 @@ try{
   jsonViewerx.appendChild(jsonToTree(JSON.stringify(data)));
 }catch(ex){console.log(ex);}
 
+}
+
+function gallery_enc_text_add_data(data_name,data_key,data_round){
+  // Şifreleme/deşifreleme fonksiyonu
+const cipher = new SC5(data_key,data_round,"128"); // key required
+// OR
+// cipher.setkey("123");
+// cipher.setdigest("0");
+// cipher.setblocksize("128"); // 0,128,256
+
+// Deşifreleme işlemi
+try {
+var dataset_x = data['gallery_enc'][data_name];
+if(dataset_x=="" || dataset_x==null){throw new Error("G Dataset undefined", { cause: err });}
+}catch(err){throw new Error("G Dataset undefined", { cause: err });}
+try {
+  var decryptedText = cipher.Decrypt(dataset_x);
+  var decryptedObj = JSON.parse(decryptedText);
+}catch(err){throw new Error("G Decrypt Error", { cause: err });}
+
+// Eklenecek veriyi dizi olarak eklemek
+try{
+  addData(foldersOLD, decryptedObj);
+}catch(ex){console.log(ex);}
+
+}
+
+function note_enc_text_read_data(data_name,data_key,data_round){
+  // Şifreleme/deşifreleme fonksiyonu
+const cipher = new SC5(data_key,data_round,"128"); // key required
+// OR
+// cipher.setkey("123");
+// cipher.setdigest("0");
+// cipher.setblocksize("128"); // 0,128,256
+
+// Deşifreleme işlemi
+try {
+var dataset_x = data['notes'][data_name];
+if(dataset_x=="" || dataset_x==null){throw new Error("Note Dataset undefined", { cause: err });}
+}catch(err){throw new Error("Note Dataset undefined", { cause: err });}
+var decryptedText = "Name/Key/Round Error";
+try {
+  decryptedText = cipher.Decrypt(dataset_x);
+}catch(err){throw new Error("Note Decrypt Error", { cause: err });}
+
+// Eklenecek veriyi dizi olarak eklemek
+return decryptedText;
 }
 function isYouTubeLink(url){
   // YouTube linki olup olmadığını algılayan regex

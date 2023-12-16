@@ -509,6 +509,8 @@ var explanations = [
   "Session Delete ❯ /kill,/die,/destroy,/destruct,/destruction,/reset",
   "Reset Total File Size ❯ /resetsize,/checksize,/checkfilesize,/resetfilesize,/resetsizes,/checksizes",
   "Add Encrypted Dataset ❯ /dd,/decryptdataset,/decdataset,/addencdataset Example: /dd -n (name) -s (password) -r (number:0,128,256 default:0)",
+  "Add Encrypted Gallery Dataset ❯ /gd,/gallerydecryptdataset,/gallerydecdataset,/galleryaddencdataset Example: /gd -n (name) -s (password) -r (number:0,128,256 default:0)",
+  "Read Secret Note ❯ /sn,/snote,/snotes,/secretnote,/secretnotes Example: /sn -n (name) -s (password) -r (number:0,128,256 default:0)",
   "Base64 Encode ❯ /base64encode,/b64encode,/b64e Example: /b64e (Plain Text)",
   "Base64 Decode ❯ /base64decode,/b64decode,/b64d Example: /b64d (Base64 Encoded Text)"
 ];
@@ -525,7 +527,7 @@ for (let i = 0; i < explanations.length; i++) {
   explanation.style.paddingRight = "5px";
   explanation.style.paddingBottom = "5px";
   explanation.style.fontWeight = "1000";
-  explanation.style.fontFamily = "cursive";
+  explanation.style.fontFamily = "monospace";
   explanation.style.textAlign = "left";
   // Div elementini div elementinin içine ekler
   div.appendChild(explanation);
@@ -640,7 +642,7 @@ div.appendChild(div2);
 var div = document.getElementById("cache_config");
 var jsonviewer = document.createElement("div");
 jsonviewer.id = "jsonviewer";
-
+jsonviewer.style.wordBreak = "break-word";
 
 // downloaddataset paragrafını oluşturur
 var downloaddataset = document.createElement("button");
@@ -1093,7 +1095,7 @@ option6.id = "option6";
 option6.onclick = function() {
   toggleMenu();
   window.showCacheInMain('gallery_x',true,true);
-  gallery_s();
+  gallery_s(foldersOLD);
 };
 option6.style.display = "block";
 option6.style.padding = "10px";
@@ -1915,6 +1917,7 @@ function mesajGonder(mesaj,enc="no") {
     }
     
             function cevapla(dataxxxx,target_A="me",lang="tr"){
+              dataxxxx = dataxxxx.trim();
               if(dataxxxx.indexOf("ws://") != -1){
                 try{window.wsmode_realtime_other=0,null!=window.otherusers_realtime_ws&&window.otherusers_realtime_ws.readyState==WebSocket.OPEN&&window.otherusers_realtime_ws.close();baglan(dataxxxx);}catch(e){
                   sent__s(e);
@@ -2146,8 +2149,13 @@ function mesajGonder(mesaj,enc="no") {
 
 }
 
+var foldersOLD = {
+  "Kpop1":"[$tw$GBJre6UX0AABkLG?format=jpg&name=4096x4096,$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large,$tw$GBI18AZWkAARxfv?format=jpg&name=large,$tw$GBF9DdRbcAAz7DD?format=jpg&name=large,$tw$GA9wJPpXIAAoamf?format=jpg&name=4096x4096,$tw$GA_m5KKasAA7L_4?format=jpg&name=large,$tw$GA7xysbXsAE9Ia5?format=jpg&name=large,$tw$GAy8vVEbIAAYNHL?format=jpg&name=4096x4096!]"
+};
+
+
 var _000x = 0;
-function gallery_s(){
+function gallery_s(dataset_data){
   if(_000x==1){
     var body = document.querySelector("body");
     var html = document.querySelector("html");
@@ -2225,11 +2233,6 @@ var prevSrc = "";
 var stickyDiv = document.getElementById("sticky");
 // Klasörlerin isimlerini ve yollarını bir obje olarak tanımlayın
 
-  var foldersOLD = {
-    "Kpop1":"[$tw$GBJre6UX0AABkLG?format=jpg&name=4096x4096,$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large,$tw$GBI18AZWkAARxfv?format=jpg&name=large,$tw$GBF9DdRbcAAz7DD?format=jpg&name=large,$tw$GA9wJPpXIAAoamf?format=jpg&name=4096x4096,$tw$GA_m5KKasAA7L_4?format=jpg&name=large,$tw$GA7xysbXsAE9Ia5?format=jpg&name=large,$tw$GAy8vVEbIAAYNHL?format=jpg&name=4096x4096!]"
-  };
-
-
 // Dizileri karıştırmak için bir fonksiyon tanımla
 function shuffle(array) {
 // Dizinin uzunluğunu al
@@ -2252,14 +2255,14 @@ return result;
 }
 
 // Anahtarlar dizisini karıştır
-var shuffledKeys = shuffle(Object.keys(foldersOLD));
+var shuffledKeys = shuffle(Object.keys(dataset_data));
 
 // Yeni bir nesne oluştur
 var folders = {};
 
 // Karıştırılmış anahtarlar ve orijinal değerler ile yeni nesneyi doldur
 for (var i = 0; i < shuffledKeys.length; i++) {
-folders[shuffledKeys[i]] = foldersOLD[shuffledKeys[i]];
+folders[shuffledKeys[i]] = dataset_data[shuffledKeys[i]];
 }
 
 let div = document.createElement("div");
@@ -3136,7 +3139,7 @@ function jsonToTree(json){
   ul.style.textAlign="left";
   var nodes = getNodes(obj); // call the helper function
   for(var node of nodes){ // loop over the nodes array
-    if(node.title=="yasakli_kelime" || node.title=="enc"){continue;}
+    if(node.title=="yasakli_kelime"){continue;}
     var li=document.createElement("li");
     li.className="json-item";
     var spanKey=document.createElement("span");
