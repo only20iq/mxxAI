@@ -1,4 +1,4 @@
-* {background-color:transparent;background:transparent;}
+* {background-color:transparent;background:transparent;padding:0;margin:0;}
 .a{font-size:20px;font-weight:1000;font-variant: small-caps;}
 .a a{color:#838383;font-variant: small-caps;}
 .rg{text-align:right;padding-right:15px;font-variant: small-caps;}
