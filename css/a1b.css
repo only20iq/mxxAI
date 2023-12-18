@@ -1,3 +1,4 @@
+* {background-color:transparent;background:transparent;}
 .a{font-size:20px;font-weight:1000;font-variant: small-caps;}
 .a a{color:#838383;font-variant: small-caps;}
 .rg{text-align:right;padding-right:15px;font-variant: small-caps;}
@@ -5,14 +6,14 @@
 #f1{color:#838383 !important;font-size:24px;font-variant: small-caps;}
 /*Project vertical-align: bottom */
 .textareaxx {
-    color:black;
+    color:#c43f22;
     overflow-x: hidden;
     overflow-y: auto;
     resize: vertical;
     border:none;
     min-height:59px; /* En az 59 piksel yükseklik */
     scrollbar-width: thin;
-    scrollbar-color: white;
+    scrollbar-color: transparent!important;
     line-height: 25px; /* Bir satırın yüksekliği */
 }
 textarea:focus {
@@ -47,7 +48,7 @@ textarea:focus {
   .textareaxx::-webkit-scrollbar-track {
     background-color: transparent!important;
   }
-  textarea::-webkit-resizer { background-color: white!important; border:none;border-right: 2px solid grey!important;border-bottom: 2px solid grey!important; border-top-left-radius: 50%!important; border-bottom-right-radius: 50%!important; transform: rotate(45deg)!important; }
+  textarea::-webkit-resizer { background-color: transparent!important; border:none;border-right: 2px solid #c43f22!important;border-bottom: 2px solid #c43f22!important; border-top-left-radius: 50%!important; border-bottom-right-radius: 50%!important; transform: rotate(45deg)!important; }
   .asdas1c::-webkit-resizer {border:none!important;}
 
   #ytpanel {
@@ -60,6 +61,7 @@ textarea:focus {
     height: auto;
     margin: 0 auto;
     max-width: 600px;
+    visibility: visible;
   }
   iframe{width:100%;height:100%;min-height:280px;max-width: 600px;max-height: 360px;border:none;border-radius:25px;}
   #ytpanel iframe{

@@ -555,6 +555,36 @@ function ai_cevapla(metin,onlytext=false) {
         window.showCacheInMain('cache_config');
         return "sil";
       }
+      if (['dp','deleteplayer','deletebg','deletebackground'].includes(args[0].toLowerCase().slice(1))) {
+        var ytpanelx = document.getElementById("ytpanel");
+        ytpanelx.removeAttribute("style");
+        ytpanelx.style.borderTopLeftRadius = "25px";
+        ytpanelx.style.borderTopRightRadius = "25px";
+        ytpanelx.innerHTML = "<Youtube Embed Panel>";
+        return "sil";
+      }
+      if (['bg','background','arkaplan'].includes(args[0].toLowerCase().slice(1))) {
+        try{
+          let bg = document.getElementById("ytpanel");
+          if(!bg.firstElementChild){return "Video Not Found%notr%%noeval%";}
+          if(bg.firstElementChild.tagName!="IFRAME"){return "Video Not Found%notr%%noeval%";}
+          bg.style.setProperty('max-height', '100%');
+          bg.style.setProperty('max-width', '100%');
+          bg.style.setProperty('width', '100%');
+          bg.style.setProperty('height', '100%');
+          bg.style.setProperty('z-index', '-1');
+          bg.style.borderRadius = "0";
+          let bg1 = document.getElementById("ytpanel").firstChild;
+          bg1.style.setProperty('max-height', '100%');
+          bg1.style.setProperty('max-width', '100%');
+          bg1.style.setProperty('width', '100%');
+          bg1.style.setProperty('height', '100%');
+          bg1.style.setProperty('z-index', '-1');
+          bg1.style.objectFit = "cover";
+          bg1.style.borderRadius = "0";
+        }catch(ex){console.log(ex);}
+        return "sil";
+      }
       if (['kill','die','destroy','destruct',"destruction",'reset'].includes(args[0].toLowerCase().slice(1))) {
         // window.caches.keys().then(function(cacheNames) {
         //   cacheNames.forEach(function(cacheName) {
@@ -1673,7 +1703,35 @@ function youtubeatag(data){
   var _return = 0
   var ytpanelx = document.getElementById("ytpanel");
   if(_000 != false){
+    ytpanelx.style.textAlign = "center";
+    ytpanelx.style.setProperty('position', 'fixed');
+    ytpanelx.style.setProperty('margin', '0 auto');
+    ytpanelx.style.setProperty('max-width', '600px');
+    ytpanelx.style.setProperty('width', '100%');
+    ytpanelx.style.setProperty('height', 'auto');
+    ytpanelx.style.setProperty('z-index', '1');
+    ytpanelx.style.setProperty('min-height', '280px');
+    ytpanelx.style.setProperty('max-height', '360px');
+    ytpanelx.style.setProperty('bottom', '0');
+    ytpanelx.style.setProperty('left', '0');
+    ytpanelx.style.setProperty('right', '0');
+    ytpanelx.style.bottom = 0;
     ytpanelx.innerHTML = '<iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    
+    let bg1 = document.getElementById("ytpanel").firstChild;
+    bg1.style.setProperty('min-height', '280px');
+    bg1.style.setProperty('max-height', '360px');
+    bg1.style.setProperty('max-width', '600px');
+    bg1.style.setProperty('width', '100%');
+    bg1.style.setProperty('height', '100%');
+    bg1.style.setProperty('z-index', '1');
+    bg1.style.setProperty('bottom', '0');
+    bg1.style.setProperty('left', '0');
+    bg1.style.setProperty('right', '0');
+    bg1.style.bottom = 0;
+    bg1.style.borderRadius = "none";
+    bg1.style.borderTopRightRadius = "25px";
+    bg1.style.borderTopLeftRadius = "25px";
     _return = 1;
     return "sil";
   }

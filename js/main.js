@@ -199,7 +199,7 @@ var div = document.createElement("div");
 div.style.margin = "0 auto";
 div.style.textAlign = "center";
 div.style.height = "auto";
-div.style.color = "grey";
+div.style.color = "#c43f22";
 div.style.maxWidth = "600px";
 div.style.position = "relative";
 div.id = "base";
@@ -298,11 +298,11 @@ websocket.textContent = "Websocket";
 // Bağlantı durumu paragrafını oluşturur
 var baglanti = document.createElement("p");
 baglanti.style.fontSize = "24px";
-baglanti.style.color = "grey";
+baglanti.style.color = "#c43f22";
 baglanti.textContent = "Bağlantı durumu: ";
 var span = document.createElement("span");
 span.id = "baglanti";
-span.style.color = "grey";
+span.style.color = "#c43f22";
 span.textContent = "Kapalı";
 baglanti.appendChild(span);
 
@@ -332,7 +332,7 @@ textarea1.style.border = "0";
 textarea1.style.margin = "0";
 textarea1.style.borderBottom = "2.5px solid #FFA000";
 textarea1.style.padding = "16px";
-textarea1.style.color = "dimgrey";
+textarea1.style.color = "#c43f22";
 textarea1.style.resize = "vertical";
 textarea1.autocomplete = "off";
 var input1 = document.createElement("input");
@@ -348,7 +348,7 @@ input1.style.border = "0";
 input1.style.backgroundColor = "transparent";
 input1.style.borderBottom = "2.5px solid #FFA000";
 input1.style.padding = "16px";
-input1.style.color = "black";
+input1.style.color = "#c43f22";
 input1.style.height = "59px";
 input1.style.display = "inline-block";
 div1.appendChild(textarea1);
@@ -381,7 +381,7 @@ textarea2.style.border = "0";
 textarea2.style.margin = "0";
 textarea2.style.borderBottom = "2.5px solid #FFA000";
 textarea2.style.padding = "16px";
-textarea2.style.color = "dimgrey";
+textarea2.style.color = "#c43f22";
 textarea2.style.resize = "vertical";
 textarea2.autocomplete = "off";
 textarea2.textContent = "123456789:0:0:w";
@@ -397,7 +397,7 @@ input2.style.border = "0";
 input2.style.backgroundColor = "transparent";
 input2.style.borderBottom = "2.5px solid #FFA000";
 input2.style.padding = "16px";
-input2.style.color = "black";
+input2.style.color = "#c43f22";
 input2.style.height = "59px";
 input2.style.display = "inline-block";
 div2.appendChild(textarea2);
@@ -431,7 +431,7 @@ textarea3.style.border = "0";
 textarea3.style.margin = "0";
 textarea3.style.borderBottom = "2.5px solid #FFA000";
 textarea3.style.padding = "16px";
-textarea3.style.color = "dimgrey";
+textarea3.style.color = "#c43f22";
 textarea3.style.resize = "vertical";
 textarea3.autocomplete = "off";
 var input3 = document.createElement("input");
@@ -447,7 +447,7 @@ input3.style.border = "0";
 input3.style.backgroundColor = "transparent";
 input3.style.borderBottom = "2.5px solid #FFA000";
 input3.style.padding = "16px";
-input3.style.color = "black";
+input3.style.color = "#c43f22";
 input3.style.height = "59px";
 input3.style.display = "inline-block";
 div3.appendChild(textarea3);
@@ -461,11 +461,11 @@ etkilesim.textContent = "Diğer Kullanıcılarla Etkileşim";
 // Bağlantı durumu paragrafını oluşturur
 var baglantiother = document.createElement("p");
 baglantiother.style.fontSize = "24px";
-baglantiother.style.color = "grey";
+baglantiother.style.color = "#c43f22";
 baglantiother.textContent = "Bağlantı durumu: ";
 var spanother = document.createElement("span");
 spanother.id = "baglantiother";
-spanother.style.color = "grey";
+spanother.style.color = "#c43f22";
 spanother.textContent = "Kapalı";
 baglantiother.appendChild(spanother);
 
@@ -502,6 +502,8 @@ var explanations = [
   "Generate Music List ❯ /m,/music,/şarkı,/müzik Example: /m -s all,/m -s 10(number)",
   "Open Gallery ❯ /g,/gallery,/galeri,/foto,/fotoğraf,/fotoğraflar",
   "Delete Chat ❯ /cls,/clear,/delete,/del",
+  "Set Background ❯ /bg,/background,/arkaplan",
+  "Delete Player or Background ❯ /dp,/deleteplayer,/deletebg,/deletebackground",
   "Open Notepad Panel ❯ /note,/not,/notepad,/notdefteri",
   "Open Websocket Panel ❯ /ws,/websocket,/websocketserver,/wsserver",
   "Open Kpop List Panel ❯ /gg,/girlgrouplist,/girlgroup,/gglist,/kpoplist,/kpop",
@@ -520,7 +522,7 @@ for (let i = 0; i < explanations.length; i++) {
   // Açıklamayı içeren bir div elementi oluşturur
   var explanation = document.createElement("div");
   explanation.textContent = explanations[i];
-  explanation.style.borderBottom = "1px dashed grey";
+  explanation.style.borderBottom = "1px dashed #c43f22";
   explanation.style.marginBottom = "5px";
   explanation.style.marginTop = "10px";
   explanation.style.paddingLeft = "5px";
@@ -652,7 +654,8 @@ downloaddataset.style.padding = "5px";
 downloaddataset.style.margin = "5px";
 downloaddataset.style.backgroundColor = "transparent";
 downloaddataset.style.border = "none";
-downloaddataset.style.borderBottom = "1px solid black";
+downloaddataset.style.color = "#c43f22";
+downloaddataset.style.borderBottom = "1px solid #c43f22";
 downloaddataset.textContent = "Download Dataset";
 downloaddataset.onclick = function() { 
   const blob = new Blob([JSON.stringify(data,null,2)], {type: "text/plain"});
@@ -684,12 +687,13 @@ input.id = "dosyax7";
 input.accept = "application/text";
 label.for = "dosya"; // input elementinin id özelliğiyle aynı yapın
 label.textContent = "Load Dataset";
+label.style.color = "#c43f22";
 button.style.fontSize = "16px";
 button.style.padding = "5px";
 button.style.margin = "5px";
 button.style.backgroundColor = "transparent";
 button.style.border = "none";
-button.style.borderBottom = "1px solid black";
+button.style.borderBottom = "1px solid #c43f22";
 
 // Elementlerin stilini ayarlayın
 input.style.display = "none"; // display: none yerine opacity: 0 kullanın
@@ -785,9 +789,9 @@ textarea.style.width = "100%";
 textarea.style.backgroundColor = "transparent";
 textarea.style.border = "0";
 textarea.style.margin = "0";
-textarea.style.borderBottom = "2.5px solid #FFA000";
+textarea.style.borderBottom = "2.5px solid #c43f22";
 textarea.style.padding = "16px";
-textarea.style.color = "dimgrey";
+textarea.style.color = "#c43f22";
 textarea.style.resize = "vertical";
 textarea.autocomplete = "off";
 textarea.autofocus = true;
@@ -800,7 +804,7 @@ arama_sonuclari.style.position = "relative";
 arama_sonuclari.style.display = "none";
 arama_sonuclari.style.width = "100%";
 arama_sonuclari.style.height = "auto";
-arama_sonuclari.style.backgroundColor = "white";
+arama_sonuclari.style.backgroundColor = "transparent";
 arama_sonuclari.style.overflow = "auto";
 arama_sonuclari.style.padding = "10px";
 // Diğer stilleri buraya ekle
@@ -823,9 +827,9 @@ input.style.width = "100%";
 input.style.maxWidth = "40px";
 input.style.border = "0";
 input.style.backgroundColor = "transparent";
-input.style.borderBottom = "2.5px solid #FFA000";
+input.style.borderBottom = "2.5px solid #c43f22";
 input.style.padding = "16px";
-input.style.color = "black";
+input.style.color = "#c43f22";
 input.style.height = "59px";
 input.style.display = "inline-block";
 
@@ -873,12 +877,16 @@ var suggestion4 = document.createElement("div");
 suggestion4.className = "suggestion";
 suggestion4.id = "voicex";
 suggestion4.textContent = "Vc: Off";
+var suggestion5 = document.createElement("div");
+suggestion5.className = "suggestion";
+suggestion5.textContent = "/bg";
 
 // Önerilenler kutusunun içine öneri elementlerini ekler
 suggestions.appendChild(suggestion1);
 suggestions.appendChild(suggestion2);
 suggestions.appendChild(suggestion3);
 suggestions.appendChild(suggestion4);
+suggestions.appendChild(suggestion5);
 
 // input elementine bir event listener ekle
 // data_raw değişkenini bir diziye dönüştür
@@ -953,6 +961,7 @@ div.appendChild(suggestions);
 
 // Mesajları göstermek için bir div elementi oluşturur
 var messages = document.createElement("div");
+messages.style.backgroundImage="white";
 messages.id = "messages";
 messages.style.wordWrap = "break-word";
 messages.innerHTML = "<br><y style='color:#c59722'></y><p style='color:#c43f22'>(!) Başkasının yazışmalarını görebilirsiniz</p>Size: <x>null</x>";
@@ -983,7 +992,7 @@ h1.style.mozUserSelect = "none";
 h1.style.msUserSelect = "none";
 h1.style.oUserSelect = "none";
 h1.style.userSelect = "none";
-h1.style.color = "black";
+h1.style.color = "#c43f22";
 
 // <img> elementini oluşturalım
 var img = document.createElement("img");
@@ -1017,7 +1026,7 @@ menuButton.style.width = "40px";
 menuButton.style.height = "40px";
 menuButton.style.backgroundColor = "transparent";
 menuButton.style.cursor = "pointer";
-menuButton.style.color = "black";
+menuButton.style.color = "#c43f22";
 menuButton.style.fontSize = "24px";
 menuButton.textContent = ">";
 
@@ -1039,7 +1048,7 @@ option1.onclick = function() {
 option1.style.display = "block";
 option1.style.padding = "10px";
 option1.style.textDecoration = "none";
-option1.style.color = "black";
+option1.style.color = "#c43f22";
 option1.textContent = "Chat";
 
 var option2 = document.createElement("a");
@@ -1051,7 +1060,7 @@ option2.onclick = function() {
 option2.style.display = "block";
 option2.style.padding = "10px";
 option2.style.textDecoration = "none";
-option2.style.color = "black";
+option2.style.color = "#c43f22";
 option2.textContent = "Notepad";
 
 var option3 = document.createElement("a");
@@ -1063,7 +1072,7 @@ option3.onclick = function() {
 option3.style.display = "block";
 option3.style.padding = "10px";
 option3.style.textDecoration = "none";
-option3.style.color = "black";
+option3.style.color = "#c43f22";
 option3.textContent = "Commands";
 
 var option4 = document.createElement("a");
@@ -1075,7 +1084,7 @@ option4.onclick = function() {
 option4.style.display = "block";
 option4.style.padding = "10px";
 option4.style.textDecoration = "none";
-option4.style.color = "black";
+option4.style.color = "#c43f22";
 option4.textContent = "Kpop List";
 
 var option5 = document.createElement("a");
@@ -1087,7 +1096,7 @@ option5.onclick = function() {
 option5.style.display = "block";
 option5.style.padding = "10px";
 option5.style.textDecoration = "none";
-option5.style.color = "black";
+option5.style.color = "#c43f22";
 option5.textContent = "Websocket";
 
 var option6 = document.createElement("a");
@@ -1100,7 +1109,7 @@ option6.onclick = function() {
 option6.style.display = "block";
 option6.style.padding = "10px";
 option6.style.textDecoration = "none";
-option6.style.color = "black";
+option6.style.color = "#c43f22";
 option6.textContent = "Gallery";
 
 var option7 = document.createElement("a");
@@ -1112,7 +1121,7 @@ option7.onclick = function() {
 option7.style.display = "block";
 option7.style.padding = "10px";
 option7.style.textDecoration = "none";
-option7.style.color = "black";
+option7.style.color = "#c43f22";
 option7.textContent = "Config";
 
 // Menü içeriği elementinin içine menü seçenekleri elementlerini ekleyelim
@@ -1198,11 +1207,14 @@ window.wsmode_realtime_other = 1;
 window.sifrelemesorgu = 1;
 window.SCMmain_tag = "u";
 window.main_tag = "w";
+window.SCMcache_sifre = "123456789";
 window.cache_sifre = "123456789";
+window.SCMcache_sindirme = "0";
 window.cache_sindirme = "0";
+window.SCMcache_block = "0";
 window.cache_block = "0";
 window.cipher = new SC5(window.cache_sifre,window.cache_sindirme,window.cache_block);
-window.SCMcipher = new SilverCipherMini(window.cache_sifre);
+window.SCMcipher = new SilverCipherMini(window.SCMcache_sifre);
 
 function san_input_fix_MOD1(a){const b={"<":"&lt;",">":"&gt;",'"':"&quot;"};return a.replace(/[<>"']/ig,a=>b[a])}
 function san_input_fix(a){const b={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"};return a.replace(/[&<>"'/]/ig,a=>b[a])}
@@ -1211,6 +1223,129 @@ window.old_form_width = "100%";
 window.old_header_x_height = "120px";
 window.old_header_x_width = "100%";
   // Div leri gösteren fonksiyon
+
+
+window.oldValues = {};
+// elementlerin genişlik, yükseklik, min-genişlik ve min-yükseklik değerlerini sıfıra ayarlayan fonksiyon
+function zeroSize(parent) {
+  // parent elementin içindeki tüm elementleri seç
+  let children = parent.getElementsByTagName("*");
+  // her bir element için döngü oluştur
+  for (let child of children) {
+    if(child.tagName=="IFRAME"){continue;}
+    if(child.id){
+      if(child.id=="ytpanel"){continue}
+    }else{
+      child.id="child-" + Math.random().toString(36).substr(2, 9);
+    }
+    let id = child.id;
+    // window.oldValues değişkenine elementin id, genişlik, yükseklik, min-genişlik ve min-yükseklik değerlerini kaydet
+    // her bir değeri ayrı ayrı "0px" veya "" değerine eşit mi diye kontrol et
+    if (child.style.width != "0px") {
+      window.oldValues[id] = window.oldValues[id] || {};
+      window.oldValues[id].width = child.style.width;
+      child.style.width = "0px";
+    }
+    if (child.style.height != "0px") {
+      window.oldValues[id] = window.oldValues[id] || {};
+      window.oldValues[id].height = child.style.height;
+      child.style.height = "0px";
+    }
+    if (child.style.minWidth != "0px") {
+      window.oldValues[id] = window.oldValues[id] || {};
+      window.oldValues[id].minWidth = child.style.minWidth;
+      child.style.minWidth = "0px";
+    }
+    if (child.style.minHeight != "0px") {
+      window.oldValues[id] = window.oldValues[id] || {};
+      window.oldValues[id].minHeight = child.style.minHeight;
+      child.style.minHeight = "0px";
+    }
+    if (child.style.overflowWrap != "normal") {
+      window.oldValues[id] = window.oldValues[id] || {};
+      window.oldValues[id].overflowWrap = child.style.overflowWrap;
+      child.style.overflowWrap = "normal";
+    }
+    if (child.style.fontSize != "0px") {
+      window.oldValues[id] = window.oldValues[id] || {};
+      window.oldValues[id].fontSize = child.style.fontSize;
+      child.style.fontSize = "0px";
+    }
+    // elementin genişlik, yükseklik, min-genişlik ve min-yükseklik değerlerini sıfıra ayarla
+  }
+}
+
+// elementlerin genişlik, yükseklik, min-genişlik ve min-yükseklik değerlerini eski değerlere geri yükleyen fonksiyon
+function restoreSize(parent) {
+  // parent elementin içindeki tüm elementleri seç
+  let children = parent.getElementsByTagName("*");
+  // her bir element için döngü oluştur
+  for (let child of children) {
+    // elementin id özelliğini al
+    let id = child.id;
+    // window.oldValues değişkeninin boş olup olmadığını kontrol et
+    if (window.oldValues[id]) {
+      // window.oldValues değişkeninden elementin id'ye karşılık gelen eski genişlik, yükseklik, min-genişlik ve min-yükseklik değerlerini al
+      if (window.oldValues[id].hasOwnProperty("width")) {
+        let oldWidth = window.oldValues[id].width;
+        if (oldWidth == "") {
+          child.style.removeProperty("width");
+        }else{
+          child.style.width = oldWidth;
+        }
+      }
+      if (window.oldValues[id].hasOwnProperty("height")) {
+        let oldHeight = window.oldValues[id].height;
+        if (oldHeight == "") {
+          child.style.removeProperty("height");
+        }else{
+          child.style.height = oldHeight;
+        }
+      }
+      if (window.oldValues[id].hasOwnProperty("minWidth")) {
+        let oldMinWidth = window.oldValues[id].minWidth;
+        if (oldMinWidth == "") {
+          child.style.removeProperty("min-width");
+        }else{
+          child.style.minWidth = oldMinWidth;
+        }
+      }
+      if (window.oldValues[id].hasOwnProperty("minHeight")) {
+        let oldMinHeight = window.oldValues[id].minHeight;
+        if (oldMinHeight == "") {
+          child.style.removeProperty("min-height");
+        }else{
+          child.style.minHeight = oldMinHeight;
+        }
+      }
+      if (window.oldValues[id].hasOwnProperty("overflowWrap")) {
+        let overflowWrap = window.oldValues[id].overflowWrap;
+        if (overflowWrap == "") {
+          child.style.removeProperty("overflow-wrap");
+        }else{
+          child.style.overflowWrap = overflowWrap;
+        }
+      }
+      if (window.oldValues[id].hasOwnProperty("fontSize")) {
+        let fontSize = window.oldValues[id].fontSize;
+        if (fontSize == "") {
+          child.style.removeProperty("font-size");
+        }else{
+          child.style.fontSize = fontSize;
+        }
+      }
+      // elementin genişlik, yükseklik, min-genişlik ve min-yükseklik değerlerini eski değerlere ayarla
+      // her bir değeri ayrı ayrı "0px" veya "" değerine eşit mi diye kontrol et
+    } else {
+      // window.oldValues değişkeninde kayıtlı değer yoksa, döngüyü atla
+      continue;
+    }
+  }
+}
+
+
+
+
   var __index__C = 0;
   function showCacheInMain(cacheId,all=false,tumunugizle=false) {
     // Main div ini seç
@@ -1235,12 +1370,14 @@ window.old_header_x_width = "100%";
         if(cache.style.height == "0px" || cache.style.width == "0px" || cache.style.height == 0 || cache.style.width == 0){
           cache.style.height = window.old_form_height;
           cache.style.width = window.old_form_width;
+          restoreSize(cache);
         }
       }
       if(cacheId=="header_x"){
         if(cache.style.height == "0px" || cache.style.width == "0px" || cache.style.height == 0 || cache.style.width == 0){
           cache.style.height = window.old_header_x_height;
           cache.style.width = window.old_header_x_width;
+          restoreSize(cache);
         }
       }
     }else{
@@ -1287,8 +1424,9 @@ window.old_header_x_width = "100%";
         // console.log(other.style.height);
         // console.log(other.style.width);
         other.style.visibility = "hidden";
-        other.style.height = 0;
-        other.style.width = 0;
+        other.style.height = "0";
+        other.style.width = "0";
+        zeroSize(other);
       } else{
         other.style.display = "none";
         main.parentNode.insertBefore(other, main);
@@ -1327,8 +1465,9 @@ window.old_header_x_width = "100%";
           // console.log(div.style.height);
           // console.log(div.style.width);
           div.style.visibility = "hidden";
-          div.style.height = 0;
-          div.style.width = 0;
+          div.style.height = "0";
+          div.style.width = "0";
+          zeroSize(div);
         } else{
           div.style.display = "none";
           main.parentNode.insertBefore(other, main);
@@ -1528,7 +1667,7 @@ textarexr.addEventListener("input", function() {
                 // var xid11 = generateToken();
                 // xid11 = "x"+xid11;
                 // var sonradata = "";
-                // message.innerHTML = "<p class='a rg'><label id='f1'>"+"<div id='"+xid11+"' spellcheck='false' class='divasdas rg' style=''>"+m+"</div>"+"</label></p><p class='rg' style='color:grey;border:none!important;z-index:2;'>"+sonradata+"</p>";
+                // message.innerHTML = "<p class='a rg'><label id='f1'>"+"<div id='"+xid11+"' spellcheck='false' class='divasdas rg' style=''>"+m+"</div>"+"</label></p><p class='rg' style='color:#c43f22;border:none!important;z-index:2;'>"+sonradata+"</p>";
                 // messages.insertBefore(message, messages.firstChild);
             }
 
@@ -1606,7 +1745,7 @@ window.otherusers_realtime_ws.onopen = function() {
           var messages = document.querySelector('#messages');
           var messagex = document.createElement('div');
           messagex.style.display = "block";
-          messagex.innerHTML = "<p class='a lf'><label id='f1'>Unknown : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:grey;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
+          messagex.innerHTML = "<p class='a lf'><label id='f1'>Unknown : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:#c43f22;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
           messages.insertBefore(messagex, messages.firstChild);
           message1="";
           sent__s(message2.replaceAll("\n","<br>"));
@@ -1652,10 +1791,10 @@ window.otherusers_realtime_ws.onopen = function() {
     url = url.trim();
     if(url==""){
       window.SCMmain_tag = "u";
-      window.cache_sifre = "123456789";
-      window.cache_sindirme = "0";
-      window.cache_block = "0";
-      window.SCMcipher = new SilverCipherMini(window.cache_sifre);
+      window.SCMcache_sifre = "123456789";
+      window.SCMcache_sindirme = "0";
+      window.SCMcache_block = "0";
+      window.SCMcipher = new SilverCipherMini(window.SCMcache_sifre);
       window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther();
       return;
     }else{
@@ -1815,7 +1954,7 @@ function mesajGonder(mesaj,enc="no") {
       return new Promise(function(resolve, reject) {
         // XMLHttpRequest nesnesi oluşturalım
         let request = new XMLHttpRequest();
-        
+
         // URL'ye GET isteği gönderelim
         request.open("GET", url, true);
         request.onerror = function(){
@@ -1928,10 +2067,10 @@ function mesajGonder(mesaj,enc="no") {
                   setTimeout(()=>{
                     if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
                       window.SCMmain_tag = "u";
-                      window.cache_sifre = "123456789";
-                      window.cache_sindirme = "0";
-                      window.cache_block = "0";
-                      window.SCMcipher = new SilverCipherMini(window.cache_sifre);
+                      window.SCMcache_sifre = "123456789";
+                      window.SCMcache_sindirme = "0";
+                      window.SCMcache_block = "0";
+                      window.SCMcipher = new SilverCipherMini(window.SCMcache_sifre);
                       window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther();
                     }
                   },2200);
@@ -1948,10 +2087,10 @@ function mesajGonder(mesaj,enc="no") {
                   setTimeout(()=>{
                     if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
                       window.SCMmain_tag = "u";
-                      window.cache_sifre = "123456789";
-                      window.cache_sindirme = "0";
-                      window.cache_block = "0";
-                      window.SCMcipher = new SilverCipherMini(window.cache_sifre);
+                      window.SCMcache_sifre = "123456789";
+                      window.SCMcache_sindirme = "0";
+                      window.SCMcache_block = "0";
+                      window.SCMcipher = new SilverCipherMini(window.SCMcache_sifre);
                       window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther();
                     }
                   },2200);
@@ -1980,6 +2119,7 @@ function mesajGonder(mesaj,enc="no") {
                     }
                     mesajGonder(veri__0.replaceAll("%noeval%",""), "no");
                     messagecbbtbtnrte=veri__0;
+                    var noeval = false;
                     if(new RegExp("%noeval%").test(___text__0)){___text__0 = ___text__0.replaceAll("%noeval%","");noeval=true;}
                     sent__s(___text__0,noeval);
                     if(dataxxxx.charAt(0) != '/'){
@@ -2004,6 +2144,7 @@ function mesajGonder(mesaj,enc="no") {
                     }
                     mesajGonder(veri__0.replaceAll("%noeval%",""),"yes");
                     messagecbbtbtnrte=veri__0;
+                    var noeval = false;
                     if(new RegExp("%noeval%").test(___text__0)){___text__0 = ___text__0.replaceAll("%noeval%","");noeval=true;}
                     sent__s(___text__0,noeval);
                     if(dataxxxx.charAt(0) != '/'){
@@ -2058,13 +2199,13 @@ function mesajGonder(mesaj,enc="no") {
               var messagex = document.createElement('div');
               messagex.style.display = "block";
               //message1="(Encrypted)";
-              //messagex.innerHTML = "Mesaj Gönderildi => <textarea spellcheck='false' style='color:grey;overflow: hidden;resize: vertical;'>"+message1+"</textarea> "+getCurrentTime()+" ID: "+target;
+              //messagex.innerHTML = "Mesaj Gönderildi => <textarea spellcheck='false' style='color:#c43f22;overflow: hidden;resize: vertical;'>"+message1+"</textarea> "+getCurrentTime()+" ID: "+target;
               if(target=="__server__"){
                 var __cache_kisi_0x13 = "Websocket";
               }else {
                 var __cache_kisi_0x13 = "Me";
               }
-              messagex.innerHTML = "<p class='a lf'><label id='f1'>"+__cache_kisi_0x13+" : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:grey;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
+              messagex.innerHTML = "<p class='a lf'><label id='f1'>"+__cache_kisi_0x13+" : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:#c43f22;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
               messages.insertBefore(messagex, messages.firstChild);
             }
             function sendMessage(message1,target) {
@@ -2161,11 +2302,14 @@ function gallery_s(dataset_data){
     var html = document.querySelector("html");
     html.style.backgroundColor = "#131417";
     body.style.backgroundColor = "#131417";
+    var ytpanelx = document.getElementById("ytpanel");
+    ytpanelx.style.visibility = "hidden";
     // var ul_x = document.querySelector("#gallery_x > ul");
     // scrollEvent(ul_x);
     var _____t = document.getElementById("gallery_x");
     _____t.style.Display="block";
-    return;}else{_000x=1;}
+    return;}else{_000x=1;    var ytpanelx = document.getElementById("ytpanel");
+    ytpanelx.style.visibility = "hidden";}
   var style = document.createElement("style");
   style.innerHTML = "@font-face{font-family:'Ephesis';src:url(Ephesis-Regular.ttf) format('woff')}";
   style.type = "text/css";
@@ -2205,6 +2349,10 @@ geridon_gallery.style.position = "fixed";
 geridon_gallery.style.zIndex = "9999";
 geridon_gallery.style.fontSize = "24px";
 geridon_gallery.addEventListener("click", ()=>{
+  var ytpanelx = document.getElementById("ytpanel");
+  ytpanelx.style.visibility = "visible";
+  ytpanelx.style.backgroundColor = "transparent";
+  ytpanelx.style.background = "transparent";
   // window.removeEventListener("scroll", window.throttleScroll);
   var ul = document.querySelector("#gallery_x > ul");
   try {
@@ -2214,10 +2362,10 @@ geridon_gallery.addEventListener("click", ()=>{
   }
   showCacheInMain('header_x',true,true);
   showCacheInMain('cache_form');
-  html.style.backgroundColor = "white";
-  body.style.backgroundColor = "white";
-  html.style.color = "black";
-  body.style.color = "black";
+  html.style.backgroundColor = "transparent";
+  body.style.backgroundColor = "transparent";
+  html.style.color = "#c43f22";
+  body.style.color = "#c43f22";
   window.scrollTo(0, 0);
 });
 // Elementleri doğru sırayla birbirine bağlayalım
@@ -3043,7 +3191,7 @@ function showDetails(event) {
   };
   back.textContent = "<";
   back.style.fontSize = "32px";
-  back.style.color = "black";
+  back.style.color = "#c43f22";
   // Geri dönme bağlantısını cache'nin ilk çocuğu olarak ekle
   cache.insertBefore(back, cache.firstChild);
 }
