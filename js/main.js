@@ -503,7 +503,7 @@ var explanations = [
   "Open Gallery ❯ /g,/gallery,/galeri,/foto,/fotoğraf,/fotoğraflar",
   "Delete Chat ❯ /cls,/clear,/delete,/del",
   "Set Background ❯ /bg,/background,/arkaplan",
-  "Delete Player or Background ❯ /dp,/deleteplayer,/deletebg,/deletebackground",
+  "Delete Player or Background ❯ /dp,/db,/deleteplayer,/deletebg,/deletebackground",
   "Open Notepad Panel ❯ /note,/not,/notepad,/notdefteri",
   "Open Websocket Panel ❯ /ws,/websocket,/websocketserver,/wsserver",
   "Open Kpop List Panel ❯ /gg,/girlgrouplist,/girlgroup,/gglist,/kpoplist,/kpop",

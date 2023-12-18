@@ -555,7 +555,7 @@ function ai_cevapla(metin,onlytext=false) {
         window.showCacheInMain('cache_config');
         return "sil";
       }
-      if (['dp','deleteplayer','deletebg','deletebackground'].includes(args[0].toLowerCase().slice(1))) {
+      if (['dp','db','deleteplayer','deletebg','deletebackground'].includes(args[0].toLowerCase().slice(1))) {
         var ytpanelx = document.getElementById("ytpanel");
         ytpanelx.removeAttribute("style");
         ytpanelx.style.borderTopLeftRadius = "25px";
