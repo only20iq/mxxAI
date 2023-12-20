@@ -1561,13 +1561,63 @@ try{
 // [ ve ] işaretlerini ( ve ) işaretine dönüştür
 expression = expression.replace(/\[/g, '(').replace(/\]/g, ')').replace(/,/g, '.');
 
-let paren = "\\((?:[^()]*|\\(\\s*\\d+([.]\\d+)?\\)*)*\\)";
-let log = "\\s*log\\((?:[^()]*|\\(\\s*\\d+([.]\\d+)?\\)*)\\)\\s*([\\+\\-\\*\\/\\^%]\\s*\\d+([.]\\d+)?\\s*)*";
-let other = "\\s*\\d+([.]\\d+)?\\s*([\\+\\-\\*\\/\\^%]\\s*\\d+([.]\\d+)?\\s*)*";
-let regex = new RegExp(`(${log}|${other}|${paren})\\s*([\\+\\-\\*\\/\\^%]\\s*(${log}|${other}|${paren})\\s*)*`, "g");
 
 
-  let match = expression.match(regex);
+function removeSpacesX(str) {
+  // Parantez içindeki boşlukları sil
+  str = str.replaceAll(/\s+(?=[^[]*\])/g, ""); // Köşeli parantez için
+  str = str.replaceAll(/\s+(?=[^(]*\))/g, ""); // Yuvarlak parantez için
+
+  // Parantezin solundaki boşlukları düzelt
+  str = str.replaceAll(/\s+(?=[^[]*\[)/g, " "); // Köşeli parantez için
+  str = str.replaceAll(/\s+(?=[^(]*\()/g, " "); // Yuvarlak parantez için
+
+  // Matematiksel ifadeler arasındaki boşlukları sil
+  str = str.replaceAll(/\s+(?=[+\-*/^])/g, ""); // Matematiksel operatörlerin solu için
+  str = str.replaceAll(/(?<=[+\-*/^])\s+/g, "");
+
+  str = str.replaceAll(/\s+(?<=\d)\s+(?=\D)/g, " "); // Sayı ile harf arasındaki boşluk için
+  str = str.replaceAll(/\s+(?<=\D)\s+(?=\d)/g, " "); // Harf ile sayı arasındaki boşluk için
+
+  // Sayı ile harf ve harf ile sayı arasındaki boşlukları 1'e indir
+  str = str.replaceAll(/\s{2,}(?<=\d)\s+(?=\D)/g, " "); // Sayı ile harf arasındaki boşluk için
+  str = str.replaceAll(/\s{2,}(?<=\D)\s+(?=\d)/g, " "); // Harf ile sayı arasındaki boşluk için
+
+
+  return str;
+}
+
+
+expression = removeSpacesX(expression);
+// let paren = "\\((?:[^()]*|\\(\\s*\\d+([.]\\d+)?\\)*)*\\)";
+// let log = "\\s*log\\((?:[^()]*|\\(\\s*\\d+([.]\\d+)?\\)*)\\)\\s*([\\+\\-\\*\\/\\^%]\\s*\\d+([.]\\d+)?\\s*)*";
+// let other = "\\s*\\d+([.]\\d+)?\\s*([\\+\\-\\*\\/\\^%]\\s*\\d+([.]\\d+)?\\s*)*";
+// let regex = new RegExp(`(${log}|${other}|${paren})\\s*([\\+\\-\\*\\/\\^%]\\s*(${log}|${other}|${paren})\\s*)*`, "g");
+
+function detectMathExpressions(str) {
+  // İfadeler arasında boşluklar ve metinler olduğu için, metni boşluklara göre bölelim
+  let parts = str.split(' ');
+
+  // Matematiksel ifadeleri tutacak bir dizi oluşturalım
+  let expressions = [];
+
+  // Her bir parçayı kontrol edelim
+  for(let part of parts) {
+      // Eğer parça bir sayı veya matematiksel işlem içeriyorsa, diziye ekleyelim
+      if(/^[+\-*/^%.0-9,log()]+$/.test(part)) {
+          expressions.push(part);
+      }
+  }
+
+  // Matematiksel ifadeleri içeren diziyi döndürelim
+  return expressions;
+}
+
+
+
+console.log(expression);
+let match = detectMathExpressions(expression);
+console.log(match);
 
   if (match) {
     let isSingleNumber = /^(\d+(\.\d+)?)$/.test(match[0]) || /^[\[(]\d+(\.\d+)?[\])]$/.test(match[0]);
@@ -1579,7 +1629,6 @@ let regex = new RegExp(`(${log}|${other}|${paren})\\s*([\\+\\-\\*\\/\\^%]\\s*(${
     try{
       match = logcalculate(match);
     }catch(ex){console.log(ex);}
-    console.log(match);
     // matematik işlemini al
     let regex = /[^0123456789.,+\-/*()[]%^]/g;
     var mathExpression=[];
