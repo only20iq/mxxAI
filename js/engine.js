@@ -1559,17 +1559,17 @@ function extractAndEvaluateMath(expression) {
 try{
 
 // [ ve ] işaretlerini ( ve ) işaretine dönüştür
-expression = expression.replace(/\[/g, '(').replace(/\]/g, ')').replace(/,/g, '.');
+expression = expression.replace(/\[/g, '(').replace(/\]/g, ')').replace(/,/g, '.').replaceAll(/\?/g, "").replaceAll(/\=/g, "");
 
 
 
 function removeSpacesX(str) {
   // Parantez içindeki boşlukları sil
-  str = str.replaceAll(/\s+(?=[^[]*\])/g, ""); // Köşeli parantez için
+  // str = str.replaceAll(/\s+(?=[^[]*\])/g, ""); // Köşeli parantez için
   str = str.replaceAll(/\s+(?=[^(]*\))/g, ""); // Yuvarlak parantez için
 
   // Parantezin solundaki boşlukları düzelt
-  str = str.replaceAll(/\s+(?=[^[]*\[)/g, " "); // Köşeli parantez için
+  // str = str.replaceAll(/\s+(?=[^[]*\[)/g, " "); // Köşeli parantez için
   str = str.replaceAll(/\s+(?=[^(]*\()/g, " "); // Yuvarlak parantez için
 
   // Matematiksel ifadeler arasındaki boşlukları sil
