@@ -1239,7 +1239,7 @@ function compareInput (userInput, list, threshold) {
 
 function evaluateMath(expression) {
   // ifadeyi, operatörleri ve sayıları ayıran bir diziye ayır
-  let tokens = expression.replaceAll(",",".").split(/(\+|-|\*|\/|\^|\(|\)|%)/).filter(x => x.trim() !== "");
+  let tokens = expression.replaceAll(",",".").split(/(\+|-|\*|\/|\^|\(|\)|\[|\]|%)/).filter(x => x.trim() !== "");
   // diziyi, işlem önceliğine göre grupla
   let grouped = groupTokens(tokens);
   // gruplanmış ifadeyi değerlendir ve sonucu döndür
@@ -1255,14 +1255,14 @@ function groupTokens(tokens) {
   // dizideki her bir öğe için
   for (let token of tokens) {
     // eğer öğe bir sol parantez ise
-    if (token === "(") {
+    if (token === "(" || token === "[") { // [ karakterini de sol parantez olarak kabul et
       // yığına ekle
       stack.push(token);
     }
     // eğer öğe bir sağ parantez ise
-    else if (token === ")") {
+    else if (token === ")" || token === "]") { // ] karakterini de sağ parantez olarak kabul et
       // yığından sol parantez bulana kadar öğeleri çıkar
-      while (stack.length > 0 && stack[stack.length - 1] !== "(") {
+      while (stack.length > 0 && stack[stack.length - 1] !== "(" && stack[stack.length - 1] !== "[") { // [ karakterini de sol parantez olarak kontrol et
         // çıkarılan öğeleri gruplanmış ifadeye ekle
         grouped.push(stack.pop());
       }
@@ -1298,7 +1298,7 @@ function groupTokens(tokens) {
   // yığındaki kalan öğeleri gruplanmış ifadeye ekle
   while (stack.length > 0) {
     // eğer yığında parantez varsa
-    if (stack[stack.length - 1] === "(" || stack[stack.length - 1] === ")") {
+    if (stack[stack.length - 1] === "(" || stack[stack.length - 1] === ")" || stack[stack.length - 1] === "[" || stack[stack.length - 1] === "]") { // [ ve ] karakterlerini de parantez olarak kontrol et
       // hata fırlat
       throw new Error("Mismatched parentheses");
     }
@@ -1444,7 +1444,7 @@ function splitMathExpressions(string) {
 // Bir stringin matematik ifadesi olup olmadığını kontrol eden fonksiyon
 function isMathExpression(string) {
   // Matematik ifadesinin bir parçası olabilecek karakterleri tanımla
-  let validChars = "0123456789.,+-/*()%^";
+  let validChars = "0123456789.,+-/*()[]%^";
   // Stringin her karakterini döngüyle kontrol et
   for (let char of string) {
     // Eğer karakter geçerli karakterlerden biri değilse, false döndür
@@ -1456,6 +1456,62 @@ function isMathExpression(string) {
   return true;
 }
 
+// Eğer eleman logaritma işlemi içeriyorsa true döndüren bir fonksiyon tanımlayın
+function isLog(element) {
+  // Eğer eleman logaritma işlemi içeriyorsa
+  if (/log\(\d+(\.\d+)?\)/.test(element)) {
+    // true döndür
+    return true;
+  }
+  // Aksi halde, false döndür
+  return false;
+}
+
+
+// İfadeyi sayılar ve işaretler olarak ayıran bir fonksiyon tanımlayın
+function splitMathExpressions_log(expression) {
+  // İfade içindeki işaretleri bulun
+  let signs = expression.match(/[\+\-\*\/\^%]/g);
+
+  // İfade içindeki sayıları bulun
+  let numbers = expression.split(/[\+\-\*\/\^%]/g);
+
+  // Sayılar ve işaretler dizilerini döndürün
+  return [numbers, signs];
+}
+
+// match değişkeninin her bir elemanını, replace metodunu kullanarak logaritma işlemlerini sonucuyla değiştirmek için bir fonksiyon tanımlayın
+function replaceLog(element) {
+  // Eğer eleman logaritma işlemi içeriyorsa
+  if (isLog(element)) {
+    // Elemanı, logaritma işlemini sonucuyla değiştiren bir fonksiyonla replace edin
+    element = element.replace(/log\(\d+(\.\d+)?\)/g, function(match) {
+      // Logaritma işlemindeki sayıyı bulun
+      let number = match.match(/\d+(\.\d+)?/)[0];
+      // Logaritma işleminin sonucunu hesaplayın
+      let result = Math.log10(number);
+      // Sonucu döndürün
+      return result;
+    });
+  }
+  // Elemanı döndürün
+  return element;
+}
+
+// İfadeler dizisindeki her bir ifade için bir işlem fonksiyonu tanımlayın
+function logcalculate(match) {
+  // match değişkenini bir diziye dönüştürün
+  match = Array.from(match);
+
+  // match değişkeninin her bir elemanı için replaceLog fonksiyonunu çağırın
+  match = match.map(replaceLog);
+
+  // match değişkenini döndürün
+  return match;
+}
+
+
+// (3+(3+3+([1+1+log(5)+log(3)-1%6+2-1/1%1]))
 
 // matematik işlemini ayıklayan ve değerlendiren bir fonksiyon tanımla
 function extractAndEvaluateMath(expression) {
@@ -1480,13 +1536,52 @@ function extractAndEvaluateMath(expression) {
 
 
 
-let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*)+/g;
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*)+/g;
+  
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\])\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\])\s*)+/g;
+
+
+// En başarılı olanı
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
+
+// Best V1
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
+
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]|\g<0>)*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]|\g<0>)*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)*/g;
+
+//BEST x4
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\)|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[[^\[\]]*\]|\[(?:[^\[\]]*|\[[^\[\]]*\])*\])*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\)|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[[^\[\]]*\]|\[(?:[^\[\]]*|\[[^\[\]]*\])*\])*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
+
+
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
+// regex değişkenini, işlemleri gruplamak için parantez ekleyerek değiştirin
+// let regex = /((\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+)/g;
+try{
+
+// [ ve ] işaretlerini ( ve ) işaretine dönüştür
+expression = expression.replace(/\[/g, '(').replace(/\]/g, ')').replace(/,/g, '.');
+
+let paren = "\\((?:[^()]*|\\(\\s*\\d+([.]\\d+)?\\)*)*\\)";
+let log = "\\s*log\\((?:[^()]*|\\(\\s*\\d+([.]\\d+)?\\)*)\\)\\s*([\\+\\-\\*\\/\\^%]\\s*\\d+([.]\\d+)?\\s*)*";
+let other = "\\s*\\d+([.]\\d+)?\\s*([\\+\\-\\*\\/\\^%]\\s*\\d+([.]\\d+)?\\s*)*";
+let regex = new RegExp(`(${log}|${other}|${paren})\\s*([\\+\\-\\*\\/\\^%]\\s*(${log}|${other}|${paren})\\s*)*`, "g");
+
+
   let match = expression.match(regex);
-  // eğer bir matematik işlemi bulunursa
+
   if (match) {
-    match = match.map(m => m.replace(/\s+/g, '').replaceAll(",","."));
+    let isSingleNumber = /^(\d+(\.\d+)?)$/.test(match[0]) || /^[\[(]\d+(\.\d+)?[\])]$/.test(match[0]);
+    if (isSingleNumber) {
+      return false;
+    }
+
+    
+    try{
+      match = logcalculate(match);
+    }catch(ex){console.log(ex);}
+    console.log(match);
     // matematik işlemini al
-    let regex = /[^0123456789.,+\-/*()%^]/g;
+    let regex = /[^0123456789.,+\-/*()[]%^]/g;
     var mathExpression=[];
     for (let i = 0; i < match.length; i++) {
         let input = match[i];
@@ -1509,9 +1604,11 @@ let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*([\+
   }
   // eğer bir matematik işlemi bulunmazsa
   else {
+    alert("algılamadı");
     // hata mesajı döndür
     return false;
   }
+}catch(ex){console.log(ex);}
 }
 
 // Eklenecek veriyi dizi olarak eklemek için fonksiyon
