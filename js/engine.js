@@ -1572,16 +1572,21 @@ expression = expression.replace(/\[/g, '(').replace(/\]/g, ')').replace(/,/g, '.
 function removeSpacesX(str) {
   // Parantez içindeki boşlukları sil
   // str = str.replaceAll(/\s+(?=[^[]*\])/g, ""); // Köşeli parantez için
-  str = str.replaceAll(/\s+(?=[^(]*\))/g, ""); // Yuvarlak parantez için
+  // str = str.replaceAll(/\s+(?=[^(]*\))/g, ""); // Yuvarlak parantez için
 
   // Parantezin solundaki boşlukları düzelt
   // str = str.replaceAll(/\s+(?=[^[]*\[)/g, " "); // Köşeli parantez için
-  str = str.replaceAll(/\s+(?=[^(]*\()/g, ""); // Yuvarlak parantez için
+  // str = str.replaceAll(/\s+(?=[^(]*\()/g, ""); // Yuvarlak parantez için
   // console.log("V1: "+str);
   // str = str.replaceAll(/\s+(?=[+\-*/^%])/g, ""); // Matematiksel operatörlerin solu için
   // str = str.replaceAll(/(?<=[+\-*/^%])\s+/g, ""); // Matematiksel operatörlerin sağı için
-  str = str.replaceAll(/\s+(?=[+\-*/^%])(?!\w|\(|\))/g, ""); // Matematiksel operatörlerin solu için
-  str = str.replaceAll(/(?<!\w)\s+(?=[+\-*/^%]|\)|\()/g, ""); // Matematiksel operatörlerin sağı için  
+  // Sayı, parantez ve operatörlerin sol tarafındaki boşlukları kontrol et ve sil
+  str = str.replace(/([\d)])(\s+)(?=[+\-*/^%\d(])/g, "$1");
+
+  // Sayı, parantez ve operatörlerin sağ tarafındaki boşlukları kontrol et ve sil
+  str = str.replace(/(?<=[+\-*/^%\d)])\s*([\d(])/g, "$1");
+  
+  
   // console.log("V2: "+str);
   str = str.replaceAll(/log\s+(?=[+\-*/^%0123456789()\[\]])/g, "log");
   str = str.replaceAll(/\s+log(?=[+\-*/^%0123456789()\[\]])/g, "log");
@@ -1636,10 +1641,16 @@ let match = detectMathExpressions(expression);
 // console.log(match);
 
   if (match) {
-    let isSingleNumber = /^(\d+(\.\d+)?)$/.test(match[0]) || /^[\[(]\d+(\.\d+)?[\])]$/.test(match[0]);
-    if (isSingleNumber) {
-      return false;
+    for(let i = 0; i < match.length; i++) {
+        let X = match[i];
+        let isSingleNumber = /^(\d+(\.\d+)?)$/.test(X) || /^[\[(]\d+(\.\d+)?[\])]$/.test(X);
+        if (isSingleNumber) {
+          match.splice(i, 1);
+            i--; // Dizinin boyutu azaldığı için indeksi azaltıyoruz
+        }
     }
+    if(match.length==0){return false;}
+    
 
     
     try{
