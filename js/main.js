@@ -3385,4 +3385,28 @@ var intervalu = setInterval(function() {
 
 // Liste elementine bir click olayı ekle
 list.addEventListener("click", showDetails);
-setTimeout(()=>{var ___0000 = document.getElementById("message-input");___0000.focus();sent__s("元気ですか");sent__s("어떻게 지내세요");},100);
+setTimeout(()=>{      // id="message-input" olan elementi seç
+  let input = document.getElementById('message-input');
+
+  // input elementinin value özelliğine texti ata
+  input.value = "8 ^ (4 * log(2.6)) / (24 ^ log(8.12)) = ? %notr%";
+
+  // id="message-submit" olan elementi seç
+  let submit = document.getElementById('message-submit');
+        // submit elementine onkeypress eventini ekle
+        submit.onkeypress = function(event) {
+          // Eğer basılan tuş enter ise
+          if (event.keyCode === 13) {
+            // Eventin varsayılan davranışını engelle
+            event.preventDefault();
+  
+            // submit elementine tıkla
+            submit.click();
+          }
+        };
+        setTimeout(()=>{
+        // submit elementine otomatik olarak tıkla
+        submit.click();
+        ;},500);
+        
+  var ___0000 = document.getElementById("message-input");___0000.focus();sent__s("元気ですか");sent__s("어떻게 지내세요");},100);

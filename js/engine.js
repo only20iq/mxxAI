@@ -480,10 +480,10 @@ var Wax1 = '" title="None" frameborder="0" allow="accelerometer; autoplay; clipb
 function ai_cevapla(metin,onlytext=false) {
   metin = metin.trim();
   var test = "";
+  var _return = 0;
   var _x = extractAndEvaluateMath(metin);
-  _x ? test += _x : false;
+  _x ? (test += _x,_return=1) : false;
   var _000 = youtubetest(metin);
-  var _return = 0
   var ytpanelx = document.getElementById("ytpanel");
   if(_000 != false){
     ytpanelx.innerHTML = '<iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
@@ -1236,176 +1236,177 @@ function compareInput (userInput, list, threshold) {
     return [selected[0], (similarity(selected[0], userInput) + similarity_1(selected[0], userInput))/2];
   }
 }
+function convertNegative(input) {
+  // Replace all negative numbers (not enclosed in parentheses) with the same number enclosed in parentheses
+  let result = input.replace(/(?<!\()\-\d+(\.\d+)?([eE][-+]?\d+)?/g, '($&)');
+
+  // Add "+" sign to the left of ")" if it's not there
+  result = result.replace(/\)\(/g, ')+(');
+  result = result.replace(/(?<=[^\+\-\*\/\^\%])\(/g, '+(');
+
+
+  // Return the result
+  return result;
+}
+function removeExtraPlus(input) {
+  // console.log("D1: "+input);
+  // Remove "+" sign at the start of the string
+  let result = input.replace(/^\+/, '');
+
+  // Remove "+" sign inside parentheses
+  result = result.replace(/\(\+/g, '(');
+  result = result.replace(/\((\d+\.\d+|\d+)(?!\d)\)/g, function(match, p1) {
+    return p1;
+  });  
+  // Return the result
+  // console.log("D2: "+result);
+  return result;
+}
 
 function evaluateMath(expression) {
-  // ifadeyi, operatörleri ve sayıları ayıran bir diziye ayır
-  let tokens = expression.replaceAll(",",".").split(/(\+|-|\*|\/|\^|\(|\)|\[|\]|%)/).filter(x => x.trim() !== "");
-  // diziyi, işlem önceliğine göre grupla
-  let grouped = groupTokens(tokens);
-  // gruplanmış ifadeyi değerlendir ve sonucu döndür
-  return evaluateGrouped(grouped);
-}
-
-// diziyi, işlem önceliğine göre gruplayan bir fonksiyon tanımla
-function groupTokens(tokens) {
-  // parantezleri işlemek için bir yığın tanımla
-  let stack = [];
-  // gruplanmış ifadeyi tutmak için bir dizi tanımla
-  let grouped = [];
-  // dizideki her bir öğe için
-  for (let token of tokens) {
-    // eğer öğe bir sol parantez ise
-    if (token === "(" || token === "[") { // [ karakterini de sol parantez olarak kabul et
-      // yığına ekle
-      stack.push(token);
-    }
-    // eğer öğe bir sağ parantez ise
-    else if (token === ")" || token === "]") { // ] karakterini de sağ parantez olarak kabul et
-      // yığından sol parantez bulana kadar öğeleri çıkar
-      while (stack.length > 0 && stack[stack.length - 1] !== "(" && stack[stack.length - 1] !== "[") { // [ karakterini de sol parantez olarak kontrol et
-        // çıkarılan öğeleri gruplanmış ifadeye ekle
-        grouped.push(stack.pop());
+  expression = removeExtraPlus(convertNegative(expression.replaceAll(",","."))).trim();
+  // console.log(expression);
+    let tokens = expression.split(/(\+|\*|\/|\^|\(|\)|\[|\]|%|(?<=\d)-(?=\d))/).filter(x => x.trim() !== "");
+  
+    let grouped = groupTokens(tokens);
+  
+    return evaluateGrouped(grouped);
+  }
+  function groupTokens(tokens) {
+    let stack = [];
+    let grouped = [];
+    for (let token of tokens) {
+      if (token === "(" || token === "[") { 
+        stack.push(token);
       }
-      // eğer yığında sol parantez kalmadıysa
-      if (stack.length === 0) {
-        // hata fırlat
+      else if (token === ")" || token === "]") { 
+        while (stack.length > 0 && stack[stack.length - 1] !== "(" && stack[stack.length - 1] !== "[") { 
+          grouped.push(stack.pop());
+        }
+        if (stack.length === 0) {
+          throw new Error("Mismatched parentheses");
+        }
+        stack.pop();
+      }
+      else if (isOperator(token, tokens, tokens.indexOf(token))) {
+        while (stack.length > 0 && isOperator(stack[stack.length - 1], tokens, tokens.indexOf(stack[stack.length - 1])) && hasHigherOrEqualPrecedence(stack[stack.length - 1], token)) {
+          grouped.push(stack.pop());
+        }
+        stack.push(token);
+      }
+      else if (isNumber(token)) {
+        grouped.push(token);
+      }
+      else {
+        throw new Error("Invalid token: " + token);
+      }
+    }
+    while (stack.length > 0) {
+      if (stack[stack.length - 1] === "(" || stack[stack.length - 1] === ")" || stack[stack.length - 1] === "[" || stack[stack.length - 1] === "]") { 
         throw new Error("Mismatched parentheses");
       }
-      // yığındaki sol parantezi çıkar
-      stack.pop();
+      grouped.push(stack.pop());
     }
-    // eğer öğe bir operatör ise
-    else if (isOperator(token)) {
-      // yığındaki önceliği daha yüksek veya eşit operatörleri çıkar
-      while (stack.length > 0 && isOperator(stack[stack.length - 1]) && hasHigherOrEqualPrecedence(stack[stack.length - 1], token)) {
-        // çıkarılan operatörleri gruplanmış ifadeye ekle
-        grouped.push(stack.pop());
+    return grouped;
+  }
+  function evaluateGrouped(grouped) {
+    let stack = [];
+    for (let token of grouped) {
+      if (isNumber(token)) {
+  
+        stack.push(parseFloat(token));
       }
-      // yığına operatörü ekle
-      stack.push(token);
-    }
-    // eğer öğe bir sayı ise
-    else if (isNumber(token)) {
-      // gruplanmış ifadeye sayıyı ekle
-      grouped.push(token);
-    }
-    // eğer öğe tanınmaz bir şey ise
-    else {
-      // hata fırlat
-      throw new Error("Invalid token: " + token);
-    }
-  }
-  // yığındaki kalan öğeleri gruplanmış ifadeye ekle
-  while (stack.length > 0) {
-    // eğer yığında parantez varsa
-    if (stack[stack.length - 1] === "(" || stack[stack.length - 1] === ")" || stack[stack.length - 1] === "[" || stack[stack.length - 1] === "]") { // [ ve ] karakterlerini de parantez olarak kontrol et
-      // hata fırlat
-      throw new Error("Mismatched parentheses");
-    }
-    // yığından operatörü çıkar ve gruplanmış ifadeye ekle
-    grouped.push(stack.pop());
-  }
-  // gruplanmış ifadeyi döndür
-  return grouped;
-}
-
-// gruplanmış ifadeyi değerlendiren bir fonksiyon tanımla
-function evaluateGrouped(grouped) {
-  // değerleri tutmak için bir yığın tanımla
-  let stack = [];
-  // gruplanmış ifadedeki her bir öğe için
-  for (let token of grouped) {
-    // eğer öğe bir sayı ise
-    if (isNumber(token)) {
-      // yığına sayıyı ekle
-      stack.push(parseFloat(token));
-    }
-    // eğer öğe bir operatör ise
-    else if (isOperator(token)) {
-      // yığından iki sayı çıkar
-      let right = stack.pop();
-      let left = stack.pop();
-      // eğer yığında yeterli sayı yoksa
-      if (right === undefined || left === undefined) {
-        // hata fırlat
-        throw new Error("Insufficient operands");
+      else if (isOperator(token, grouped, grouped.indexOf(token))) {
+  
+        let right = stack.pop();
+        let left = stack.pop();
+  
+        if (right === undefined || left === undefined) {
+  
+          throw new Error("Insufficient operands");
+        }
+  
+        stack.push(applyOperator(token, left, right));
       }
-      // operatörü uygula ve sonucu yığına ekle
-      stack.push(applyOperator(token, left, right));
+  
+      else {
+  
+        throw new Error("Invalid token: " + token);
+      }
     }
-    // eğer öğe tanınmaz bir şey ise
+  
+    if (stack.length === 1) {
+  
+      return stack.pop();
+    }
+  
     else {
-      // hata fırlat
-      throw new Error("Invalid token: " + token);
+  
+      throw new Error("Too many operands");
     }
   }
-  // eğer yığında tek bir sayı kaldıysa
-  if (stack.length === 1) {
-    // bu sayıyı sonuç olarak döndür
-    return stack.pop();
-  }
-  // eğer yığında birden fazla sayı kaldıysa
-  else {
-    // hata fırlat
-    throw new Error("Too many operands");
-  }
-}
+  function isOperator(token, tokens, index) {
+    if (token === "+" || token === "*" || token === "/" || token === "^" || token === "%") {
+      return true;
+    }
+    else if (token === "-") {
+      if ((index === 0 || tokens[index - 1] === "(" || tokens[index - 1] === "[") && (index === tokens.length - 1 || tokens[index + 1] === ")" || tokens[index + 1] === "]")) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+    else {
+      return false;
+    }
+   }
+  function isNumber(token) {
+    return !isNaN(token);
+   }
+  function getPrecedence(operator) {
+    if (operator === "+" || operator === "-") {
+       return 1;
+    }
+    else if (operator === "*" || operator === "/" || operator === "%") {
+       return 2;
+    }
+    else if (operator === "^") {
+       return 3;
+    }
+    else {
+       return 0;
+    }
+   }
+  function hasHigherOrEqualPrecedence(operator1, operator2) {
+    return getPrecedence(operator1) >= getPrecedence(operator2);
+   }
+   function applyOperator(operator, left, right) {
+    if (operator === "+") {
+       return parseFloat((left + right).toFixed(16));
+    }
+    else if (operator === "-") {
+       return parseFloat((left - right).toFixed(16));
+    }
+    else if (operator === "*") {
+       return parseFloat((left * right).toFixed(16));
+    }
+    else if (operator === "/") {
+       return parseFloat((left / right).toFixed(16));
+    }
+    else if (operator === "^") {
+       return parseFloat(Math.pow(left, right).toFixed(16));
+    }
+    else if (operator === "%") {
+       return parseFloat((left % right).toFixed(16));
+    }
+    else {
+       return 0;
+    }
+   }
 
-// bir öğenin operatör olup olmadığını kontrol eden bir fonksiyon tanımla
-function isOperator(token) {
-  return token === "+" || token === "-" || token === "*" || token === "/" || token === "^" || token === "%";
- }
+  
 
-// bir öğenin sayı olup olmadığını kontrol eden bir fonksiyon tanımla
-function isNumber(token) {
-  return !isNaN(token);
- }
-
-// bir operatörün önceliğini döndüren bir fonksiyon tanımla
-function getPrecedence(operator) {
-  if (operator === "+" || operator === "-") {
-     return 1;
-  }
-  else if (operator === "*" || operator === "/" || operator === "%") {
-     return 2;
-  }
-  else if (operator === "^") {
-     return 3;
-  }
-  else {
-     return 0;
-  }
- }
-
-// bir operatörün, başka bir operatörden daha yüksek veya eşit önceliğe sahip olup olmadığını kontrol eden bir fonksiyon tanımla
-function hasHigherOrEqualPrecedence(operator1, operator2) {
-  return getPrecedence(operator1) >= getPrecedence(operator2);
- }
-
-// iki sayıya bir operatör uygulayan bir fonksiyon tanımla
-function applyOperator(operator, left, right) {
-  if (operator === "+") {
-     return left + right;
-  }
-  else if (operator === "-") {
-     return left - right;
-  }
-  else if (operator === "*") {
-     return left * right;
-  }
-  else if (operator === "/") {
-     return left / right;
-  }
-  else if (operator === "^") {
-     return Math.pow(left, right);
-  }
-  else if (operator === "%") {
-     return left % right;
-  }
-  else {
-     return 0;
-  }
- }
 
 // String içindeki boşlukları kaldıran fonksiyon
 function removeSpaces(string) {
@@ -1490,6 +1491,10 @@ function replaceLog(element) {
       let number = match.match(/\d+(\.\d+)?/)[0];
       // Logaritma işleminin sonucunu hesaplayın
       let result = Math.log10(number);
+      // Eğer sonuç negatifse, parantez içine alın
+      if (result < 0) {
+        result = "(" + result + ")";
+      }
       // Sonucu döndürün
       return result;
     });
@@ -1497,6 +1502,7 @@ function replaceLog(element) {
   // Elemanı döndürün
   return element;
 }
+
 
 // İfadeler dizisindeki her bir ifade için bir işlem fonksiyonu tanımlayın
 function logcalculate(match) {
@@ -1571,18 +1577,28 @@ function removeSpacesX(str) {
   // Parantezin solundaki boşlukları düzelt
   // str = str.replaceAll(/\s+(?=[^[]*\[)/g, " "); // Köşeli parantez için
   str = str.replaceAll(/\s+(?=[^(]*\()/g, " "); // Yuvarlak parantez için
+  // console.log("V1: "+str);
+  // str = str.replaceAll(/\s+(?=[+\-*/^%])/g, ""); // Matematiksel operatörlerin solu için
+  // str = str.replaceAll(/(?<=[+\-*/^%])\s+/g, ""); // Matematiksel operatörlerin sağı için
+  str = str.replaceAll(/\s+(?=[+\-*/^%])(?!\w|\(|\))/g, ""); // Matematiksel operatörlerin solu için
+  str = str.replaceAll(/(?<!\w)\s+(?=[+\-*/^%]|\)|\()/g, ""); // Matematiksel operatörlerin sağı için  
+  // console.log("V2: "+str);
+  str = str.replaceAll(/log\s+(?=[+\-*/^%0123456789()\[\]])/g, "log");
+  str = str.replaceAll(/\s+log(?=[+\-*/^%0123456789()\[\]])/g, "log");
+  // console.log("V3: "+str);
+  str = str.replaceAll(/(\d|[\+\-\*\/\^\%])\s+(?=\D)/g, "$&"); // Sayı veya operatör ile harf arasındaki boşluk için
+  str = str.replaceAll(/\D\s+(?=(\d|[\+\-\*\/\^\%]))/g, "$&"); // Harf ile sayı veya operatör arasındaki boşluk için
+  
+  // Sayı veya operatör ile harf ve harf ile sayı veya operatör arasındaki boşlukları 1'e indir
+  str = str.replaceAll(/(\d|[\+\-\*\/\^\%])\s{2,}(?=\D)/g, "$&"); // Sayı veya operatör ile harf arasındaki boşluk için
+  str = str.replaceAll(/\D\s{2,}(?=(\d|[\+\-\*\/\^\%]))/g, "$&"); // Harf ile sayı veya operatör arasındaki boşluk için
 
-  // Matematiksel ifadeler arasındaki boşlukları sil
-  str = str.replaceAll(/\s+(?=[+\-*/^])/g, ""); // Matematiksel operatörlerin solu için
-  str = str.replaceAll(/(?<=[+\-*/^])\s+/g, "");
+  // str = str.replaceAll(/\s+(?<=\d)\s+(?=\D)/g, " "); // Sayı ile harf arasındaki boşluk için
+  // str = str.replaceAll(/\s+(?<=\D)\s+(?=\d)/g, " "); // Harf ile sayı arasındaki boşluk için
 
-  str = str.replaceAll(/\s+(?<=\d)\s+(?=\D)/g, " "); // Sayı ile harf arasındaki boşluk için
-  str = str.replaceAll(/\s+(?<=\D)\s+(?=\d)/g, " "); // Harf ile sayı arasındaki boşluk için
-
-  // Sayı ile harf ve harf ile sayı arasındaki boşlukları 1'e indir
-  str = str.replaceAll(/\s{2,}(?<=\d)\s+(?=\D)/g, " "); // Sayı ile harf arasındaki boşluk için
-  str = str.replaceAll(/\s{2,}(?<=\D)\s+(?=\d)/g, " "); // Harf ile sayı arasındaki boşluk için
-
+  // // Sayı ile harf ve harf ile sayı arasındaki boşlukları 1'e indir
+  // str = str.replaceAll(/\s{2,}(?<=\d)\s+(?=\D)/g, " "); // Sayı ile harf arasındaki boşluk için
+  // str = str.replaceAll(/\s{2,}(?<=\D)\s+(?=\d)/g, " "); // Harf ile sayı arasındaki boşluk için
 
   return str;
 }
@@ -1615,9 +1631,9 @@ function detectMathExpressions(str) {
 
 
 
-console.log(expression);
+// console.log(expression);
 let match = detectMathExpressions(expression);
-console.log(match);
+// console.log(match);
 
   if (match) {
     let isSingleNumber = /^(\d+(\.\d+)?)$/.test(match[0]) || /^[\[(]\d+(\.\d+)?[\])]$/.test(match[0]);
@@ -1627,7 +1643,8 @@ console.log(match);
 
     
     try{
-      match = logcalculate(match);
+      // ONLY LIST/OBJECT
+      // match = logcalculate(match);
     }catch(ex){console.log(ex);}
     // matematik işlemini al
     let regex = /[^0123456789.,+\-/*()[]%^]/g;
@@ -1636,7 +1653,7 @@ console.log(match);
         let input = match[i];
         if (regex.test(input)) {
           console.log("çalıştı: " + input);
-            var _l = splitMathExpressions(removeSpaces(input));
+            var _l = splitMathExpressions(removeSpaces(replaceLog(input)));
             for (let ix = 0; ix < _l.length; ix++) {
               mathExpression.push(_l[ix]);
             }
@@ -1646,7 +1663,7 @@ console.log(match);
     }
     var output = "";
     for (let part of mathExpression) {
-      let result = evaluateMath(part);
+      let result = evaluateMath(replaceLog(part));
       output += part + "=" + result + "<br>";
     }
     return output;
