@@ -1576,7 +1576,7 @@ function removeSpacesX(str) {
 
   // Parantezin solundaki boşlukları düzelt
   // str = str.replaceAll(/\s+(?=[^[]*\[)/g, " "); // Köşeli parantez için
-  str = str.replaceAll(/\s+(?=[^(]*\()/g, " "); // Yuvarlak parantez için
+  str = str.replaceAll(/\s+(?=[^(]*\()/g, ""); // Yuvarlak parantez için
   // console.log("V1: "+str);
   // str = str.replaceAll(/\s+(?=[+\-*/^%])/g, ""); // Matematiksel operatörlerin solu için
   // str = str.replaceAll(/(?<=[+\-*/^%])\s+/g, ""); // Matematiksel operatörlerin sağı için
