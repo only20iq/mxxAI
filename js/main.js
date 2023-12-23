@@ -647,7 +647,7 @@ function wsrealtimeOther(url,xnew=true){
     url = "wss://" + url;
     }
   }else {
-    if(xnew==false){
+    if(xnew==true){
       window.wsmode_realtime_other=0;
       var baglantiother = document.getElementById("baglantiother");
       baglantiother.textContent = "Kapalı";
@@ -655,6 +655,10 @@ function wsrealtimeOther(url,xnew=true){
       var ___d_cac1 = document.getElementById("ws3");
       var url = ___d_cac1.value;
       delete ___d_cac1;
+      if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
+          window.otherusers_realtime_ws.close();
+      }
+      return;
     }
   }
   if(xnew==true){
@@ -696,10 +700,10 @@ baglantiother.style.color = "green";
 window.otherusers_realtime_ws.onclose = function() {
 if(window.wsmode_realtime_other==1 || window.wsmode_websocket==0){
   var baglantiother = document.getElementById("baglantiother");
-if(!["Bağlantı kesildi","Hata"].includes(baglantiother.textContent)){
+if(!["Kapalı","Hata"].includes(baglantiother.textContent)){
 sent__s("Lobiden ayrıldın");
-baglantiother.textContent = "Bağlantı kesildi";
-baglantiother.style.color = "red";
+baglantiother.textContent = "Kapalı";
+baglantiother.style.color = "#c43f22";
 }
 setTimeout (()=>{
 if(window.wsmode_realtime_other==1){
@@ -719,7 +723,7 @@ window.otherusers_realtime_ws.onerror = function() {
   if(window.wsmode_realtime_other==1){
 if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
 
-if(!["Bağlantı kesildi","Hata"].includes(baglantiother.textContent)){
+if(!["Kapalı","Hata"].includes(baglantiother.textContent)){
 sent__s("Lobiye bağlantı sorunu");
 baglantiother.textContent = "Hata";
 baglantiother.style.color = "yellow";
