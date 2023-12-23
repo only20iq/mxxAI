@@ -822,7 +822,7 @@ function detectMathExpressions(str) {
       expressions.push(part);
     }
   }
-  console.log("İŞLEM: " + expressions);
+  // console.log("İŞLEM: " + expressions);
 
   // Matematiksel ifadeleri içeren diziyi döndürelim
   return expressions;
