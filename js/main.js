@@ -3274,7 +3274,7 @@ setTimeout(()=>{      // id="message-input" olan elementi seç
   let input = document.getElementById('message-input');
 
   // input elementinin value özelliğine texti ata
-  input.value = "8^(4*log(222.6%2^4))/(2^log(8.12/3))+log(24/(38/12^2%4)) = ? %notr%";
+  input.value = "8.4e+10^(4*log(222.6%2^4))+log(log(12e+30)+24/(38/12^2%4)) = ? %notr%";
 
   // id="message-submit" olan elementi seç
   let submit = document.getElementById('message-submit');
