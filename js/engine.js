@@ -1,61 +1,7 @@
-function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
-  let currentIndex = array.length, randomIndex; // Mevcut indeks ve rastgele indeks değişkenlerini tanımlayın
-  // Karıştırılacak eleman kalmayana kadar
-  while (currentIndex != 0) {
-    // Bir eleman seçin
-    randomIndex = Math.floor (Math.random () * currentIndex);
-    currentIndex--;
-    // Seçilen elemanı mevcut elemanla değiştirin
-    [array [currentIndex], array [randomIndex]] = [
-      array [randomIndex], array [currentIndex]];
-  }
-  return array; // Diziyi döndürün
-}
-function uint8ArrayToString(uint8Array) {
-  return new TextDecoder().decode(uint8Array);
-}
-function StringTouint8Array(str) {
-  return new TextEncoder().encode(str);
-}
-function base64_encode(array) {
-  var base64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-  var result = '';
-  var i, j, triplet;
-
-  for (i = 0; i < array.length; i += 3) {
-    triplet = (array[i] << 16) | (array[i + 1] << 8) | array[i + 2];
-    for (j = 0; j < 4; j += 1) {
-      if (i * 8 + j * 6 <= array.length * 8) {
-        result += base64.charAt((triplet >> 18 - j * 6) & 0x3F);
-      }
-    }
-  }
-  return result;
-}
-function base64_decode(str) {
-  let buffer = [];
-  let bits = 0;
-  let value = 0;
-  let index = 0;
-  for (let i = 0; i < str.length; i++) {
-    const charCode = str.charCodeAt(i);
-    let digit = charCode > 64 && charCode < 91 ? charCode - 65
-      : charCode > 96 && charCode < 123 ? charCode - 71
-      : charCode > 47 && charCode < 58 ? charCode + 4
-      : charCode === 43 ? 62
-      : charCode === 47 ? 63
-      : -1;
-    if (digit !== -1) {
-      value = (value << 6) | digit;
-      bits += 6;
-      if (bits >= 8) {
-        buffer[index++] = (value >> (bits - 8)) & 255;
-        bits -= 8;
-      }
-    }
-  }
-  return new Uint8Array(buffer);
-}
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                          Thematic Language Processing                          ||
+// ! ||                     Like, About, Love, Dislike, Nationality                    ||
+// ! ||--------------------------------------------------------------------------------||
 function quad_core([dataset, text, name],database_0,sub_item_name,sub_item_keyx) {
   let cevap = "";
   let metin = text.split(" "); // Metni boşluklara göre bölün
@@ -155,7 +101,6 @@ function quad_core([dataset, text, name],database_0,sub_item_name,sub_item_keyx)
   }
   return [cevap,database_0];
 }
-// 112234
 function quad_thread(text) {
   var cevap = "";
   text = text.trim();
@@ -292,6 +237,123 @@ function quad_thread(text) {
     return cevap.trim();
   }
 }
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                     Language Processing by Word Simulation                     ||
+// ! ||                    Levenshtein, Normalized Cosine Similarity                   ||
+// ! ||--------------------------------------------------------------------------------||
+function levenshtein(text1, text2) {
+  // Metinlerin uzunluklarını alın
+  const len1 = text1.length;
+  const len2 = text2.length;
+
+  // Metinlerden biri boşsa, mesafe diğerinin uzunluğudur
+  if (len1 === 0) return len2;
+  if (len2 === 0) return len1;
+
+  // Mesafeleri tutmak için bir matris oluşturun
+  let matrix = [];
+
+  // Matrisin ilk satırını ve sütununu doldurun
+  for (let i = 0; i <= len1; i++) {
+    matrix[i] = [i];
+  }
+  for (let j = 0; j <= len2; j++) {
+    matrix[0][j] = j;
+  }
+
+  // Matrisin geri kalanını doldurun
+  for (let i = 1; i <= len1; i++) {
+    for (let j = 1; j <= len2; j++) {
+      // Metinlerin i ve j indisli harflerini karşılaştırın
+      if (text1[i - 1] === text2[j - 1]) {
+        // Eğer aynıysa, mesafe değişmez
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        // Eğer farklıysa, mesafe bir artar
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // Değiştirme
+          matrix[i][j - 1] + 1, // Ekleme
+          matrix[i - 1][j] + 1 // Silme
+        );
+      }
+    }
+  }
+
+  // Matrisin sağ alt köşesindeki değer mesafedir
+  return matrix[len1][len2];
+}
+
+// Metinler arasındaki benzeme oranını hesaplayan bir fonksiyon
+function similarity(text1, text2) {
+  // Metinlerin uzunluklarını alın
+  const len1 = text1.length;
+  const len2 = text2.length;
+
+  // Metinlerden biri boşsa, benzeme oranı 0'dır
+  if (len1 === 0 || len2 === 0) return 0;
+
+  // Metinler arasındaki Levenshtein mesafesini bulun
+  const distance = levenshtein(text1.toLowerCase(), text2.toLowerCase());
+
+  // Benzeme oranını hesaplayın
+  return 1 - distance / Math.max(len1, len2);
+}
+
+function similarity_1 (text1, text2) {
+  // Metinleri harflerine ayırın ve küçük harfe dönüştürün
+  const letters1 = text1.toLowerCase().split ("");
+  const letters2 = text2.toLowerCase().split ("");
+ 
+  // Metinler arasındaki benzeme oranını hesaplayın
+  const matches = letters1.filter (letter => letters2.includes (letter)).length;
+  const differences = letters1.length + letters2.length - 2 * matches;
+ 
+  // Benzeme oranını hesaplayın
+  return matches / (matches + differences);
+ }
+ function selectSentences (list, input, threshold) {
+  // Seçilen cümleleri tutacak bir dizi tanımlayın
+  const selected = [];
+ 
+  // List içindeki her cümle için döngü başlatın
+  for (let sentence of list) {
+     // Cümle ile kullanıcının girdiği cümle arasındaki benzeme oranlarını hesaplayın
+     const ratio1 = similarity (sentence, input); // Levenshtein mesafesi ile
+     const ratio2 = similarity_1 (sentence, input); // Harf kesişimi ile
+
+     // Benzeme oranlarının ortalamasını alın
+     const average = (ratio1 + ratio2) / 2;
+
+     // Ortalama eşik değerinden büyük veya eşitse, cümleyi seçin
+     if (average >= threshold) {
+       selected.push (sentence);
+     }
+  }
+ 
+  // Seçilen cümleleri döndürün
+  return selected;
+ }
+// Kullanıcının girdiği değeri list içindeki cümlelerle karşılaştıran bir fonksiyon tanımlayın
+function compareInput (userInput, list, threshold) {
+  // selectSentences fonksiyonunu kullanarak, benzeme oranı eşik değerinden büyük veya eşit olan cümleleri seçin
+  const selected = selectSentences (list, userInput, threshold);
+  // Seçilen cümlelerin sayısını kontrol edin
+  if (selected.length === 0) {
+    // Eğer hiç cümle seçilmediyse, bir hata mesajı döndürün
+    return "";
+  } else if (selected.length === 1) {
+    // Eğer sadece bir cümle seçildiyse, o cümleyi ve benzeme oranlarını döndürün
+    return [selected[0], (similarity(selected[0], userInput) + similarity_1(selected[0], userInput))/2];
+  } else {
+    // Eğer birden fazla cümle seçildiyse, benzeme oranlarının ortalamalarına göre sıralayın
+    selected.sort((a, b) => ((similarity(b, userInput) + similarity_1(b, userInput)) / 2) - ((similarity(a, userInput) + similarity_1(a, userInput)) / 2));
+    // En yüksek ortalama benzeme oranına sahip olan cümleyi ve benzeme oranlarını döndürün
+    return [selected[0], (similarity(selected[0], userInput) + similarity_1(selected[0], userInput))/2];
+  }
+}
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                        Precision Q&A Language Processing                       ||
+// ! ||--------------------------------------------------------------------------------||
 function multi_thread(text) {
   var database_0=[];
   let cevap = "";
@@ -356,6 +418,9 @@ function multi_thread(text) {
     return cevap.trim();
   }
 }
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                      Simple Tokenized Language Processing                      ||
+// ! ||--------------------------------------------------------------------------------||
 function single_thread(text) {
   text = text.trim().replace(/\s/g, "");
   if (text in data["single"]) {
@@ -370,6 +435,544 @@ function single_thread(text) {
       cevap = single_thread(response.slice(1)); // Değerin başındaki "$" işaretini atlayarak aynı fonksiyonu çağırır
     } else { // Değer bir dizi değilse, doğrudan kullanır
       cevap = response + " ";
+    }
+    return cevap.trim();
+  } else {
+    return null;
+  }
+}
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                                   Math Engine                                  ||
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                           [+-*/^%], (), log([+-*/^%])                          ||
+// ! ||--------------------------------------------------------------------------------||
+// ! ||          (2^log((24^8)/8.6)*(1%1+(12-0.001*0.2))) = 13235.544601814112         ||
+// ! ||--------------------------------------------------------------------------------||
+
+function convertNegative(input) {
+  // Replace all negative numbers (not enclosed in parentheses) with the same number enclosed in parentheses
+  let result = input.replace(/(?<!\()\-\d+(\.\d+)?([eE][-+]?\d+)?/g, '($&)');
+
+  // Add "+" sign to the left of ")" if it's not there
+  result = result.replace(/\)\(/g, ')+(');
+  result = result.replace(/(?<=[^\+\-\*\/\^\%])\(/g, '+(');
+
+
+  // Return the result
+  return result;
+}
+function removeExtraPlus(input) {
+  // console.log("D1: "+input);
+  // Remove "+" sign at the start of the string
+  let result = input.replace(/^\+/, '');
+
+  // Remove "+" sign inside parentheses
+  result = result.replace(/\(\+/g, '(');
+  result = result.replace(/\((\d+\.\d+|\d+)(?!\d)\)/g, function(match, p1) {
+    return p1;
+  });  
+  // Return the result
+  // console.log("D2: "+result);
+  return result;
+}
+
+
+function evaluateMath(expression) {
+  expression = removeExtraPlus(convertNegative(expression.replaceAll(",","."))).trim();
+  // console.log(expression);
+    let tokens = expression.split(/(\+|\*|\/|\^|\(|\)|\[|\]|%|(?<=\d)-(?=\d))/).filter(x => x.trim() !== "");
+  
+    let grouped = groupTokens(tokens);
+  
+    return evaluateGrouped(grouped);
+  }
+  function groupTokens(tokens) {
+    let stack = [];
+    let grouped = [];
+    for (let token of tokens) {
+      if (token === "(" || token === "[") { 
+        stack.push(token);
+      }
+      else if (token === ")" || token === "]") { 
+        while (stack.length > 0 && stack[stack.length - 1] !== "(" && stack[stack.length - 1] !== "[") { 
+          grouped.push(stack.pop());
+        }
+        if (stack.length === 0) {
+          throw new Error("Mismatched parentheses");
+        }
+        stack.pop();
+      }
+      else if (isOperator(token, tokens, tokens.indexOf(token))) {
+        while (stack.length > 0 && isOperator(stack[stack.length - 1], tokens, tokens.indexOf(stack[stack.length - 1])) && hasHigherOrEqualPrecedence(stack[stack.length - 1], token)) {
+          grouped.push(stack.pop());
+        }
+        stack.push(token);
+      }
+      else if (isNumber(token)) {
+        grouped.push(token);
+      }
+      else {
+        throw new Error("Invalid token: " + token);
+      }
+    }
+    while (stack.length > 0) {
+      if (stack[stack.length - 1] === "(" || stack[stack.length - 1] === ")" || stack[stack.length - 1] === "[" || stack[stack.length - 1] === "]") { 
+        throw new Error("Mismatched parentheses");
+      }
+      grouped.push(stack.pop());
+    }
+    return grouped;
+  }
+  function evaluateGrouped(grouped) {
+    let stack = [];
+    for (let token of grouped) {
+      if (isNumber(token)) {
+  
+        stack.push(parseFloat(token));
+      }
+      else if (isOperator(token, grouped, grouped.indexOf(token))) {
+  
+        let right = stack.pop();
+        let left = stack.pop();
+  
+        if (right === undefined || left === undefined) {
+  
+          throw new Error("Insufficient operands");
+        }
+  
+        stack.push(applyOperator(token, left, right));
+      }
+  
+      else {
+  
+        throw new Error("Invalid token: " + token);
+      }
+    }
+  
+    if (stack.length === 1) {
+  
+      return stack.pop();
+    }
+  
+    else {
+  
+      throw new Error("Too many operands");
+    }
+  }
+  function isOperator(token, tokens, index) {
+    if (token === "+" || token === "*" || token === "/" || token === "^" || token === "%") {
+      return true;
+    }
+    else if (token === "-") {
+      if ((index === 0 || tokens[index - 1] === "(" || tokens[index - 1] === "[") && (index === tokens.length - 1 || tokens[index + 1] === ")" || tokens[index + 1] === "]")) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+    else {
+      return false;
+    }
+   }
+  function isNumber(token) {
+    return !isNaN(token);
+   }
+  function getPrecedence(operator) {
+    if (operator === "+" || operator === "-") {
+       return 1;
+    }
+    else if (operator === "*" || operator === "/" || operator === "%") {
+       return 2;
+    }
+    else if (operator === "^") {
+       return 3;
+    }
+    else {
+       return 0;
+    }
+   }
+  function hasHigherOrEqualPrecedence(operator1, operator2) {
+    return getPrecedence(operator1) >= getPrecedence(operator2);
+   }
+   function applyOperator(operator, left, right) {
+    if (operator === "+") {
+       return parseFloat((left + right).toFixed(16));
+    }
+    else if (operator === "-") {
+       return parseFloat((left - right).toFixed(16));
+    }
+    else if (operator === "*") {
+       return parseFloat((left * right).toFixed(16));
+    }
+    else if (operator === "/") {
+       return parseFloat((left / right).toFixed(16));
+    }
+    else if (operator === "^") {
+       return parseFloat(Math.pow(left, right).toFixed(16));
+    }
+    else if (operator === "%") {
+       return parseFloat((left % right).toFixed(16));
+    }
+    else {
+       return 0;
+    }
+   }
+
+// String içindeki matematik ifadelerini ayıran fonksiyon
+function splitMathExpressions(string) {
+  // Matematik ifadelerini tutacak bir dizi oluştur
+  let expressions = [];
+  // Stringi işlem önceliklerine göre böl
+  let parts = string.split("");
+  // Her parçayı döngüyle kontrol et
+  var cache_list = "";
+  for (let part of parts) {
+    // Eğer parça boş değilse ve bir matematik ifadesi ise, diziye ekle
+    if (isMathExpression(part)) {
+      cache_list += part;
+    }else {
+      if(part !== "" && cache_list.length !== 0){
+        expressions.push(cache_list);
+        cache_list = "";
+      }
+    }
+  }
+  expressions.push(cache_list);
+  // Diziyi döndür
+  return expressions;
+}
+
+// Bir stringin matematik ifadesi olup olmadığını kontrol eden fonksiyon
+function isMathExpression(string) {
+  // Matematik ifadesinin bir parçası olabilecek karakterleri tanımla
+  let validChars = "0123456789.,+-/*()[]%^";
+  // Stringin her karakterini döngüyle kontrol et
+  for (let char of string) {
+    // Eğer karakter geçerli karakterlerden biri değilse, false döndür
+    if (!validChars.includes(char)) {
+      return false;
+    }
+  }
+  // Eğer stringin tüm karakterleri geçerli ise, true döndür
+  return true;
+}
+
+// Eğer eleman logaritma işlemi içeriyorsa true döndüren bir fonksiyon tanımlayın
+function isLog(element) {
+  // Eğer eleman logaritma işlemi içeriyorsa
+  if (/log\(\d+(\.\d+)?\)/.test(element)) {
+    // true döndür
+    return true;
+  }
+  // Aksi halde, false döndür
+  return false;
+}
+
+
+// İfadeyi sayılar ve işaretler olarak ayıran bir fonksiyon tanımlayın
+function splitMathExpressions_log(expression) {
+  // İfade içindeki işaretleri bulun
+  let signs = expression.match(/[\+\-\*\/\^%]/g);
+
+  // İfade içindeki sayıları bulun
+  let numbers = expression.split(/[\+\-\*\/\^%]/g);
+
+  // Sayılar ve işaretler dizilerini döndürün
+  return [numbers, signs];
+}
+
+function replaceLog(expression) {
+  // Düzgün iç içe geçmiş parantezleri ele alacak düzenli ifade
+  const regex = /log\(((?:[^()]|\([^()]*\))*)\)/g;
+
+  return expression.replace(regex, function (match, group1) {
+    let result = evaluateMath(group1);
+    let logResult = Math.log10(Math.abs(result));
+    if (result < 0) {
+      logResult = -logResult;
+    }
+    return logResult.toString();
+  });
+}
+
+// İfadeler dizisindeki her bir ifade için bir işlem fonksiyonu tanımlayın
+function logcalculate(match) {
+  // match değişkenini bir diziye dönüştürün
+  match = Array.from(match);
+
+  // match değişkeninin her bir elemanı için replaceLog fonksiyonunu çağırın
+  match = match.map(replaceLog);
+
+  // match değişkenini döndürün
+  return match;
+}
+// (3+(3+3+([1+1+log(5)+log(3)-1%6+2-1/1%1]))
+
+// matematik işlemini ayıklayan ve değerlendiren bir fonksiyon tanımla
+function extractAndEvaluateMath(expression) {
+  // matematik işlemini tanımlayan bir regular expression tanımla
+  // bu regular expression, sayılar, operatörler ve parantezler içeren basit bir matematik işlemini yakalar
+  // let regex = /(\d+(\.\d+)?\s*[\+\-\*\/\^]\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^]\s*\d+(\.\d+)?|\s*\))*(\s|$)/;
+  // let regex = /(\s|\()*(\d+(\.\d+)?\s*[\+\-\*\/\^%]?\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^%]?\s*\d+(\.\d+)?|\s*\))*(\s|\))*$/;
+  // let regex = /(.|\s|\()*(\d+(\.\d+)?\s*[\+\-\*\/\^%]?\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^%]?\s*\d+(\.\d+)?|\s*\))*(\s|\))*$/;
+// Regex'i basitleştirin
+
+// İçindeki stringleri ayıklayan ama her şeyi matematik işlemi olarak kabul eden
+// let regex = /(.|\s|\()*(\d+(\.\d+)?\s*[\+\-\*\/\^%]?\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^%]?\s*\d+(\.\d+)?|\s*\))*(\s|\))*$/;
+// İçindeki stringleri ayıklamayan ama her şeyi matematik işlemi kabul etmeyen
+// let regex = /^\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*([\+\-\*\/\^%]\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*)*$/;
+// Hem stringleri ayıklayabilen hem de her şeyi matematik işlemi olarak algılamayan regex
+
+
+// Başarılı olan bu
+// let regex = /(\d+(?!\.)\.\d+|\d+|\(.*\))\s*([\+\-\*\/\^%]\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*)*/;
+
+// let regex = /(\d+(?!\.)\.\d+|\d+|\(.*\))\s*([\+\-\*\/\^%]\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*)*(?=\s*([^0-9\+\-\*\/\^%\(\)\s]+|[^0-9\+\-\*\/\^%\(\)\s][^0-9\+\-\*\/\^%\(\)]*)\s*|$)/g;
+
+
+
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*)+/g;
+  
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\])\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\])\s*)+/g;
+
+
+// En başarılı olanı
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
+
+// Best V1
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
+
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]|\g<0>)*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]|\g<0>)*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)*/g;
+
+//BEST x4
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\)|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[[^\[\]]*\]|\[(?:[^\[\]]*|\[[^\[\]]*\])*\])*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\)|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[[^\[\]]*\]|\[(?:[^\[\]]*|\[[^\[\]]*\])*\])*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
+
+
+// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
+// regex değişkenini, işlemleri gruplamak için parantez ekleyerek değiştirin
+// let regex = /((\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+)/g;
+try{
+
+// [ ve ] işaretlerini ( ve ) işaretine dönüştür
+expression = expression.toLowerCase().replace(/\[/g, '(').replace(/\]/g, ')').replace(/,/g, '.').replaceAll(/\?/g, "").replaceAll(/\=/g, "");
+
+
+
+function removeSpacesX(str) {
+  // Parantez içindeki boşlukları sil
+  // str = str.replaceAll(/\s+(?=[^[]*\])/g, ""); // Köşeli parantez için
+  // str = str.replaceAll(/\s+(?=[^(]*\))/g, ""); // Yuvarlak parantez için
+
+  // Parantezin solundaki boşlukları düzelt
+  // str = str.replaceAll(/\s+(?=[^[]*\[)/g, " "); // Köşeli parantez için
+  // str = str.replaceAll(/\s+(?=[^(]*\()/g, ""); // Yuvarlak parantez için
+  // console.log("V1: "+str);
+  // str = str.replaceAll(/\s+(?=[+\-*/^%])/g, ""); // Matematiksel operatörlerin solu için
+  // str = str.replaceAll(/(?<=[+\-*/^%])\s+/g, ""); // Matematiksel operatörlerin sağı için
+  // Sayı, parantez ve operatörlerin sol tarafındaki boşlukları kontrol et ve sil
+  str = str.replace(/([\d)])(\s+)(?=[+\-*/^%\d(])/g, "$1");
+
+  // Sayı, parantez ve operatörlerin sağ tarafındaki boşlukları kontrol et ve sil
+  str = str.replace(/(?<=[+\-*/^%\d)])\s*([\d(])/g, "$1");
+  
+  
+  // console.log("V2: "+str);
+  str = str.replaceAll(/log\s+(?=[+\-*/^%0123456789()\[\]])/g, "log");
+  str = str.replaceAll(/\s+log(?=[+\-*/^%0123456789()\[\]])/g, "log");
+  // console.log("V3: "+str);
+  str = str.replaceAll(/(\d|[\+\-\*\/\^\%])\s+(?=\D)/g, "$&"); // Sayı veya operatör ile harf arasındaki boşluk için
+  str = str.replaceAll(/\D\s+(?=(\d|[\+\-\*\/\^\%]))/g, "$&"); // Harf ile sayı veya operatör arasındaki boşluk için
+  
+  // Sayı veya operatör ile harf ve harf ile sayı veya operatör arasındaki boşlukları 1'e indir
+  str = str.replaceAll(/(\d|[\+\-\*\/\^\%])\s{2,}(?=\D)/g, "$&"); // Sayı veya operatör ile harf arasındaki boşluk için
+  str = str.replaceAll(/\D\s{2,}(?=(\d|[\+\-\*\/\^\%]))/g, "$&"); // Harf ile sayı veya operatör arasındaki boşluk için
+
+  // str = str.replaceAll(/\s+(?<=\d)\s+(?=\D)/g, " "); // Sayı ile harf arasındaki boşluk için
+  // str = str.replaceAll(/\s+(?<=\D)\s+(?=\d)/g, " "); // Harf ile sayı arasındaki boşluk için
+
+  // // Sayı ile harf ve harf ile sayı arasındaki boşlukları 1'e indir
+  // str = str.replaceAll(/\s{2,}(?<=\d)\s+(?=\D)/g, " "); // Sayı ile harf arasındaki boşluk için
+  // str = str.replaceAll(/\s{2,}(?<=\D)\s+(?=\d)/g, " "); // Harf ile sayı arasındaki boşluk için
+
+  return str;
+}
+
+
+expression = removeSpacesX(expression);
+// let paren = "\\((?:[^()]*|\\(\\s*\\d+([.]\\d+)?\\)*)*\\)";
+// let log = "\\s*log\\((?:[^()]*|\\(\\s*\\d+([.]\\d+)?\\)*)\\)\\s*([\\+\\-\\*\\/\\^%]\\s*\\d+([.]\\d+)?\\s*)*";
+// let other = "\\s*\\d+([.]\\d+)?\\s*([\\+\\-\\*\\/\\^%]\\s*\\d+([.]\\d+)?\\s*)*";
+// let regex = new RegExp(`(${log}|${other}|${paren})\\s*([\\+\\-\\*\\/\\^%]\\s*(${log}|${other}|${paren})\\s*)*`, "g");
+
+function detectMathExpressions(str) {
+  // İfadeler arasında boşluklar ve metinler olduğu için, metni boşluklara göre bölelim
+  let parts = str.split(' ');
+
+  // Matematiksel ifadeleri tutacak bir dizi oluşturalım
+  let expressions = [];
+
+  // Her bir parçayı kontrol edelim
+  for (let part of parts) {
+    // Eğer parça bir sayı veya matematiksel işlem içeriyorsa ve bu işlem bir sayı ile başlamıyorsa, diziye ekleyelim
+    // if (/^(?=.*(?<!log\()log\()|^(?=.*\d+[+\-*/^%.0-9,()]*$)/.test(part) && !/^\d/.test(part)) {
+    //   expressions.push(part);
+    // }
+    if (/^(?=.*(?<!log)\b\d+\b)(?=.*[+\-*/^%.0-9,()a-zA-Z])/.test(part)) {
+      expressions.push(part);
+    }
+  }
+  console.log("İŞLEM: " + expressions);
+
+  // Matematiksel ifadeleri içeren diziyi döndürelim
+  return expressions;
+}
+
+
+
+// console.log(expression);
+let match = detectMathExpressions(expression);
+// console.log(match);
+
+  if (match) {
+    for(let i = 0; i < match.length; i++) {
+        let X = match[i];
+        let isSingleNumber = /^(\d+(\.\d+)?)$/.test(X) || /^[\[(]\d+(\.\d+)?[\])]$/.test(X);
+        if (isSingleNumber) {
+          match.splice(i, 1);
+            i--; // Dizinin boyutu azaldığı için indeksi azaltıyoruz
+        }
+    }
+    if(match.length==0){return false;}
+    
+
+    
+    try{
+      // ONLY LIST/OBJECT
+      // match = logcalculate(match);
+    }catch(ex){console.log(ex);}
+    // matematik işlemini al
+    let regex = /[^0123456789.,+\-/*()[]%^]/g;
+    var mathExpression=[];
+    for (let i = 0; i < match.length; i++) {
+        let input = match[i];
+        if (regex.test(input)) {
+          console.log("çalıştı: " + input);
+            var _l = splitMathExpressions(removeSpaces(replaceLog(input)));
+            for (let ix = 0; ix < _l.length; ix++) {
+              mathExpression.push(_l[ix]);
+            }
+        } else {
+            mathExpression.push(input)
+        }
+    }
+    var output = "";
+    for (let part of mathExpression) {
+      let result = evaluateMath(replaceLog(part));
+      output += part + "=" + result + "<br>";
+    }
+    return output;
+  }
+  // eğer bir matematik işlemi bulunmazsa
+  else {
+    // hata mesajı döndür
+    return false;
+  }
+}catch(ex){console.log(ex);}
+}
+
+
+// String içindeki boşlukları kaldıran fonksiyon
+function removeSpaces(string) {
+  // Boşluk karakterini tanımlayan regular expression
+  let regex = /\s/g;
+  // Stringdeki boşluk karakterlerini boş string ile değiştir
+  let newString = string.replace(regex, "");
+  // Yeni stringi döndür
+  return newString;
+}
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                                 Other Functions                                ||
+// ! ||--------------------------------------------------------------------------------||
+
+function shuffle (array) { // Karıştırma fonksiyonunu tanımlayın
+  let currentIndex = array.length, randomIndex; // Mevcut indeks ve rastgele indeks değişkenlerini tanımlayın
+  // Karıştırılacak eleman kalmayana kadar
+  while (currentIndex != 0) {
+    // Bir eleman seçin
+    randomIndex = Math.floor (Math.random () * currentIndex);
+    currentIndex--;
+    // Seçilen elemanı mevcut elemanla değiştirin
+    [array [currentIndex], array [randomIndex]] = [
+      array [randomIndex], array [currentIndex]];
+  }
+  return array; // Diziyi döndürün
+}
+function uint8ArrayToString(uint8Array) {
+  return new TextDecoder().decode(uint8Array);
+}
+function StringTouint8Array(str) {
+  return new TextEncoder().encode(str);
+}
+function base64_encode(array) {
+  var base64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  var result = '';
+  var i, j, triplet;
+
+  for (i = 0; i < array.length; i += 3) {
+    triplet = (array[i] << 16) | (array[i + 1] << 8) | array[i + 2];
+    for (j = 0; j < 4; j += 1) {
+      if (i * 8 + j * 6 <= array.length * 8) {
+        result += base64.charAt((triplet >> 18 - j * 6) & 0x3F);
+      }
+    }
+  }
+  return result;
+}
+function base64_decode(str) {
+  let buffer = [];
+  let bits = 0;
+  let value = 0;
+  let index = 0;
+  for (let i = 0; i < str.length; i++) {
+    const charCode = str.charCodeAt(i);
+    let digit = charCode > 64 && charCode < 91 ? charCode - 65
+      : charCode > 96 && charCode < 123 ? charCode - 71
+      : charCode > 47 && charCode < 58 ? charCode + 4
+      : charCode === 43 ? 62
+      : charCode === 47 ? 63
+      : -1;
+    if (digit !== -1) {
+      value = (value << 6) | digit;
+      bits += 6;
+      if (bits >= 8) {
+        buffer[index++] = (value >> (bits - 8)) & 255;
+        bits -= 8;
+      }
+    }
+  }
+  return new Uint8Array(buffer);
+}
+function linkA(item) {
+  return `<a href="${item.split(",")[1]}" style="color:#f60000;">${item.split(",")[0]}</a>`;
+}
+function listToLinks(list) {
+  return list.map(linkA).join("<br>");
+}
+function link_thread(text) {
+  text = text.trim().replace(/\s/g, "");
+  if (text in data["link"]) {
+    let response = data["link"][text];
+    if (Array.isArray(response)) { // Değerin bir dizi olup olmadığını kontrol eder
+      if (response.length == 1) {
+        cevap = linkA(response[0]) + " ";
+      } else {
+        cevap = listToLinks(response) + " ";
+      }
+    } else if (typeof response == "string" && response.startsWith("$")) { // Değerin bir dize olup başında "$" işareti olup olmadığını kontrol eder
+      cevap = link_thread(response.slice(1)); // Değerin başındaki "$" işaretini atlayarak aynı fonksiyonu çağırır
+    } else { // Değer bir dizi değilse, doğrudan kullanır
+      cevap = linkA(response) + " ";
     }
     return cevap.trim();
   } else {
@@ -486,7 +1089,36 @@ function ai_cevapla(metin,onlytext=false) {
   var _000 = youtubetest(metin);
   var ytpanelx = document.getElementById("ytpanel");
   if(_000 != false){
+    ytpanelx.style.textAlign = "center";
+    ytpanelx.style.setProperty('position', 'fixed');
+    ytpanelx.style.setProperty('margin', '0 auto');
+    ytpanelx.style.setProperty('max-width', '600px');
+    ytpanelx.style.setProperty('width', '100%');
+    ytpanelx.style.setProperty('height', 'auto');
+    ytpanelx.style.setProperty('z-index', '1');
+    ytpanelx.style.setProperty('min-height', '280px');
+    ytpanelx.style.setProperty('max-height', '360px');
+    ytpanelx.style.setProperty('bottom', '0');
+    ytpanelx.style.setProperty('left', '0');
+    ytpanelx.style.setProperty('right', '0');
+    ytpanelx.style.bottom = 0;    
     ytpanelx.innerHTML = '<iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    let bg1 = document.getElementById("ytpanel").firstChild;
+    bg1.style.setProperty('min-height', '280px');
+    bg1.style.setProperty('max-height', '360px');
+    bg1.style.setProperty('max-width', '600px');
+    bg1.style.setProperty('width', '100%');
+    bg1.style.setProperty('height', '100%');
+    bg1.style.setProperty('z-index', '1');
+    bg1.style.setProperty('bottom', '0');
+    bg1.style.setProperty('left', '0');
+    bg1.style.setProperty('right', '0');
+    bg1.style.bottom = 0;
+    bg1.style.borderRadius = "none";
+    bg1.style.borderTopRightRadius = "25px";
+    bg1.style.borderTopLeftRadius = "25px";
+    bg1.style.backgroundColor = "transparent";
+    ytpanelx.style.backgroundColor = "transparent";
     _return = 1;
     return "sil";
   }
@@ -561,6 +1193,9 @@ function ai_cevapla(metin,onlytext=false) {
         ytpanelx.style.borderTopLeftRadius = "25px";
         ytpanelx.style.borderTopRightRadius = "25px";
         ytpanelx.innerHTML = "<Youtube Embed Panel>";
+        let bg1 = document.getElementById("ytpanel").firstChild;
+        ytpanelx.style.backgroundColor = "transparent";
+        bg1.style.backgroundColor = "transparent";
         return "sil";
       }
       if (['bg','background','arkaplan'].includes(args[0].toLowerCase().slice(1))) {
@@ -582,6 +1217,8 @@ function ai_cevapla(metin,onlytext=false) {
           bg1.style.setProperty('z-index', '-1');
           bg1.style.objectFit = "cover";
           bg1.style.borderRadius = "0";
+          bg.style.backgroundColor = "black";
+          bg1.style.backgroundColor = "black";
         }catch(ex){console.log(ex);}
         return "sil";
       }
@@ -725,9 +1362,13 @@ function ai_cevapla(metin,onlytext=false) {
     if(onlytext==false){kill();}
     return "sil";
   }
+  var test_link = link_thread(metin);
   var test1 = single_thread(metin);
   var test2 = multi_thread(metin);
   var test3 = quad_thread(metin);
+  if(test_link!=null && test_link!=""){
+    test+=test_link+"<br>";
+  }
   if(test1!=null && test1!=""){
     test+=test1+"<br>";
   }
@@ -735,7 +1376,7 @@ function ai_cevapla(metin,onlytext=false) {
     test+=test2+"<br>";
   }
   if(test3!=null && test3!=""){
-    test+=test3;
+    test+=test3+"<br>";
   }
 //   let r = rand_r(); // rand_r() fonksiyonunun çıktısını r değişkenine atıyoruz
 // result_0_data.contains(r) ? (array[i] = r + " ", result_0_data.remove(r)) : printf("Hata: rand_r() fonksiyonunun ciktisi result_0_data listinin icinde degil.\n");
@@ -1037,99 +1678,6 @@ function markdown_to_html_link(markdown) {
     }
     return replace_with_xxx(html); // HTML dizesini döndürür
 }
-// Levenshtein mesafesini hesaplayan bir fonksiyon
-function levenshtein(text1, text2) {
-  // Metinlerin uzunluklarını alın
-  const len1 = text1.length;
-  const len2 = text2.length;
-
-  // Metinlerden biri boşsa, mesafe diğerinin uzunluğudur
-  if (len1 === 0) return len2;
-  if (len2 === 0) return len1;
-
-  // Mesafeleri tutmak için bir matris oluşturun
-  let matrix = [];
-
-  // Matrisin ilk satırını ve sütununu doldurun
-  for (let i = 0; i <= len1; i++) {
-    matrix[i] = [i];
-  }
-  for (let j = 0; j <= len2; j++) {
-    matrix[0][j] = j;
-  }
-
-  // Matrisin geri kalanını doldurun
-  for (let i = 1; i <= len1; i++) {
-    for (let j = 1; j <= len2; j++) {
-      // Metinlerin i ve j indisli harflerini karşılaştırın
-      if (text1[i - 1] === text2[j - 1]) {
-        // Eğer aynıysa, mesafe değişmez
-        matrix[i][j] = matrix[i - 1][j - 1];
-      } else {
-        // Eğer farklıysa, mesafe bir artar
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1, // Değiştirme
-          matrix[i][j - 1] + 1, // Ekleme
-          matrix[i - 1][j] + 1 // Silme
-        );
-      }
-    }
-  }
-
-  // Matrisin sağ alt köşesindeki değer mesafedir
-  return matrix[len1][len2];
-}
-
-// Metinler arasındaki benzeme oranını hesaplayan bir fonksiyon
-function similarity(text1, text2) {
-  // Metinlerin uzunluklarını alın
-  const len1 = text1.length;
-  const len2 = text2.length;
-
-  // Metinlerden biri boşsa, benzeme oranı 0'dır
-  if (len1 === 0 || len2 === 0) return 0;
-
-  // Metinler arasındaki Levenshtein mesafesini bulun
-  const distance = levenshtein(text1.toLowerCase(), text2.toLowerCase());
-
-  // Benzeme oranını hesaplayın
-  return 1 - distance / Math.max(len1, len2);
-}
-
-function similarity_1 (text1, text2) {
-  // Metinleri harflerine ayırın ve küçük harfe dönüştürün
-  const letters1 = text1.toLowerCase().split ("");
-  const letters2 = text2.toLowerCase().split ("");
- 
-  // Metinler arasındaki benzeme oranını hesaplayın
-  const matches = letters1.filter (letter => letters2.includes (letter)).length;
-  const differences = letters1.length + letters2.length - 2 * matches;
- 
-  // Benzeme oranını hesaplayın
-  return matches / (matches + differences);
- }
- function selectSentences (list, input, threshold) {
-  // Seçilen cümleleri tutacak bir dizi tanımlayın
-  const selected = [];
- 
-  // List içindeki her cümle için döngü başlatın
-  for (let sentence of list) {
-     // Cümle ile kullanıcının girdiği cümle arasındaki benzeme oranlarını hesaplayın
-     const ratio1 = similarity (sentence, input); // Levenshtein mesafesi ile
-     const ratio2 = similarity_1 (sentence, input); // Harf kesişimi ile
-
-     // Benzeme oranlarının ortalamasını alın
-     const average = (ratio1 + ratio2) / 2;
-
-     // Ortalama eşik değerinden büyük veya eşitse, cümleyi seçin
-     if (average >= threshold) {
-       selected.push (sentence);
-     }
-  }
- 
-  // Seçilen cümleleri döndürün
-  return selected;
- }
 
 // Data nın içindeki tüm değerleri alan bir fonksiyon tanımlıyoruz
 function getAllValues(data) {
@@ -1217,476 +1765,6 @@ function getAllValues(data) {
 }
 
 var result_0_data = getAllValues(data);
-
-// Kullanıcının girdiği değeri list içindeki cümlelerle karşılaştıran bir fonksiyon tanımlayın
-function compareInput (userInput, list, threshold) {
-  // selectSentences fonksiyonunu kullanarak, benzeme oranı eşik değerinden büyük veya eşit olan cümleleri seçin
-  const selected = selectSentences (list, userInput, threshold);
-  // Seçilen cümlelerin sayısını kontrol edin
-  if (selected.length === 0) {
-    // Eğer hiç cümle seçilmediyse, bir hata mesajı döndürün
-    return "Maalesef, girdiğiniz değer ile eşleşen bir cümle bulamadım.";
-  } else if (selected.length === 1) {
-    // Eğer sadece bir cümle seçildiyse, o cümleyi ve benzeme oranlarını döndürün
-    return [selected[0], (similarity(selected[0], userInput) + similarity_1(selected[0], userInput))/2];
-  } else {
-    // Eğer birden fazla cümle seçildiyse, benzeme oranlarının ortalamalarına göre sıralayın
-    selected.sort((a, b) => ((similarity(b, userInput) + similarity_1(b, userInput)) / 2) - ((similarity(a, userInput) + similarity_1(a, userInput)) / 2));
-    // En yüksek ortalama benzeme oranına sahip olan cümleyi ve benzeme oranlarını döndürün
-    return [selected[0], (similarity(selected[0], userInput) + similarity_1(selected[0], userInput))/2];
-  }
-}
-function convertNegative(input) {
-  // Replace all negative numbers (not enclosed in parentheses) with the same number enclosed in parentheses
-  let result = input.replace(/(?<!\()\-\d+(\.\d+)?([eE][-+]?\d+)?/g, '($&)');
-
-  // Add "+" sign to the left of ")" if it's not there
-  result = result.replace(/\)\(/g, ')+(');
-  result = result.replace(/(?<=[^\+\-\*\/\^\%])\(/g, '+(');
-
-
-  // Return the result
-  return result;
-}
-function removeExtraPlus(input) {
-  // console.log("D1: "+input);
-  // Remove "+" sign at the start of the string
-  let result = input.replace(/^\+/, '');
-
-  // Remove "+" sign inside parentheses
-  result = result.replace(/\(\+/g, '(');
-  result = result.replace(/\((\d+\.\d+|\d+)(?!\d)\)/g, function(match, p1) {
-    return p1;
-  });  
-  // Return the result
-  // console.log("D2: "+result);
-  return result;
-}
-
-function evaluateMath(expression) {
-  expression = removeExtraPlus(convertNegative(expression.replaceAll(",","."))).trim();
-  // console.log(expression);
-    let tokens = expression.split(/(\+|\*|\/|\^|\(|\)|\[|\]|%|(?<=\d)-(?=\d))/).filter(x => x.trim() !== "");
-  
-    let grouped = groupTokens(tokens);
-  
-    return evaluateGrouped(grouped);
-  }
-  function groupTokens(tokens) {
-    let stack = [];
-    let grouped = [];
-    for (let token of tokens) {
-      if (token === "(" || token === "[") { 
-        stack.push(token);
-      }
-      else if (token === ")" || token === "]") { 
-        while (stack.length > 0 && stack[stack.length - 1] !== "(" && stack[stack.length - 1] !== "[") { 
-          grouped.push(stack.pop());
-        }
-        if (stack.length === 0) {
-          throw new Error("Mismatched parentheses");
-        }
-        stack.pop();
-      }
-      else if (isOperator(token, tokens, tokens.indexOf(token))) {
-        while (stack.length > 0 && isOperator(stack[stack.length - 1], tokens, tokens.indexOf(stack[stack.length - 1])) && hasHigherOrEqualPrecedence(stack[stack.length - 1], token)) {
-          grouped.push(stack.pop());
-        }
-        stack.push(token);
-      }
-      else if (isNumber(token)) {
-        grouped.push(token);
-      }
-      else {
-        throw new Error("Invalid token: " + token);
-      }
-    }
-    while (stack.length > 0) {
-      if (stack[stack.length - 1] === "(" || stack[stack.length - 1] === ")" || stack[stack.length - 1] === "[" || stack[stack.length - 1] === "]") { 
-        throw new Error("Mismatched parentheses");
-      }
-      grouped.push(stack.pop());
-    }
-    return grouped;
-  }
-  function evaluateGrouped(grouped) {
-    let stack = [];
-    for (let token of grouped) {
-      if (isNumber(token)) {
-  
-        stack.push(parseFloat(token));
-      }
-      else if (isOperator(token, grouped, grouped.indexOf(token))) {
-  
-        let right = stack.pop();
-        let left = stack.pop();
-  
-        if (right === undefined || left === undefined) {
-  
-          throw new Error("Insufficient operands");
-        }
-  
-        stack.push(applyOperator(token, left, right));
-      }
-  
-      else {
-  
-        throw new Error("Invalid token: " + token);
-      }
-    }
-  
-    if (stack.length === 1) {
-  
-      return stack.pop();
-    }
-  
-    else {
-  
-      throw new Error("Too many operands");
-    }
-  }
-  function isOperator(token, tokens, index) {
-    if (token === "+" || token === "*" || token === "/" || token === "^" || token === "%") {
-      return true;
-    }
-    else if (token === "-") {
-      if ((index === 0 || tokens[index - 1] === "(" || tokens[index - 1] === "[") && (index === tokens.length - 1 || tokens[index + 1] === ")" || tokens[index + 1] === "]")) {
-        return false;
-      }
-      else {
-        return true;
-      }
-    }
-    else {
-      return false;
-    }
-   }
-  function isNumber(token) {
-    return !isNaN(token);
-   }
-  function getPrecedence(operator) {
-    if (operator === "+" || operator === "-") {
-       return 1;
-    }
-    else if (operator === "*" || operator === "/" || operator === "%") {
-       return 2;
-    }
-    else if (operator === "^") {
-       return 3;
-    }
-    else {
-       return 0;
-    }
-   }
-  function hasHigherOrEqualPrecedence(operator1, operator2) {
-    return getPrecedence(operator1) >= getPrecedence(operator2);
-   }
-   function applyOperator(operator, left, right) {
-    if (operator === "+") {
-       return parseFloat((left + right).toFixed(16));
-    }
-    else if (operator === "-") {
-       return parseFloat((left - right).toFixed(16));
-    }
-    else if (operator === "*") {
-       return parseFloat((left * right).toFixed(16));
-    }
-    else if (operator === "/") {
-       return parseFloat((left / right).toFixed(16));
-    }
-    else if (operator === "^") {
-       return parseFloat(Math.pow(left, right).toFixed(16));
-    }
-    else if (operator === "%") {
-       return parseFloat((left % right).toFixed(16));
-    }
-    else {
-       return 0;
-    }
-   }
-
-  
-
-
-// String içindeki boşlukları kaldıran fonksiyon
-function removeSpaces(string) {
-  // Boşluk karakterini tanımlayan regular expression
-  let regex = /\s/g;
-  // Stringdeki boşluk karakterlerini boş string ile değiştir
-  let newString = string.replace(regex, "");
-  // Yeni stringi döndür
-  return newString;
-}
-
-// String içindeki matematik ifadelerini ayıran fonksiyon
-function splitMathExpressions(string) {
-  // Matematik ifadelerini tutacak bir dizi oluştur
-  let expressions = [];
-  // Stringi işlem önceliklerine göre böl
-  let parts = string.split("");
-  // Her parçayı döngüyle kontrol et
-  var cache_list = "";
-  for (let part of parts) {
-    // Eğer parça boş değilse ve bir matematik ifadesi ise, diziye ekle
-    if (isMathExpression(part)) {
-      cache_list += part;
-    }else {
-      if(part !== "" && cache_list.length !== 0){
-        expressions.push(cache_list);
-        cache_list = "";
-      }
-    }
-  }
-  expressions.push(cache_list);
-  // Diziyi döndür
-  return expressions;
-}
-
-// Bir stringin matematik ifadesi olup olmadığını kontrol eden fonksiyon
-function isMathExpression(string) {
-  // Matematik ifadesinin bir parçası olabilecek karakterleri tanımla
-  let validChars = "0123456789.,+-/*()[]%^";
-  // Stringin her karakterini döngüyle kontrol et
-  for (let char of string) {
-    // Eğer karakter geçerli karakterlerden biri değilse, false döndür
-    if (!validChars.includes(char)) {
-      return false;
-    }
-  }
-  // Eğer stringin tüm karakterleri geçerli ise, true döndür
-  return true;
-}
-
-// Eğer eleman logaritma işlemi içeriyorsa true döndüren bir fonksiyon tanımlayın
-function isLog(element) {
-  // Eğer eleman logaritma işlemi içeriyorsa
-  if (/log\(\d+(\.\d+)?\)/.test(element)) {
-    // true döndür
-    return true;
-  }
-  // Aksi halde, false döndür
-  return false;
-}
-
-
-// İfadeyi sayılar ve işaretler olarak ayıran bir fonksiyon tanımlayın
-function splitMathExpressions_log(expression) {
-  // İfade içindeki işaretleri bulun
-  let signs = expression.match(/[\+\-\*\/\^%]/g);
-
-  // İfade içindeki sayıları bulun
-  let numbers = expression.split(/[\+\-\*\/\^%]/g);
-
-  // Sayılar ve işaretler dizilerini döndürün
-  return [numbers, signs];
-}
-
-// match değişkeninin her bir elemanını, replace metodunu kullanarak logaritma işlemlerini sonucuyla değiştirmek için bir fonksiyon tanımlayın
-function replaceLog(element) {
-  // Eğer eleman logaritma işlemi içeriyorsa
-  if (isLog(element)) {
-    // Elemanı, logaritma işlemini sonucuyla değiştiren bir fonksiyonla replace edin
-    element = element.replace(/log\(\d+(\.\d+)?\)/g, function(match) {
-      // Logaritma işlemindeki sayıyı bulun
-      let number = match.match(/\d+(\.\d+)?/)[0];
-      // Logaritma işleminin sonucunu hesaplayın
-      let result = Math.log10(number);
-      // Eğer sonuç negatifse, parantez içine alın
-      if (result < 0) {
-        result = "(" + result + ")";
-      }
-      // Sonucu döndürün
-      return result;
-    });
-  }
-  // Elemanı döndürün
-  return element;
-}
-
-
-// İfadeler dizisindeki her bir ifade için bir işlem fonksiyonu tanımlayın
-function logcalculate(match) {
-  // match değişkenini bir diziye dönüştürün
-  match = Array.from(match);
-
-  // match değişkeninin her bir elemanı için replaceLog fonksiyonunu çağırın
-  match = match.map(replaceLog);
-
-  // match değişkenini döndürün
-  return match;
-}
-
-
-// (3+(3+3+([1+1+log(5)+log(3)-1%6+2-1/1%1]))
-
-// matematik işlemini ayıklayan ve değerlendiren bir fonksiyon tanımla
-function extractAndEvaluateMath(expression) {
-  // matematik işlemini tanımlayan bir regular expression tanımla
-  // bu regular expression, sayılar, operatörler ve parantezler içeren basit bir matematik işlemini yakalar
-  // let regex = /(\d+(\.\d+)?\s*[\+\-\*\/\^]\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^]\s*\d+(\.\d+)?|\s*\))*(\s|$)/;
-  // let regex = /(\s|\()*(\d+(\.\d+)?\s*[\+\-\*\/\^%]?\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^%]?\s*\d+(\.\d+)?|\s*\))*(\s|\))*$/;
-  // let regex = /(.|\s|\()*(\d+(\.\d+)?\s*[\+\-\*\/\^%]?\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^%]?\s*\d+(\.\d+)?|\s*\))*(\s|\))*$/;
-// Regex'i basitleştirin
-
-// İçindeki stringleri ayıklayan ama her şeyi matematik işlemi olarak kabul eden
-// let regex = /(.|\s|\()*(\d+(\.\d+)?\s*[\+\-\*\/\^%]?\s*|\(\s*)+(\d+(\.\d+)?)\s*(\s*[\+\-\*\/\^%]?\s*\d+(\.\d+)?|\s*\))*(\s|\))*$/;
-// İçindeki stringleri ayıklamayan ama her şeyi matematik işlemi kabul etmeyen
-// let regex = /^\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*([\+\-\*\/\^%]\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*)*$/;
-// Hem stringleri ayıklayabilen hem de her şeyi matematik işlemi olarak algılamayan regex
-
-
-// Başarılı olan bu
-// let regex = /(\d+(?!\.)\.\d+|\d+|\(.*\))\s*([\+\-\*\/\^%]\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*)*/;
-
-// let regex = /(\d+(?!\.)\.\d+|\d+|\(.*\))\s*([\+\-\*\/\^%]\s*(\d+(?!\.)\.\d+|\d+|\(.*\))\s*)*(?=\s*([^0-9\+\-\*\/\^%\(\)\s]+|[^0-9\+\-\*\/\^%\(\)\s][^0-9\+\-\*\/\^%\(\)]*)\s*|$)/g;
-
-
-
-// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\))\s*)+/g;
-  
-// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\])\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\])\s*)+/g;
-
-
-// En başarılı olanı
-// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[(?:[^\[\]]*|\[[^\[\]]*\]\])*])\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
-
-// Best V1
-// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
-
-// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]|\g<0>)*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]|\g<0>)*\)|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)*/g;
-
-//BEST x4
-// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\)|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[[^\[\]]*\]|\[(?:[^\[\]]*|\[[^\[\]]*\])*\])*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\)|\((?:[^()]*|\([^()]*\))*\))*\)|\[(?:[^\[\]]*|\[[^\[\]]*\]|\[(?:[^\[\]]*|\[[^\[\]]*\])*\])*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
-
-
-// let regex = /(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+/g;
-// regex değişkenini, işlemleri gruplamak için parantez ekleyerek değiştirin
-// let regex = /((\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*([\+\-\*\/\^%]\s*(\b\d+([.,]\d+)?|\((?:[^()]*|\([^()]*\))*\)|\[(?:[^\[\]]*|\[\[[^\[\]]*\]\])*\]|\[[^\[\]]*\]|[a-z]+\d+\+\d+[a-z]+)\s*)+)/g;
-try{
-
-// [ ve ] işaretlerini ( ve ) işaretine dönüştür
-expression = expression.replace(/\[/g, '(').replace(/\]/g, ')').replace(/,/g, '.').replaceAll(/\?/g, "").replaceAll(/\=/g, "");
-
-
-
-function removeSpacesX(str) {
-  // Parantez içindeki boşlukları sil
-  // str = str.replaceAll(/\s+(?=[^[]*\])/g, ""); // Köşeli parantez için
-  // str = str.replaceAll(/\s+(?=[^(]*\))/g, ""); // Yuvarlak parantez için
-
-  // Parantezin solundaki boşlukları düzelt
-  // str = str.replaceAll(/\s+(?=[^[]*\[)/g, " "); // Köşeli parantez için
-  // str = str.replaceAll(/\s+(?=[^(]*\()/g, ""); // Yuvarlak parantez için
-  // console.log("V1: "+str);
-  // str = str.replaceAll(/\s+(?=[+\-*/^%])/g, ""); // Matematiksel operatörlerin solu için
-  // str = str.replaceAll(/(?<=[+\-*/^%])\s+/g, ""); // Matematiksel operatörlerin sağı için
-  // Sayı, parantez ve operatörlerin sol tarafındaki boşlukları kontrol et ve sil
-  str = str.replace(/([\d)])(\s+)(?=[+\-*/^%\d(])/g, "$1");
-
-  // Sayı, parantez ve operatörlerin sağ tarafındaki boşlukları kontrol et ve sil
-  str = str.replace(/(?<=[+\-*/^%\d)])\s*([\d(])/g, "$1");
-  
-  
-  // console.log("V2: "+str);
-  str = str.replaceAll(/log\s+(?=[+\-*/^%0123456789()\[\]])/g, "log");
-  str = str.replaceAll(/\s+log(?=[+\-*/^%0123456789()\[\]])/g, "log");
-  // console.log("V3: "+str);
-  str = str.replaceAll(/(\d|[\+\-\*\/\^\%])\s+(?=\D)/g, "$&"); // Sayı veya operatör ile harf arasındaki boşluk için
-  str = str.replaceAll(/\D\s+(?=(\d|[\+\-\*\/\^\%]))/g, "$&"); // Harf ile sayı veya operatör arasındaki boşluk için
-  
-  // Sayı veya operatör ile harf ve harf ile sayı veya operatör arasındaki boşlukları 1'e indir
-  str = str.replaceAll(/(\d|[\+\-\*\/\^\%])\s{2,}(?=\D)/g, "$&"); // Sayı veya operatör ile harf arasındaki boşluk için
-  str = str.replaceAll(/\D\s{2,}(?=(\d|[\+\-\*\/\^\%]))/g, "$&"); // Harf ile sayı veya operatör arasındaki boşluk için
-
-  // str = str.replaceAll(/\s+(?<=\d)\s+(?=\D)/g, " "); // Sayı ile harf arasındaki boşluk için
-  // str = str.replaceAll(/\s+(?<=\D)\s+(?=\d)/g, " "); // Harf ile sayı arasındaki boşluk için
-
-  // // Sayı ile harf ve harf ile sayı arasındaki boşlukları 1'e indir
-  // str = str.replaceAll(/\s{2,}(?<=\d)\s+(?=\D)/g, " "); // Sayı ile harf arasındaki boşluk için
-  // str = str.replaceAll(/\s{2,}(?<=\D)\s+(?=\d)/g, " "); // Harf ile sayı arasındaki boşluk için
-
-  return str;
-}
-
-
-expression = removeSpacesX(expression);
-// let paren = "\\((?:[^()]*|\\(\\s*\\d+([.]\\d+)?\\)*)*\\)";
-// let log = "\\s*log\\((?:[^()]*|\\(\\s*\\d+([.]\\d+)?\\)*)\\)\\s*([\\+\\-\\*\\/\\^%]\\s*\\d+([.]\\d+)?\\s*)*";
-// let other = "\\s*\\d+([.]\\d+)?\\s*([\\+\\-\\*\\/\\^%]\\s*\\d+([.]\\d+)?\\s*)*";
-// let regex = new RegExp(`(${log}|${other}|${paren})\\s*([\\+\\-\\*\\/\\^%]\\s*(${log}|${other}|${paren})\\s*)*`, "g");
-
-function detectMathExpressions(str) {
-  // İfadeler arasında boşluklar ve metinler olduğu için, metni boşluklara göre bölelim
-  let parts = str.split(' ');
-
-  // Matematiksel ifadeleri tutacak bir dizi oluşturalım
-  let expressions = [];
-
-  // Her bir parçayı kontrol edelim
-  for(let part of parts) {
-      // Eğer parça bir sayı veya matematiksel işlem içeriyorsa, diziye ekleyelim
-      if(/^[+\-*/^%.0-9,log()]+$/.test(part)) {
-          expressions.push(part);
-      }
-  }
-
-  // Matematiksel ifadeleri içeren diziyi döndürelim
-  return expressions;
-}
-
-
-
-// console.log(expression);
-let match = detectMathExpressions(expression);
-// console.log(match);
-
-  if (match) {
-    for(let i = 0; i < match.length; i++) {
-        let X = match[i];
-        let isSingleNumber = /^(\d+(\.\d+)?)$/.test(X) || /^[\[(]\d+(\.\d+)?[\])]$/.test(X);
-        if (isSingleNumber) {
-          match.splice(i, 1);
-            i--; // Dizinin boyutu azaldığı için indeksi azaltıyoruz
-        }
-    }
-    if(match.length==0){return false;}
-    
-
-    
-    try{
-      // ONLY LIST/OBJECT
-      // match = logcalculate(match);
-    }catch(ex){console.log(ex);}
-    // matematik işlemini al
-    let regex = /[^0123456789.,+\-/*()[]%^]/g;
-    var mathExpression=[];
-    for (let i = 0; i < match.length; i++) {
-        let input = match[i];
-        if (regex.test(input)) {
-          console.log("çalıştı: " + input);
-            var _l = splitMathExpressions(removeSpaces(replaceLog(input)));
-            for (let ix = 0; ix < _l.length; ix++) {
-              mathExpression.push(_l[ix]);
-            }
-        } else {
-            mathExpression.push(input)
-        }
-    }
-    var output = "";
-    for (let part of mathExpression) {
-      let result = evaluateMath(replaceLog(part));
-      output += part + "=" + result + "<br>";
-    }
-    return output;
-  }
-  // eğer bir matematik işlemi bulunmazsa
-  else {
-    alert("algılamadı");
-    // hata mesajı döndür
-    return false;
-  }
-}catch(ex){console.log(ex);}
-}
 
 // Eklenecek veriyi dizi olarak eklemek için fonksiyon
 function addData(data, decryptedObj) {
@@ -1906,6 +1984,8 @@ function youtubeatag(data){
     bg1.style.borderRadius = "none";
     bg1.style.borderTopRightRadius = "25px";
     bg1.style.borderTopLeftRadius = "25px";
+    bg1.style.backgroundColor = "transparent";
+    ytpanelx.style.backgroundColor = "transparent";
     _return = 1;
     return "sil";
   }

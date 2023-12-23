@@ -256,10 +256,6 @@ var data_raw = {
         "napıyorsun":"$şarkısöyle",
         "şarkıönersene":"$kpop",
         "şarkıöner":"$kpop",
-        "yt":"İşte Youtube linkleri [YouTube](https://www.youtube.com/) [YouTube Music](https://music.youtube.com/)",
-        "youtube":"$yt",
-        "ytmusic":"$yt",
-        "youtubemusic":"$yt",
         "resim":"Nasıl olmuş resim?{resim1}",
         "gaymisin":"Gay değilim hocam sevmem lgbt gibi şeyleri batıcılık yayıyor gibi görünüyor",
         "kafayıyicem":["Kafayı yememek elde değil valla bu hayatta","Cidden kafayı yememek elde değil ya"],
@@ -455,7 +451,7 @@ var data_raw = {
         },
         "dataset3":{
         "n":"newjeans/nwjeans/newjans/newjens/nevjeans",
-        "sevme":["Aşırı seviyorum onlar gibi çalışkan olmak istiyorum "],
+        "sevme":["Aşırı seviyorum onlar gibi çalışkan olmak istiyorum."],
         "nasıl":"$sevme",
         "love":"Müziklerinin kalitesi muhteşem {bos_yap_nj}{bos_yap_nj}{bos_yap_nj}",
         "kötü":["Bi koreliler kadar çalışkan olamadık ya :( ","Bi koreli kadar çalışkan olamadım ya offf ","Bir koreliler kadar çalışkan olamadık :( ya off off "]
@@ -1174,6 +1170,30 @@ var data_raw = {
             "$tw$F_zCU3NXgAAhLNt?format=jpg&name=large",
             "$tw$F_IEZjMbwAAooTH?format=jpg&name=large"
         ]
+    },
+    'link':{
+        "youtube":["Youtube,https://www.youtube.com/","Youtube Music,https://music.youtube.com/"],
+        "yt":"$youtube",
+        "bard":"Google Bard,https://bard.google.com/",
+        "googlebard":"$bard",
+        "blackbox":"BlackboxAI,https://www.blackbox.ai/",
+        "blackboxai":"$blackbox",
+        "keep":"Google Keep,https://keep.google.com/",
+        "googlekeep":"$keep",
+        "googleimages":"Google Images,https://images.google.com/",
+        "googleimage":"$googleimages",
+        "jsfiddle":"JSFiddle,https://jsfiddle.net/",
+        "jsfidle":"$jsfiddle",
+        "tw":"Twitter(X),https://twitter.com/",
+        "twitter":"$tw",
+        "x":"$tw",
+        "yandexdisk":"Yandex Disk,https://disk.yandex.com.tr/client/disk",
+        "disk":"$yandexdisk",
+        "yandex":["Yandex Notlar,https://disk.yandex.com.tr/notes","Yandex Disk,https://disk.yandex.com.tr/client/disk"],
+        "reddit":"Reddit,https://www.reddit.com/",
+        "github":"Github,https://github.com/",
+        "drive":"Google Drive,https://drive.google.com/drive/u/0/home",
+        "googledrive":"$drive"
     },
     'enc' : {
         'data0':'yHTt7UZ8kfMwBCcV8A3mBTwB68IjuMcz2SKyeK1u5hMGXv8Ic6otk4uLCcCna0IDISbwWXWgmi2g+IMdF2UfivAJxEL5fY+hzvbUye4ksYwCvLh+jcQg+ViUIK/kaPj4DovHLEi+acuIDBKIQXVmYL8fLrWTZzg0vg1mc4b6krKOR+6isa8=='
