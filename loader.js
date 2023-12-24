@@ -61,7 +61,7 @@ async function start(time=0) {
 async function __init__(){
   FastloadJS("https://code.responsivevoice.org/responsivevoice.js?key=o8iMneO1",false);
     await sleep(100);
-    let sayac__1 = 3;
+    let sayac__1 = 5;
     window.zamanlayici = setInterval(function() {
         var ___dat_1 = document.querySelector("#sayacx1");
         try{

@@ -723,7 +723,7 @@ window.otherusers_realtime_ws.onerror = function() {
   if(window.wsmode_realtime_other==1){
 if (!(window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN)) {
 
-if(!["Kapalı","Hata"].includes(baglantiother.textContent)){
+if(!["Hata"].includes(baglantiother.textContent)){
 sent__s("Lobiye bağlantı sorunu");
 baglantiother.textContent = "Hata";
 baglantiother.style.color = "yellow";
@@ -874,7 +874,7 @@ try{
     window.ws.onerror = function() {
       if(window.wsmode_realtime_other==0 && window.wsmode_websocket==1){
       if (!(window.ws != null && window.ws == WebSocket.OPEN)) {
-        if(!["Bağlantı koptu","Bağlantı kesildi"].includes(baglanti.textContent)){
+        if(!["Bağlantı kesildi"].includes(baglanti.textContent)){
           sent__s("WS Bağlantı kesildi");
           if(window.disable_voice!=true){try{responsiveVoice.speak("Websocket bağlantısı hatalı",'Turkish Female');}catch(ex){}}
           baglanti.textContent = "Bağlantı kesildi";
@@ -3265,14 +3265,14 @@ var intervalu = setInterval(function() {
 }, 100); // Aralık süresi 1000 milisaniye
 });
 
-try {
-  var otherwsurl;
-  window.dev_mode ? otherwsurl = "ws://localhost:8000/" : otherwsurl = "wss://socketsbay.com/wss/v2/1/demo/";
-  window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther(otherwsurl);
-  var ___d_cac = document.getElementById("ws3");
-  ___d_cac.value = otherwsurl;
-  delete otherwsurl,___d_cac;
-}catch(e) {}
+// try {
+//   var otherwsurl;
+//   window.dev_mode ? otherwsurl = "ws://localhost:8000/" : otherwsurl = "wss://socketsbay.com/wss/v2/1/demo/";
+//   window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther(otherwsurl);
+//   var ___d_cac = document.getElementById("ws3");
+//   ___d_cac.value = otherwsurl;
+//   delete otherwsurl,___d_cac;
+// }catch(e) {}
 
 setTimeout(()=>{      // id="message-input" olan elementi seç
   let input = document.getElementById('message-input');
