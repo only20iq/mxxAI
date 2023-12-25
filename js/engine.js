@@ -1164,8 +1164,14 @@ function del_fff(test){
 }
 var Wax0_ = '<iframe src="https://www.youtube.com/embed/';
 var Wax1 = '" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+String.prototype.turkishToLower = function(){
+	var string = this;
+	var letters = { "İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç" };
+	string = string.replace(/(([İIŞĞÜÇÖ]))/g, function(letter){ return letters[letter]; })
+	return string.toLowerCase();
+}	
 function ai_cevapla(metin,onlytext=false) {
-  metin = metin.trim();
+  metin = metin.trim().turkishToLower();
   var test = "";
   var _return = 0;
   var _x = extractAndEvaluateMath(metin);
