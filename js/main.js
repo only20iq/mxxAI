@@ -8,7 +8,7 @@ window.keycode_block_open = false;
 // * OTHER
 window.total_file_size="";
 window.version_x="";
-window.disable_translate = true;
+window.disable_translate = false;
 window.disable_voice = true;
 window.latest_____cache_x = "";
 // * WEBSOCKET
@@ -3051,7 +3051,7 @@ suggestion2.textContent = "/g";
 var suggestion3 = document.createElement("div");
 suggestion3.className = "suggestion";
 suggestion3.id = "translatex";
-suggestion3.textContent = "Tr: tr";
+suggestion3.textContent = "Tr: Auto";
 var suggestion4 = document.createElement("div");
 suggestion4.className = "suggestion";
 suggestion4.id = "voicex";
