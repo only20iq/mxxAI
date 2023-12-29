@@ -1484,7 +1484,9 @@ function ai_cevapla(metin,onlytext=false) {
   }catch(e){}
   result_0_data.length == 0 ? result_0_data = getAllValues(data) : ()=>{};
   if(onlytext==false){
-    document.querySelector("#message-input").placeholder = tip == "array" ? cikti[1] : "0";
+    try{
+      document.querySelector("#message-input").placeholder = tip == "array" ? cikti[1] : "0";
+    }catch(exaaa){}
   }
   console.log(test);
   if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
