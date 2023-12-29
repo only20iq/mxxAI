@@ -8,7 +8,7 @@ window.keycode_block_open = false;
 // * OTHER
 window.total_file_size="";
 window.version_x="";
-window.disable_translate = false;
+window.disable_translate = true;
 window.disable_voice = true;
 window.latest_____cache_x = "";
 // * WEBSOCKET
@@ -71,7 +71,7 @@ var groupData = [
 ];
 // * GALLERY
 var foldersOLD = {
-  "Kpop1":"[$tw$GBJre6UX0AABkLG?format=jpg&name=4096x4096,$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large,$tw$GBI18AZWkAARxfv?format=jpg&name=large,$tw$GBF9DdRbcAAz7DD?format=jpg&name=large,$tw$GA9wJPpXIAAoamf?format=jpg&name=4096x4096,$tw$GA_m5KKasAA7L_4?format=jpg&name=large,$tw$GA7xysbXsAE9Ia5?format=jpg&name=large,$tw$GAy8vVEbIAAYNHL?format=jpg&name=4096x4096,$tw$GB8LPD-WMAA5KAJ?format=jpg&name=large!]"
+  "Kpop1":"[$tw$GBJre6UX0AABkLG?format=jpg&name=4096x4096,$rd$x48xi6vpqsua1.jpg?width=640&crop=smart&auto=webp&s=25ea4d1fc0e87dab3ae05392eff717092efb29f4,$rd$07jxy01qqsua1.jpg?width=640&crop=smart&auto=webp&s=5ec11cbc5ca106d4abad0a25fd4a4d310531cc1b,$rd$q0zo76a2kgbb1.jpg?width=640&crop=smart&auto=webp&s=df0d6d8c01aaab9908a608a6acf29a9ebfcee675,$rd$qh8axeb2kgbb1.jpg?width=640&crop=smart&auto=webp&s=96e506c9f55edd6b028d4e8c18a9e31132070708,$rd$vk50ravg0wtb1.jpg?width=1080&format=pjpg&auto=webp&s=989be823411e845b608eb7f840a32b10a6e314de,$rd$66yy59ps6kub1.jpg?width=1440&format=pjpg&auto=webp&s=d71e5355e6e6ca88aa27ada5858a557ef90cec48,$rd$ja1fgzlib34c1.png?width=1366&format=png&auto=webp&s=390e3ce1d9d2ccba5d9d362143bb60ccca6dc733,$rd$1bc105d4ng4c1.jpg?width=1295&format=pjpg&auto=webp&s=99d98bb421dac6c17bafe7b9a4ba2ac5a977618d,$tw$GAl82OYXQAA-jLr?format=jpg&name=4096x4096,$tw$GAVtER3XkAAHzIQ?format=jpg&name=large,$tw$GBI18AZWkAARxfv?format=jpg&name=large,$tw$GBF9DdRbcAAz7DD?format=jpg&name=large,$tw$GA9wJPpXIAAoamf?format=jpg&name=4096x4096,$tw$GA_m5KKasAA7L_4?format=jpg&name=large,$tw$GA7xysbXsAE9Ia5?format=jpg&name=large,$tw$GAy8vVEbIAAYNHL?format=jpg&name=4096x4096,$tw$GB8LPD-WMAA5KAJ?format=jpg&name=large,$tw$GCMeI2NXUAAgl3s?format=jpg&name=large!]"
 };
 // * IMAGE
 var noteb64img = "data:image/png;base64,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";
@@ -97,14 +97,7 @@ function kill(){
     sessionStorage.clear();
   }catch(ex){}
   try{
-    var cookies = document.cookie;
-    for (var i = 0; i < cookies.split(";").length; ++i)
-    {
-        var myCookie = cookies[i];
-        var pos = myCookie.indexOf("=");
-        var name = pos > -1 ? myCookie.substr(0, pos) : myCookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
+    deleteAllCookies();
   }catch(ex){}
   try{window.console_block_open ? ()=>{} : (()=>{
     var console = (window.console = window.console || {});
@@ -2068,15 +2061,70 @@ function save_notepad(){
   var value = textarexr.value;
   // Eğer değer boş değilse, cookie'ye kaydet
   if (value != "") {
-    // Değeri encodeURI ile kodla
-    var encodedValue = encodeURI(value);
     // Değeri cookie ye kaydet
-    document.cookie = "textareaValue=" + encodedValue + "; max-age=604800"; // Süre 1 hafta olarak ayarlandı
+    setCookie("textareaValue",value,7);
     // Değerin md5 ini hesapla
     var md5Value = md5(value);
     // md5 elementine md5 değerini yaz
     md5a.textContent = "Saved: " + md5Value;
   }
+}
+// * Proc Panel Delete
+function removeDataDecrypted(attrValue) {
+  // "abc" id'li div elementini seçelim
+  var abcDiv = document.getElementById("kutular_proc");
+
+  // Öznitelik adını değişkene atayalım
+  var attrName = "data";
+
+  // "abc" id'li div elementinin altındaki tüm div elementlerini seçelim
+  var divs = abcDiv.getElementsByTagName("div");
+
+  // Her bir div elementi için bir döngü başlatalım
+  for (var i = 0; i < divs.length; i++) {
+    // Eğer div elementinin özniteliği varsa ve değeri istediğimizle eşleşiyorsa
+    if (divs[i].hasAttribute(attrName) && divs[i].getAttribute(attrName) == attrValue) {
+      // Div elementini sayfadan kaldıralım
+      divs[i].parentNode.removeChild(divs[i]);
+    }
+  }
+}
+// * Set Cookie
+function setCookie(name,value,days) {
+  var expires = "";
+  var value_data = "";
+  if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days*24*60*60*1000));
+      expires = "; expires=" + date.toUTCString();
+  }
+  if(value){
+    value_data = encodeURIComponent(value);
+  }
+  document.cookie = encodeURIComponent(name) + "=" + value_data + expires + "; path=/";
+}
+// * Get Cookie
+function getCookie(sKey) {
+  return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+}
+// * List All Cookie
+function listallcookie() {
+  var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+  for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+  return aKeys;
+}
+// * Delete All Cookie
+function deleteAllCookies() {
+  var aKeys = listallcookie();
+  for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { eraseCookie(decodeURIComponent(aKeys[nIdx]));};
+}
+// * Erase Cookie
+function eraseCookie(name) {   
+  document.cookie = encodeURIComponent(name) +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+// * Has Cookie
+function hasCookie(sKey) {
+  return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
 }
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                    Security                                    ||
@@ -2760,13 +2808,9 @@ cacheNote.appendChild(div2);
 
   // Cookie yi al
   var cookie = document.cookie;
-  // Cookie den textareaValue isimli değeri bul
-  var index = cookie.indexOf("textareaValue=");
-  // Eğer değer varsa, textarea ya yaz
-  if (index != -1) {
+  if (hasCookie("textareaValue")) {
     // Değeri almak için, eşittir işaretinden sonraki kısmı al
-    var encodedValue = cookie.substring(index + 14);
-    // Değeri decodeURI ile çöz
+    var encodedValue = getCookie("textareaValue");
     var value = decodeURI(encodedValue);
     // Textarea ya değeri yaz
     textarea.value = value;
@@ -3051,7 +3095,7 @@ suggestion2.textContent = "/g";
 var suggestion3 = document.createElement("div");
 suggestion3.className = "suggestion";
 suggestion3.id = "translatex";
-suggestion3.textContent = "Tr: Auto";
+suggestion3.textContent = "Tr: tr";
 var suggestion4 = document.createElement("div");
 suggestion4.className = "suggestion";
 suggestion4.id = "voicex";
@@ -3238,7 +3282,7 @@ cacheForm.appendChild(messages);
 
 
   let kutular = document.createElement('div');
-
+  kutular.id = "kutular_proc";
   let form = document.createElement('div');
   form.style.display = 'none';
   
@@ -3386,7 +3430,7 @@ cacheForm.appendChild(messages);
     }
     alert("Başarılı");
     sent__s("Başarılı",true);
-    currentKutu.remove();
+    try{currentKutu.remove();}catch(ex2){}
   });
   // console.log(data["notes"]);
   // console.log(data["enc"]);

@@ -1320,16 +1320,11 @@ function ai_cevapla(metin,onlytext=false) {
         // });
         // window.localStorage.clear();
         // window.sessionStorage.clear();
+        try{
         localStorage.clear();
         sessionStorage.clear();
-        var cookies = document.cookie;
-        for (var i = 0; i < cookies.split(";").length; ++i)
-        {
-            var myCookie = cookies[i];
-            var pos = myCookie.indexOf("=");
-            var name = pos > -1 ? myCookie.substr(0, pos) : myCookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        }
+        deleteAllCookies();}
+        catch(ex){console.log(ex);}
         var __t = document.getElementById("messages");
         __t.innerHTML = "";
       return "sil";
@@ -1491,6 +1486,7 @@ function ai_cevapla(metin,onlytext=false) {
   if(onlytext==false){
     document.querySelector("#message-input").placeholder = tip == "array" ? cikti[1] : "0";
   }
+  console.log(test);
   if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
     test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
   }
@@ -1587,7 +1583,7 @@ function restoreTags(text, list) {
 function link(data) {
   var link = data.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
   var description = data.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
-  return "<a href='#"+link+"' onclick='event.preventDefault(),youtubeatag(\"" + replaceTextlink(link) + "\")' style='color:#f60000;'>" + description + "</a><br>"; // HTML bağlantısını oluşturun
+  return "<a onclick='event.preventDefault(),youtubeatag(\"" + replaceTextlink(link) + "\")' style='color:#f60000;'>" + description + "</a><br>"; // HTML bağlantısını oluşturun
 }
 function linktoimg(data) {
   return "<img src='" + replaceTextlink(data) + "' target='_blank' style='user-select:none;margin:0 auto;padding:0;width:100%;height:auto;display:block;border-radius:1vh;'>"; // HTML bağlantısını oluşturun
@@ -1668,13 +1664,13 @@ function xxx(string, length = 0,onlytext=false) {
           if (length === 'all') { // Eğer length parametresi 'all' ise
             var result = ''; // Sonucu tutacak bir değişken tanımla
             for (let item of array) { // Dizinin tüm elemanlarını döngü ile gez
-              result += "<br>" + linktoimg(item) + "<br>"; // Her elemanı sonuca ekle ve sonuna <br> koy
+              result += linktoimg(item); // Her elemanı sonuca ekle ve sonuna <br> koy
             }
             return result; // Sonucu döndür
           } else if (length > 0) { // Eğer length parametresi pozitif bir sayı ise
             var result = ''; // Sonucu tutacak bir değişken tanımla
             for (let i = 0; i < length; i++) { // Length kadar döngü yap
-              result += "<br>" + linktoimg(array[cache_ds[key]]) + "<br>"; // Diziden sırayla bir eleman seçin ve sonuca ekle ve sonuna <br> koy
+              result += linktoimg(array[cache_ds[key]]); // Diziden sırayla bir eleman seçin ve sonuca ekle ve sonuna <br> koy
               cache_ds[key]++; // Cache değerini artırın
               if (cache_ds[key] >= array.length) { // Eğer cache değeri dizinin uzunluğunu aşıyorsa
                 cache_ds[key] = 0; // Cache değerini sıfırlayın
@@ -1682,7 +1678,7 @@ function xxx(string, length = 0,onlytext=false) {
             }
             return result; // Sonucu döndür
           } else { // Eğer length parametresi yoksa veya sıfır ise
-            var random = "<br><br>" + linktoimg(array[cache_ds[key]]) + "<br>"; // Diziden rastgele bir eleman seçin ve sonuna <br> koy
+            var random = linktoimg(array[cache_ds[key]]); // Diziden rastgele bir eleman seçin ve sonuna <br> koy
             cache_ds[key]++;
             return random;
           }
@@ -1762,7 +1758,7 @@ function markdown_to_html_link(markdown) {
           }
           var html_link = description.substring(10) + new_text;
         }else{
-          var html_link = "<a href='#" + new_text + "' onclick='event.preventDefault(),youtubeatag(\"" + new_text + "\")' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturur
+          var html_link = "<a onclick='event.preventDefault(),youtubeatag(\"" + new_text + "\")' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturur
         }
         html = html.replace(match[0], html_link); // HTML dizesindeki markdown bağlantısını HTML bağlantısı ile değiştirir
     }
@@ -1958,6 +1954,7 @@ try{
   let jsonViewerx = document.getElementById("jsonviewer");
   jsonViewerx.innerHTML = "";
   jsonViewerx.appendChild(jsonToTree(JSON.stringify(data)));
+  removeDataDecrypted("chatbot="+data_name);
 }catch(ex){console.log(ex);}
 
 }
@@ -1983,6 +1980,7 @@ try {
 // Eklenecek veriyi dizi olarak eklemek
 try{
   addData(foldersOLD, decryptedObj);
+  removeDataDecrypted("gallery="+data_name);
 }catch(ex){console.log(ex);}
 
 }
