@@ -3,8 +3,14 @@ var html = new DOMParser().parseFromString(data_html, "text/html").body;delete d
 function scriptLoader(a,b){
   function c(c){
     var e=document.createElement("script");
+    if (c.endsWith("!module")) {
+      c = c.substring(0, c.length - 7);
+      e.setAttribute("type", "module");
+    }else{
+      e.setAttribute("type", "text/javascript");
+    }
     e.setAttribute("src",c);
-    e.setAttribute("type", "text/javascript");
+    // e.setAttribute("type", "module");
     e.onload=function(){
       d++;
       d==a.length&&b();
@@ -28,7 +34,7 @@ function FastloadJS(FILE_URL, async = false) {
   scriptEle.setAttribute("type", "text/javascript");
   scriptEle.setAttribute("async", async);
 
-  document.body.appendChild(scriptEle);
+  document.head.appendChild(scriptEle);
 
   // success event 
   scriptEle.addEventListener("load", () => {

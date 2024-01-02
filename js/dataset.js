@@ -749,7 +749,7 @@ var data_raw = {
             "$y$aa_lRp_IRj8,Lovely That Day",
             "$y$QLfZw-9m86s,Someday",
             "$y$qORaYudQ7Zc,LE SSERAFIM ANTIFRAGILE",
-            "$y$h0zZE6L6sYo,fromis_9 - “Time of Our Life Cover",
+            "$y$h0zZE6L6sYo,fromis_9 - Time of Our Life Cover",
             "$y$CW7o5K5zzlY,Stayc Teddy Bear Stage Mix",
             "$y$eZc7PIERwKU,APRIL - Tinker Bell Comeback Stage",
             "$y$OdU_czht8PI,IZ*ONE Secret Story of the Swan",

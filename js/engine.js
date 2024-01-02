@@ -105,7 +105,7 @@ function quad_thread(text) {
   var cevap = "";
   text = text.trim();
   var wait_dataset_cache={
-    "sevme":[],"nasıl":[],"love":[],"kötü":[],"fart":[],"sevgili":[],"renk":[],"milliyet":[]
+    "sevme":[],"nasil":[],"love":[],"kotu":[],"fart":[],"sevgili":[],"renk":[],"milliyet":[]
   };
   for (let key of Object.keys(data["quad"])) { // data["quad"] nesnesinin tüm anahtarlarını döngü ile gez
     if (key.startsWith("dataset")) { // Anahtarın "dataset" ile başlayıp başlamadığını kontrol et
@@ -167,12 +167,12 @@ function quad_thread(text) {
     cevap += cevapx;
     }
   }
-  for (let item of wait_dataset_cache["nasıl"]) {
+  for (let item of wait_dataset_cache["nasil"]) {
     var result = _a(item[0]);
     for (let element of result) {
     var _cache_dataset_data = ekler(element);
     var dataset = _cache_dataset_data+"+nasıl/iyi/sence/hakkında+mi/iyi/nasıl/sizce/yer/bahset/anlat/düşünüyorsun/düşünüyon/düşündün/anlatsana/açıkla/açıklasana/konuş/konuşsana,"+_cache_dataset_data+"+nasıl/sence/bahset/bahsetsene/anlat,"+_cache_dataset_data+"+yi/din/den/dan/tan/ten/a/e/o/yu/yü+nasıl/iyi/sence/hakkında/mi/iyi/nasıl/sizce/yer/bahset/anlat=this";
-    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"nasıl",element);
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"nasil",element);
     cevap += cevapx;
     }
   }
@@ -185,12 +185,12 @@ function quad_thread(text) {
     cevap += cevapx;
     }
   }
-  for (let item of wait_dataset_cache["kötü"]) {
+  for (let item of wait_dataset_cache["kotu"]) {
     var result = _a(item[0]);
     for (let element of result) {
     var _cache_dataset_data = ekler(element);
     var dataset = _cache_dataset_data+"+kötü/iğrenç/berbat/rezil/kalitesiz/beceriksiz/vasıfsız/gereksiz/rezil/berbat/yeteneksiz/nefret/sevmiyom/beğenmiyom/beğenmiyorum,"+_cache_dataset_data+"+kötü/iğrenç/berbat/rezil/kalitesiz/beceriksiz/vasıfsız/gereksiz/rezil/berbat/yeteneksiz/nefret/sevmiyom/beğenmiyom/beğenmiyorum+ediyorum/kesinlikle/ettim/edicem/etyom/edyom/ben/sen/biz/siz/onlar=this";
-    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"kötü",element);
+    var [cevapx, database_0] = quad_core([dataset,text,item[1]],database_0,"kotu",element);
     cevap += cevapx;
     }
   }
@@ -323,7 +323,9 @@ function similarity_1 (text1, text2) {
 
      // Benzeme oranlarının ortalamasını alın
      const average = (ratio1 + ratio2) / 2;
-
+    //  if(list.length < 20){
+    //   console.log(list.length+"average:"+average+"["+sentence+"]");
+    //  }
      // Ortalama eşik değerinden büyük veya eşitse, cümleyi seçin
      if (average >= threshold) {
        selected.push (sentence);
@@ -422,6 +424,7 @@ function multi_thread(text) {
 // ! ||                      Simple Tokenized Language Processing                      ||
 // ! ||--------------------------------------------------------------------------------||
 function single_thread(text) {
+  var cevap;
   text = text.trim().replace(/\s/g, "");
   if (text in data["single"]) {
     let response = data["single"][text];
@@ -1038,7 +1041,7 @@ function base64_decode(str) {
   return new Uint8Array(buffer);
 }
 function linkA(item) {
-  return `<a href="${item.split(",")[1]}" style="color:#f60000;">${item.split(",")[0]}</a>`;
+  return `<a href="${item.split(",")[1]}" style="color:#f60000;text-decoration:none;">${item.split(",")[0]}</a>`;
 }
 function listToLinks(list) {
   return list.map(linkA).join("<br>");
@@ -1073,6 +1076,7 @@ function rand_single() {
   return single_thread(randomKey); // Seçilen anahtarı single_thread fonksiyonuna gönder ve sonucu döndür
 }
 function r_thread(text) {
+  var cevap;
   text = text.trim().replace(/\s/g, "");
   if (text in data["random"]) {
     let response = data["random"][text];
@@ -1164,18 +1168,46 @@ function del_fff(test){
 }
 var Wax0_ = '<iframe src="https://www.youtube.com/embed/';
 var Wax1 = '" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-String.prototype.turkishToLower = function(){
-	var string = this;
-	var letters = { "İ": "i", "I": "ı", "Ş": "ş", "Ğ": "ğ", "Ü": "ü", "Ö": "ö", "Ç": "ç" };
-	string = string.replace(/(([İIŞĞÜÇÖ]))/g, function(letter){ return letters[letter]; })
-	return string.toLowerCase();
-}	
+function turkishToLower(string) {
+  var letters = ["İ", "I", "Ş", "Ğ", "Ü", "Ö", "Ç"];
+  var replacements = ["i", "ı", "ş", "ğ", "ü", "ö", "ç"];
+  for (var i = 0; i < letters.length; i++) {
+      string = string.replace(new RegExp(letters[i], "g"), replacements[i]);
+  }
+  return string.toLowerCase();
+}
+
+
+function addTest(cevaplar, cevap) {
+  if (cevaplar.indexOf(cevap) > -1) {
+    // cevaplar.splice(cevaplar.indexOf(cevap), 1);
+    // console.log("aynısı var ztn: "+cevap);
+    return [cevaplar,false];
+  }else{
+    if (selectSentences(cevaplar,cevap,0.5).length > 0) {
+      // console.log("Çok benziyor: "+cevap);
+      return [cevaplar,false];
+      // cevaplar.splice(cevaplar.indexOf(cevap), 1);
+    }else{
+      // console.log("Eklendi knk: "+cevap);
+      cevaplar.push(cevap);
+      return [cevaplar,true];
+    }
+  }
+}
+
+
+
+
+
+
 function ai_cevapla(metin,onlytext=false) {
-  metin = metin.trim().turkishToLower();
-  var test = "";
+  metin = metin.trim();
+  var _;
+  var test = [];
   var _return = 0;
   var _x = extractAndEvaluateMath(metin);
-  _x ? (test += _x,_return=1) : false;
+  _x ? (test.push(_x),_return=1) : false;
   var _000 = youtubetest(metin);
   var ytpanelx = document.getElementById("ytpanel");
   if(_000 != false){
@@ -1213,10 +1245,10 @@ function ai_cevapla(metin,onlytext=false) {
     return "sil";
   }
   let args = metin.split(" "); // metin.split(" ") yerine metin.split() kullanıyoruz
-  let text = null; // text değişkenini varsayılan olarak null tanımlıyoruz
   let key = null; // key değişkenini varsayılan olarak null tanımlıyoruz
   if (metin.startsWith('/')) { // metin değişkeni / ile başlıyorsa bu bloğu çalıştırıyoruz
-    test += "%notr%";
+    var cache_test="";
+    cache_test += "%notr%";
     if (['müzik','şarkı','music','m'].includes(args[0].toLowerCase().slice(1))) {
       if (args.includes('-s')) {
         let key_index = args.indexOf('-s') + 1;
@@ -1230,16 +1262,16 @@ function ai_cevapla(metin,onlytext=false) {
         text = args.slice(1).join(" "); // text değişkenine ilk argümandan sonraki tüm argümanları birleştirerek atıyoruz
       }
       if(key==null) {
-        test += "{kpop:5}";
+        cache_test += "{kpop:5}";
       }else{
         if (isNaN(key) && key!="all") {
           // eğer rakam veya sayı değilse, Number() fonksiyonu ile dönüştür
           key = Number(key);
-          test += "{kpop:"+key+"}";
+          cache_test += "{kpop:"+key+"}";
         }else if(key=="all") {
-          test += "{kpop:all}";
+          cache_test += "{kpop:all}";
         }else{
-          test += "{kpop:"+key+"}";
+          cache_test += "{kpop:"+key+"}";
         }
       }
       // alert(text);
@@ -1420,7 +1452,7 @@ function ai_cevapla(metin,onlytext=false) {
     }
     if (['size','boyut','filesize','dosyaboyutu','datasetsize'].includes(args[0].toLowerCase().slice(1))) {
       if(onlytext==true){
-        test += window.total_file_size;
+        cache_test += window.total_file_size;
       }else{
         sent__s(window.total_file_size);
         return "sil";
@@ -1431,16 +1463,18 @@ function ai_cevapla(metin,onlytext=false) {
       return "sil";
     }
     if (['base64encode','b64encode','b64e'].includes(args[0].toLowerCase().slice(1))) {
-      try{test += base64_encode(StringTouint8Array(args.slice(1).join(" ")));}catch(ex){test += "Base64 Encode İşlem Başarısız";}
+      try{cache_test += base64_encode(StringTouint8Array(args.slice(1).join(" ")));}catch(ex){cache_test += "Base64 Encode İşlem Başarısız";}
     }
     if (['base64decode','b64decode','b64d'].includes(args[0].toLowerCase().slice(1))) {
-      try{test += "%noeval%"+uint8ArrayToString(base64_decode(args.slice(1).join(" ")));}catch(ex){test += "Base64 Decode İşlem Başarısız";}
+      try{cache_test += "%noeval%"+uint8ArrayToString(base64_decode(args.slice(1).join(" ")));}catch(ex){cache_test += "Base64 Decode İşlem Başarısız";}
     }
-    if(test=="%notr%"){
+    if(cache_test=="%notr%"){
       return "Command not found"+" %notr%";
+    }else{
+      [test,_] = addTest(test,cache_test);
     }
   }
-
+  metin = turkishToLower(metin);
   metin = metin.toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "");
   var regex = new RegExp(data.yasakli_kelime.join("|"));
   if (regex.test(metin)) {
@@ -1452,62 +1486,72 @@ function ai_cevapla(metin,onlytext=false) {
   var test2 = multi_thread(metin);
   var test3 = quad_thread(metin);
   if(test_link!=null && test_link!=""){
-    test+=test_link+"<br>";
+    [test,_] = addTest(test,test_link);
   }
   if(test1!=null && test1!=""){
-    test+=test1+"<br>";
+    [test,_] = addTest(test,test1);
   }
   if(test2!=null && test2!=""){
-    test+=test2+"<br>";
+    [test,_] = addTest(test,test2);
   }
   if(test3!=null && test3!=""){
-    test+=test3+"<br>";
+    [test,_] = addTest(test,test3);
   }
+
 //   let r = rand_r(); // rand_r() fonksiyonunun çıktısını r değişkenine atıyoruz
 // result_0_data.contains(r) ? (array[i] = r + " ", result_0_data.remove(r)) : printf("Hata: rand_r() fonksiyonunun ciktisi result_0_data listinin icinde degil.\n");
-  if (test.length < 500 && test != "sil" && (!metin.startsWith('/')) && _return == 0) {
+  if (test.indexOf("sil") == -1 && (!metin.startsWith('/')) && _return == 0) {
     var r = random_generate_bonus(metin,1);
-    result_0_data.indexOf(r) != -1 ? (test += (" "+r+" "),/*console.log("Random Başarılı: "+r),*/result_0_data.splice(result_0_data.indexOf(r), 1)) : /*console.log("Random Başarısız: "+r)*/()=>{};
+    result_0_data.indexOf(r) != -1 ? ([test,_] = addTest(test,(" "+r+" ")),/*console.log("Random Başarılı: "+r),*/result_0_data.splice(result_0_data.indexOf(r), 1)) : /*console.log("Random Başarısız: "+r)*/()=>{};
 
   var cikti = compareInput(metin, result_0_data, 0);
   // Çıktının tipini kontrol ediyoruz
   var tip = Array.isArray(cikti) ? "array" : "string";
   // Ternary fonksiyon ile farklı işlemler yapıyoruz
-  test += tip == "array" ? cikti[0] + " " : cikti + " ";
+  var add;
+  if(tip=="array"){
+    [test,add] = addTest(test,cikti[0]);
+  }else{
+    [test,add] = addTest(test,cikti);
+  }
   // console.log(result_0_data.length);
   // while (result_0_data.length > 1) {
   //   // Diziden son elemanı siliyoruz
   //   result_0_data.pop();
   // }
-  try{
-  tip == "array" ? result_0_data.splice(result_0_data.indexOf(cikti[0]), 1) : result_0_data.splice(result_0_data.indexOf(cikti), 1);
-  }catch(e){}
+  if(add==true){
+    try{
+      tip == "array" ? result_0_data.splice(result_0_data.indexOf(cikti[0]), 1) : result_0_data.splice(result_0_data.indexOf(cikti), 1);
+    }catch(e){}
+  }
+
   result_0_data.length == 0 ? result_0_data = getAllValues(data) : ()=>{};
   if(onlytext==false){
     try{
       document.querySelector("#message-input").placeholder = tip == "array" ? cikti[1] : "0";
     }catch(exaaa){}
   }
-  console.log(test);
-  if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
-    test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
-  }
-  test = test.trim();
+  // if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
+  //   test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
+  // }
+  // test = test.trim();
+    test = test.join("<br>");
     if(onlytext==true){
       return del_fff(replace_with_xxx(test,true));
     }else{
       window.latest_____cache_x = test;
-      return replaceTags(markdown_to_html_link(test));
+      return replaceTags(markdown_to_html_link(test,onlytext));
     }
   } else {
-    if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
-      test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
-    }
+    // if (test.endsWith("<br>")) { // Değişkenin "<br>" ile bitip bitmediğini kontrol et
+    //   test = test.slice(0, -4); // Değişkenin son 4 karakterini sil
+    // }
+    test = test.join("<br>");
     if(onlytext==true){
       return del_fff(replace_with_xxx(test,true));
     }else{
       window.latest_____cache_x = test;
-      return replaceTags(markdown_to_html_link(test));
+      return replaceTags(markdown_to_html_link(test,onlytext));
     }
   }
 }
@@ -1582,10 +1626,14 @@ function restoreTags(text, list) {
 }
 
 
-function link(data) {
+function link(data,onlytext=false) {
   var link = data.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
   var description = data.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
-  return "<a onclick='event.preventDefault(),youtubeatag(\"" + replaceTextlink(link) + "\")' style='color:#f60000;'>" + description + "</a><br>"; // HTML bağlantısını oluşturun
+  if(onlytext==true){
+    return "<a target=\"_blank\" href='" + replaceTextlink(link) + "' style='color:#f60000;text-decoration:none;'>" + description + "</a><br>";
+  }else{
+    return "<a onclick='event.preventDefault(),youtubeatag(\"" + replaceTextlink(link) + "\")' style='color:#f60000;text-decoration:none;'>" + description + "</a><br>"; // HTML bağlantısını oluşturun
+  }
 }
 function linktoimg(data) {
   return "<img src='" + replaceTextlink(data) + "' target='_blank' style='user-select:none;margin:0 auto;padding:0;width:100%;height:auto;display:block;border-radius:1vh;'>"; // HTML bağlantısını oluşturun
@@ -1603,13 +1651,13 @@ function xxx(string, length = 0,onlytext=false) {
           if (length === 'all') { // Eğer length parametresi 'all' ise
             var result = ''; // Sonucu tutacak bir değişken tanımla
             for (let item of array) { // Dizinin tüm elemanlarını döngü ile gez
-              result += link(item); // Her elemanı link fonksiyonu ile işle ve sonuca ekle
+              result += link(item,onlytext); // Her elemanı link fonksiyonu ile işle ve sonuca ekle
             }
             return result; // Sonucu döndür
           } else if (length > 0) { // Eğer length parametresi pozitif bir sayı ise
             var result = ''; // Sonucu tutacak bir değişken tanımla
             for (let i = 0; i < length; i++) { // Length kadar döngü yap
-              result += link(array[cache_ds[key]]); // Diziden sırayla bir eleman seçin ve link fonksiyonu ile işle ve sonuca ekle
+              result += link(array[cache_ds[key]],onlytext); // Diziden sırayla bir eleman seçin ve link fonksiyonu ile işle ve sonuca ekle
               cache_ds[key]++; // Cache değerini artırın
               if (cache_ds[key] >= array.length) { // Eğer cache değeri dizinin uzunluğunu aşıyorsa
                 cache_ds[key] = 0; // Cache değerini sıfırlayın
@@ -1617,7 +1665,7 @@ function xxx(string, length = 0,onlytext=false) {
             }
             return result; // Sonucu döndür
           } else { // Eğer length parametresi yoksa veya sıfır ise
-            var random = link(array[cache_ds[key]]); // Diziden rastgele bir eleman seçin
+            var random = link(array[cache_ds[key]],onlytext); // Diziden rastgele bir eleman seçin
             cache_ds[key]++;
             return random;
           }
@@ -1732,7 +1780,7 @@ function replaceTextlink(text) {
   return new_text; // Yeni dizeyi döndürür
 }
 
-function markdown_to_html_link(markdown) {
+function markdown_to_html_link(markdown,onlytext) {
     let regex = /\[([^\]]+)\]\(([^)]+)\)/g; // Markdown bağlantısını tanımlayan bir düzenli ifade, "g" bayrağı ile global arama yapar
     let html = markdown; // HTML dizesini markdown dizisi ile başlatır
     let match; // Eşleşmeyi tutacak bir değişken
@@ -1760,7 +1808,12 @@ function markdown_to_html_link(markdown) {
           }
           var html_link = description.substring(10) + new_text;
         }else{
-          var html_link = "<a onclick='event.preventDefault(),youtubeatag(\"" + new_text + "\")' target='_blank' style='color:#f60000;'>" + description + "</a>"; // HTML bağlantısını oluşturur
+          var html_link;
+          if(onlytext==true){
+            html_link = "<a target=\"_blank\" href='" + new_text + "' style='color:#f60000;text-decoration:none;'>" + description + "</a><br>";
+          }else{
+            html_link = "<a onclick='event.preventDefault(),youtubeatag(\"" + new_text + "\")' target='_blank' style='color:#f60000;text-decoration:none;'>" + description + "</a>"; // HTML bağlantısını oluşturur
+          }
         }
         html = html.replace(match[0], html_link); // HTML dizesindeki markdown bağlantısını HTML bağlantısı ile değiştirir
     }
@@ -2080,6 +2133,6 @@ function youtubeatag(data){
     return "sil";
   }
 }
-// // Fonksiyonu test edin
-// const resultx1 = compareInput ("Merhaba nasılsın iyi misin nasıl gidiyor?", result_0_data, 1);
-// console.log (resultx1); // "Bana herhangi bir soru sorabilirsiniz."
+// ! ||--------------------------------------------------------------------------------||
+// ! ||                                   Engine End                                   ||
+// ! ||--------------------------------------------------------------------------------||
