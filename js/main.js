@@ -781,7 +781,6 @@ function WS__OTHER(mesaj,aicevap) {
 function baglan(url,xnew=true) {
               if(xnew==true){
                 window.wsmode_realtime_other = 0;
-                window.wsmode_websocket=1;
                 if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
                   window.otherusers_realtime_ws.close();
                 }
@@ -812,8 +811,10 @@ function baglan(url,xnew=true) {
       var baglanti = document.getElementById("baglanti");
       baglanti.textContent = "Kapalı";
       baglanti.style.color = "#c43f22";
+      sent__s("WS Bağlantısı Kapatıldı");
       return;
     }else{
+      window.wsmode_websocket=1;
       window.wsmode_realtime_other = 0;
       if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
           window.otherusers_realtime_ws.close();
