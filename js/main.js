@@ -982,7 +982,7 @@ function cevapla(dataxxxx,target_A="me",lang="tr"){
           window.SCMcache_sindirme = "0";
           window.SCMcache_block = "0";
           window.SCMcipher = new SilverCipherMini(window.SCMcache_sifre);
-          window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther();
+          window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();
         }
       },2200);
     }
@@ -1004,7 +1004,7 @@ function cevapla(dataxxxx,target_A="me",lang="tr"){
           window.SCMcache_sindirme = "0";
           window.SCMcache_block = "0";
           window.SCMcipher = new SilverCipherMini(window.SCMcache_sifre);
-          window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther();
+          window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();
         }
       },2200);
     }
@@ -1012,7 +1012,8 @@ function cevapla(dataxxxx,target_A="me",lang="tr"){
     return;
   }
   if(dataxxxx == "websocket" || dataxxxx == "close" || dataxxxx == "kapat" || dataxxxx == "durdur"){
-    window.wsmode_realtime_other=1,null!=window.ws&&window.ws.readyState==WebSocket.OPEN&&window.ws.close();wsrealtimeOther();
+    baglan("",true);
+    wsrealtimeOther("",true);
     sent__s("tmm");
   }
     // var messagecbbtbtnrte = decryptData_FLEXMODE(messagexx,$('targetpublic').html(),$('myprivate').html());
