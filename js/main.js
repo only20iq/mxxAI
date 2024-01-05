@@ -668,6 +668,7 @@ function wsrealtimeOther(url,xnew=true){
       if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
           window.otherusers_realtime_ws.close();
       }
+      sent__s("Lobi bağlantısı kapatıldı");
       return;
     }
   }
@@ -678,7 +679,7 @@ function wsrealtimeOther(url,xnew=true){
       window.ws.close();
     }
     if (window.otherusers_realtime_ws != null && window.otherusers_realtime_ws.readyState == WebSocket.OPEN) {
-      if(window.otherusers_realtime_ws.url==url){return;}
+      if(window.otherusers_realtime_ws.url==url || window.otherusers_realtime_ws.url.slice(0, -1)==url){return;}
         window.otherusers_realtime_ws.close();
     }
   }else{
@@ -724,6 +725,7 @@ wsrealtimeOther(url,false);
 }
 }, 2000);
 }else{
+  sent__s("Lobiden ayrıldın");
   var baglantiother = document.getElementById("baglantiother");
   baglantiother.textContent = "Kapalı";
   baglantiother.style.color = "#c43f22";
@@ -785,7 +787,7 @@ function baglan(url,xnew=true) {
                   window.otherusers_realtime_ws.close();
                 }
                 if (window.ws != null && window.ws.readyState == WebSocket.OPEN) {
-                  if(window.ws.url==url){return;}
+                  if(window.ws.url==url || window.ws.url.slice(0, -1)==url){return;}
                   window.ws.close();
                 }
               }else{
@@ -875,6 +877,7 @@ try{
           }
         }, 2000);
       }else {
+        sent__s("WS Bağlantı koptu");
         var baglanti = document.getElementById("baglanti");
         baglanti.textContent = "Kapalı";
         baglanti.style.color = "#c43f22";
