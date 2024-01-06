@@ -1041,7 +1041,7 @@ function base64_decode(str) {
   return new Uint8Array(buffer);
 }
 function linkA(item) {
-  return `<a href="${item.split(",")[1]}" style="color:#f60000;text-decoration:none;">${item.split(",")[0]}</a>`;
+  return `[n:${item.split(",")[0]}](${item.split(",")[1]})`;
 }
 function listToLinks(list) {
   return list.map(linkA).join("<br>");
@@ -1790,6 +1790,8 @@ function markdown_to_html_link(markdown,onlytext) {
         let new_text = replaceTextlink(text);
         if (description.startsWith("img:")) {
           var html_link = description.substring(4) + "<img src='" + new_text + "' target='_blank' style='user-select:none;margin:0 auto;padding:0;width:100%;height:auto;display:block;border-radius:1vh;'>";
+        }else if (description.startsWith("n:")) {
+          var html_link = "<a href='" + new_text + "' target='_blank' style='color:#f60000;text-decoration:none;'>"+description.substring(2)+"</a>";
         }else if (description.startsWith("iframeb64:")) {
           new_text = uint8ArrayToString(base64_decode(new_text));
           // HTML taglarını bulmak için bir regex tanımla

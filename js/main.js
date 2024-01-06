@@ -33,6 +33,7 @@ window.old_header_x_width = "100%";
 window.oldValues = {};
 var _000x = 0;
 var __index__C = 0;
+var _index_randomString = 0;
 var _ax_a;
 // * KPOP
 var ids__A = ["kissoflife", "twice", "nmixx", "everglow", "ive", "aespa", "kep1er", "newjeans", "lesserafim"];
@@ -197,6 +198,7 @@ function randomStringAAA(length=32) {
   return str;
 }
 // * Background Display Protect
+var _index_randomString_tag = randomStringAAA(4);
 function zeroSize(parent) {
 // parent elementin içindeki tüm elementleri seç
 let children = parent.getElementsByTagName("*");
@@ -206,7 +208,8 @@ for (let child of children) {
   if(child.id){
     if(child.id=="ytpanel"){continue}
   }else{
-    child.id="child-" + randomStringAAA();
+    child.id="c-"+_index_randomString_tag+"-"+_index_randomString;
+    _index_randomString++;
   }
   let id = child.id;
   // window.oldValues değişkenine elementin id, genişlik, yükseklik, min-genişlik ve min-yükseklik değerlerini kaydet
@@ -241,8 +244,14 @@ for (let child of children) {
     window.oldValues[id].fontSize = child.style.fontSize;
     child.style.fontSize = "0px";
   }
-  // elementin genişlik, yükseklik, min-genişlik ve min-yükseklik değerlerini sıfıra ayarla
 }
+// let ids = Array.from(children).map(child => child.id);
+// for (let id in window.oldValues) {
+//   if (!ids.includes(id)) {
+//     delete window.oldValues[id];
+//   }
+// }
+
 }
 // * Background Display Restore
 function restoreSize(parent) {
@@ -752,13 +761,9 @@ mesaj = JSON.parse(mesaj);
 // sent__s("User:" + mesaj.a + "Diğer" + mesaj.b);
 message1 = san_input_fix(mesaj.a).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"','').replaceAll("[","").replaceAll("]","");
 message2 = markdown_to_html_link(san_input_fix_MOD1(mesaj.b.replaceAll("<br>","\n")).replaceAll("script","").replaceAll("<","").replaceAll(">","").replaceAll("'","").replaceAll('"',''));
-var messages = document.querySelector('#messages');
-var messagex = document.createElement('div');
-messagex.style.display = "block";
-messagex.innerHTML = "<p class='a lf'><label id='f1'>Unknown : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:#c43f22;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
-messages.insertBefore(messagex, messages.firstChild);
+sent__000(message1,"__otherws__");
 message1="";
-sent__s(message2.replaceAll("\n","<br>"));
+sent__s([message2.replaceAll("\n","<br>"),"Unknown Console"]);
 message2="";
 }else{
 // sent__s("Socket Server:" + mesaj);
@@ -940,23 +945,40 @@ function mesajGonder(mesaj,enc="no") {
 }
 // * Add Text to the Right Side of the Chat
 function sent__s(messagecbbtbtnrte,noeval=false){
+  var messages = document.querySelector('#messages');
   var message = document.createElement('div');
+  message.style.backgroundColor = "rgb(255 255 255 / 31%)";
+  message.style.boxShadow = "-1px 3px 8px -1px rgba(0, 0, 0, 0.2)";
   message.style.display = "block";
+  message.style.borderRadius = "10px";
+  message.style.padding = "10px";
+  message.style.marginBottom = "10px";
   var xid11 = generateToken();
   xid11 = "x"+xid11;
   var sonradata = "";
+  // messagecbbtbtnrte değişkeninin bir dizi olup olmadığını kontrol et
+  if (messagecbbtbtnrte.constructor === Array) {
+    // eğer bir dizi ise, dizinin ilk elemanını mesaj, ikinci elemanını gönderici olarak al
+    var mesaj = messagecbbtbtnrte[0];
+    var gonderici = messagecbbtbtnrte[1];
+  } else {
+    // eğer bir dizi değilse, mesaj olarak al ve göndericiyi "Console" olarak belirle
+    var mesaj = messagecbbtbtnrte;
+    var gonderici = "Console";
+  }
   if(noeval==false){
-    message.innerHTML = "<p class='a rg'><label id='f1'>"+"<div id='"+xid11+"' spellcheck='false' class='divasdas rg'>"+messagecbbtbtnrte+"</div>"+"</label></p>";
+    message.innerHTML = "<p class='a rg'><label id='f1'>"+gonderici+"<div id='"+xid11+"' spellcheck='false' class='divasdas rg'>"+mesaj+"</div>"+"</label></p>";
   }else{
     let _1a = document.createElement("p");
     _1a.className = "a rg";
     let _2a = document.createElement("label");
     _2a.id = "f1";
+    _2a.textContent = gonderici;
     let _3a = document.createElement("div");
     _3a.id = xid11;
     _3a.spellcheck = false;
     _3a.className = "divasdas rg";
-    _3a.textContent = messagecbbtbtnrte;
+    _3a.textContent = mesaj;
     _2a.appendChild(_3a);
     _1a.appendChild(_2a);
     message.appendChild(_1a);
@@ -1040,7 +1062,7 @@ function cevapla(dataxxxx,target_A="me",lang="tr"){
         messagecbbtbtnrte=veri__0;
         var noeval = false;
         if(new RegExp("%noeval%").test(___text__0)){___text__0 = ___text__0.replaceAll("%noeval%","");noeval=true;}
-        sent__s(___text__0,noeval);
+        sent__s([___text__0,"WS_NO_ENC Console"],noeval);
         if(dataxxxx.charAt(0) != '/'){
           WS__OTHER(dataxxxx,window.latest_____cache_x);
         }
@@ -1065,7 +1087,7 @@ function cevapla(dataxxxx,target_A="me",lang="tr"){
         messagecbbtbtnrte=veri__0;
         var noeval = false;
         if(new RegExp("%noeval%").test(___text__0)){___text__0 = ___text__0.replaceAll("%noeval%","");noeval=true;}
-        sent__s(___text__0,noeval);
+        sent__s([___text__0,"WS_ENC Console"],noeval);
         if(dataxxxx.charAt(0) != '/'){
           WS__OTHER(dataxxxx,window.latest_____cache_x);
         }
@@ -1116,15 +1138,22 @@ function cevapla(dataxxxx,target_A="me",lang="tr"){
 function sent__000(message1,target){
   var messages = document.querySelector('#messages');
   var messagex = document.createElement('div');
+  messagex.style.backgroundColor = "rgb(255 255 255 / 31%)";
+  messagex.style.boxShadow = "-1px 3px 8px -1px rgba(0, 0, 0, 0.2)";
   messagex.style.display = "block";
+  messagex.style.borderRadius = "10px";
+  messagex.style.padding = "10px";
+  messagex.style.marginBottom = "10px";
   //message1="(Encrypted)";
   //messagex.innerHTML = "Mesaj Gönderildi => <textarea spellcheck='false' style='color:#c43f22;overflow: hidden;resize: vertical;'>"+message1+"</textarea> "+getCurrentTime()+" ID: "+target;
   if(target=="__server__"){
     var __cache_kisi_0x13 = "Websocket";
+  }if(target=="__otherws__"){
+    var __cache_kisi_0x13 = "Unknown";
   }else {
     var __cache_kisi_0x13 = "Me";
   }
-  messagex.innerHTML = "<p class='a lf'><label id='f1'>"+__cache_kisi_0x13+" : " + "<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:#c43f22;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
+  messagex.innerHTML = "<p class='a lf'><label id='f1'>"+__cache_kisi_0x13+"<textarea spellcheck='false' class='textareaxx'>"+ message1 + "</textarea>"  + "</label></p><p class='rg' style='color:#c43f22;border:none!important;z-index:2;'>" + getCurrentTime()+"</p>";
   messages.insertBefore(messagex, messages.firstChild);
 }
 // * Send Message Chatbot 2
@@ -1141,13 +1170,31 @@ if(target!="__server__"){
 }
 message1="";
 }
+// * Change Background
+function changeBackground(mode){
+  switch(mode) {
+    case "normal":
+      var html = document.querySelector("html");
+      var body = document.querySelector("body");
+      html.style.backgroundColor = "transparent";
+      body.style.backgroundColor = "transparent";
+      html.style.color = "#c43f22";
+      body.style.color = "#c43f22";
+      break;
+    case "gallery":
+      var html = document.querySelector("html");
+      var body = document.querySelector("body");
+      html.style.backgroundColor = "#131417";
+      body.style.backgroundColor = "#131417";
+      break;
+    default:
+      break;
+  }
+}
 // * Create & Open Gallery
 function gallery_s(dataset_data){
   if(_000x==1){
-    var body = document.querySelector("body");
-    var html = document.querySelector("html");
-    html.style.backgroundColor = "#131417";
-    body.style.backgroundColor = "#131417";
+    changeBackground("gallery");
     var ytpanelx = document.getElementById("ytpanel");
     ytpanelx.style.visibility = "hidden";
     // var ul_x = document.querySelector("#gallery_x > ul");
@@ -1208,10 +1255,7 @@ geridon_gallery.addEventListener("click", ()=>{
   }
   showCacheInMain('header_x',true,true);
   showCacheInMain('cache_form');
-  html.style.backgroundColor = "transparent";
-  body.style.backgroundColor = "transparent";
-  html.style.color = "#c43f22";
-  body.style.color = "#c43f22";
+  changeBackground("normal");
   window.scrollTo(0, 0);
 });
 // Elementleri doğru sırayla birbirine bağlayalım
@@ -1782,12 +1826,8 @@ for (var stickyDiv of stickyDivs) {
 //   link.style.color = "#fff";
 // }
 
-html.style.backgroundColor = "#131417";
-// html.style.color = "#FFF";
+changeBackground("gallery");
 html.style["::-webkit-scrollbar"] = "display: none";
-
-body.style.backgroundColor = "#131417";
-// body.style.color = "#FFF";
 body.style["::-webkit-scrollbar"] = "display: none";
 
 for (var media of medias) {
@@ -2144,6 +2184,48 @@ function eraseCookie(name) {
 // * Has Cookie
 function hasCookie(sKey) {
   return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+}
+// * TextBase64Encode
+function text_base64_encode(text) {
+  var array = new TextEncoder().encode(text);
+  var base64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  var result = '';
+  var i, j, triplet;
+
+  for (i = 0; i < array.length; i += 3) {
+    triplet = (array[i] << 16) | (array[i + 1] << 8) | array[i + 2];
+    for (j = 0; j < 4; j += 1) {
+      if (i * 8 + j * 6 <= array.length * 8) {
+        result += base64.charAt((triplet >> 18 - j * 6) & 0x3F);
+      }
+    }
+  }
+  return result;
+}
+// * TextBase64Decode
+function text_base64_decode(str) {
+  let buffer = [];
+  let bits = 0;
+  let value = 0;
+  let index = 0;
+  for (let i = 0; i < str.length; i++) {
+    const charCode = str.charCodeAt(i);
+    let digit = charCode > 64 && charCode < 91 ? charCode - 65
+      : charCode > 96 && charCode < 123 ? charCode - 71
+      : charCode > 47 && charCode < 58 ? charCode + 4
+      : charCode === 43 ? 62
+      : charCode === 47 ? 63
+      : -1;
+    if (digit !== -1) {
+      value = (value << 6) | digit;
+      bits += 6;
+      if (bits >= 8) {
+        buffer[index++] = (value >> (bits - 8)) & 255;
+        bits -= 8;
+      }
+    }
+  }
+  return new TextDecoder().decode(new Uint8Array(buffer));
 }
 // ! ||--------------------------------------------------------------------------------||
 // ! ||                                    Security                                    ||
@@ -3008,7 +3090,6 @@ form.id = "message-form";
 
 // Div elementini oluşturur
 var div1 = document.createElement("div");
-div1.id = "asdasds";
 div1.style.display = "flex";
 div1.style.flexWrap = "no-wrap";
 div1.style.alignItems = "center";
@@ -3512,7 +3593,7 @@ var intervalu = setInterval(function() {
     _asldas.innerHTML = "Version_EA_"+window.version_x;
     delete _asldas;}catch(ex){alert(ex);}})();
   }
-}, 100); // Aralık süresi 1000 milisaniye
+}, 100);
 });
 
 // try {
