@@ -2317,35 +2317,6 @@ if(window.dev_mode!=true){
 // ! ||--------------------------------------------------------------------------------||
 // ^ Base
 var body = document.querySelector("body");
-try{
-
-var wave_data = 
-`
-<svg id="wavebodyanimate" class="editorial"
-     xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     viewBox="0 24 150 28"
-     preserveAspectRatio="none">
- <defs>
- <path id="gentle-wave"
- d="M-160 44c30 0 
-    58-18 88-18s
-    58 18 88 18 
-    58-18 88-18 
-    58 18 88 18
-    v44h-352z" />
-  </defs>
-  <g class="parallax">
-   <use xlink:href="#gentle-wave" x="50" y="0" fill="rgba(196, 64, 34, 0.952)"/>
-   <use xlink:href="#gentle-wave" x="50" y="3" fill="rgba(181, 59, 31, 0.647)"/>
-   <use xlink:href="#gentle-wave" x="50" y="6" fill="rgba(124, 23, 0, 0.843)"/>  
-  </g>
-</svg>
-`;
-body.insertAdjacentHTML('beforeend',wave_data);
-
-
-}catch(ex){}
 var div = document.createElement("div");
 div.style.margin = "0 auto";
 div.style.textAlign = "center";
@@ -2354,6 +2325,35 @@ div.style.color = "#c43f22";
 div.style.maxWidth = "600px";
 div.style.position = "relative";
 div.id = "base";
+try{
+
+  var wave_data = 
+  `
+  <svg id="wavebodyanimate" class="editorial"
+       xmlns="http://www.w3.org/2000/svg"
+       xmlns:xlink="http://www.w3.org/1999/xlink"
+       viewBox="0 24 150 28"
+       preserveAspectRatio="none">
+   <defs>
+   <path id="gentle-wave"
+   d="M-160 44c30 0 
+      58-18 88-18s
+      58 18 88 18 
+      58-18 88-18 
+      58 18 88 18
+      v44h-352z" />
+    </defs>
+    <g class="parallax">
+     <use xlink:href="#gentle-wave" x="50" y="0" fill="rgba(196, 64, 34, 0.952)"/>
+     <use xlink:href="#gentle-wave" x="50" y="3" fill="rgba(181, 59, 31, 0.647)"/>
+     <use xlink:href="#gentle-wave" x="50" y="6" fill="rgba(124, 23, 0, 0.843)"/>  
+    </g>
+  </svg>
+  `;
+  div.insertAdjacentHTML('beforeend',wave_data);
+  
+  
+  }catch(ex){}
 // ^ Header
 (()=>{
   var header = document.createElement("header");

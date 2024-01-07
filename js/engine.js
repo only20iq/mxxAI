@@ -1632,7 +1632,7 @@ function link(data,onlytext=false) {
   if(onlytext==true){
     return "<a target=\"_blank\" href='" + replaceTextlink(link) + "' >🔗" + description + "</a><br>";
   }else{
-    return "<a onclick='event.preventDefault(),youtubeatag(\"" + replaceTextlink(link) + "\")' >🔗" + description + "</a><br>"; // HTML bağlantısını oluşturun
+    return "<a onclick='event.preventDefault(),youtubeatag(\"" + replaceTextlink(link) + "\")' >📽️" + description + "</a><br>"; // HTML bağlantısını oluşturun
   }
 }
 function linktoimg(data) {
@@ -1814,7 +1814,7 @@ function markdown_to_html_link(markdown,onlytext) {
           if(onlytext==true){
             html_link = "<a target=\"_blank\" href='" + new_text + "' >🔗" + description + "</a><br>";
           }else{
-            html_link = "<a onclick='event.preventDefault(),youtubeatag(\"" + new_text + "\")' target='_blank' >🔗" + description + "</a>"; // HTML bağlantısını oluşturur
+            html_link = "<a onclick='event.preventDefault(),youtubeatag(\"" + new_text + "\")' target='_blank' >📽️" + description + "</a>"; // HTML bağlantısını oluşturur
           }
         }
         html = html.replace(match[0], html_link); // HTML dizesindeki markdown bağlantısını HTML bağlantısı ile değiştirir

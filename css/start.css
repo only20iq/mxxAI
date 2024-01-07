@@ -133,5 +133,7 @@ asdass{color: rgba(196, 64, 34, 0.952)}
   margin: 0;
   position:fixed;
   bottom:0;
+  left:0;
+  z-index:-1;
 }
 /*rgba(255, 255, 255, .75)*/

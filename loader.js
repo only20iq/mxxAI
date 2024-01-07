@@ -65,7 +65,6 @@
         return Promise.allSettled(c);
       }
       const sleep = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms));
-      document.body.appendChild(html);
       async function start(time=0) {
           await sleep(time + 100);
           scriptLoader(["js/dataset.js","js/crypto-js.min.js","js/md5.min.js","js/sc5.min.js","js/SilverCipherMini.min.js"], function() {LoadCSS( ['css/start.css','css/abc.css','css/a1b.css','css/a.css'] ).then( function() {scriptLoader(["js/engine.js"],function(){scriptLoader(["js/main.js"],function(){html.remove();});});});});
@@ -73,22 +72,40 @@
       // window.dispatchEvent(new Event("load"));
       async function __init__(){
         FastloadJS("https://code.responsivevoice.org/responsivevoice.js?key=o8iMneO1",false);
-          await sleep(100);
-          let sayac__1 = 5;
-          window.zamanlayici = setInterval(function() {
-              var ___dat_1 = document.querySelector("#sayacx1");
-              try{
-                ___dat_1.textContent = sayac__1.toString();
-              }catch(e){}
-              sayac__1--;
-          if (sayac__1 == 0) {
-              clearInterval(window.zamanlayici);
-              document.body.removeChild(box);
-              window.__nickname__ = "User";
-              window.dev_mode=false;
-              start(0);
-          }
-          }, 1000);
+        let promise = new Promise((resolve, reject) => {
+          let settimeoutID = setTimeout(() => {
+            clearInterval(intervalID);
+            clearTimeout(settimeoutID);
+            reject("Timeout Error");
+          }, 2000);
+          let intervalID = setInterval(function () {
+            if (document.body) {
+              clearInterval(intervalID);
+              clearTimeout(settimeoutID);
+              resolve();
+            }
+          }, 20);
+        }).catch((e) => {
+          console.error("LoaderJS Error: "+e);
+        });
+        await promise;
+        document.body.appendChild(html);
+        await sleep(100);
+        let sayac__1 = 5;
+        window.zamanlayici = setInterval(function() {
+            var ___dat_1 = document.querySelector("#sayacx1");
+            try{
+              ___dat_1.textContent = sayac__1.toString();
+            }catch(e){}
+            sayac__1--;
+        if (sayac__1 == 0) {
+            clearInterval(window.zamanlayici);
+            document.body.removeChild(box);
+            window.__nickname__ = "User";
+            window.dev_mode=false;
+            start(0);
+        }
+        }, 1000);
       
       // Bir kutucuk oluşturun
       let box = document.createElement("div");
