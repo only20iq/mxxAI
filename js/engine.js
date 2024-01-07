@@ -1630,9 +1630,9 @@ function link(data,onlytext=false) {
   var link = data.split(",")[0]; // Seçilen elemanın ilk kısmını link olarak alın
   var description = data.split(",")[1]; // Seçilen elemanın ikinci kısmını description olarak alın
   if(onlytext==true){
-    return "<a target=\"_blank\" href='" + replaceTextlink(link) + "' style='color:#f60000;text-decoration:none;'>" + description + "</a><br>";
+    return "<a target=\"_blank\" href='" + replaceTextlink(link) + "' >🔗" + description + "</a><br>";
   }else{
-    return "<a onclick='event.preventDefault(),youtubeatag(\"" + replaceTextlink(link) + "\")' style='color:#f60000;text-decoration:none;'>" + description + "</a><br>"; // HTML bağlantısını oluşturun
+    return "<a onclick='event.preventDefault(),youtubeatag(\"" + replaceTextlink(link) + "\")' >🔗" + description + "</a><br>"; // HTML bağlantısını oluşturun
   }
 }
 function linktoimg(data) {
@@ -1791,7 +1791,7 @@ function markdown_to_html_link(markdown,onlytext) {
         if (description.startsWith("img:")) {
           var html_link = description.substring(4) + "<img src='" + new_text + "' target='_blank' style='user-select:none;margin:0 auto;padding:0;width:100%;height:auto;display:block;border-radius:1vh;'>";
         }else if (description.startsWith("n:")) {
-          var html_link = "<a href='" + new_text + "' target='_blank' style='color:#f60000;text-decoration:none;'>"+description.substring(2)+"</a>";
+          var html_link = "<a href='" + new_text + "' target='_blank' >🔗"+description.substring(2)+"</a>";
         }else if (description.startsWith("iframeb64:")) {
           new_text = uint8ArrayToString(base64_decode(new_text));
           // HTML taglarını bulmak için bir regex tanımla
@@ -1812,9 +1812,9 @@ function markdown_to_html_link(markdown,onlytext) {
         }else{
           var html_link;
           if(onlytext==true){
-            html_link = "<a target=\"_blank\" href='" + new_text + "' style='color:#f60000;text-decoration:none;'>" + description + "</a><br>";
+            html_link = "<a target=\"_blank\" href='" + new_text + "' >🔗" + description + "</a><br>";
           }else{
-            html_link = "<a onclick='event.preventDefault(),youtubeatag(\"" + new_text + "\")' target='_blank' style='color:#f60000;text-decoration:none;'>" + description + "</a>"; // HTML bağlantısını oluşturur
+            html_link = "<a onclick='event.preventDefault(),youtubeatag(\"" + new_text + "\")' target='_blank' >🔗" + description + "</a>"; // HTML bağlantısını oluşturur
           }
         }
         html = html.replace(match[0], html_link); // HTML dizesindeki markdown bağlantısını HTML bağlantısı ile değiştirir

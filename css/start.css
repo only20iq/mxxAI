@@ -110,3 +110,28 @@
   transition: all 0.3s;
   white-space: nowrap;
 }
+asdass{color: rgba(196, 64, 34, 0.952)}
+
+::selection{background-color: salmon; color: white;}
+.parallax > use{
+  animation:move-forever 12s linear infinite;
+  &:nth-child(1){animation-delay:-20s;}
+  &:nth-child(2){animation-delay:-20s; animation-duration:50s}
+  &:nth-child(3){animation-delay:-40s; animation-duration:30s}
+}
+
+@keyframes move-forever{
+  0%{transform: translate(-90px , 0%)}
+  100%{transform: translate(85px , 0%)} 
+}
+
+.editorial {
+  display: block;
+  width: 100%;
+  height: 20%;
+  max-height: 100vh;
+  margin: 0;
+  position:fixed;
+  bottom:0;
+}
+/*rgba(255, 255, 255, .75)*/

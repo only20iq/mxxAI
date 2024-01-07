@@ -46,7 +46,7 @@ var data_raw = {
         "jahrein":"$jaho",
         "elraen":"Sevdiğim yayıncıyı 15 yaşından beri izliyorum 4 yıl oldu",
         "twitch":"T.w.h bu yayın platformunu çocukluğumdan beri izlerim",
-        "şarkısöyle":["Şarkı söyleyemem pek ama"],
+        "şarkısöyle":["Valla hiç konuşasım yok ya"],
         "mal":["Anlıyorum hocam çok iyi anlıyorum ","Boş konulara girmeyelim hocam önemli konulardan devam","anladım hocam "],
         "salak":"$mal",
         "özürlü":"$mal",
