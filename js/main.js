@@ -511,6 +511,13 @@ function get_code_data(goster=false){
             // Boyutu KB cinsine çevirmek için 1024'e bölüyoruz
             boyut = boyut / 1024;
             console.log(dosya+": "+boyut);
+            var blob = new Blob([veri], {type: "text/plain"});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.textContent=dosya;
+            a.href = url;
+            a.download = "test_" + dosya;
+            document.body.appendChild(a);
             toplamKBSayisi += boyut;
             // Sonucu ekrana yazdırıyoruz
             output += (`<br>${dosya} ${satirlar.length} lines ${boyut.toFixed(2)}KB`);
