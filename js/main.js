@@ -510,7 +510,7 @@ function get_code_data(goster=false){
             let boyut = veri.length;
             // Boyutu KB cinsine çevirmek için 1024'e bölüyoruz
             boyut = boyut / 1024;
-
+            console.log(dosya+": "+boyut);
             toplamKBSayisi += boyut;
             // Sonucu ekrana yazdırıyoruz
             output += (`<br>${dosya} ${satirlar.length} lines ${boyut.toFixed(2)}KB`);
@@ -3856,7 +3856,6 @@ var intervalu = setInterval(function() {
 
 
 // JSON verisini ağaç yapısına dönüştürün
-
 
 
 
