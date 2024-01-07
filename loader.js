@@ -77,7 +77,7 @@
             clearInterval(intervalID);
             clearTimeout(settimeoutID);
             reject("Timeout Error");
-          }, 2000);
+          }, 5000);
           let intervalID = setInterval(function () {
             if (document.body) {
               clearInterval(intervalID);
