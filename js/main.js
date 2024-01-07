@@ -953,6 +953,8 @@ function sent__s(messagecbbtbtnrte,noeval=false){
   message.style.borderRadius = "10px";
   message.style.padding = "10px";
   message.style.marginBottom = "10px";
+  message.style.marginLeft = "5px";
+  message.style.marginRight = "5px";
   var xid11 = generateToken();
   xid11 = "x"+xid11;
   var sonradata = "";
@@ -1144,6 +1146,8 @@ function sent__000(message1,target){
   messagex.style.borderRadius = "10px";
   messagex.style.padding = "10px";
   messagex.style.marginBottom = "10px";
+  messagex.style.marginLeft = "5px";
+  messagex.style.marginRight = "5px";
   //message1="(Encrypted)";
   //messagex.innerHTML = "Mesaj Gönderildi => <textarea spellcheck='false' style='color:#c43f22;overflow: hidden;resize: vertical;'>"+message1+"</textarea> "+getCurrentTime()+" ID: "+target;
   if(target=="__server__"){
