@@ -1040,6 +1040,36 @@ function base64_decode(str) {
   }
   return new Uint8Array(buffer);
 }
+function b64dataURItoBlob_onlyblob(dataURI) {
+  var parts = dataURI.split (",");
+  var mime = parts [0].match (/:(.*?);/) [1];
+  var binData = base64_decode (parts [1]);
+  return new Blob ([binData], {type: mime});
+}
+function b64dataURItoBlob (dataURI) {
+  var parts = dataURI.split (",");
+  var mime = parts [0].match (/:(.*?);/) [1];
+  var binData = base64_decode (parts [1]);
+  return URL.createObjectURL(new Blob ([binData], {type: mime}), {type: "one-time-only", expires: "session"});
+}
+function dataToBlob_onlyblob(value, contentType) {
+  if (typeof value == "string") {
+    value = new TextEncoder().encode(value);
+  } else if (value instanceof Uint8Array) {
+  } else {
+    throw new Error("Değer string veya uint8array olmalıdır.");
+  }
+  return new Blob([value], {type: contentType});
+}
+function dataToBlob(value, contentType) {
+  if (typeof value == "string") {
+    value = new TextEncoder().encode(value);
+  } else if (value instanceof Uint8Array) {
+  } else {
+    throw new Error("Değer string veya uint8array olmalıdır.");
+  }
+  return URL.createObjectURL(new Blob([value], {type: contentType}), {type: "one-time-only", expires: "session"});
+}
 function linkA(item) {
   return `[n:${item.split(",")[0]}](${item.split(",")[1]})`;
 }
@@ -1632,7 +1662,7 @@ function link(data,onlytext=false) {
   if(onlytext==true){
     return "<a target=\"_blank\" href='" + replaceTextlink(link) + "' >🔗" + description + "</a><br>";
   }else{
-    return "<a onclick='event.preventDefault(),youtubeatag(\"" + replaceTextlink(link) + "\")' >📽️" + description + "</a><br>"; // HTML bağlantısını oluşturun
+    return `<a onclick='event.preventDefault(),youtubeatag("` + replaceTextlink(link) + `")' target='_self'>📽️` + description + `</a><br>`; // HTML bağlantısını oluşturun
   }
 }
 function linktoimg(data) {
@@ -1814,7 +1844,7 @@ function markdown_to_html_link(markdown,onlytext) {
           if(onlytext==true){
             html_link = "<a target=\"_blank\" href='" + new_text + "' >🔗" + description + "</a><br>";
           }else{
-            html_link = "<a onclick='event.preventDefault(),youtubeatag(\"" + new_text + "\")' target='_blank' >📽️" + description + "</a>"; // HTML bağlantısını oluşturur
+            html_link = `<a onclick='event.preventDefault(),youtubeatag("` + new_text + `")' target='_self' >📽️` + description + `</a>`; // HTML bağlantısını oluşturur
           }
         }
         html = html.replace(match[0], html_link); // HTML dizesindeki markdown bağlantısını HTML bağlantısı ile değiştirir
