@@ -3235,11 +3235,11 @@ suggestion2.textContent = "/g";
 var suggestion3 = document.createElement("div");
 suggestion3.className = "suggestion";
 suggestion3.id = "translatex";
-suggestion3.textContent = "Tr: tr";
+suggestion3.textContent = "🌐:🇹🇷";
 var suggestion4 = document.createElement("div");
 suggestion4.className = "suggestion";
 suggestion4.id = "voicex";
-suggestion4.textContent = "Vc: Off";
+suggestion4.textContent = "🎙️:🔇";
 var suggestion5 = document.createElement("div");
 suggestion5.className = "suggestion";
 suggestion5.textContent = "/bg";
@@ -3282,10 +3282,10 @@ var children = [].slice.call(suggestions.childNodes);
       suggestion.addEventListener('click', function() {
         if(window.disable_translate==false){
           window.disable_translate = true;
-          this.textContent="Tr: tr";
+          this.textContent="🌐:🇹🇷";
         }else{
           window.disable_translate = false;
-          this.textContent="Tr: Auto";
+          this.textContent="🌐:🔁";
         }
       });
       continue;
@@ -3294,10 +3294,10 @@ var children = [].slice.call(suggestions.childNodes);
       suggestion.addEventListener('click', function() {
         if(window.disable_voice==false){
           window.disable_voice = true;
-          this.textContent="Vc: Off";
+          this.textContent="🎙️:🔇";
         }else{
           window.disable_voice = false;
-          this.textContent="Vc: On";
+          this.textContent="🎙️:🔉";
         }
       });
       continue;
