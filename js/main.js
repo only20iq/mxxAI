@@ -59,7 +59,7 @@ var groupData = [
   {
     id: "ive",
     name: "IVE",
-    image: "https://www.billboard.com/wp-content/uploads/2023/04/IVE-cr-Starship-Entertainment-billboard-1548.jpg?w=942&h=623&crop=1",
+    image: "https://6.soompi.io/wp-content/uploads/image/20231107131031_IVE-5231.jpeg?s=900x600&e=t",
     details: "[YouTube](https://www.youtube.com/IVEstarship), [Wikipedia](https://en.wikipedia.org/wiki/Ive_%28group%29), [Instagram](https://www.instagram.com/ivestarship)"
   },
   {
@@ -474,7 +474,7 @@ function showDetails(event) {
 // * Total File Size Calculator
 function get_code_data(goster=false){
   // Dosya isimlerini bir diziye atıyoruz
-  const dosyalar = ['js/main.js', 'js/engine.js', 'js/dataset.js', 'loader.js', 'index.html'];
+  const dosyalar = ['js/main.js', 'js/engine.js', 'js/dataset.js', "css/start.css", "css/abc.css", "css/a1b.css", "css/a.css", 'loader.js', 'index.html'];
   let dosyaSayisi = dosyalar.length;
 
   // Toplam kod sayısını tutacak bir değişken tanımlıyoruz
@@ -2567,7 +2567,7 @@ header.appendChild(divx2);
 // Liste elementini temizle
 // Grup verilerini döngüye al
 for (var i = 0; i < groupData.length; i++) {
-  // Grup verisini al
+  !function(){
   var group = groupData[i];
   // Liste öğesi elementi oluştur
   var item = document.createElement("li");
@@ -2584,7 +2584,18 @@ for (var i = 0; i < groupData.length; i++) {
   var image = document.createElement("img");
   // Grup resmi elementine class, src ve alt ekle
   image.className = "group-image";
-  image.src = group.image;
+  fetch(group.image)
+  .then(res => res.blob())
+  .then(function load(res){
+    var url = URL.createObjectURL(res, {type: "one-time-only", expires: "session"});
+    res = undefined;
+    image.src = url;
+    image.onload = function() {
+      URL.revokeObjectURL(url);
+    };
+  }).catch(function(){
+    image.src = group.image;
+  });
   image.alt = group.name;
   image.id=group.id;
   // Liste öğesi elementine grup adı ve resmi ekle
@@ -2592,6 +2603,7 @@ for (var i = 0; i < groupData.length; i++) {
   item.appendChild(image);
   // Liste elementine liste öğesi ekle
   list.appendChild(item);
+  }(this);
 }
 
 
@@ -3675,6 +3687,7 @@ var intervalu = setInterval(function() {
 //   ___d_cac.value = otherwsurl;
 //   delete otherwsurl,___d_cac;
 // }catch(e) {}
+
 
 // setTimeout(()=>{      // id="message-input" olan elementi seç
 //   let input = document.getElementById('message-input');

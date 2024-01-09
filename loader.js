@@ -48,7 +48,7 @@
             // XMLHttpRequest nesnesi oluştur
             let xhr = new XMLHttpRequest();
             // GET isteği yap
-            xhr.open('GET', window.location.href+dosya);
+            xhr.open('GET', window.location.href+dosya+"?t="+(+new Date));
             xhr.send();
             // İstek tamamlandığında
             xhr.onreadystatechange = function() {
@@ -169,7 +169,7 @@
             // XMLHttpRequest nesnesi oluştur
             let xhr = new XMLHttpRequest();
             // GET isteği yap
-            xhr.open('GET', window.location.href+dosya);
+            xhr.open('GET', window.location.href+dosya+"?t="+(+new Date));
             xhr.send();
             // İstek tamamlandığında
             xhr.onreadystatechange = function() {
