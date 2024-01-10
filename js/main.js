@@ -1637,8 +1637,8 @@ function toggleFiles(ul) {
     }
   }, {
     root: null,
-    rootMargin: "0px 0px 0px 0px",
-    threshold: 0.75
+    rootMargin: "0px 0px 0px 0px"
+    //threshold: 0.75
   });
   mediaElements.forEach(media => {
     observer.observe(media);
@@ -1660,7 +1660,7 @@ function scrollEvent(ul) {
       // Şimdiki zamanı alın
       let now = Date.now();
       // Eğer şimdiki zaman ile son kaydırma zamanı arasındaki fark, gecikmeden büyükse
-      if (now - lastScrollTime > 700) {
+      if (now - lastScrollTime > 150) {
         // Geri çağırma fonksiyonunu çalıştırın
         scrollCallback();
         // Son kaydırma zamanını güncelleyin
@@ -1668,8 +1668,8 @@ function scrollEvent(ul) {
       }
       // Zamanlayıcıyı iptal edin
       clearTimeout(timer);
-      // Zamanlayıcıyı 1 saniye sonra scrollCallback() fonksiyonunu çalıştıracak şekilde ayarlayın
-      timer = setTimeout(scrollCallback, 1000);
+      // Zamanlayıcıyı 0.150 saniye sonra scrollCallback() fonksiyonunu çalıştıracak şekilde ayarlayın
+      timer = setTimeout(scrollCallback, 150);
     }
 
     // Kaydırma olayında yapılacak işlemleri tanımlayan bir fonksiyon tanımlayın
