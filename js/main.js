@@ -3468,6 +3468,7 @@ cacheForm.appendChild(messages);
   let passwordLabel = document.createElement('label');
   passwordLabel.setAttribute('for', 'passwordAAA');
   passwordLabel.textContent = 'Password:';
+  passwordLabel.style.color = 'white';
   formElement.appendChild(passwordLabel);
   formElement.appendChild(document.createElement('br'));
   
@@ -3475,12 +3476,14 @@ cacheForm.appendChild(messages);
   passwordInput.setAttribute('type', 'password');
   passwordInput.setAttribute('name', 'passwordAAA');
   passwordInput.setAttribute('autocomplete', 'off');
+  passwordInput.style.color = 'white';
   formElement.appendChild(passwordInput);
   formElement.appendChild(document.createElement('br'));
   
   let roundLabel = document.createElement('label');
   roundLabel.setAttribute('for', 'roundAAA');
   roundLabel.textContent = 'Round:';
+  roundLabel.style.color = 'white';
   formElement.appendChild(roundLabel);
   formElement.appendChild(document.createElement('br'));
   
@@ -3489,6 +3492,7 @@ cacheForm.appendChild(messages);
   roundInput.setAttribute('name', 'roundAAA');
   roundInput.setAttribute('value', 0);
   roundInput.setAttribute('min', '0');
+  roundInput.style.color = 'white';
   roundInput.addEventListener("wheel", function(event) {
     // orta tuşa basılıp basılmadığını kontrol et
     if (event.button === 1) {
