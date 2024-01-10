@@ -2436,7 +2436,8 @@ menuContent.id = "menu-content";
 menuContent.style.display = "none";
 menuContent.style.width = "200px";
 menuContent.style.height = "auto";
-menuContent.style.backgroundColor = "white";
+menuContent.style.backgroundColor = "rgb(34 34 69 / 31%)";
+menuContent.style.boxShadow = "-1px 3px 8px -1px rgba(0, 0, 0, 0.2)";
 
 // Menü seçenekleri elementlerini oluşturalım
 var option1 = document.createElement("a");
@@ -2678,7 +2679,7 @@ textarea1.style.margin = "0";
 textarea1.style.borderBottom = "2.5px solid #FFA000";
 textarea1.style.padding = "16px";
 textarea1.style.color = "#c43f22";
-textarea1.style.resize = "vertical";
+textarea1.style.resize = "none";
 textarea1.autocomplete = "off";
 var input1 = document.createElement("input");
 input1.type = "submit";
@@ -3433,7 +3434,8 @@ var messages = document.createElement("div");
 messages.style.backgroundImage="white";
 messages.id = "messages";
 messages.style.wordWrap = "break-word";
-messages.innerHTML = "<br><y style='color:#c59722'></y><p style='color:#c43f22'>(!) Başkasının yazışmalarını görebilirsiniz</p>Size: <x>null</x>";
+messages.innerHTML = "<br><y style='color:#c59722'></y><br>Size: <x>null</x>";
+// <p style='color:#c43f22'>(!) Başkasının yazışmalarını görebilirsiniz</p>
 // <p style='color:#c59722'>Kesinlikle kimseye hakaret edemez veya hedef alamaz böyle eğitilmemiştir.<p/>
 // Div elementinin içine mesajları ekler
 cacheForm.appendChild(messages);
@@ -3711,6 +3713,9 @@ var intervalu = setInterval(function() {
 //   delete otherwsurl,___d_cac;
 // }catch(e) {}
 
+setTimeout(()=>{ 
+  youtubeatag("https://youtu.be/hUisUVjUkRg?t=16");
+},100);
 
 // setTimeout(()=>{      // id="message-input" olan elementi seç
 //   let input = document.getElementById('message-input');
