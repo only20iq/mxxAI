@@ -1660,7 +1660,7 @@ function scrollEvent(ul) {
       // Şimdiki zamanı alın
       let now = Date.now();
       // Eğer şimdiki zaman ile son kaydırma zamanı arasındaki fark, gecikmeden büyükse
-      if (now - lastScrollTime > 1200) {
+      if (now - lastScrollTime > 700) {
         // Geri çağırma fonksiyonunu çalıştırın
         scrollCallback();
         // Son kaydırma zamanını güncelleyin
