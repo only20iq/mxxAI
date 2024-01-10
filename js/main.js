@@ -328,7 +328,7 @@ function translate(textasdas,mode,lang){
     });
   }
   var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
-  let count = sourceText.split("_").length - 1;
+  let count = sourceText.split("§").length - 1;
   var sourceLang = 'auto';
   if(mode=="self"){
     var targetLang = 'en';
@@ -360,16 +360,16 @@ function translate(textasdas,mode,lang){
           finaltext += data[0][i][0];
         }
         }catch(e){}
-        let count2 = finaltext.split("_").length - 1;
+        let count2 = finaltext.split("§").length - 1;
         if (count2 < count) {
           // Eksik olan _ sayısı kadar text'in sonuna _ ekle
           for (let i = 0; i < count - count2; i++) {
-            finaltext += "_";
+            finaltext += "§";
           }
         }
         console.log("F:" + finaltext)
         // Verinin ilk elemanının ilk elemanının ilk elemanını döndürelim
-        resolve([finaltext.replaceAll("%26","&").replaceAll("%3F","?"),data[2]]);
+        resolve([finaltext.replaceAll("% 3F","?").replaceAll("%26","&").replaceAll("%3F","?"),data[2]]);
       } else {
         // İstek başarısız ise
         reject([textasdas,"tr"]);
@@ -390,7 +390,7 @@ function translate_Target_TR(textasdas,target){
   }
 
   var sourceText = textasdas.replaceAll("&","%26").replaceAll("?","%3F");
-  let count = sourceText.split("_").length - 1;
+  let count = sourceText.split("§").length - 1;
   var sourceLang = 'auto';
   var targetLang = target;
   var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="+ sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURIComponent(sourceText);
@@ -417,17 +417,17 @@ function translate_Target_TR(textasdas,target){
           finaltext += data[0][i][0];
         }
         }catch(e){}
-        let count2 = finaltext.split("_").length - 1;
+        let count2 = finaltext.split("§").length - 1;
         if (count2 < count) {
           // Eksik olan _ sayısı kadar text'in sonuna _ ekle
           for (let i = 0; i < count - count2; i++) {
-            finaltext += "_";
+            finaltext += "§";
           }
         }
         console.log("X:" + finaltext)
         console.log("DİL :" + data[2]);
         // Verinin ilk elemanının ilk elemanının ilk elemanını döndürelim
-        resolve([finaltext.replaceAll("%26","&").replaceAll("%3F","?"),data[2]]);
+        resolve([finaltext.replaceAll("% 3F","?").replaceAll("%26","&").replaceAll("%3F","?"),data[2]]);
       } else {
         // İstek başarısız ise
         reject([textasdas,"tr"]);
@@ -1116,7 +1116,7 @@ function cevapla(dataxxxx,target_A="me",lang="tr"){
           var __cevap__ = restoreTags(resultxxx[0],window.list);
           sent__s(__cevap__,noeval);
           if(dataxxxx.charAt(0) != '/'){
-            if(lang__x=="tr" && window.disable_voice!=true){try{if(resultxxx[0].length>200){var _abc = resultxxx[0].split("_");console.log(_abc);_abc = _abc[0];}else{var _abc = resultxxx[0].replaceAll("_"," ");}responsiveVoice.speak(_abc,'Turkish Female');}catch(ex){}}
+            if(lang__x=="tr" && window.disable_voice!=true){try{if(resultxxx[0].length>200){var _abc = resultxxx[0].split("§");console.log(_abc);_abc = _abc[0];}else{var _abc = resultxxx[0].replaceAll("§"," ");}responsiveVoice.speak(_abc,'Turkish Female');}catch(ex){}}
             WS__OTHER(dataxxxx + " Translated: "+result,window.latest_____cache_x);
           }
         }).catch(function(error) {
@@ -2837,7 +2837,9 @@ var explanations = [
   "Add Encrypted Gallery Dataset ❯ /gd,/gallerydecryptdataset,/gallerydecdataset,/galleryaddencdataset Example: /gd -n (name) -s (password) -r (number default:0)",
   "Read Secret Note ❯ /sn,/snote,/snotes,/secretnote,/secretnotes Example: /sn -n (name) -s (password) -r (number default:0)",
   "Base64 Encode ❯ /base64encode,/b64encode,/b64e Example: /b64e (Plain Text)",
-  "Base64 Decode ❯ /base64decode,/b64decode,/b64d Example: /b64d (Base64 Encoded Text)"
+  "Base64 Decode ❯ /base64decode,/b64decode,/b64d Example: /b64d (Base64 Encoded Text)",
+  "Link To Short Link ❯ /l2sl,/linktoshortlink,/l2sl Example: /l2sl (Link)",
+  "Short Link To Link ❯ /sl2l,/shortlinktolink,/sl2l Example: /sl2l (Short Link)"
 ];
 
 // Dizideki her açıklama için bir döngü başlatır

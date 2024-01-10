@@ -1493,10 +1493,20 @@ function ai_cevapla(metin,onlytext=false) {
       return "sil";
     }
     if (['base64encode','b64encode','b64e'].includes(args[0].toLowerCase().slice(1))) {
-      try{cache_test += base64_encode(StringTouint8Array(args.slice(1).join(" ")));}catch(ex){cache_test += "Base64 Encode İşlem Başarısız";}
+      try{cache_test += base64_encode(StringTouint8Array(args.slice(1).join("")));}catch(ex){cache_test += "Base64 Encode İşlem Başarısız";}
     }
     if (['base64decode','b64decode','b64d'].includes(args[0].toLowerCase().slice(1))) {
-      try{cache_test += "%noeval%"+uint8ArrayToString(base64_decode(args.slice(1).join(" ")));}catch(ex){cache_test += "Base64 Decode İşlem Başarısız";}
+      try{cache_test += "%noeval%"+uint8ArrayToString(base64_decode(args.slice(1).join("")));}catch(ex){cache_test += "Base64 Decode İşlem Başarısız";}
+    }
+    if (['l2sl','linktoshortlink'].includes(args[0].toLowerCase().slice(1))) {
+      try{
+        cache_test += "%noeval%"+replaceTextlink(args.slice(1).join(""),true);
+      }catch(ex){cache_test += "Link To Short Link İşlem Başarısız";}
+    }
+    if (['sl2l','shortlinktolink'].includes(args[0].toLowerCase().slice(1))) {
+      try{
+        cache_test += "%noeval%"+replaceTextlink(args.slice(1).join(""),false);
+      }catch(ex){cache_test += "Short Link To Link İşlem Başarısız";}
     }
     if(cache_test=="%notr%"){
       return "Command not found"+" %notr%";
@@ -1640,17 +1650,23 @@ function replaceTags(text) {
       // Parçayı listeye ekliyoruz
       list.push(parts[i]);
       // Parçayı _ ile değiştiriyoruz
-      parts[i] = "_";
+      parts[i] = "§";
     }
   }
   var newText = parts.join("");
   window.list = list;
   return newText;
 }
+function adjustSpaces(text) {
+  return text.replace(/(§+)([^§]+?)(§*)/g, function(match, open, value, close) {
+    return open + " " + value.trim() + close;
+  });
+}
 function restoreTags(text, list) {
   let index = 0;
-  text = text.replace(/[_]/g, function(match) {
-    return list[index++];
+  text = adjustSpaces(text).replace(/[§]/g, function(match) {
+    let replacement = list[index++];
+    return replacement !== undefined ? replacement : "";
   });
   return text;
 }
@@ -1788,26 +1804,32 @@ function replace_with_xxx(string,onlytext=false) {
   let result = string.replace(regex, callback); // Stringin içinde regex ile eşleşen kısmı callback fonksiyonu ile değiştirir
   return result; // Sonucu döndürür
 }
-function replaceTextlink(text) {
-  let regex = /\$([^\$]+)\$/g; // $ ile başlayıp $ ile biten karakter dizilerini tanımlayan bir düzenli ifade, "g" bayrağı ile global arama yapar
-  let new_text = text.replace(regex, function(match, value) { // Text dizesindeki tüm eşleşmeleri değiştiren bir fonksiyon kullanır
-    if (value == "tw") { // Eğer değer "tw" ise
-      return "https://pbs.twimg.com/media/"; // Değeri https://twitter/api/ ile değiştirir
-    } else if (value == "y") { // Eğer değer "tw" ise
-      return "https://youtu.be/"; // Değeri https://youtu.be/ ile değiştirir
-    } else if (value == "rd") { // Eğer değer "rd" ise
-      return "https://preview.redd.it/"; // Değeri https://preview.redd.it/ ile değiştirir
-    } else if (value == "i") { // Eğer değer "rd" ise
-      return "https://i.imgur.com/"; // Değeri https://i.imgur.com/ ile değiştirir
-    } else if (value == "v1pin") { // Eğer değer "rd" ise
-      return "https://v1.pinimg.com/"; // Değeri https://v1.pinimg.com/ ile değiştirir
-    } else if (value == "ipin") { // Eğer değer "rd" ise
-      return "https://i.pinimg.com/"; // Değeri https://i.pinimg.com/ ile değiştirir
-    } else { // Eğer değer "tw" değilse
-      return match; // Değeri olduğu gibi bırakır
-    }
-  });
-  return new_text; // Yeni dizeyi döndürür
+
+let links = {
+  "tw": "https://pbs.twimg.com/media/",
+  "y": "https://youtu.be/",
+  "rd": "https://preview.redd.it/",
+  "i": "https://i.imgur.com/",
+  "v1pin": "https://v1.pinimg.com/",
+  "ipin": "https://i.pinimg.com/"
+};
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+function replaceTextlink(text, reverse) {
+  if (reverse) {
+    let regex = new RegExp(Object.values(links).map(escapeRegExp).join("|"), "g");
+    return text.replace(regex, function(match) {
+      return "$" + Object.keys(links).find(key => links[key] === match) + "$";
+    });
+  } else {
+    let regex = /\$([^\$]+)\$/g;
+    return text.replace(regex, function(match, value) {
+      return links[value] ? links[value] : match;
+    });
+  }
 }
 
 function markdown_to_html_link(markdown,onlytext) {
