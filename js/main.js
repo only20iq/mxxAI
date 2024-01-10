@@ -3713,9 +3713,9 @@ var intervalu = setInterval(function() {
 //   delete otherwsurl,___d_cac;
 // }catch(e) {}
 
-setTimeout(()=>{ 
-  youtubeatag("https://youtu.be/hUisUVjUkRg?t=16");
-},100);
+// setTimeout(()=>{ 
+//   youtubeatag("https://youtu.be/hUisUVjUkRg?t=16");
+// },100);
 
 // setTimeout(()=>{      // id="message-input" olan elementi seç
 //   let input = document.getElementById('message-input');
