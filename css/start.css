@@ -75,7 +75,7 @@
     background-color: transparent; /* Önerinin arka plan rengini koyulaştır */
     transform: scale(1.1); /* Öneriyi biraz büyüt */
     transition: all 0.3s; /* Değişikliği yumuşak bir şekilde yap */
-    color:black;
+    color:red;
   }
 
   .textareaxa {

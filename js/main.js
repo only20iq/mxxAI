@@ -2320,8 +2320,6 @@ if(window.dev_mode!=true){
 // ! ||--------------------------------------------------------------------------------||
 // ^ Base
 var body = document.querySelector("body");
-body.style.backgroundImage = "url("+background_theme_img+")";
-body.style.backgroundAttachment = "fixed";
 var div = document.createElement("div");
 div.style.margin = "0 auto";
 div.style.textAlign = "center";
@@ -2330,6 +2328,7 @@ div.style.color = "#c43f22";
 div.style.maxWidth = "600px";
 div.style.position = "relative";
 div.id = "base";
+
 try{
 
   var wave_data = 
@@ -2364,6 +2363,29 @@ try{
   var header = document.createElement("header");
   header.id = "header_x";
   header.style.height = "180px";
+
+  var bgimg = document.createElement("img");
+  bgimg.id="backgrounddivimage";
+  var node = document.createElement("div");
+  node.id="backgrounddiv";
+  node.style.position = "fixed";
+  node.style.top = "0";
+  node.style.left = "0";
+  node.style.zIndex = "-2";
+  node.style.userSelect = "none";
+  node.style.pointerEvents = "none";
+  node.style.width = "100%";
+  node.style.height = "100%";
+  node.appendChild(bgimg); // bgimg'yi yeni div'in içine ekle
+  header.appendChild(node); // div'i belirli bir node'un içine ekle
+  bgimg.style.width = "100%";
+  bgimg.style.height = "100%";
+  bgimg.src = background_theme_img;
+  bgimg.onload = function() {
+    URL.revokeObjectURL(background_theme_img);
+  };
+
+
 
 // <img> elementini oluşturalım
 var img = document.createElement("div");
@@ -3176,7 +3198,7 @@ var textarea = document.createElement("textarea");
 textarea.spellcheck = false;
 textarea.type = "search";
 textarea.id = "message-input";
-textarea.className = "textareaxx1 asdas1c";
+textarea.className = "textareaxx asdas1c";
 textarea.onkeypress = function() { if (window.event.keyCode == 13) { event.preventDefault(); document.getElementById('message-submit').click(); } };
 textarea.placeholder = "Send Message";
 textarea.style.height = "59px";
