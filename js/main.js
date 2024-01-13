@@ -2377,9 +2377,9 @@ try{
   node.style.width = "100%";
   // node.style.height = "100%";
   bgimg.style.width = "100%";
-  // bgimg.style.height = "100%";
+  bgimg.style.height = "100%";
   bgimg.style.position = "fixed";
-  bgimg.style.objectFit = "contain";
+  bgimg.style.objectFit = "cover";
   // bgimg.style.top = "0";
   bgimg.style.left = "0";
   bgimg.style.zIndex = "-2";
@@ -2387,7 +2387,7 @@ try{
   bgimg.style.pointerEvents = "none";
   bgimg.src = background_theme_img;
   node.appendChild(bgimg);
-  header.appendChild(node);
+  div.appendChild(node);
   bgimg.onload = function() {
     URL.revokeObjectURL(background_theme_img);
   };
