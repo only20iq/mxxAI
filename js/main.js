@@ -2320,6 +2320,15 @@ if(window.dev_mode!=true){
 // ! ||--------------------------------------------------------------------------------||
 // ^ Base
 var body = document.querySelector("body");
+var bgImg = new Image();
+bgImg.onload = function(){
+    URL.revokeObjectURL(background_theme_img);
+};
+bgImg.src = background_theme_img;
+body.style.backgroundImage = `url('${bgImg.src}')`;
+body.style.backgroundRepeat = "no-repeat";
+body.style.backgroundAttachment = "fixed";
+body.style.backgroundSize = "cover";
 var div = document.createElement("div");
 div.style.margin = "0 auto";
 div.style.textAlign = "center";
@@ -2364,33 +2373,33 @@ try{
   header.id = "header_x";
   header.style.height = "180px";
 
-  var bgimg = document.createElement("img");
-  bgimg.id="backgrounddivimage";
-  var node = document.createElement("div");
-  node.id="backgrounddiv";
-  node.style.position = "fixed";
-  node.style.top = "0";
-  node.style.left = "0";
-  node.style.zIndex = "-2";
-  node.style.userSelect = "none";
-  node.style.pointerEvents = "none";
-  node.style.width = "100%";
-  // node.style.height = "100%";
-  bgimg.style.width = "100%";
-  bgimg.style.height = "100%";
-  bgimg.style.position = "fixed";
-  bgimg.style.objectFit = "cover";
-  // bgimg.style.top = "0";
-  bgimg.style.left = "0";
-  bgimg.style.zIndex = "-2";
-  bgimg.style.userSelect = "none";
-  bgimg.style.pointerEvents = "none";
-  bgimg.src = background_theme_img;
-  node.appendChild(bgimg);
-  div.appendChild(node);
-  bgimg.onload = function() {
-    URL.revokeObjectURL(background_theme_img);
-  };
+  // var bgimg = document.createElement("img");
+  // bgimg.id="backgrounddivimage";
+  // var node = document.createElement("div");
+  // node.id="backgrounddiv";
+  // node.style.position = "fixed";
+  // node.style.top = "0";
+  // node.style.left = "0";
+  // node.style.zIndex = "-2";
+  // node.style.userSelect = "none";
+  // node.style.pointerEvents = "none";
+  // node.style.width = "100%";
+  // // node.style.height = "100%";
+  // bgimg.style.width = "100%";
+  // bgimg.style.height = "100%";
+  // bgimg.style.position = "fixed";
+  // bgimg.style.objectFit = "cover";
+  // // bgimg.style.top = "0";
+  // bgimg.style.left = "0";
+  // bgimg.style.zIndex = "-2";
+  // bgimg.style.userSelect = "none";
+  // bgimg.style.pointerEvents = "none";
+  // bgimg.src = background_theme_img;
+  // node.appendChild(bgimg);
+  // div.appendChild(node);
+  // bgimg.onload = function() {
+  //   URL.revokeObjectURL(background_theme_img);
+  // };
 
 
 
