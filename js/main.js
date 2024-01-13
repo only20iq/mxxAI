@@ -2378,7 +2378,7 @@ try{
   node.style.height = "auto";
   bgimg.style.width = "100%";
   bgimg.style.height = "100%";
-  bgimg.style.position = "fixed";
+  bgimg.style.position = "relative";
   bgimg.style.top = "0";
   bgimg.style.left = "0";
   bgimg.style.zIndex = "-2";
