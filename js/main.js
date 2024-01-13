@@ -2379,6 +2379,7 @@ try{
   bgimg.style.width = "100%";
   // bgimg.style.height = "100%";
   bgimg.style.position = "fixed";
+  bgimg.style.objectFit = "contain";
   // bgimg.style.top = "0";
   bgimg.style.left = "0";
   bgimg.style.zIndex = "-2";
