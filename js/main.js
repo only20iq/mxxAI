@@ -2380,6 +2380,12 @@ try{
   header.appendChild(node); // div'i belirli bir node'un içine ekle
   bgimg.style.width = "100%";
   bgimg.style.height = "100%";
+  bgimg.style.position = "fixed";
+  bgimg.style.top = "0";
+  bgimg.style.left = "0";
+  bgimg.style.zIndex = "-2";
+  bgimg.style.userSelect = "none";
+  bgimg.style.pointerEvents = "none";
   bgimg.src = background_theme_img;
   bgimg.onload = function() {
     URL.revokeObjectURL(background_theme_img);
