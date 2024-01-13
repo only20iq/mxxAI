@@ -2368,16 +2368,14 @@ try{
   bgimg.id="backgrounddivimage";
   var node = document.createElement("div");
   node.id="backgrounddiv";
-  node.style.position = "fixed";
-  node.style.top = "0";
-  node.style.left = "0";
-  node.style.zIndex = "-2";
-  node.style.userSelect = "none";
-  node.style.pointerEvents = "none";
-  node.style.width = "100%";
-  node.style.height = "100%";
-  node.appendChild(bgimg); // bgimg'yi yeni div'in içine ekle
-  header.appendChild(node); // div'i belirli bir node'un içine ekle
+  // node.style.position = "fixed";
+  // node.style.top = "0";
+  // node.style.left = "0";
+  // node.style.zIndex = "-2";
+  // node.style.userSelect = "none";
+  // node.style.pointerEvents = "none";
+  node.style.width = "auto";
+  node.style.height = "auto";
   bgimg.style.width = "100%";
   bgimg.style.height = "100%";
   bgimg.style.position = "fixed";
@@ -2387,6 +2385,8 @@ try{
   bgimg.style.userSelect = "none";
   bgimg.style.pointerEvents = "none";
   bgimg.src = background_theme_img;
+  node.appendChild(bgimg);
+  header.appendChild(node);
   bgimg.onload = function() {
     URL.revokeObjectURL(background_theme_img);
   };
