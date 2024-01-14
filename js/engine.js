@@ -1249,7 +1249,7 @@ function ai_cevapla(metin,onlytext=false) {
     ytpanelx.style.setProperty('height', 'auto');
     ytpanelx.style.setProperty('z-index', '1');
     ytpanelx.style.setProperty('min-height', '280px');
-    ytpanelx.style.setProperty('max-height', '360px');
+    ytpanelx.style.setProperty('max-height', '315px');
     ytpanelx.style.setProperty('bottom', '0');
     ytpanelx.style.setProperty('left', '0');
     ytpanelx.style.setProperty('right', '0');
@@ -2155,7 +2155,7 @@ function youtubeatag(data){
     ytpanelx.style.setProperty('height', 'auto');
     ytpanelx.style.setProperty('z-index', '1');
     ytpanelx.style.setProperty('min-height', '280px');
-    ytpanelx.style.setProperty('max-height', '360px');
+    ytpanelx.style.setProperty('max-height', '315px');
     ytpanelx.style.setProperty('bottom', '0');
     ytpanelx.style.setProperty('left', '0');
     ytpanelx.style.setProperty('right', '0');

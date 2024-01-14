@@ -354,7 +354,9 @@ var data_raw = {
         "ensevdiğinrenk":"En sevdiğim renk sanırım mor diyebilirim",
         "ensevdiğinrenknedir":"$ensevdiğinrenk",
         "ensevdiğinmeyve":"Benim en sevdiğim meyve kesinlikle muz diyebilirim",
-        "ensevdiğinmeyvenedir":"$ensevdiğinmeyve"
+        "ensevdiğinmeyvenedir":"$ensevdiğinmeyve",
+        "niyededin":"Ben ne dediğimi bilmiyorum peki ya sen?",
+        "nededin":"Ne dediğimi niye söyliyim ki?"
     },
     "multi" : {
         "set1": "merhaba/nasılsın/iyimisin/naber/meraba=$sc1",
