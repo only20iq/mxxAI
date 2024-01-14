@@ -1244,6 +1244,7 @@ function ai_cevapla(metin,onlytext=false) {
     ytpanelx.style.textAlign = "center";
     ytpanelx.style.setProperty('position', 'fixed');
     ytpanelx.style.setProperty('margin', '0 auto');
+    ytpanelx.style.setProperty('min-width', 'auto');
     ytpanelx.style.setProperty('max-width', '600px');
     ytpanelx.style.setProperty('width', 'auto');
     ytpanelx.style.setProperty('height', 'auto');
@@ -1253,8 +1254,9 @@ function ai_cevapla(metin,onlytext=false) {
     ytpanelx.style.setProperty('bottom', '0');
     ytpanelx.style.setProperty('left', '0');
     ytpanelx.style.setProperty('right', '0');
-    ytpanelx.style.bottom = 0;    
-    ytpanelx.innerHTML = '<div class="iframe-wrapper"><iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
+    ytpanelx.style.bottom = 0; 
+    ytpanelx.className = "iframeAAAdiv";   
+    ytpanelx.innerHTML = '<div id="iframe-wrapper" class="iframe-wrapper"><iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
     let bg1 = document.getElementById("ytpanel").firstChild;
     bg1.style.setProperty('width', '100%');
     bg1.style.setProperty('height', '100%');
@@ -1352,20 +1354,26 @@ function ai_cevapla(metin,onlytext=false) {
           if(bg.firstElementChild.firstElementChild.tagName!="IFRAME"){return "Video Not Found%notr%%noeval%";}
           bg.style.setProperty('max-height', '100%');
           bg.style.setProperty('max-width', '100%');
+          bg.style.setProperty('min-height', '100%');
+          bg.style.setProperty('min-width', '100%');
           bg.style.setProperty('width', '100%');
           bg.style.setProperty('height', '100%');
-          bg.style.setProperty('z-index', '-1');
+          bg.style.setProperty('z-index', '-2');
+          bg.style.setProperty('position', 'fixed');
+          bg.classList.remove("iframeAAAdiv");
           bg.style.borderRadius = "0";
           let bg1 = document.getElementById("ytpanel").firstChild.firstChild;
-          bg1.style.setProperty('max-height', '100%');
-          bg1.style.setProperty('max-width', '100%');
-          bg1.style.setProperty('width', '100%');
-          bg1.style.setProperty('height', '100%');
-          bg1.style.setProperty('z-index', '-1');
+          // bg1.style.setProperty('max-height', '100%');
+          // bg1.style.setProperty('max-width', '100%');
+          // bg1.style.setProperty('min-height', '100%');
+          // bg1.style.setProperty('min-width', '100%');
+          // bg1.style.setProperty('width', '100%');
+          // bg1.style.setProperty('height', '100%');
+          // bg1.style.setProperty('z-index', '-2');
           bg1.style.objectFit = "cover";
           bg1.style.borderRadius = "0";
-          bg.style.backgroundColor = "black";
-          bg1.style.backgroundColor = "black";
+          bg.style.backgroundColor = "transparent";
+          bg1.style.backgroundColor = "transparent";
         }catch(ex){console.log(ex);}
         return "sil";
       }
@@ -2150,6 +2158,7 @@ function youtubeatag(data){
     ytpanelx.style.textAlign = "center";
     ytpanelx.style.setProperty('position', 'fixed');
     ytpanelx.style.setProperty('margin', '0 auto');
+    ytpanelx.style.setProperty('min-width', 'auto');
     ytpanelx.style.setProperty('max-width', '600px');
     ytpanelx.style.setProperty('width', 'auto');
     ytpanelx.style.setProperty('height', 'auto');
@@ -2160,7 +2169,8 @@ function youtubeatag(data){
     ytpanelx.style.setProperty('left', '0');
     ytpanelx.style.setProperty('right', '0');
     ytpanelx.style.bottom = 0;
-    ytpanelx.innerHTML = '<div class="iframe-wrapper"><iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
+    ytpanelx.className = "iframeAAAdiv";
+    ytpanelx.innerHTML = '<div id="iframe-wrapper" class="iframe-wrapper"><iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
     let bg1 = document.getElementById("ytpanel").firstChild;
     bg1.style.setProperty('width', '100%');
     bg1.style.setProperty('height', '100%');

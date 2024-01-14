@@ -76,6 +76,7 @@ textarea:focus {
     padding-bottom: 56.25%; /* 16:9 */
     overflow: hidden;
     background-size:100% 100%;
+    background-color:transparent;
   }
   #messages iframe{width:100%;height:auto;min-height:280px;max-width: 600px;max-height: 315px;border:none;border-radius:25px;}
 
