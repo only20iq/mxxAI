@@ -1245,7 +1245,7 @@ function ai_cevapla(metin,onlytext=false) {
     ytpanelx.style.setProperty('position', 'fixed');
     ytpanelx.style.setProperty('margin', '0 auto');
     ytpanelx.style.setProperty('max-width', '600px');
-    ytpanelx.style.setProperty('width', '100%');
+    ytpanelx.style.setProperty('width', 'auto');
     ytpanelx.style.setProperty('height', 'auto');
     ytpanelx.style.setProperty('z-index', '1');
     ytpanelx.style.setProperty('min-height', '280px');
@@ -1254,22 +1254,17 @@ function ai_cevapla(metin,onlytext=false) {
     ytpanelx.style.setProperty('left', '0');
     ytpanelx.style.setProperty('right', '0');
     ytpanelx.style.bottom = 0;    
-    ytpanelx.innerHTML = '<iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    ytpanelx.innerHTML = '<div class="iframe-wrapper"><iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
     let bg1 = document.getElementById("ytpanel").firstChild;
-    bg1.style.setProperty('min-height', '280px');
-    bg1.style.setProperty('max-height', '360px');
-    bg1.style.setProperty('max-width', '600px');
     bg1.style.setProperty('width', '100%');
     bg1.style.setProperty('height', '100%');
     bg1.style.setProperty('z-index', '1');
-    bg1.style.setProperty('bottom', '0');
-    bg1.style.setProperty('left', '0');
-    bg1.style.setProperty('right', '0');
-    bg1.style.bottom = 0;
+    bg1.style.setProperty('position', 'absolute');
     bg1.style.borderRadius = "none";
     bg1.style.borderTopRightRadius = "25px";
     bg1.style.borderTopLeftRadius = "25px";
     bg1.style.backgroundColor = "transparent";
+    bg1.style.textAlign = "left";
     ytpanelx.style.backgroundColor = "transparent";
     _return = 1;
     return "sil";
@@ -1353,15 +1348,15 @@ function ai_cevapla(metin,onlytext=false) {
       if (['bg','background','arkaplan'].includes(args[0].toLowerCase().slice(1))) {
         try{
           let bg = document.getElementById("ytpanel");
-          if(!bg.firstElementChild){return "Video Not Found%notr%%noeval%";}
-          if(bg.firstElementChild.tagName!="IFRAME"){return "Video Not Found%notr%%noeval%";}
+          if(!bg.firstElementChild.firstElementChild){return "Video Not Found%notr%%noeval%";}
+          if(bg.firstElementChild.firstElementChild.tagName!="IFRAME"){return "Video Not Found%notr%%noeval%";}
           bg.style.setProperty('max-height', '100%');
           bg.style.setProperty('max-width', '100%');
           bg.style.setProperty('width', '100%');
           bg.style.setProperty('height', '100%');
           bg.style.setProperty('z-index', '-1');
           bg.style.borderRadius = "0";
-          let bg1 = document.getElementById("ytpanel").firstChild;
+          let bg1 = document.getElementById("ytpanel").firstChild.firstChild;
           bg1.style.setProperty('max-height', '100%');
           bg1.style.setProperty('max-width', '100%');
           bg1.style.setProperty('width', '100%');
@@ -2156,7 +2151,7 @@ function youtubeatag(data){
     ytpanelx.style.setProperty('position', 'fixed');
     ytpanelx.style.setProperty('margin', '0 auto');
     ytpanelx.style.setProperty('max-width', '600px');
-    ytpanelx.style.setProperty('width', '100%');
+    ytpanelx.style.setProperty('width', 'auto');
     ytpanelx.style.setProperty('height', 'auto');
     ytpanelx.style.setProperty('z-index', '1');
     ytpanelx.style.setProperty('min-height', '280px');
@@ -2165,23 +2160,17 @@ function youtubeatag(data){
     ytpanelx.style.setProperty('left', '0');
     ytpanelx.style.setProperty('right', '0');
     ytpanelx.style.bottom = 0;
-    ytpanelx.innerHTML = '<iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-    
+    ytpanelx.innerHTML = '<div class="iframe-wrapper"><iframe src="https://www.youtube.com/embed/'+_000+'" title="None" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>';
     let bg1 = document.getElementById("ytpanel").firstChild;
-    bg1.style.setProperty('min-height', '280px');
-    bg1.style.setProperty('max-height', '360px');
-    bg1.style.setProperty('max-width', '600px');
     bg1.style.setProperty('width', '100%');
     bg1.style.setProperty('height', '100%');
     bg1.style.setProperty('z-index', '1');
-    bg1.style.setProperty('bottom', '0');
-    bg1.style.setProperty('left', '0');
-    bg1.style.setProperty('right', '0');
-    bg1.style.bottom = 0;
+    bg1.style.setProperty('position', 'absolute');
     bg1.style.borderRadius = "none";
     bg1.style.borderTopRightRadius = "25px";
     bg1.style.borderTopLeftRadius = "25px";
     bg1.style.backgroundColor = "transparent";
+    bg1.style.textAlign = "left";
     ytpanelx.style.backgroundColor = "transparent";
     _return = 1;
     return "sil";
