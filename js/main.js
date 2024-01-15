@@ -2483,7 +2483,7 @@ option1.style.display = "block";
 option1.style.padding = "10px";
 option1.style.textDecoration = "none";
 option1.style.color = "#c43f22";
-option1.textContent = "𝒞𝒽𝒶𝓉";
+option1.textContent = "Chat";
 
 var option2 = document.createElement("a");
 option2.id = "option2";
@@ -2495,7 +2495,7 @@ option2.style.display = "block";
 option2.style.padding = "10px";
 option2.style.textDecoration = "none";
 option2.style.color = "#c43f22";
-option2.textContent = "𝒩𝑜𝓉𝑒𝓅𝒶𝒹";
+option2.textContent = "Notepad";
 
 var option3 = document.createElement("a");
 option3.id = "option3";
@@ -2507,7 +2507,7 @@ option3.style.display = "block";
 option3.style.padding = "10px";
 option3.style.textDecoration = "none";
 option3.style.color = "#c43f22";
-option3.textContent = "𝒞𝑜𝓂𝓂𝒶𝓃𝒹𝓈";
+option3.textContent = "Commands";
 
 var option4 = document.createElement("a");
 option4.id = "option4";
@@ -2519,7 +2519,7 @@ option4.style.display = "block";
 option4.style.padding = "10px";
 option4.style.textDecoration = "none";
 option4.style.color = "#c43f22";
-option4.textContent = "𝒦𝓅𝑜𝓅";
+option4.textContent = "Kpop";
 
 var option5 = document.createElement("a");
 option5.id = "option5";
@@ -2531,7 +2531,7 @@ option5.style.display = "block";
 option5.style.padding = "10px";
 option5.style.textDecoration = "none";
 option5.style.color = "#c43f22";
-option5.textContent = "𝒲𝑒𝒷𝓈𝑜𝒸𝓀𝑒𝓉";
+option5.textContent = "Websocket";
 
 var option6 = document.createElement("a");
 option6.id = "option6";
@@ -2544,7 +2544,7 @@ option6.style.display = "block";
 option6.style.padding = "10px";
 option6.style.textDecoration = "none";
 option6.style.color = "#c43f22";
-option6.textContent = "𝒢𝒶𝓁𝓁𝑒𝓇𝓎";
+option6.textContent = "Gallery";
 
 var option7 = document.createElement("a");
 option7.id = "option7";
@@ -2556,7 +2556,7 @@ option7.style.display = "block";
 option7.style.padding = "10px";
 option7.style.textDecoration = "none";
 option7.style.color = "#c43f22";
-option7.textContent = "𝒞𝑜𝓃𝒻𝒾𝑔";
+option7.textContent = "Config";
 
 var option8 = document.createElement("a");
 option8.id = "option8";
@@ -2568,7 +2568,7 @@ option8.style.display = "block";
 option8.style.padding = "10px";
 option8.style.textDecoration = "none";
 option8.style.color = "#c43f22";
-option8.textContent = "𝒫𝓇𝑜𝒸";
+option8.textContent = "Proc";
 
 // Menü içeriği elementinin içine menü seçenekleri elementlerini ekleyelim
 menuContent.appendChild(option1);
