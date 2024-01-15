@@ -371,6 +371,8 @@ var data_raw = {
         "sc1x4": ["Sağlık hizmetlerinde en önemlisi bana göre psikiyatrik kısım diyebilirim"],
         "set1.5": "insan+hakları/haklarının+önemi/hizmetleri/hizmetlerinin/önemini+nedir/anlatır/anlatsana/anlatırmısın/tanımlarsın=$sc1x5",
         "sc1x5": ["İnsan haklarına hiç girme konuşacak boğazım kalmadı hatta boğazım kurudu"],
+        "set1.6": "seni+kim+yaptı/üretti,seni+kim+icat+etti=$sc1x6",
+        "sc1x6": ["Beni icat eden kişiyi boşver benim üretilme amacım önemli, amacım ise tamamen sıkılmanı engellemek"],
         "set2": "ad/adın/soyadın/adınız+ne/nedir,yaş/yaşın+kaç,sen+kimsin=$sc2",
         "set2x0":"kore/korea/korean+draması/drama/dramasi/dizi/dizileri=$sc2x0",
         "sc2x0":["Move to Heaven, Flower of Evil, My Mister, Reply 1988, Prison Playbook, Mr. Queen, Extraordinary Attorney Woo<br>Kore dizilerini genel olarak kaliteli buluyorum eğlenceli","Under the Queen's Umbrella, It's Okay to Not Be Okay,Crash Landing on You, Vincenzo, Navillera, Signal, Mr. Sunshine, Mouse, he Uncanny Counter, The Red Sleeve<br>Kore ile ilgili her şeyi seviyorum "],

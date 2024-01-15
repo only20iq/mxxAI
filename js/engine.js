@@ -1362,6 +1362,8 @@ function ai_cevapla(metin,onlytext=false) {
           bg.style.setProperty('position', 'fixed');
           bg.classList.remove("iframeAAAdiv");
           bg.style.borderRadius = "0";
+          let iframewrapper = document.getElementById("ytpanel").firstChild;
+          iframewrapper.style.borderRadius = "0";
           let bg1 = document.getElementById("ytpanel").firstChild.firstChild;
           // bg1.style.setProperty('max-height', '100%');
           // bg1.style.setProperty('max-width', '100%');
@@ -2177,8 +2179,8 @@ function youtubeatag(data){
     bg1.style.setProperty('z-index', '1');
     bg1.style.setProperty('position', 'absolute');
     bg1.style.borderRadius = "none";
-    bg1.style.borderTopRightRadius = "25px";
-    bg1.style.borderTopLeftRadius = "25px";
+    // bg1.style.borderTopRightRadius = "25px";
+    // bg1.style.borderTopLeftRadius = "25px";
     bg1.style.backgroundColor = "transparent";
     bg1.style.textAlign = "left";
     ytpanelx.style.backgroundColor = "transparent";
