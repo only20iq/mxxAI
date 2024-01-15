@@ -89,7 +89,7 @@
   outline: none;
   padding: 10px;
   font-size: 18px;
-  font-family: Roboto, sans-serif;
+  /* font-family: Roboto, sans-serif; */
   resize: none;
   background: transparent;
   color: #c43f22;
@@ -103,7 +103,7 @@
   border: none;
   outline: none;
   font-size: 20px;
-  font-family: Roboto, sans-serif;
+  /* font-family: Roboto, sans-serif; */
   box-shadow: none;
   background: transparent;
   color: #c43f22;
