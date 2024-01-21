@@ -1740,19 +1740,19 @@ var media; if (/(\.jpeg|\.jpg|\.png|\pbs.twimg.com|\.gif)/i.test(fileName)){ med
     media.dataset.src = url;
   } media.alt = fileName;media.style.objectFit = "contain";
   media.style.maxWidth = "100%";  media.style.height = "100vh";
-  media.style.objectFit = "contain";
+  media.style.objectFit = "cover";
   media.style.marginTop = "1%";
   media.style.textIndent = "-20000px";
   media.style.background = "none";
   media.style.backgroundColor = "transparent";
-  media.style["::before"] = "content: none";
+  media.style["::before"] = "display: none";
   media.style.marginBottom = "1%";  media.style.width = "100%";
 } else if (/(\.mp4|\.webm|\.ogg|\.wmv)/i.test(fileName)){
   media = document.createElement("video");
   media.style.width = "100%";
   media.style.maxWidth = "600px";
   media.style.height = "100vh";
-  media.style.objectFit = "contain";
+  media.style.objectFit = "cover";
   media.style.backgroundColor = "transparent";
   media.style.marginTop = "1%";
   media.style.marginBottom = "1%";
