@@ -1546,7 +1546,7 @@ if (folderPath.endsWith("]")) {
   // Dosya isimlerini showFiles fonksiyonuna gönderin
   showFiles(fileNames, folderPath, (ul) => {
     // Kaydırma olayını tanımlayın
-    window.addEventListener("scroll", () => scrollEvent(ul));
+    document.getElementById("gallery_x").addEventListener("scroll", () => scrollEvent(ul));
     // Sayfanın en başına kaydırın
     window.scrollTo(0, 0);
   },kural);
@@ -1558,7 +1558,7 @@ if (folderPath.endsWith("]")) {
     .then(shuffleFileNames) // Dosya adlarını rastgele karıştırın
     .then(fileNames => showFiles(fileNames, folderPath, (ul) => {
       // Kaydırma olayını tanımlayın
-      window.addEventListener("scroll", () => scrollEvent(ul));
+      document.getElementById("gallery_x").addEventListener("scroll", () => scrollEvent(ul));
       // Sayfanın en başına kaydırın
       window.scrollTo(0, 0);
     }));
@@ -1696,7 +1696,7 @@ function scrollEvent(ul) {
       // Zamanlayıcıyı null olarak ayarlayın
       clearTimeout(timer);
       timer = null;
-      if (window.scrollY + window.innerHeight >= window.listBottom) {
+      if (document.getElementById("gallery_x").scrollTop + document.getElementById("gallery_x").clientHeight >= window.listBottom) {
         var firstChild = ul.firstElementChild;
         ul.removeChild(firstChild);
         ul.append(firstChild); 
@@ -1716,10 +1716,10 @@ function scrollEvent(ul) {
     }
 
     // Kaydırma olayını dinlemeye başlayın
-    window.addEventListener("scroll", throttleScroll);
+    document.getElementById("gallery_x").addEventListener("scroll", throttleScroll);
   } else {
     // Kaydırma olayını dinlemeyi durdurun
-    window.removeEventListener("scroll", throttleScroll);
+    document.getElementById("gallery_x").removeEventListener("scroll", throttleScroll);
   }
 }
 
@@ -1740,7 +1740,7 @@ var media; if (/(\.jpeg|\.jpg|\.png|\pbs.twimg.com|\.gif)/i.test(fileName)){ med
     media.dataset.src = url;
   } media.alt = fileName;media.style.objectFit = "contain";
   media.style.maxWidth = "100%";  media.style.height = "100vh";
-  media.style.objectFit = "cover";
+  media.style.objectFit = "contain";
   media.style.marginTop = "1%";
   media.style.textIndent = "-20000px";
   media.style.background = "none";
@@ -1752,7 +1752,7 @@ var media; if (/(\.jpeg|\.jpg|\.png|\pbs.twimg.com|\.gif)/i.test(fileName)){ med
   media.style.width = "100%";
   media.style.maxWidth = "600px";
   media.style.height = "100vh";
-  media.style.objectFit = "cover";
+  media.style.objectFit = "contain";
   media.style.backgroundColor = "transparent";
   media.style.marginTop = "1%";
   media.style.marginBottom = "1%";
@@ -3530,7 +3530,12 @@ cacheForm.appendChild(messages);
   var gallery_x = document.createElement("div");
   gallery_x.id = "gallery_x";
   gallery_x.style.display = "none";
-  
+  gallery_x.style.width = "100%";
+  gallery_x.style.height = "100%";
+  gallery_x.style.left = "0";
+  gallery_x.style.top = "0";
+  gallery_x.style.position = "fixed";
+  gallery_x.style.overflowY = "scroll";
   div.appendChild(gallery_x);
 })();
 // ^ Proc
