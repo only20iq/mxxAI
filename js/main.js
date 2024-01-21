@@ -1763,6 +1763,7 @@ var media; if (/(\.jpeg|\.jpg|\.png|\pbs.twimg.com|\.gif)/i.test(fileName)){ med
   media.style.height = "100vh";
   media.style.objectFit = "contain";
   media.style.backgroundColor = "transparent";
+  media.style.margin = "0 auto";
   media.style.marginTop = "1%";
   media.style.marginBottom = "1%";
   media.style.display = "block";
