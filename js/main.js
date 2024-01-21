@@ -1619,9 +1619,12 @@ fileNames.forEach(fileName => {
   callback(ul);
 
 }
-
+let lastRun = null;
 // Medya öğelerini değiştiren bir fonksiyon oluşturun
 function toggleFiles(ul) {
+  if (lastRun === null || Date.now() - lastRun >= 200) {
+    lastRun = Date.now();
+  }else{return;}
   const mediaElements = ul.querySelectorAll(".media[data-src], video[data-src]");
   // prevSrc değişkenini tanımlayın
   let prevSrc = "";
