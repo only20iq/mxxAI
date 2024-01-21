@@ -1609,6 +1609,7 @@ fileNames.forEach(fileName => {
 });
   // Liste elementini body elementine ekleyin
   document.getElementById("gallery_x").appendChild(ul);
+  document.getElementById("gallery_x").appendChild(document.createElement("br"));
   // Liste elementini gösterin
   ul.style.display = "block";
   ul.style.margin = "0 auto";
@@ -1619,12 +1620,8 @@ fileNames.forEach(fileName => {
   callback(ul);
 
 }
-let lastRun = null;
 // Medya öğelerini değiştiren bir fonksiyon oluşturun
 function toggleFiles(ul) {
-  if (lastRun === null || Date.now() - lastRun >= 200) {
-    lastRun = Date.now();
-  }else{return;}
   const mediaElements = ul.querySelectorAll(".media[data-src], video[data-src]");
   // prevSrc değişkenini tanımlayın
   let prevSrc = "";
@@ -1635,6 +1632,15 @@ function toggleFiles(ul) {
         if (entry.isIntersecting) {
           if (!entry.target.dataset.loaded) {
             entry.target.src = entry.target.dataset.src;
+            if (entry.target.tagName === "IMG") {
+              entry.target.style.backgroundColor = "red";
+              entry.target.onload = function () {
+                this.style.backgroundColor = "transparent";
+              }
+              entry.target.onerror = function () {
+                this.style.backgroundColor = "transparent";
+              }
+            }
             entry.target.dataset.loaded = true;
           }
           if (!document.querySelector("video[autoplay]")) {
