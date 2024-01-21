@@ -1276,8 +1276,8 @@ geridon_gallery.addEventListener("click", ()=>{
   // window.removeEventListener("scroll", window.throttleScroll);
   var ul = document.querySelector("#gallery_x > ul");
   try {
-    window.listBottom = ul.offsetTop + ul.offsetHeight;
-    window.listTop = ul.offsetTop;
+    // window.listBottom = ul.offsetTop + ul.offsetHeight;
+    // window.listTop = ul.offsetTop;
   } catch (error) {
   }
   showCacheInMain('header_x',true,true);
@@ -1669,8 +1669,8 @@ let timer = null;
 
 // Kaydırma olayını tanımlayan bir fonksiyon oluşturun
 function scrollEvent(ul) {
-  window.listBottom = ul.offsetTop + ul.offsetHeight;
-  window.listTop = ul.offsetTop;
+  // window.listBottom = ul.offsetTop + ul.offsetHeight;
+  // window.listTop = ul.offsetTop;
   // ul elementinin alt ve üst sınırlarını alın
   // Kaydırma olayını tanımlayın
   if (ul.children.length > 1) {
@@ -1696,7 +1696,7 @@ function scrollEvent(ul) {
       // Zamanlayıcıyı null olarak ayarlayın
       clearTimeout(timer);
       timer = null;
-      if (document.getElementById("gallery_x").scrollTop + document.getElementById("gallery_x").clientHeight >= window.listBottom) {
+      if (document.getElementById("gallery_x").scrollTop + document.getElementById("gallery_x").clientHeight >= document.getElementById("gallery_x").scrollHeight) {
         var firstChild = ul.firstElementChild;
         ul.removeChild(firstChild);
         ul.append(firstChild); 
@@ -1796,8 +1796,8 @@ var stickyDivs = document.querySelectorAll(".stickydiv");
 // var links = document.querySelectorAll("a:active,a:hover,a:link,a:visited");
 var html = document.querySelector("html");
 var body = document.querySelector("body");
-var medias = document.querySelectorAll(".media");
-var videos = document.querySelectorAll(".video");
+// var medias = document.querySelectorAll(".media");
+// var videos = document.querySelectorAll(".video");
 var videoContainers = document.querySelectorAll(".video-container");
 var mainDivs = document.querySelectorAll(".maindiv");
 var innerDivs = document.querySelectorAll(".innerdiv");
@@ -1863,24 +1863,24 @@ changeBackground("gallery");
 html.style["::-webkit-scrollbar"] = "display: none";
 body.style["::-webkit-scrollbar"] = "display: none";
 
-for (var media of medias) {
-  media.style.width = "100%";
-  media.style.margin = "0 auto";
-  media.style.textAlign = "center";
-  media.style.maxWidth = "600px";
-  media.style.height = "100vh";
-  media.style.objectFit = "cover";
-}
+// for (var media of medias) {
+//   media.style.width = "100%";
+//   media.style.margin = "0 auto";
+//   media.style.textAlign = "center";
+//   media.style.maxWidth = "600px";
+//   media.style.height = "100vh";
+//   media.style.objectFit = "cover";
+// }
 
-for (var video of videos) {
-  video.style.width = "100%";
-  video.style.maxWidth = "600px";
-  video.style.height = "100vh";
-  video.style.objectFit = "cover";
-  video.style.marginTop = "1%";
-  video.style.marginBottom = "1%";
-  video.style.Display = "block";
-}
+// for (var video of videos) {
+//   video.style.width = "100%";
+//   video.style.maxWidth = "600px";
+//   video.style.height = "100vh";
+//   video.style.objectFit = "cover";
+//   video.style.marginTop = "1%";
+//   video.style.marginBottom = "1%";
+//   video.style.Display = "block";
+// }
 
 for (var videoContainer of videoContainers) {
   videoContainer.style.display = "flex";
