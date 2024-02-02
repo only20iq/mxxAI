@@ -33,13 +33,19 @@
 .textareaxx {
     color:#c43f22;
     overflow-x: hidden;
-    overflow-y: auto;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
     resize: vertical;
     border:none;
     min-height:59px; /* En az 59 piksel yükseklik */
-    scrollbar-width: thin;
-    scrollbar-color: transparent!important;
+    /* scrollbar-width: thin;
+    scrollbar-color: transparent!important; */
     line-height: 25px; /* Bir satırın yüksekliği */
+}
+
+.textareaxx::-webkit-scrollbar {
+  display: none;
 }
 
 textarea:focus {

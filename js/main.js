@@ -1636,7 +1636,7 @@ function toggleFiles(ul) {
             entry.target.dataset.loaded = true;
             entry.target.src = entry.target.dataset.src;
             if (entry.target.tagName === "IMG") {
-              entry.target.style.backgroundColor = "red";
+              entry.target.style.backgroundColor = "black";
               entry.target.onload = function () {
                 this.style.backgroundColor = "transparent";
               }
