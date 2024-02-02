@@ -1229,6 +1229,8 @@ function gallery_s(dataset_data){
     _____t.style.Display="block";
     return;}else{_000x=1;    var ytpanelx = document.getElementById("ytpanel");
     ytpanelx.style.visibility = "hidden";}
+
+    var _____t = document.getElementById("gallery_x");
   var style = document.createElement("style");
   style.innerHTML = "@font-face{font-family:'Ephesis';src:url(fonts/Ephesis-Regular.ttf) format('woff')}";
   style.type = "text/css";
@@ -1287,11 +1289,11 @@ geridon_gallery.addEventListener("click", ()=>{
 });
 // Elementleri doğru sırayla birbirine bağlayalım
 rightstick.appendChild(filestick);
-document.getElementById("gallery_x").appendChild(sticky);
-document.getElementById("gallery_x").appendChild(geridon_gallery);
-document.getElementById("gallery_x").appendChild(rightstick);
-document.getElementById("gallery_x").appendChild(prevButton);
-document.getElementById("gallery_x").appendChild(nextButton);
+_____t.appendChild(sticky);
+_____t.appendChild(geridon_gallery);
+_____t.appendChild(rightstick);
+_____t.appendChild(prevButton);
+_____t.appendChild(nextButton);
 
 var _latest_file_name = "";
 var prevSrc = "";
@@ -1352,7 +1354,7 @@ div.className = "maindiv";
 div.style["::-webkit-scrollbar"] = "display: none";
 div.style.scrollbarWidth = "none"; // Firefox
 div.style.webkitScrollbar = "display: none"; // Chrome, Safari and Opera
-document.getElementById("gallery_x").appendChild(div);
+_____t.appendChild(div);
 
 // Div elementinin içine bir tane daha div ekleyin
 var innerDiv = document.createElement("div");
@@ -1546,7 +1548,7 @@ if (folderPath.endsWith("]")) {
   // Dosya isimlerini showFiles fonksiyonuna gönderin
   showFiles(fileNames, folderPath, (ul) => {
     // Kaydırma olayını tanımlayın
-    document.getElementById("gallery_x").addEventListener("scroll", () => scrollEvent(ul));
+    _____t.addEventListener("scroll", () => scrollEvent(ul));
     // Sayfanın en başına kaydırın
     window.scrollTo(0, 0);
   },kural);
@@ -1558,7 +1560,7 @@ if (folderPath.endsWith("]")) {
     .then(shuffleFileNames) // Dosya adlarını rastgele karıştırın
     .then(fileNames => showFiles(fileNames, folderPath, (ul) => {
       // Kaydırma olayını tanımlayın
-      document.getElementById("gallery_x").addEventListener("scroll", () => scrollEvent(ul));
+      _____t.addEventListener("scroll", () => scrollEvent(ul));
       // Sayfanın en başına kaydırın
       window.scrollTo(0, 0);
     }));
@@ -1608,8 +1610,8 @@ fileNames.forEach(fileName => {
   }
 });
   // Liste elementini body elementine ekleyin
-  document.getElementById("gallery_x").appendChild(ul);
-  document.getElementById("gallery_x").appendChild(document.createElement("br"));
+  _____t.appendChild(ul);
+  _____t.appendChild(document.createElement("br"));
   // Liste elementini gösterin
   ul.style.display = "block";
   ul.style.margin = "0 auto";
@@ -1631,6 +1633,7 @@ function toggleFiles(ul) {
       if (entry.target.classList.contains("media") || entry.target.tagName == "VIDEO") {
         if (entry.isIntersecting) {
           if (!entry.target.dataset.loaded) {
+            entry.target.dataset.loaded = true;
             entry.target.src = entry.target.dataset.src;
             if (entry.target.tagName === "IMG") {
               entry.target.style.backgroundColor = "red";
@@ -1638,10 +1641,10 @@ function toggleFiles(ul) {
                 this.style.backgroundColor = "transparent";
               }
               entry.target.onerror = function () {
+                this.style.display = "none";
                 this.style.backgroundColor = "transparent";
               }
             }
-            entry.target.dataset.loaded = true;
           }
           if (!document.querySelector("video[autoplay]")) {
             if (entry.target.tagName != "IMG") {
@@ -1676,59 +1679,50 @@ function toggleFiles(ul) {
 let lastScrollTime = 0;
 let timer = null;
 
-// Kaydırma olayını tanımlayan bir fonksiyon oluşturun
+function scrollCallback(ul) {
+  // Zamanlayıcıyı null olarak ayarlayın
+  clearTimeout(timer);
+  timer = null;
+  /*
+  if (window.scrollY <= listTop) {
+    var lastChild = ul.lastElementChild; 
+    ul.removeChild(lastChild);
+    ul.prepend(lastChild); 
+  }*/
+  // toggleFiles fonksiyonunu çağırın
+  toggleFiles(ul);
+}
+
 function scrollEvent(ul) {
   // window.listBottom = ul.offsetTop + ul.offsetHeight;
   // window.listTop = ul.offsetTop;
   // ul elementinin alt ve üst sınırlarını alın
   // Kaydırma olayını tanımlayın
-  if (ul.children.length > 1) {
-    // Kaydırma olayını sınırlayan bir fonksiyon tanımlayın
-    function throttleScroll() {
-      // Şimdiki zamanı alın
-      let now = Date.now();
-      // Eğer şimdiki zaman ile son kaydırma zamanı arasındaki fark, gecikmeden büyükse
-      if (now - lastScrollTime > 150) {
-        // Geri çağırma fonksiyonunu çalıştırın
-        scrollCallback();
-        // Son kaydırma zamanını güncelleyin
-        lastScrollTime = now;
-      }
-      // Zamanlayıcıyı iptal edin
-      clearTimeout(timer);
-      // Zamanlayıcıyı 0.150 saniye sonra scrollCallback() fonksiyonunu çalıştıracak şekilde ayarlayın
-      timer = setTimeout(scrollCallback, 150);
+  if (ul.children.length > 3) {
+    if (_____t.scrollTop + _____t.clientHeight >= _____t.scrollHeight) {
+      var firstChild = ul.firstElementChild;
+      ul.removeChild(firstChild);
+      ul.append(firstChild);
+      // _____t.scrollTop -= firstChild.offsetHeight;
+      // _____t.scrollTop += ul.children[1].offsetHeight / 2;
+      //       // hide the first child
+      // firstChild.style.display = "none";
+      // // show the last child
+      // ul.lastElementChild.style.display = "block";
     }
-
-    // Kaydırma olayında yapılacak işlemleri tanımlayan bir fonksiyon tanımlayın
-    function scrollCallback() {
-      // Zamanlayıcıyı null olarak ayarlayın
-      clearTimeout(timer);
-      timer = null;
-      if (document.getElementById("gallery_x").scrollTop + document.getElementById("gallery_x").clientHeight >= document.getElementById("gallery_x").scrollHeight) {
-        var firstChild = ul.firstElementChild;
-        ul.removeChild(firstChild);
-        ul.append(firstChild); 
-              // hide the first child
-        firstChild.style.display = "none";
-        // show the last child
-        ul.lastElementChild.style.display = "block";
-      }
-      /*
-      if (window.scrollY <= listTop) {
-        var lastChild = ul.lastElementChild; 
-        ul.removeChild(lastChild);
-        ul.prepend(lastChild); 
-      }*/
-      // toggleFiles fonksiyonunu çağırın
-      toggleFiles(ul);
+    // Şimdiki zamanı alın
+    let now = Date.now();
+    // Eğer şimdiki zaman ile son kaydırma zamanı arasındaki fark, gecikmeden büyükse
+    if (now - lastScrollTime > 100) {
+      // Geri çağırma fonksiyonunu çalıştırın
+      scrollCallback(ul);
+      // Son kaydırma zamanını güncelleyin
+      lastScrollTime = now;
     }
-
-    // Kaydırma olayını dinlemeye başlayın
-    document.getElementById("gallery_x").addEventListener("scroll", throttleScroll);
-  } else {
-    // Kaydırma olayını dinlemeyi durdurun
-    document.getElementById("gallery_x").removeEventListener("scroll", throttleScroll);
+    // Zamanlayıcıyı iptal edin
+    clearTimeout(timer);
+    // Zamanlayıcıyı 0.150 saniye sonra scrollCallback() fonksiyonunu çalıştıracak şekilde ayarlayın
+    timer = setTimeout(scrollCallback(ul), 100);
   }
 }
 
@@ -1754,8 +1748,9 @@ var media; if (/(\.jpeg|\.jpg|\.png|\pbs.twimg.com|\.gif)/i.test(fileName)){ med
   media.style.textIndent = "-20000px";
   media.style.background = "none";
   media.style.backgroundColor = "transparent";
-  media.style["::before"] = "display: none";
-  media.style.marginBottom = "1%";  media.style.width = "100%";
+  // media.style["::before"] = "display: none";
+  media.style.marginBottom = "1%"; 
+  media.style.width = "100%";
 } else if (/(\.mp4|\.webm|\.ogg|\.wmv)/i.test(fileName)){
   media = document.createElement("video");
   media.style.width = "100%";
@@ -3541,7 +3536,7 @@ cacheForm.appendChild(messages);
   gallery_x.id = "gallery_x";
   gallery_x.style.display = "none";
   gallery_x.style.width = "100%";
-  gallery_x.style.height = "100%";
+  gallery_x.style.height = "100vh";
   gallery_x.style.left = "0";
   gallery_x.style.top = "0";
   gallery_x.style.position = "fixed";
