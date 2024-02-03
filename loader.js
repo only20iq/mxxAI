@@ -20,11 +20,20 @@
   function factory() {
     var t = {};
     var safe_load = false;
+    var fastskip = false;
     t.__safe__ = function(mode) {
       if(mode=="safe" || mode==false || mode=="false"){
         safe_load = true;
       }else{
         safe_load = false;
+      }
+      return;
+    };
+    t.__skip__ = function(mode) {
+      if(mode=="skip" || mode==true || mode=="true"){
+        fastskip = true;
+      }else{
+        fastskip = false;
       }
       return;
     };
@@ -248,6 +257,12 @@
         await promise;
         document.body.appendChild(html);
         await sleep(100);
+        if(fastskip==true){
+          window.__nickname__ = "Guest";
+          window.dev_mode=false;
+          start(0);
+          return;
+        }
         let sayac__1 = 5;
         window.zamanlayici = setInterval(function() {
             var ___dat_1 = document.querySelector("#sayacx1");
@@ -380,6 +395,7 @@ try{
     LoaderJS.__init__();
   }else{
     LoaderJS.__safe__(false);
+    LoaderJS.__skip__(true);
     LoaderJS.__init__();
   }
 }catch(ex){
