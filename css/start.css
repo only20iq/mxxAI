@@ -1,141 +1,141 @@
-          /* Başlık stilini ayarla */
-          .list-title {
-            font-family: Arial, sans-serif;
-            font-size: 24px;
-            color: #c43f22;
-            text-align: center;
-          }
-      
-          /* Liste stilini ayarla */
-          .group-list {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex; /* Liste öğelerini yan yana diz */
-            flex-wrap: wrap; /* Liste öğelerini satırlara böl */
-            justify-content: center; /* Liste öğelerini merkezle */
-          }
-      
-          /* Liste öğesi stilini ayarla */
-          .group-item {
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-            color: #c43f22;
-            padding: 10px;
-            border-bottom: 1px solid transparent;
-            width: 200px; /* Liste öğelerinin genişliğini belirle */
-            height: 200px; /* Liste öğelerinin yüksekliğini belirle */
-            display: flex; /* Liste öğelerini flex kutusu yap */
-            flex-direction: column; /* Liste öğelerinin içeriğini dikey olarak diz */
-            align-items: center; /* Liste öğelerinin içeriğini yatay olarak merkezle */
-            justify-content: center; /* Liste öğelerinin içeriğini dikey olarak merkezle */
-          }
-      
-          /* Liste öğesi üzerine gelince stilini değiştir */
-          .group-item:hover {
-            background-color: transparent;
-            cursor: pointer;
-          }
-      
-          /* Grup adı stilini ayarla */
-          .group-name {
-            font-weight: bold; /* Grup adını kalın yap */
-          }
-
-.group-image { width: 150px;
-  height: 150px; border-radius: 50%; object-fit: cover;
- }
-
- .divasdas {
-    color:#c43f22;
-    border:none;
-    line-height: 25px;
-    font-size:24px;
-    font-weight:1000;
-  }
-
-/* Önerilenler kutusunun stilini tanımla */
-.suggestions {
-    display: flex; /* Önerileri yatay olarak hizala */
-    justify-content: space-evenly;
-    align-items: center;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:16px;
-  }
-
-  /* Her bir önerinin stilini tanımla */
-  .suggestion {
-    background-color: transparent; /* Önerinin arka plan rengini belirle */
-    padding: 10px; /* Önerinin içine biraz boşluk ver */
-    cursor: pointer; /* Önerinin üzerine gelince imleci el şekline getir */
-    user-select: none; /* Önerinin mouse ile seçilemez olmasını sağla */
-    word-wrap: break-word;
-  }
-
-  /* Önerinin üzerine gelince stilini değiştir */
-  .suggestion:hover {
-    background-color: transparent; /* Önerinin arka plan rengini koyulaştır */
-    transform: scale(1.1); /* Öneriyi biraz büyüt */
-    transition: all 0.3s; /* Değişikliği yumuşak bir şekilde yap */
-    color:red;
-  }
-
-  .textareaxa {
-  min-width: 150px;
-  width: 92%;
-  max-width: 644px;
-  height: 150px;
-  border: none;
-  outline: none;
-  padding: 10px;
-  font-size: 18px;
-  /* font-family: Roboto, sans-serif; */
-  resize: none;
-  background: transparent;
-  color: #c43f22;
-  margin: 10px auto;
-  display: block;
-  /* box-shadow: inset 0 -1px 0 #c43f22, inset 0 1px 0 transparent, inset -1px 0 0 transparent, inset 1px 0 0 transparent; */
-}
-.button0x1 {
-  min-width: 100px;
-  height: 80px;
-  border: none;
-  outline: none;
-  font-size: 20px;
-  /* font-family: Roboto, sans-serif; */
-  box-shadow: none;
-  background: transparent;
-  color: #c43f22;
-  margin: 0 auto;
-  display: inline-block;
-  transition: all 0.3s;
-  white-space: nowrap;
-}
-asdass{color: rgba(196, 64, 34, 0.952)}
-
-::selection{background-color: salmon; color: white;}
-.parallax > use{
-  animation:move-forever 12s linear infinite;
-  &:nth-child(1){animation-delay:-20s;}
-  &:nth-child(2){animation-delay:-20s; animation-duration:50s}
-  &:nth-child(3){animation-delay:-40s; animation-duration:30s}
-}
-
-@keyframes move-forever{
-  0%{transform: translate(-90px , 0%)}
-  100%{transform: translate(85px , 0%)} 
-}
-
-.editorial {
-  display: block;
-  width: 100%;
-  height: 20%;
-  max-height: 100vh;
-  margin: 0;
-  position:fixed;
-  bottom:0;
-  left:0;
-  z-index:-1;
-}
+          /* Başlık stilini ayarla */
+          .list-title {
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            color: #c43f22;
+            text-align: center;
+          }
+      
+          /* Liste stilini ayarla */
+          .group-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Liste öğelerini yan yana diz */
+            flex-wrap: wrap; /* Liste öğelerini satırlara böl */
+            justify-content: center; /* Liste öğelerini merkezle */
+          }
+      
+          /* Liste öğesi stilini ayarla */
+          .group-item {
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            color: #c43f22;
+            padding: 10px;
+            border-bottom: 1px solid transparent;
+            width: 200px; /* Liste öğelerinin genişliğini belirle */
+            height: 200px; /* Liste öğelerinin yüksekliğini belirle */
+            display: flex; /* Liste öğelerini flex kutusu yap */
+            flex-direction: column; /* Liste öğelerinin içeriğini dikey olarak diz */
+            align-items: center; /* Liste öğelerinin içeriğini yatay olarak merkezle */
+            justify-content: center; /* Liste öğelerinin içeriğini dikey olarak merkezle */
+          }
+      
+          /* Liste öğesi üzerine gelince stilini değiştir */
+          .group-item:hover {
+            background-color: transparent;
+            cursor: pointer;
+          }
+      
+          /* Grup adı stilini ayarla */
+          .group-name {
+            font-weight: bold; /* Grup adını kalın yap */
+          }
+
+.group-image { width: 150px;
+  height: 150px; border-radius: 50%; object-fit: cover;
+ }
+
+ .divasdas {
+    color:#c43f22;
+    border:none;
+    line-height: 25px;
+    font-size:24px;
+    font-weight:1000;
+  }
+
+/* Önerilenler kutusunun stilini tanımla */
+.suggestions {
+    display: flex; /* Önerileri yatay olarak hizala */
+    justify-content: space-evenly;
+    align-items: center;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+  }
+
+  /* Her bir önerinin stilini tanımla */
+  .suggestion {
+    background-color: transparent; /* Önerinin arka plan rengini belirle */
+    padding: 10px; /* Önerinin içine biraz boşluk ver */
+    cursor: pointer; /* Önerinin üzerine gelince imleci el şekline getir */
+    user-select: none; /* Önerinin mouse ile seçilemez olmasını sağla */
+    word-wrap: break-word;
+  }
+
+  /* Önerinin üzerine gelince stilini değiştir */
+  .suggestion:hover {
+    background-color: transparent; /* Önerinin arka plan rengini koyulaştır */
+    transform: scale(1.1); /* Öneriyi biraz büyüt */
+    transition: all 0.3s; /* Değişikliği yumuşak bir şekilde yap */
+    color:red;
+  }
+
+  .textareaxa {
+  min-width: 150px;
+  width: 92%;
+  max-width: 644px;
+  height: 150px;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 18px;
+  /* font-family: Roboto, sans-serif; */
+  resize: none;
+  background: transparent;
+  color: #c43f22;
+  margin: 10px auto;
+  display: block;
+  /* box-shadow: inset 0 -1px 0 #c43f22, inset 0 1px 0 transparent, inset -1px 0 0 transparent, inset 1px 0 0 transparent; */
+}
+.button0x1 {
+  min-width: 100px;
+  height: 80px;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  /* font-family: Roboto, sans-serif; */
+  box-shadow: none;
+  background: transparent;
+  color: #c43f22;
+  margin: 0 auto;
+  display: inline-block;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+asdass{color: rgba(196, 64, 34, 0.952)}
+
+::selection{background-color: salmon; color: white;}
+.parallax > use{
+  animation:move-forever 12s linear infinite;
+  &:nth-child(1){animation-delay:-20s;}
+  &:nth-child(2){animation-delay:-20s; animation-duration:50s}
+  &:nth-child(3){animation-delay:-40s; animation-duration:30s}
+}
+
+@keyframes move-forever{
+  0%{transform: translate(-90px , 0%)}
+  100%{transform: translate(85px , 0%)} 
+}
+
+.editorial {
+  display: block;
+  width: 100%;
+  height: 20%;
+  max-height: 100vh;
+  margin: 0;
+  position:fixed;
+  bottom:0;
+  left:0;
+  z-index:-1;
+}
 /*rgba(255, 255, 255, .75)*/
