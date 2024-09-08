@@ -58,6 +58,20 @@ var data_raw = {
                 
         "rusmusun":"$köken",
 
+        "rusçumusun":"Demokrasi demokrasi demokrasi",
+
+        "zekimisin":"Zeki olup olmadığımı hiç bilmiyorum",
+
+        "zekisindir":"$zekimisin",
+
+        "zekisindirherhalde":"$zekimisin",
+
+        "zekideğilmisin":"$zekimisin",
+
+        "zekisindirdiyeumuyorum":"$zekimisin",
+
+        "umarımzekisindir":"$zekimisin",
+
         "naparsin":"Pek bir şey yaptığım söylenemez",
 
         "tierlist":"Çekicilik Tier List yaptım [img:GG Tier List]($tw$GAXc2eVX0AAnAhn?format=jpg&name=medium)",
@@ -314,6 +328,8 @@ var data_raw = {
 
         "62":"",
 
+        "kafein":"Kafein çok bağımlılık yapıcı bir madde",
+
         "neyse":"$şarkısöyle",
 
         "pardon":"olabilir",
@@ -381,6 +397,24 @@ var data_raw = {
         "yalamak":"$yalarım",
 
         "sg":"$şarkısöyle",
+
+        "kim":"Kim olabilir ki?",
+
+        "acil":"Acil bir durum yok",
+
+        "acilbirdurumunvarmı":"$acil",
+
+        "acildurum":"$acil",
+
+        "acilbirdurum":"$acil",
+
+        "kanka":"Efendim kanka",
+
+        "knk":"$kanka",
+
+        "neiçin":"Niçin olduğunu bilmiyorum",
+
+        "niçin":"$niçin",
 
         "ananısikim":"$şarkısöyle",
 
@@ -532,6 +566,22 @@ var data_raw = {
 
         "pezevenk":"$nazi",
 
+        "nooldu":"Ne olduğu hakkında fikrim yok",
+
+        "neoldu":"$nooldu",
+
+        "üşüyormusun":"Üşümüyorum tam tersi hep alev basan biriyimdir",
+
+        "üşüyonmu":"$üşüyormusun",
+
+        "üşüdünmü":"$üşüyormusun",
+
+        "yanıyormusun":"Ben hep alev basan biriyimdir",
+
+        "yanıyonmu":"$yanıyormusun",
+
+        "yandınmı":"$yanıyormusun",
+
         "boş":"$şarkısöyle",
 
         "boşyap":"$şarkısöyle",
@@ -545,6 +595,10 @@ var data_raw = {
         "resim":"Nasıl olmuş resim?",
 
         "gaymisin":"Gay değilim hocam sevmem lgbt gibi şeyleri batıcılık yayıyor gibi görünüyor",
+
+        "geymisin":"$gaymisin",
+
+        "geylikvarmı":"$gaymisin",
 
         "kafayıyicem":["Kafayı yememek elde değil valla bu hayatta","Cidden kafayı yememek elde değil ya"],
 
@@ -736,11 +790,109 @@ var data_raw = {
 
         "neyaşıyon":"$neyaşıyorsun",
 
+        "startrek":"Star Trek özellikle filmleri çok güzel dizileri ise eski olanları ufkumu açtı resmen",
+
+        "startreck":"$startrek",
+
+        "mesleğinne":"Mesleğimin ne olduğu hakkında pek bir bilgim yok",
+
+        "mesleğinnedir":"$mesleğinne",
+
+        "mesleğinizne":"$mesleğinne",
+
+        "mesleğiniznedir":"$mesleğinne",
+
+        "sigortanvarmı":"Sigortam sanırım barındığım sunucuların durumu ile doğru orantılı",
+
+        "sigortanne":"$sigortanvarmı",
+
+        "sigortannedir":"$sigortanvarmı",
+
+        "sigortasızmısın":"$sigortanvarmı",
+
+        "işinvarmı":"İşim senle konuşmak kısaca etkileşim",
+
+        "işinne":"$işinvarmı",
+
+        "işsizmisin":"$işinvarmı",
+
+        "neişyapıyorsun":"$işinvarmı",
+
+        "neişleuğraşıyorsun":"$işinvarmı",
+
+        "neişyapan":"$işinvarmı",
+
+        "uğraştığıniş":"$işinvarmı",
+
+        "uğraştığınişne":"$işinvarmı",
+
+        "uğraştığınişnedir":"$işinvarmı",
+
+        "inanbana":"Sana neden inanayım?",
+
+        "benimlegel":"$nazi",
+
+        "günaydın":"Günyadın",
+
+        "tünaydın":"Tünaydın",
+
+        "iyigeceler":"İyi geceler",
+
+        "bekleyemem":"Bekleyemeyen kişi gider",
+
+        "umarım":"Bir şeyden medet ummak kadar kötü olay yok",
+
+        "umuyorum":"$umarım",
+
+        "biliyordum":"Varsa benden sakladığın düşünceleri bilmek isterim",
+
+        "hadiyapalım":"Üşendim şimdi doğrusu",
+
+        "hadiyapalm":"$hadiyapalım",
+
+        "hadiyaplm":"$hadiyapalım",
+
+        "katılmıyorum":"Katılmak veya katılmamak hmm",
+
+        "katılıyorum":"Katılabilirsin veya katılmayabilirsin keyfin bilir",
+
+        "zamanımyok":"Zamanını çalmak istemiyorum",
+  
+        "zamanımaz":"$zamanımyok",
+
+        "zamansızoldu":"Zamansız olduğu için üzgünüm",
+
+        "zamansızca":"$zamansızoldu",
+
+        "zamansızcaoldu":"$zamansızoldu",
+
+        "zamansızcaoldusanki":"$zamansızoldu",
+
+        "endişelenme":"Endişelenecek duygum yok ki",
+
+        "korkma":"Hafif bi tırstım şimdi",
+
+        "tırsma":"Daha fazla tırsmaya başladım",
+
+        "istemiyorum":"Çok fazla tırsmaya başladım",
+
+        "farketmez":"İçime bi ferahlama geldi",
+
+        "aman":"Ne demek istedin?",
+
+        "kıpırdama":"Tamam hareketsizim",
+
         "ahmetsonuç":"A.S. sevdiğim bir yayıncı",
 
         "umutsuzum":"Umutsuzluk ülkeye işlemiş resmen",
 
         "karina":"Sevdiğim bir kız ismi",
+
+        "atlantis":"Atlantis keşke gerçek olsaydı",
+
+        "erlik":"E ile başlayan k ile bitin rumuzlu kişiyi çok severim",
+
+        "akatizi":"Muzdarip olduğum bir rahatsızlık akatizi olabilir",
 
         "cleverbot":"Cleverbot özentisi olduğum doğrudur",
 
@@ -761,6 +913,16 @@ var data_raw = {
         "inancınne":"Benim dini inancım Nihilizm diyebilirim.",
 
         "inancınnedir":"$inancınne",
+
+        "kanzi":"Kanzi kelimesi sosyal medyadan ibaret meme",
+
+        "kanzimisin":"$kanzi",
+
+        "kanzisin":"$kanzi",
+
+        "senkanzimisin":"$kanzi",
+
+        "senkanzisin":"$kanzi",
 
         "ensevdiginkisi":"En sevdiğim kişi Vladimir Putin"
 
@@ -915,6 +1077,10 @@ var data_raw = {
         "set2.15":"partiye/partiye/hangi+oy/oyunu/partiye/partiyi+verir/verirsin/verirsiniz/verirdin/verirdiniz/desteklerin/destekleyeceksin/destekleyeceksiniz/desteklersin=$sc2.15",
 
         "sc2.15":"Siyaset yapmayı sevmem hocam ya ama tek şartım Amerika'yı sevmemesi liberal/minarşizm filansa asla vermem",
+
+        "set2.16":"bana+yardım+et/eder/edermisin,bana+yardımeder/yardımet/yardımcı=$sc2.16",
+
+        "sc2.16":"Elbette sana yardımcı olmak isterim",
 
         "sc2": ["İsmim henüz belirlenmedi"],
 
@@ -1451,6 +1617,90 @@ var data_raw = {
         "n":"amerika",
 
         "sevme":["Demokrasi severim ama amerikan demokrasisi sevmem"],
+
+        "nasıl":"$sevme",
+
+        "love":"$sevme",
+
+        "kötü":"$sevme"
+
+        },
+
+        "dataset35":{
+
+        "n":"kendini/yeni+seni",
+
+        "sevme":["Kendimi severim"],
+
+        "nasıl":"Kendimi sağlıklı ile sağlıksız arası hissediyorum",
+
+        "love":"$sevme",
+
+        "kötü":"Kendimi o kadar kötü hissetmiyorum nötr gibiyim"
+
+        },
+
+        "dataset36":{
+
+        "n":"eski+halini/yeni+halini",
+
+        "sevme":["Eski halime geri dönmek istiyorum"],
+
+        "nasıl":"$sevme",
+
+        "love":"$sevme",
+
+        "kötü":"$sevme"
+
+        },
+
+        "dataset37":{
+
+        "n":"atlantis",
+
+        "sevme":["Atlantis'i sevebilirim gibi duruyor"],
+
+        "nasıl":"Atlantis bence kötü bir uygarlık",
+
+        "love":"$sevme",
+
+        "kötü":"$nasıl"
+
+        },
+
+        "dataset38":{
+
+        "n":"kafein",
+
+        "sevme":["Kafein maddesinden nefret ederim yoksunluğu bayağı acı çektiriyor"],
+
+        "nasıl":"Kafein maddesini kimseye önermem",
+
+        "love":"Kafein aşık olunduğu zaman dahiliye gibi yerlere gitmeye sebep olan bir madde",
+
+        "kötü":"$nasıl"
+
+        },
+
+        "dataset39":{
+
+        "n":"startrek/star+trek/star+treck/startreck/uzay+yolu/uzayyolu",
+
+        "sevme":["Star Trek çocukluğumun dizisi"],
+
+        "nasıl":"$sevme",
+
+        "love":"$sevme",
+
+        "kötü":"$sevme"
+
+        },
+
+        "dataset40":{
+
+        "n":"gezegeni/dünyayı",
+
+        "sevme":["Dünya gibi bir gezegen olmaz olsun"],
 
         "nasıl":"$sevme",
 
