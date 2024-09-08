@@ -2135,6 +2135,7 @@ function cevapla(dataxxxx,target_A="me",lang="tr"){
 
       var messagecbbtbtnrte = ai_cevapla(dataxxxx,true,0);
 
+
       if(messagecbbtbtnrte=="sil"){return;}
 
       translate___PROC=true;
@@ -2148,6 +2149,7 @@ function cevapla(dataxxxx,target_A="me",lang="tr"){
           var veri__0 = messagecbbtbtnrte;
 
           var ___text__0 = messagecbbtbtnrte;
+
 
         }else {
 

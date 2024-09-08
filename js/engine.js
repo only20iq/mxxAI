@@ -3040,7 +3040,7 @@ function ai_cevapla(metin,onlytext=false,random__create_func=1) {
 
   metin = turkishToLower(metin);
 
-  metin = metin.toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "");
+  metin = metin.toLowerCase().replaceAll("?", "").replaceAll("!", "").replaceAll(".", "").replaceAll(",", "").replaceAll("'", "").replaceAll('"', "");
 
   var regex = new RegExp(data.yasakli_kelime.join("|"));
 
@@ -3110,7 +3110,7 @@ function ai_cevapla(metin,onlytext=false,random__create_func=1) {
     })();
   }
 
-  if(test.length!=0){_return=1;} // Eğer cevap bulamazsa rastgele cevap eklesin
+  if(test.length!=0 && test!=undefined){_return=1;} // Eğer cevap bulamazsa rastgele cevap eklesin
 
   if (test.indexOf("sil") == -1 && (!metin.startsWith('/')) && _return == 0 && random__create_func!=0) {
     var r = random_generate_bonus(metin,1);

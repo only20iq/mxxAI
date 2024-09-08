@@ -348,6 +348,14 @@ var data_raw = {
 
         "esteregg":"$hayat",
 
+        "yakes":"$nazi",
+
+        "yakesya":"$nazi",
+
+        "kes ya":"$nazi",
+
+        "yavkes":"$nazi",
+
         "begenmedinmi":"bilmem kanka",
 
         "begenemedinmi":"$beğenemedinmi",
@@ -1419,6 +1427,34 @@ var data_raw = {
         "sevme":["Arapları sevmem veya sevmemem önemsiz"],
 
         "nasıl":"$sevme",
+
+        "kötü":"$sevme"
+
+        },
+
+        "dataset33":{
+
+        "n":"karina",
+
+        "sevme":["Karina'yı sevdiğim doğrudur"],
+
+        "nasıl":"$sevme",
+
+        "love":"$sevme",
+
+        "kötü":"$sevme"
+
+        },
+
+        "dataset34":{
+
+        "n":"amerika",
+
+        "sevme":["Demokrasi severim ama amerikan demokrasisi sevmem"],
+
+        "nasıl":"$sevme",
+
+        "love":"$sevme",
 
         "kötü":"$sevme"
 
